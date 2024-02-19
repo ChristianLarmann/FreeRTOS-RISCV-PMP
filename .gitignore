@@ -1,0 +1,32 @@
+
+FreeRTOS-RISC-V-PMP Software/.settings/
+
+FreeRTOS-RISC-V-PMP Software/Debug/.~lock.code_pmp.as#
+
+FreeRTOS-RISC-V-PMP Software/Debug/code.dat
+
+FreeRTOS-RISC-V-PMP Software/Debug/data.dat
+
+FreeRTOS-RISC-V-PMP Software/Debug/FreeRTOS-RISC-V-PMP_Software.asm
+
+FreeRTOS-RISC-V-PMP Software/Debug/FreeRTOS-RISC-V-PMP_Software.elf
+
+FreeRTOS-RISC-V-PMP Software/Debug/FreeRTOS-RISC-V-PMP_Software.srec
+
+FreeRTOS-RISC-V-PMP Software/Release/main.s
+
+FreeRTOS-RISC-V-PMP Software/Release/objects.mk
+
+FreeRTOS-RISC-V-PMP Software/Release/RISCKY.elf
+
+FreeRTOS-RISC-V-PMP Software/Release/RISCKY.hex
+
+FreeRTOS-RISC-V-PMP Software/Release/RISCKY.map
+
+FreeRTOS-RISC-V-PMP Software/Release/RISCKY.srec
+
+FreeRTOS-RISC-V-PMP Software/Release/spi.s
+
+FreeRTOS-RISC-V-PMP Software/Release/src/
+
+FreeRTOS-RISC-V-PMP Software/Debug/src/
