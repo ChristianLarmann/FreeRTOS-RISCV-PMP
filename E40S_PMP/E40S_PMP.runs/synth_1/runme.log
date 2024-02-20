@@ -1,0 +1,1469 @@
+
+*** Running vivado
+    with args -log TOPLEVEL.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source TOPLEVEL.tcl
+
+
+****** Vivado v2023.1 (64-bit)
+  **** SW Build 3865809 on Sun May  7 15:04:56 MDT 2023
+  **** IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+  **** SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source TOPLEVEL.tcl -notrace
+create_project: Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1332.793 ; gain = 0.023 ; free physical = 699 ; free virtual = 8609
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/christian/Apps/Xilinx/Vivado/2023.1/data/ip'.
+Command: synth_design -top TOPLEVEL -part xc7z020clg400-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Device 21-403] Loading part xc7z020clg400-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 107472
+WARNING: [Synth 8-11067] parameter 'ALU_OP_WIDTH' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:63]
+WARNING: [Synth 8-11067] parameter 'MUL_OP_WIDTH' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:148]
+WARNING: [Synth 8-11067] parameter 'DIV_OP_WIDTH' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:156]
+WARNING: [Synth 8-11067] parameter 'HAVERESET_INDEX' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:175]
+WARNING: [Synth 8-11067] parameter 'RUNNING_INDEX' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:176]
+WARNING: [Synth 8-11067] parameter 'HALTED_INDEX' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:177]
+WARNING: [Synth 8-11067] parameter 'CSR_JVT_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:467]
+WARNING: [Synth 8-11067] parameter 'CSR_DCSR_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:468]
+WARNING: [Synth 8-11067] parameter 'CSR_MEPC_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:469]
+WARNING: [Synth 8-11067] parameter 'CSR_DPC_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:470]
+WARNING: [Synth 8-11067] parameter 'CSR_MSTATUS_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:472]
+WARNING: [Synth 8-11067] parameter 'CSR_MINTSTATUS_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:473]
+WARNING: [Synth 8-11067] parameter 'CSR_MSCRATCH_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:474]
+WARNING: [Synth 8-11067] parameter 'CSR_CPUCTRL_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:475]
+WARNING: [Synth 8-11067] parameter 'CSR_PMPNCFG_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:476]
+WARNING: [Synth 8-11067] parameter 'CSR_PMPADDR_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:477]
+WARNING: [Synth 8-11067] parameter 'CSR_MSECCFG_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:478]
+WARNING: [Synth 8-11067] parameter 'CSR_PRV_LVL_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:479]
+WARNING: [Synth 8-11067] parameter 'CSR_MSTATEEN0_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:480]
+WARNING: [Synth 8-11067] parameter 'CSR_DSCRATCH0_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:481]
+WARNING: [Synth 8-11067] parameter 'CSR_DSCRATCH1_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:482]
+WARNING: [Synth 8-11067] parameter 'CSR_MINTTHRESH_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:483]
+WARNING: [Synth 8-11067] parameter 'CSR_CLIC_MCAUSE_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:484]
+WARNING: [Synth 8-11067] parameter 'CSR_BASIC_MCAUSE_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:485]
+WARNING: [Synth 8-11067] parameter 'CSR_CLIC_MTVEC_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:486]
+WARNING: [Synth 8-11067] parameter 'CSR_BASIC_MTVEC_MASK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:487]
+WARNING: [Synth 8-11067] parameter 'CSR_OP_WIDTH' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:492]
+WARNING: [Synth 8-11067] parameter 'CSR_MSIX_BIT' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:503]
+WARNING: [Synth 8-11067] parameter 'CSR_MTIX_BIT' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:504]
+WARNING: [Synth 8-11067] parameter 'CSR_MEIX_BIT' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:505]
+WARNING: [Synth 8-11067] parameter 'CSR_MFIX_BIT_LOW' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:506]
+WARNING: [Synth 8-11067] parameter 'CSR_MFIX_BIT_HIGH' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:507]
+WARNING: [Synth 8-11067] parameter 'CPUCTRL_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:521]
+WARNING: [Synth 8-11067] parameter 'MVENDORID_OFFSET' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:554]
+WARNING: [Synth 8-11067] parameter 'MVENDORID_BANK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:555]
+WARNING: [Synth 8-11067] parameter 'MARCHID' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:558]
+WARNING: [Synth 8-11067] parameter 'MIMPID_MAJOR' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:561]
+WARNING: [Synth 8-11067] parameter 'MIMPID_MINOR' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:562]
+WARNING: [Synth 8-11067] parameter 'MTVEC_MODE_BASIC' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:564]
+WARNING: [Synth 8-11067] parameter 'MTVEC_MODE_CLIC' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:565]
+WARNING: [Synth 8-11067] parameter 'NUM_HPM_EVENTS' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:566]
+WARNING: [Synth 8-11067] parameter 'MSTATUS_MIE_BIT' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:568]
+WARNING: [Synth 8-11067] parameter 'MSTATUS_MPIE_BIT' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:569]
+WARNING: [Synth 8-11067] parameter 'MSTATUS_MPP_BIT_LOW' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:570]
+WARNING: [Synth 8-11067] parameter 'MSTATUS_MPP_BIT_HIGH' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:571]
+WARNING: [Synth 8-11067] parameter 'MSTATUS_MPRV_BIT' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:572]
+WARNING: [Synth 8-11067] parameter 'MSTATUS_TW_BIT' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:573]
+WARNING: [Synth 8-11067] parameter 'MCAUSE_MPIE_BIT' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:575]
+WARNING: [Synth 8-11067] parameter 'MCAUSE_MPP_BIT_LOW' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:576]
+WARNING: [Synth 8-11067] parameter 'MCAUSE_MPP_BIT_HIGH' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:577]
+WARNING: [Synth 8-11067] parameter 'MTVEC_MODE_BIT_HIGH' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:579]
+WARNING: [Synth 8-11067] parameter 'MTVEC_MODE_BIT_LOW' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:580]
+WARNING: [Synth 8-11067] parameter 'DCSR_EBREAKU_BIT' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:582]
+WARNING: [Synth 8-11067] parameter 'DCSR_PRV_BIT_HIGH' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:583]
+WARNING: [Synth 8-11067] parameter 'DCSR_PRV_BIT_LOW' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:584]
+WARNING: [Synth 8-11067] parameter 'MXL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:588]
+WARNING: [Synth 8-11067] parameter 'JVT_ADDR_WIDTH' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:597]
+WARNING: [Synth 8-11067] parameter 'DBG_CAUSE_NONE' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:631]
+WARNING: [Synth 8-11067] parameter 'DBG_CAUSE_EBREAK' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:632]
+WARNING: [Synth 8-11067] parameter 'DBG_CAUSE_TRIGGER' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:633]
+WARNING: [Synth 8-11067] parameter 'DBG_CAUSE_HALTREQ' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:634]
+WARNING: [Synth 8-11067] parameter 'DBG_CAUSE_STEP' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:635]
+WARNING: [Synth 8-11067] parameter 'DBG_CAUSE_RSTHALTREQ' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:636]
+WARNING: [Synth 8-11067] parameter 'DCSR_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:704]
+WARNING: [Synth 8-11067] parameter 'MTVEC_BASIC_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:712]
+WARNING: [Synth 8-11067] parameter 'MTVEC_CLIC_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:718]
+WARNING: [Synth 8-11067] parameter 'MTVT_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:724]
+WARNING: [Synth 8-11067] parameter 'MINTSTATUS_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:728]
+WARNING: [Synth 8-11067] parameter 'MSTATUS_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:734]
+WARNING: [Synth 8-11067] parameter 'MCAUSE_CLIC_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:746]
+WARNING: [Synth 8-11067] parameter 'MCAUSE_BASIC_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:750]
+WARNING: [Synth 8-11067] parameter 'JVT_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:753]
+WARNING: [Synth 8-11067] parameter 'MSCRATCH_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:754]
+WARNING: [Synth 8-11067] parameter 'MEPC_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:755]
+WARNING: [Synth 8-11067] parameter 'DPC_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:756]
+WARNING: [Synth 8-11067] parameter 'DSCRATCH0_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:757]
+WARNING: [Synth 8-11067] parameter 'DSCRATCH1_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:758]
+WARNING: [Synth 8-11067] parameter 'MINTTHRESH_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:759]
+WARNING: [Synth 8-11067] parameter 'MIE_BASIC_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:760]
+WARNING: [Synth 8-11067] parameter 'MSTATEEN0_RESET_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:761]
+WARNING: [Synth 8-11067] parameter 'TDATA1_RST_VAL' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:763]
+WARNING: [Synth 8-11067] parameter 'MCONTROL_6_UNCERTAIN' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:783]
+WARNING: [Synth 8-11067] parameter 'MCONTROL_6_HIT1' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:784]
+WARNING: [Synth 8-11067] parameter 'MCONTROL_6_HIT0' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:785]
+WARNING: [Synth 8-11067] parameter 'MCONTROL2_6_MATCH_HIGH' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:786]
+WARNING: [Synth 8-11067] parameter 'MCONTROL2_6_MATCH_LOW' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:787]
+WARNING: [Synth 8-11067] parameter 'MCONTROL2_6_M' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:788]
+WARNING: [Synth 8-11067] parameter 'MCONTROL_6_UNCERTAINEN' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:789]
+WARNING: [Synth 8-11067] parameter 'MCONTROL2_6_U' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:790]
+WARNING: [Synth 8-11067] parameter 'MCONTROL2_6_EXECUTE' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:791]
+WARNING: [Synth 8-11067] parameter 'MCONTROL2_6_STORE' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:792]
+WARNING: [Synth 8-11067] parameter 'MCONTROL2_6_LOAD' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:793]
+WARNING: [Synth 8-11067] parameter 'ETRIGGER_M' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:796]
+WARNING: [Synth 8-11067] parameter 'ETRIGGER_U' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:797]
+WARNING: [Synth 8-11067] parameter 'TDATA1_TTYPE_HIGH' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:800]
+WARNING: [Synth 8-11067] parameter 'TDATA1_TTYPE_LOW' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:801]
+WARNING: [Synth 8-11067] parameter 'SECURE' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:824]
+WARNING: [Synth 8-11067] parameter 'USER' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:827]
+WARNING: [Synth 8-11067] parameter 'PRIV_LVL_LOWEST' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:830]
+WARNING: [Synth 8-11067] parameter 'REGFILE_NUM_WRITE_PORTS' declared inside package 'cv32e40s_pkg' shall be treated as localparam [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:833]
+INFO: [Common 17-14] Message 'Synth 8-11067' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Synth 8-11241] undeclared symbol 'sys_wfe_unqual_id', assumed default net type 'wire' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_controller_bypass.sv:133]
+INFO: [Synth 8-11241] undeclared symbol 'mscratchcsw_q', assumed default net type 'wire' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_cs_registers.sv:2092]
+INFO: [Synth 8-11241] undeclared symbol 'mscratchcswl_q', assumed default net type 'wire' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_cs_registers.sv:2094]
+INFO: [Synth 8-11241] undeclared symbol 'tdata1_n', assumed default net type 'wire' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_debug_triggers.sv:530]
+INFO: [Synth 8-11241] undeclared symbol 'clic_ptr_valid', assumed default net type 'wire' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_ex_stage.sv:476]
+INFO: [Synth 8-11241] undeclared symbol 'mret_ptr_valid', assumed default net type 'wire' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_ex_stage.sv:477]
+WARNING: [Synth 8-6901] identifier 'cache_rdy' is used before its declaration [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:48]
+WARNING: [Synth 8-6901] identifier 'cache_req' is used before its declaration [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:49]
+WARNING: [Synth 8-6901] identifier 'UA_debug' is used before its declaration [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:50]
+INFO: [Synth 8-11241] undeclared symbol 'BT_RST', assumed default net type 'wire' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/SECURE_PLATFORM_RI5CY/rtl/SECURE_PLATFORM_RI5CY_with_Caches.v:132]
+INFO: [Synth 8-11241] undeclared symbol 'HSEL_NOMAP', assumed default net type 'wire' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/SECURE_PLATFORM_RI5CY/rtl/SECURE_PLATFORM_RI5CY_with_Caches.v:232]
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2039.055 ; gain = 375.699 ; free physical = 245 ; free virtual = 7607
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'TOPLEVEL' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/TOPLEVEL.v:4]
+INFO: [Synth 8-6157] synthesizing module 'clock' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/RI5CY_UA.gen/sources_1/bd/clock/synth/clock.v:13]
+INFO: [Synth 8-6157] synthesizing module 'clock_clk_wiz_0_0' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/E40S_PMP.runs/synth_1/.Xil/Vivado-107345-christian-ThinkPad-X270-W10DG/realtime/clock_clk_wiz_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'clock_clk_wiz_0_0' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/E40S_PMP.runs/synth_1/.Xil/Vivado-107345-christian-ThinkPad-X270-W10DG/realtime/clock_clk_wiz_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'clock' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/RI5CY_UA.gen/sources_1/bd/clock/synth/clock.v:13]
+INFO: [Synth 8-6157] synthesizing module 'SECURE_PLATFORM_RI5CY' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/SECURE_PLATFORM_RI5CY/rtl/SECURE_PLATFORM_RI5CY_with_Caches.v:11]
+INFO: [Synth 8-6157] synthesizing module 'riscv_top_ahb3lite' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/riscv_top_ahb3lite.sv:2]
+	Parameter BOOT_ADDR bound to: 32768 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_core' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_core.sv:32]
+	Parameter DEBUG bound to: 1'b0 
+	Parameter PMP_GRANULARITY bound to: 32'b00000000000000000000000000000000 
+	Parameter PMP_NUM_REGIONS bound to: 32'sb00000000000000000000000000000100 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_int_controller' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_int_controller.sv:24]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_int_controller' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_int_controller.sv:24]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_if_c_obi' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_if_c_obi.sv:27]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_if_c_obi' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_if_c_obi.sv:27]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_if_c_obi' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_if_c_obi.sv:27]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_if_c_obi' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_if_c_obi.sv:27]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_sleep_unit' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_sleep_unit.sv:43]
+	Parameter LIB bound to: 0 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_clock_gate' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/bhv/cv32e40s_sim_clock_gate.sv:15]
+	Parameter LIB bound to: 0 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_clock_gate' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/bhv/cv32e40s_sim_clock_gate.sv:15]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_sleep_unit' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_sleep_unit.sv:43]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_alert' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_alert.sv:33]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_alert' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_alert.sv:33]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_if_stage' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_if_stage.sv:29]
+	Parameter RV32 bound to: 1'b0 
+	Parameter B_EXT bound to: 2'b00 
+	Parameter PMA_NUM_REGIONS bound to: 32'sb00000000000000000000000000000000 
+	Parameter PMA_CFG bound to: 136'b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 
+	Parameter PMP_GRANULARITY bound to: 32'b00000000000000000000000000000000 
+	Parameter PMP_NUM_REGIONS bound to: 32'sb00000000000000000000000000000100 
+	Parameter DUMMY_INSTRUCTIONS bound to: 1'b1 
+	Parameter MTVT_ADDR_WIDTH bound to: 32'b00000000000000000000000000011001 
+	Parameter CLIC bound to: 1'b0 
+	Parameter CLIC_ID_WIDTH bound to: 32'b00000000000000000000000000000101 
+	Parameter ZC_EXT bound to: 1'b1 
+	Parameter M_EXT bound to: 2'b01 
+	Parameter DEBUG bound to: 1'b0 
+	Parameter DM_REGION_START bound to: -268435456 - type: integer 
+	Parameter DM_REGION_END bound to: -268369921 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_sequencer' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_sequencer.sv:34]
+	Parameter RV32 bound to: 1'b0 
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_sequencer.sv:165]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv:1825]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_sequencer.sv:279]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_sequencer' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_sequencer.sv:34]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_dummy_instr' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_dummy_instr.sv:33]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_dummy_instr.sv:128]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_dummy_instr' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_dummy_instr.sv:33]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_if_stage.sv:201]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_prefetch_unit' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_prefetch_unit.sv:29]
+	Parameter CLIC bound to: 1'b0 
+	Parameter ALBUF_DEPTH bound to: 32'b00000000000000000000000000000011 
+	Parameter ALBUF_CNT_WIDTH bound to: 32'b00000000000000000000000000000010 
+	Parameter MAX_OUTSTANDING bound to: 32'b00000000000000000000000000000001 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_prefetcher' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_prefetcher.sv:40]
+	Parameter CLIC bound to: 1'b0 
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_prefetcher.sv:91]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_prefetcher' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_prefetcher.sv:40]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_alignment_buffer' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_alignment_buffer.sv:24]
+	Parameter ALBUF_DEPTH bound to: 32'b00000000000000000000000000000011 
+	Parameter ALBUF_CNT_WIDTH bound to: 32'b00000000000000000000000000000010 
+	Parameter MAX_OUTSTANDING bound to: 32'b00000000000000000000000000000001 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_rchk_check' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_rchk_check.sv:35]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_rchk_check' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_rchk_check.sv:35]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_alignment_buffer.sv:470]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_alignment_buffer' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_alignment_buffer.sv:24]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_prefetch_unit' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_prefetch_unit.sv:29]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_mpu' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_mpu.sv:26]
+	Parameter IF_STAGE bound to: 1'b1 
+	Parameter PMP_GRANULARITY bound to: 32'b00000000000000000000000000000000 
+	Parameter PMP_NUM_REGIONS bound to: 32'sb00000000000000000000000000000100 
+	Parameter PMA_NUM_REGIONS bound to: 32'sb00000000000000000000000000000000 
+	Parameter PMA_CFG bound to: 136'b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 
+	Parameter DEBUG bound to: 1'b0 
+	Parameter DM_REGION_START bound to: -268435456 - type: integer 
+	Parameter DM_REGION_END bound to: -268369921 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_pmp' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:31]
+	Parameter PMP_GRANULARITY bound to: 32'b00000000000000000000000000000000 
+	Parameter PMP_NUM_REGIONS bound to: 32'sb00000000000000000000000000000100 
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:116]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:116]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:116]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:116]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:116]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:116]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:116]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:116]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:149]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:149]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:149]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:149]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:149]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:149]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:149]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:149]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_pmp' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv:31]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_pma' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pma.sv:26]
+	Parameter PMA_NUM_REGIONS bound to: 32'sb00000000000000000000000000000000 
+	Parameter PMA_CFG bound to: 136'b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_pma' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pma.sv:26]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_mpu' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_mpu.sv:26]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_instr_obi_interface' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_instr_obi_interface.sv:38]
+	Parameter MAX_OUTSTANDING bound to: 32'b00000000000000000000000000000001 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_obi_integrity_fifo' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_obi_integrity_fifo.sv:33]
+	Parameter MAX_OUTSTANDING bound to: 32'b00000000000000000000000000000001 
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_obi_integrity_fifo.sv:101]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_obi_integrity_fifo' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_obi_integrity_fifo.sv:33]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_instr_obi_interface.sv:119]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_instr_obi_interface' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_instr_obi_interface.sv:38]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_pc_check' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pc_check.sv:33]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_pc_check' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pc_check.sv:33]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_compressed_decoder' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_compressed_decoder.sv:27]
+	Parameter ZC_EXT bound to: 1'b1 
+	Parameter B_EXT bound to: 2'b00 
+	Parameter M_EXT bound to: 2'b01 
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_compressed_decoder.sv:66]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_compressed_decoder.sv:69]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_compressed_decoder.sv:69]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_compressed_decoder.sv:91]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_compressed_decoder.sv:142]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_compressed_decoder.sv:142]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_compressed_decoder.sv:184]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_compressed_decoder.sv:184]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_compressed_decoder.sv:209]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_compressed_decoder.sv:209]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_compressed_decoder.sv:242]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_compressed_decoder.sv:313]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_compressed_decoder.sv:313]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_compressed_decoder' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_compressed_decoder.sv:27]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_if_stage' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_if_stage.sv:29]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_id_stage' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_id_stage.sv:33]
+	Parameter RV32 bound to: 1'b0 
+	Parameter B_EXT bound to: 2'b00 
+	Parameter M_EXT bound to: 2'b01 
+	Parameter REGFILE_NUM_READ_PORTS bound to: 32'b00000000000000000000000000000010 
+	Parameter CLIC bound to: 1'b0 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_pc_target' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pc_target.sv:26]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pc_target.sv:50]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pc_target.sv:50]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_pc_target' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_pc_target.sv:26]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_id_stage.sv:303]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_id_stage.sv:303]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_id_stage.sv:312]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_id_stage.sv:322]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_id_stage.sv:340]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_id_stage.sv:340]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_id_stage.sv:360]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_decoder' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_decoder.sv:28]
+	Parameter RV32 bound to: 1'b0 
+	Parameter REGFILE_NUM_READ_PORTS bound to: 32'b00000000000000000000000000000010 
+	Parameter B_EXT bound to: 2'b00 
+	Parameter M_EXT bound to: 2'b01 
+	Parameter CLIC bound to: 1'b0 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_m_decoder' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_m_decoder.sv:29]
+	Parameter M_EXT bound to: 2'b01 
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_m_decoder.sv:46]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_m_decoder.sv:61]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_m_decoder' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_m_decoder.sv:29]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_i_decoder' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_i_decoder.sv:30]
+	Parameter CLIC bound to: 1'b0 
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_i_decoder.sv:54]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_i_decoder.sv:108]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_i_decoder.sv:207]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_i_decoder.sv:207]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_i_decoder.sv:249]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_i_decoder.sv:279]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_i_decoder.sv:301]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_i_decoder.sv:392]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_i_decoder' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_i_decoder.sv:30]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_decoder.sv:221]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_decoder' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_decoder.sv:28]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_id_stage' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_id_stage.sv:33]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_ex_stage' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_ex_stage.sv:33]
+	Parameter B_EXT bound to: 2'b00 
+	Parameter M_EXT bound to: 2'b01 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_div' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_div.sv:28]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_div.sv:120]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_div.sv:231]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_div' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_div.sv:28]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_mult' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_mult.sv:27]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_mult.sv:123]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_mult' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_mult.sv:27]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_ex_stage.sv:152]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_alu' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_alu.sv:50]
+	Parameter B_EXT bound to: 2'b00 
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_alu.sv:153]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_alu.sv:236]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_ff_one' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_ff_one.sv:25]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_ff_one' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_ff_one.sv:25]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_alu_b_cpop' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_alu_b_cpop.sv:30]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_alu_b_cpop' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_alu_b_cpop.sv:30]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_alu.sv:345]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_alu' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_alu.sv:50]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_ex_stage' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_ex_stage.sv:33]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_load_store_unit' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_load_store_unit.sv:28]
+	Parameter PMP_GRANULARITY bound to: 32'b00000000000000000000000000000000 
+	Parameter PMP_NUM_REGIONS bound to: 32'sb00000000000000000000000000000100 
+	Parameter PMA_NUM_REGIONS bound to: 32'sb00000000000000000000000000000000 
+	Parameter PMA_CFG bound to: 136'b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 
+	Parameter DBG_NUM_TRIGGERS bound to: 32'sb00000000000000000000000000000001 
+	Parameter DEBUG bound to: 1'b0 
+	Parameter DM_REGION_START bound to: -268435456 - type: integer 
+	Parameter DM_REGION_END bound to: -268369921 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_wpt' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_wpt.sv:31]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_wpt' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_wpt.sv:31]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_load_store_unit.sv:218]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_load_store_unit.sv:230]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_load_store_unit.sv:247]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_load_store_unit.sv:257]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_load_store_unit.sv:274]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_load_store_unit.sv:524]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_mpu__parameterized0' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_mpu.sv:26]
+	Parameter IF_STAGE bound to: 1'b0 
+	Parameter PMP_GRANULARITY bound to: 32'b00000000000000000000000000000000 
+	Parameter PMP_NUM_REGIONS bound to: 32'sb00000000000000000000000000000100 
+	Parameter PMA_NUM_REGIONS bound to: 32'sb00000000000000000000000000000000 
+	Parameter PMA_CFG bound to: 136'b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 
+	Parameter DEBUG bound to: 1'b0 
+	Parameter DM_REGION_START bound to: -268435456 - type: integer 
+	Parameter DM_REGION_END bound to: -268369921 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_mpu__parameterized0' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_mpu.sv:26]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_lsu_response_filter' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_lsu_response_filter.sv:33]
+	Parameter DEPTH bound to: 1 - type: integer 
+	Parameter OUTSTND_CNT_WIDTH bound to: 1 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_lsu_response_filter' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_lsu_response_filter.sv:33]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_write_buffer' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_write_buffer.sv:32]
+	Parameter PMA_NUM_REGIONS bound to: 32'sb00000000000000000000000000000000 
+	Parameter PMA_CFG bound to: 136'b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_write_buffer.sv:76]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_write_buffer' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_write_buffer.sv:32]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_data_obi_interface' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_data_obi_interface.sv:38]
+	Parameter MAX_OUTSTANDING bound to: 1 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_obi_integrity_fifo__parameterized0' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_obi_integrity_fifo.sv:33]
+	Parameter MAX_OUTSTANDING bound to: 1 - type: integer 
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_obi_integrity_fifo.sv:101]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_rchk_check__parameterized0' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_rchk_check.sv:35]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_rchk_check__parameterized0' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_rchk_check.sv:35]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_obi_integrity_fifo__parameterized0' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_obi_integrity_fifo.sv:33]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_data_obi_interface' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_data_obi_interface.sv:38]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_load_store_unit' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_load_store_unit.sv:28]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_wb_stage' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_wb_stage.sv:37]
+	Parameter DEBUG bound to: 1'b0 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_wb_stage' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_wb_stage.sv:37]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_cs_registers' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_cs_registers.sv:34]
+	Parameter LIB bound to: 0 - type: integer 
+	Parameter RV32 bound to: 1'b0 
+	Parameter M_EXT bound to: 2'b01 
+	Parameter ZC_EXT bound to: 1'b1 
+	Parameter CLIC bound to: 1'b0 
+	Parameter CLIC_ID_WIDTH bound to: 32'b00000000000000000000000000000101 
+	Parameter NUM_MHPMCOUNTERS bound to: 32'b00000000000000000000000000000000 
+	Parameter PMP_NUM_REGIONS bound to: 32'sb00000000000000000000000000000100 
+	Parameter PMP_GRANULARITY bound to: 32'b00000000000000000000000000000000 
+	Parameter PMP_PMPNCFG_RV bound to: 32'b00000000000000000000000000000000 
+	Parameter PMP_PMPADDR_RV bound to: 128'b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 
+	Parameter PMP_MSECCFG_RV[zero0] bound to: 29'b00000000000000000000000000000 
+	Parameter PMP_MSECCFG_RV[rlb] bound to: 1'b0 
+	Parameter PMP_MSECCFG_RV[mmwp] bound to: 1'b0 
+	Parameter PMP_MSECCFG_RV[mml] bound to: 1'b0 
+	Parameter LFSR0_CFG[coeffs] bound to: 32'b00000000000000000000000000000000 
+	Parameter LFSR0_CFG[default_seed] bound to: 32'b00000000000000000000000000000000 
+	Parameter LFSR1_CFG[coeffs] bound to: 32'b00000000000000000000000000000000 
+	Parameter LFSR1_CFG[default_seed] bound to: 32'b00000000000000000000000000000000 
+	Parameter LFSR2_CFG[coeffs] bound to: 32'b00000000000000000000000000000000 
+	Parameter LFSR2_CFG[default_seed] bound to: 32'b00000000000000000000000000000000 
+	Parameter DEBUG bound to: 1'b0 
+	Parameter DBG_NUM_TRIGGERS bound to: 32'sb00000000000000000000000000000001 
+	Parameter MTVT_ADDR_WIDTH bound to: 32'b00000000000000000000000000011001 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_csr' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+	Parameter LIB bound to: 0 - type: integer 
+	Parameter WIDTH bound to: 32'b00000000000000000000000000100000 
+	Parameter SHADOWCOPY bound to: 1'b1 
+	Parameter RESETVALUE bound to: 32'b00000000000000000000000000000000 
+	Parameter MASK bound to: -2147481601 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_sffr' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/bhv/cv32e40s_sim_sffr.sv:32]
+	Parameter LIB bound to: 0 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_sffr' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/bhv/cv32e40s_sim_sffr.sv:32]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_sffs' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/bhv/cv32e40s_sim_sffs.sv:32]
+	Parameter LIB bound to: 0 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_sffs' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/bhv/cv32e40s_sim_sffs.sv:32]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_csr' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_csr__parameterized0' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+	Parameter LIB bound to: 0 - type: integer 
+	Parameter WIDTH bound to: 32'b00000000000000000000000000100000 
+	Parameter SHADOWCOPY bound to: 1'b1 
+	Parameter RESETVALUE bound to: 32'b00000000000000000000000000000001 
+	Parameter MASK bound to: -127 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_csr__parameterized0' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_csr__parameterized1' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+	Parameter LIB bound to: 0 - type: integer 
+	Parameter WIDTH bound to: 32'b00000000000000000000000000100000 
+	Parameter SHADOWCOPY bound to: 1'b1 
+	Parameter RESETVALUE bound to: 0 - type: integer 
+	Parameter MASK bound to: -63352 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_csr__parameterized1' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_csr__parameterized2' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+	Parameter LIB bound to: 0 - type: integer 
+	Parameter WIDTH bound to: 32'b00000000000000000000000000100000 
+	Parameter SHADOWCOPY bound to: 1'b1 
+	Parameter RESETVALUE bound to: 32'b00000000000000010000000000000000 
+	Parameter MASK bound to: 983071 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_csr__parameterized2' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_lfsr' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_lfsr.sv:32]
+	Parameter LFSR_CFG[coeffs] bound to: 32'b00000000000000000000000000000000 
+	Parameter LFSR_CFG[default_seed] bound to: 32'b00000000000000000000000000000000 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_lfsr' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_lfsr.sv:32]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_csr__parameterized3' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+	Parameter LIB bound to: 0 - type: integer 
+	Parameter WIDTH bound to: 32'b00000000000000000000000000000010 
+	Parameter SHADOWCOPY bound to: 1'b1 
+	Parameter RESETVALUE bound to: 2'b11 
+	Parameter MASK bound to: 2'b11 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_csr__parameterized3' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_cs_registers.sv:2342]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_cs_registers.sv:2342]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_csr__parameterized4' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+	Parameter LIB bound to: 0 - type: integer 
+	Parameter WIDTH bound to: 32'b00000000000000000000000000001000 
+	Parameter SHADOWCOPY bound to: 1'b1 
+	Parameter RESETVALUE bound to: 8'b00000000 
+	Parameter MASK bound to: 8'b11111111 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_csr__parameterized4' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_csr__parameterized5' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+	Parameter LIB bound to: 0 - type: integer 
+	Parameter WIDTH bound to: 32 - type: integer 
+	Parameter SHADOWCOPY bound to: 1'b1 
+	Parameter RESETVALUE bound to: 32'b00000000000000000000000000000000 
+	Parameter MASK bound to: 32'b11111111111111111111111111111111 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_csr__parameterized5' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_cs_registers.sv:2342]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_cs_registers.sv:2342]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_cs_registers.sv:2342]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_cs_registers.sv:2342]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_cs_registers.sv:2342]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_cs_registers.sv:2342]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_csr__parameterized6' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+	Parameter LIB bound to: 0 - type: integer 
+	Parameter WIDTH bound to: 32'b00000000000000000000000000100000 
+	Parameter SHADOWCOPY bound to: 1'b1 
+	Parameter RESETVALUE bound to: 32'b00000000000000000000000000000000 
+	Parameter MASK bound to: 7 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_csr__parameterized6' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_cs_registers.sv:1579]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_cs_registers.sv:1719]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_csr__parameterized7' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+	Parameter LIB bound to: 0 - type: integer 
+	Parameter WIDTH bound to: 32'b00000000000000000000000000100000 
+	Parameter SHADOWCOPY bound to: 1'b1 
+	Parameter RESETVALUE bound to: 0 - type: integer 
+	Parameter MASK bound to: 4 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_csr__parameterized7' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_csr__parameterized8' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+	Parameter LIB bound to: 0 - type: integer 
+	Parameter WIDTH bound to: 32'b00000000000000000000000000100000 
+	Parameter SHADOWCOPY bound to: 1'b1 
+	Parameter RESETVALUE bound to: 0 - type: integer 
+	Parameter MASK bound to: -64 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_csr__parameterized8' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_csr__parameterized9' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+	Parameter LIB bound to: 0 - type: integer 
+	Parameter WIDTH bound to: 32'b00000000000000000000000000100000 
+	Parameter SHADOWCOPY bound to: 1'b1 
+	Parameter RESETVALUE bound to: 0 - type: integer 
+	Parameter MASK bound to: -2 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_csr__parameterized9' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_csr__parameterized10' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+	Parameter LIB bound to: 0 - type: integer 
+	Parameter WIDTH bound to: 32'b00000000000000000000000000100000 
+	Parameter SHADOWCOPY bound to: 1'b1 
+	Parameter RESETVALUE bound to: 32'b00000000000000000001100000000000 
+	Parameter MASK bound to: 2234504 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_csr__parameterized10' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_debug_triggers' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_debug_triggers.sv:32]
+	Parameter LIB bound to: 0 - type: integer 
+	Parameter DBG_NUM_TRIGGERS bound to: 32'sb00000000000000000000000000000001 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_csr__parameterized11' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+	Parameter LIB bound to: 0 - type: integer 
+	Parameter WIDTH bound to: 32'b00000000000000000000000000100000 
+	Parameter SHADOWCOPY bound to: 1'b0 
+	Parameter RESETVALUE bound to: 32'b00101000000000000001000000000000 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_csr__parameterized11' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_csr__parameterized12' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+	Parameter LIB bound to: 0 - type: integer 
+	Parameter WIDTH bound to: 32'b00000000000000000000000000100000 
+	Parameter SHADOWCOPY bound to: 1'b0 
+	Parameter RESETVALUE bound to: 0 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_csr__parameterized12' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv:10]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_debug_triggers' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_debug_triggers.sv:32]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_cs_registers' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_cs_registers.sv:34]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_controller' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_controller.sv:32]
+	Parameter REGFILE_NUM_READ_PORTS bound to: 32'b00000000000000000000000000000010 
+	Parameter CLIC bound to: 1'b0 
+	Parameter CLIC_ID_WIDTH bound to: 32'b00000000000000000000000000000101 
+	Parameter RV32 bound to: 1'b0 
+	Parameter DEBUG bound to: 1'b0 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_controller_fsm' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_controller_fsm.sv:32]
+	Parameter DEBUG bound to: 1'b0 
+	Parameter CLIC bound to: 1'b0 
+	Parameter CLIC_ID_WIDTH bound to: 32'b00000000000000000000000000000101 
+	Parameter RV32 bound to: 1'b0 
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_controller_fsm.sv:627]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_controller_fsm.sv:627]
+INFO: [Synth 8-294] found qualifier unique on case statement: implementing as parallel_case [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_controller_fsm.sv:740]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_controller_fsm.sv:740]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_controller_fsm' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_controller_fsm.sv:32]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_controller_bypass' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_controller_bypass.sv:33]
+	Parameter REGFILE_NUM_READ_PORTS bound to: 32'b00000000000000000000000000000010 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_controller_bypass' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_controller_bypass.sv:33]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_controller' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_controller.sv:32]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_register_file_wrapper' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_register_file_wrapper.sv:32]
+	Parameter REGFILE_NUM_READ_PORTS bound to: 32'b00000000000000000000000000000010 
+	Parameter RV32 bound to: 1'b0 
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_register_file_ecc' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_register_file_ecc.sv:79]
+	Parameter REGFILE_NUM_READ_PORTS bound to: 32'b00000000000000000000000000000010 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_register_file_ecc' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_register_file_ecc.sv:79]
+INFO: [Synth 8-6157] synthesizing module 'cv32e40s_register_file' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_register_file.sv:29]
+	Parameter REGFILE_NUM_READ_PORTS bound to: 32'b00000000000000000000000000000010 
+	Parameter RV32 bound to: 1'b0 
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_register_file' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_register_file.sv:29]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_register_file_wrapper' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_register_file_wrapper.sv:32]
+INFO: [Synth 8-6155] done synthesizing module 'cv32e40s_core' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_core.sv:32]
+WARNING: [Synth 8-7071] port 'mimpid_patch_i' of module 'cv32e40s_core' is unconnected for instance 'RISCV_CORE' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/riscv_top_ahb3lite.sv:106]
+WARNING: [Synth 8-7071] port 'data_reqpar_o' of module 'cv32e40s_core' is unconnected for instance 'RISCV_CORE' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/riscv_top_ahb3lite.sv:106]
+WARNING: [Synth 8-7071] port 'data_achk_o' of module 'cv32e40s_core' is unconnected for instance 'RISCV_CORE' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/riscv_top_ahb3lite.sv:106]
+WARNING: [Synth 8-7071] port 'mcycle_o' of module 'cv32e40s_core' is unconnected for instance 'RISCV_CORE' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/riscv_top_ahb3lite.sv:106]
+WARNING: [Synth 8-7071] port 'wu_wfe_i' of module 'cv32e40s_core' is unconnected for instance 'RISCV_CORE' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/riscv_top_ahb3lite.sv:106]
+WARNING: [Synth 8-7071] port 'fencei_flush_req_o' of module 'cv32e40s_core' is unconnected for instance 'RISCV_CORE' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/riscv_top_ahb3lite.sv:106]
+WARNING: [Synth 8-7071] port 'fencei_flush_ack_i' of module 'cv32e40s_core' is unconnected for instance 'RISCV_CORE' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/riscv_top_ahb3lite.sv:106]
+WARNING: [Synth 8-7071] port 'alert_minor_o' of module 'cv32e40s_core' is unconnected for instance 'RISCV_CORE' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/riscv_top_ahb3lite.sv:106]
+WARNING: [Synth 8-7071] port 'alert_major_o' of module 'cv32e40s_core' is unconnected for instance 'RISCV_CORE' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/riscv_top_ahb3lite.sv:106]
+WARNING: [Synth 8-7023] instance 'RISCV_CORE' of module 'cv32e40s_core' has 60 connections declared, but only 51 given [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/riscv_top_ahb3lite.sv:106]
+INFO: [Synth 8-6157] synthesizing module 'core2ahb3lite' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/components/core2ahb3lite_bram.sv:1]
+	Parameter AHB_ADDR_WIDTH bound to: 32 - type: integer 
+	Parameter AHB_DATA_WIDTH bound to: 32 - type: integer 
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/components/core2ahb3lite_bram.sv:67]
+INFO: [Synth 8-6155] done synthesizing module 'core2ahb3lite' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/components/core2ahb3lite_bram.sv:1]
+INFO: [Synth 8-6155] done synthesizing module 'riscv_top_ahb3lite' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/riscv_top_ahb3lite.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'AHBDCD' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_BUS/rtl/AHBDCD.v:38]
+INFO: [Synth 8-6155] done synthesizing module 'AHBDCD' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_BUS/rtl/AHBDCD.v:38]
+INFO: [Synth 8-6157] synthesizing module 'AHBMUX' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_BUS/rtl/AHBMUX.v:38]
+INFO: [Synth 8-6155] done synthesizing module 'AHBMUX' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_BUS/rtl/AHBMUX.v:38]
+INFO: [Synth 8-6157] synthesizing module 'AHB_CACHE' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:11]
+	Parameter MEM_ADDR_BITS bound to: 12 - type: integer 
+	Parameter INSTRUCTION bound to: 1 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'cache_16_way' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/cache_16_way.v:13]
+	Parameter WAYS bound to: 16 - type: integer 
+	Parameter CACHE_SIZE bound to: 128 - type: integer 
+	Parameter LINE_WIDTH bound to: 16 - type: integer 
+	Parameter WORD_WIDTH bound to: 4 - type: integer 
+	Parameter ADDRESS_SIZE bound to: 32 - type: integer 
+	Parameter MEM_ADDR_BITS bound to: 12 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'set' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/set.v:1]
+	Parameter TAG_ADDRESS bound to: 25 - type: integer 
+	Parameter LINE_WIDTH bound to: 16 - type: integer 
+	Parameter WAYS bound to: 16 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'set' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/set.v:1]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/cache_16_way.v:93]
+INFO: [Synth 8-226] default block is never used [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/cache_16_way.v:145]
+INFO: [Synth 8-6155] done synthesizing module 'cache_16_way' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/cache_16_way.v:13]
+WARNING: [Synth 8-689] width (12) of port connection 'mem_address' does not match port width (30) of module 'cache_16_way' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:243]
+INFO: [Synth 8-6157] synthesizing module 'bram_memory' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/bram_memory.v:1]
+	Parameter MEM_DATA_BITS bound to: 128 - type: integer 
+	Parameter MEM_ADDR_BITS bound to: 12 - type: integer 
+	Parameter INSTRUCTION bound to: 1 - type: integer 
+CRITICAL WARNING: [Synth 8-4445] could not open $readmem data file 'code.dat'; please make sure the file is added to project and has read permission, ignoring [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/bram_memory.v:27]
+INFO: [Synth 8-6155] done synthesizing module 'bram_memory' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/bram_memory.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'AHB_CACHE' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:11]
+WARNING: [Synth 8-7071] port 'debug' of module 'AHB_CACHE' is unconnected for instance 'uAHB2MEM' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/SECURE_PLATFORM_RI5CY/rtl/SECURE_PLATFORM_RI5CY_with_Caches.v:279]
+WARNING: [Synth 8-7023] instance 'uAHB2MEM' of module 'AHB_CACHE' has 13 connections declared, but only 12 given [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/SECURE_PLATFORM_RI5CY/rtl/SECURE_PLATFORM_RI5CY_with_Caches.v:279]
+INFO: [Synth 8-6157] synthesizing module 'AHB_CACHE__parameterized0' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:11]
+	Parameter MEM_ADDR_BITS bound to: 12 - type: integer 
+	Parameter INSTRUCTION bound to: 0 - type: integer 
+WARNING: [Synth 8-689] width (12) of port connection 'mem_address' does not match port width (30) of module 'cache_16_way' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:243]
+INFO: [Synth 8-6157] synthesizing module 'bram_memory__parameterized0' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/bram_memory.v:1]
+	Parameter MEM_DATA_BITS bound to: 128 - type: integer 
+	Parameter MEM_ADDR_BITS bound to: 12 - type: integer 
+	Parameter INSTRUCTION bound to: 0 - type: integer 
+CRITICAL WARNING: [Synth 8-4445] could not open $readmem data file 'data.dat'; please make sure the file is added to project and has read permission, ignoring [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/bram_memory.v:34]
+INFO: [Synth 8-6155] done synthesizing module 'bram_memory__parameterized0' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/bram_memory.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'AHB_CACHE__parameterized0' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:11]
+WARNING: [Synth 8-7071] port 'debug' of module 'AHB_CACHE' is unconnected for instance 'uAHB2DMEM' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/SECURE_PLATFORM_RI5CY/rtl/SECURE_PLATFORM_RI5CY_with_Caches.v:317]
+WARNING: [Synth 8-7023] instance 'uAHB2DMEM' of module 'AHB_CACHE' has 13 connections declared, but only 12 given [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/SECURE_PLATFORM_RI5CY/rtl/SECURE_PLATFORM_RI5CY_with_Caches.v:317]
+INFO: [Synth 8-6157] synthesizing module 'AHB2DUMP' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_DUMP/rtl/AHB2DUMP.v:11]
+INFO: [Synth 8-6155] done synthesizing module 'AHB2DUMP' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_DUMP/rtl/AHB2DUMP.v:11]
+INFO: [Synth 8-6157] synthesizing module 'AHB2UART' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_UART/rtl/AHB2UART.v:38]
+INFO: [Synth 8-6157] synthesizing module 'BAUDGEN' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_UART/rtl/baudgen.v:37]
+INFO: [Synth 8-6155] done synthesizing module 'BAUDGEN' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_UART/rtl/baudgen.v:37]
+INFO: [Synth 8-6157] synthesizing module 'UFIFO' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_UART/rtl/ufifo.v:38]
+	Parameter DWIDTH bound to: 8 - type: integer 
+	Parameter AWIDTH bound to: 4 - type: integer 
+INFO: [Synth 8-155] case statement is not full and has no default [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_UART/rtl/ufifo.v:115]
+INFO: [Synth 8-6155] done synthesizing module 'UFIFO' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_UART/rtl/ufifo.v:38]
+INFO: [Synth 8-6157] synthesizing module 'UART_RX' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_UART/rtl/uart_rx.v:38]
+INFO: [Synth 8-6155] done synthesizing module 'UART_RX' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_UART/rtl/uart_rx.v:38]
+INFO: [Synth 8-6157] synthesizing module 'UART_TX' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_UART/rtl/uart_tx.v:38]
+INFO: [Synth 8-6155] done synthesizing module 'UART_TX' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_UART/rtl/uart_tx.v:38]
+INFO: [Synth 8-6155] done synthesizing module 'AHB2UART' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_UART/rtl/AHB2UART.v:38]
+INFO: [Synth 8-6157] synthesizing module 'AHB2TIMER' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_TIMER/rtl/AHB2TIMER.v:38]
+INFO: [Synth 8-6157] synthesizing module 'prescaler' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_TIMER/rtl/prescaler.v:37]
+INFO: [Synth 8-6155] done synthesizing module 'prescaler' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_TIMER/rtl/prescaler.v:37]
+INFO: [Synth 8-6155] done synthesizing module 'AHB2TIMER' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_TIMER/rtl/AHB2TIMER.v:38]
+INFO: [Synth 8-6155] done synthesizing module 'SECURE_PLATFORM_RI5CY' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/SECURE_PLATFORM_RI5CY/rtl/SECURE_PLATFORM_RI5CY_with_Caches.v:11]
+WARNING: [Synth 8-689] width (4) of port connection 'output_LEDS' does not match port width (8) of module 'SECURE_PLATFORM_RI5CY' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/TOPLEVEL.v:51]
+WARNING: [Synth 8-7071] port 'fetch_enable' of module 'SECURE_PLATFORM_RI5CY' is unconnected for instance 'RI5CY_with_Caches' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/TOPLEVEL.v:47]
+WARNING: [Synth 8-7023] instance 'RI5CY_with_Caches' of module 'SECURE_PLATFORM_RI5CY' has 10 connections declared, but only 9 given [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/TOPLEVEL.v:47]
+INFO: [Synth 8-6155] done synthesizing module 'TOPLEVEL' (0#1) [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/TOPLEVEL.v:4]
+WARNING: [Synth 8-3936] Found unconnected internal register 'shifter_tmp_reg' and it is trimmed from '64' to '32' bits. [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_alu.sv:173]
+WARNING: [Synth 8-6014] Unused sequential element last_q_reg was removed.  [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/rtl/cv32e40s_load_store_unit.sv:292]
+WARNING: [Synth 8-3848] Net debug_gnt_o in module/entity riscv_top_ahb3lite does not have driver. [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/riscv_top_ahb3lite.sv:54]
+WARNING: [Synth 8-3848] Net debug_rvalid_o in module/entity riscv_top_ahb3lite does not have driver. [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/riscv_top_ahb3lite.sv:55]
+WARNING: [Synth 8-3848] Net debug_rdata_o in module/entity riscv_top_ahb3lite does not have driver. [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/riscv_top_ahb3lite.sv:59]
+WARNING: [Synth 8-3848] Net debug_halted_o in module/entity riscv_top_ahb3lite does not have driver. [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_RISCV/rtl/riscv_top_ahb3lite.sv:60]
+WARNING: [Synth 8-6014] Unused sequential element miss_ctr_reg was removed.  [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/cache_16_way.v:253]
+WARNING: [Synth 8-6014] Unused sequential element hit_ctr_reg was removed.  [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/cache_16_way.v:254]
+WARNING: [Synth 8-6014] Unused sequential element req_ctr_reg was removed.  [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/cache_16_way.v:255]
+WARNING: [Synth 8-6014] Unused sequential element cache_ctr_reg was removed.  [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:103]
+WARNING: [Synth 8-6014] Unused sequential element mem_ctr_reg was removed.  [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:104]
+WARNING: [Synth 8-6014] Unused sequential element APhase_HSEL_reg was removed.  [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:138]
+WARNING: [Synth 8-6014] Unused sequential element APhase_HTRANS_reg was removed.  [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:140]
+WARNING: [Synth 8-6014] Unused sequential element delay_reg was removed.  [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:323]
+WARNING: [Synth 8-3848] Net interrupt in module/entity AHB_CACHE does not have driver. [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:41]
+WARNING: [Synth 8-3848] Net UA_debug in module/entity AHB_CACHE does not have driver. [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:52]
+WARNING: [Synth 8-6014] Unused sequential element cache_ctr_reg was removed.  [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:103]
+WARNING: [Synth 8-6014] Unused sequential element mem_ctr_reg was removed.  [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:104]
+WARNING: [Synth 8-6014] Unused sequential element APhase_HSEL_reg was removed.  [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:138]
+WARNING: [Synth 8-6014] Unused sequential element APhase_HTRANS_reg was removed.  [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:140]
+WARNING: [Synth 8-6014] Unused sequential element delay_reg was removed.  [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:323]
+WARNING: [Synth 8-3848] Net interrupt in module/entity AHB_CACHE__parameterized0 does not have driver. [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:41]
+WARNING: [Synth 8-3848] Net UA_debug in module/entity AHB_CACHE__parameterized0 does not have driver. [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v:52]
+WARNING: [Synth 8-6014] Unused sequential element APhase_HADDR_reg was removed.  [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_DUMP/rtl/AHB2DUMP.v:53]
+WARNING: [Synth 8-6014] Unused sequential element APhase_HSIZE_reg was removed.  [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_DUMP/rtl/AHB2DUMP.v:54]
+WARNING: [Synth 8-3848] Net BT_RTS in module/entity SECURE_PLATFORM_RI5CY does not have driver. [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/SECURE_PLATFORM_RI5CY/rtl/SECURE_PLATFORM_RI5CY_with_Caches.v:38]
+WARNING: [Synth 8-3848] Net HRDATA_AES in module/entity SECURE_PLATFORM_RI5CY does not have driver. [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/SECURE_PLATFORM_RI5CY/rtl/SECURE_PLATFORM_RI5CY_with_Caches.v:98]
+WARNING: [Synth 8-3848] Net HREADYOUT_AES in module/entity SECURE_PLATFORM_RI5CY does not have driver. [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/SECURE_PLATFORM_RI5CY/rtl/SECURE_PLATFORM_RI5CY_with_Caches.v:107]
+WARNING: [Synth 8-3848] Net ins_HRESP in module/entity SECURE_PLATFORM_RI5CY does not have driver. [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/SECURE_PLATFORM_RI5CY/rtl/SECURE_PLATFORM_RI5CY_with_Caches.v:72]
+WARNING: [Synth 8-3848] Net dat_HRESP in module/entity SECURE_PLATFORM_RI5CY does not have driver. [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/TOP_LEVEL/SECURE_PLATFORM_RI5CY/rtl/SECURE_PLATFORM_RI5CY_with_Caches.v:72]
+WARNING: [Synth 8-7129] Port HWDATA[31] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[30] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[29] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[28] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[27] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[26] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[25] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[24] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[23] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[22] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[21] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[20] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[19] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[18] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[17] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[16] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[15] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[14] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[13] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[12] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[11] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[10] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[9] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[8] in module AHB2UART is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[31] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[30] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[29] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[28] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[27] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[26] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[25] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[24] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[23] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[22] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[21] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[20] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[19] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[18] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[17] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[16] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[15] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[14] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[13] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[12] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[11] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[10] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[9] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[8] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[7] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[6] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[5] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[4] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[3] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[2] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[1] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HADDR[0] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HSIZE[2] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HSIZE[1] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HSIZE[0] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[31] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[30] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[29] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[28] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[27] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[26] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[25] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[24] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[23] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[22] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[21] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[20] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[19] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[18] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[17] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[16] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[15] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[14] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[13] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[12] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[11] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[10] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[9] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port HWDATA[8] in module AHB2DUMP is either unconnected or has no load
+WARNING: [Synth 8-7129] Port cpu_address[1] in module cache_16_way is either unconnected or has no load
+WARNING: [Synth 8-7129] Port cpu_address[0] in module cache_16_way is either unconnected or has no load
+WARNING: [Synth 8-7129] Port interrupt in module AHB_CACHE__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port debug[7] in module AHB_CACHE__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port debug[6] in module AHB_CACHE__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port debug[5] in module AHB_CACHE__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port debug[4] in module AHB_CACHE__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port debug[3] in module AHB_CACHE__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port debug[2] in module AHB_CACHE__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port debug[1] in module AHB_CACHE__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port debug[0] in module AHB_CACHE__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port interrupt in module AHB_CACHE is either unconnected or has no load
+WARNING: [Synth 8-7129] Port debug[7] in module AHB_CACHE is either unconnected or has no load
+WARNING: [Synth 8-7129] Port debug[6] in module AHB_CACHE is either unconnected or has no load
+WARNING: [Synth 8-7129] Port debug[5] in module AHB_CACHE is either unconnected or has no load
+WARNING: [Synth 8-7129] Port debug[4] in module AHB_CACHE is either unconnected or has no load
+WARNING: [Synth 8-7129] Port debug[3] in module AHB_CACHE is either unconnected or has no load
+INFO: [Common 17-14] Message 'Synth 8-7129' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2224.930 ; gain = 561.574 ; free physical = 212 ; free virtual = 7345
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:18 ; elapsed = 00:00:20 . Memory (MB): peak = 2239.773 ; gain = 576.418 ; free physical = 212 ; free virtual = 7344
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:18 ; elapsed = 00:00:20 . Memory (MB): peak = 2239.773 ; gain = 576.418 ; free physical = 212 ; free virtual = 7344
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 2239.773 ; gain = 0.000 ; free physical = 208 ; free virtual = 7341
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/RI5CY_UA.gen/sources_1/bd/clock/ip/clock_clk_wiz_0_0/clock_clk_wiz_0_0/clock_clk_wiz_0_0_in_context.xdc] for cell 'sys_clock/clk_wiz_0'
+Finished Parsing XDC File [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/RI5CY_UA.gen/sources_1/bd/clock/ip/clock_clk_wiz_0_0/clock_clk_wiz_0_0/clock_clk_wiz_0_0_in_context.xdc] for cell 'sys_clock/clk_wiz_0'
+Parsing XDC File [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/E40S_PMP.runs/synth_1/dont_touch.xdc]
+Finished Parsing XDC File [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/E40S_PMP.runs/synth_1/dont_touch.xdc]
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2393.477 ; gain = 0.000 ; free physical = 286 ; free virtual = 7325
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.89 . Memory (MB): peak = 2393.477 ; gain = 0.000 ; free physical = 265 ; free virtual = 7309
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:44 ; elapsed = 00:00:45 . Memory (MB): peak = 2393.477 ; gain = 730.121 ; free physical = 175 ; free virtual = 7215
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z020clg400-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:44 ; elapsed = 00:00:45 . Memory (MB): peak = 2393.477 ; gain = 730.121 ; free physical = 175 ; free virtual = 7215
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+Applied set_property IO_BUFFER_TYPE = NONE for clk_125. (constraint file  /home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/RI5CY_UA.gen/sources_1/bd/clock/ip/clock_clk_wiz_0_0/clock_clk_wiz_0_0/clock_clk_wiz_0_0_in_context.xdc, line 3).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for clk_125. (constraint file  /home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/RI5CY_UA.gen/sources_1/bd/clock/ip/clock_clk_wiz_0_0/clock_clk_wiz_0_0/clock_clk_wiz_0_0_in_context.xdc, line 4).
+Applied set_property KEEP_HIERARCHY = SOFT for sys_clock. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for sys_clock/clk_wiz_0. (constraint file  auto generated constraint).
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:44 ; elapsed = 00:00:45 . Memory (MB): peak = 2393.477 ; gain = 730.121 ; free physical = 175 ; free virtual = 7212
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'seq_state_q_reg' in module 'cv32e40s_sequencer'
+INFO: [Synth 8-802] inferred FSM for state register 'state_q_reg' in module 'cv32e40s_mpu'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'cv32e40s_div'
+INFO: [Synth 8-802] inferred FSM for state register 'state_q_reg' in module 'cv32e40s_wpt'
+INFO: [Synth 8-802] inferred FSM for state register 'state_q_reg' in module 'cv32e40s_mpu__parameterized0'
+INFO: [Synth 8-802] inferred FSM for state register 'ctrl_fsm_cs_reg' in module 'cv32e40s_controller_fsm'
+INFO: [Synth 8-802] inferred FSM for state register 'debug_fsm_cs_reg' in module 'cv32e40s_controller_fsm'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'core2ahb3lite'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'cache_16_way'
+INFO: [Synth 8-802] inferred FSM for state register 'current_state_reg' in module 'UART_RX'
+INFO: [Synth 8-802] inferred FSM for state register 'current_state_reg' in module 'UART_TX'
+WARNING: [Synth 8-3936] Found unconnected internal register 'last_HADDR_reg' and it is trimmed from '32' to '8' bits. [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_UART/rtl/AHB2UART.v:105]
+WARNING: [Synth 8-3936] Found unconnected internal register 'last_HADDR_reg' and it is trimmed from '32' to '4' bits. [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/AHB_TIMER/rtl/AHB2TIMER.v:102]
+WARNING: [Synth 8-327] inferring latch for variable 'clk_en_reg' [/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/design_database/IP/cv32e40s_core/bhv/cv32e40s_sim_clock_gate.sv:31]
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                  S_IDLE |                              000 |                             0000
+                   S_POP |                              001 |                             0010
+                  S_PUSH |                              010 |                             0001
+                    S_RA |                              011 |                             0100
+                    S_SP |                              100 |                             0101
+                    S_A0 |                              101 |                             0110
+                   S_RET |                              110 |                             0111
+                 S_DMOVE |                              111 |                             0011
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'seq_state_q_reg' using encoding 'sequential' in module 'cv32e40s_sequencer'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                  iSTATE |                               00 |                              000
+                 iSTATE2 |                               01 |                              010
+                 iSTATE3 |                               10 |                              001
+                 iSTATE1 |                               11 |                              011
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_q_reg' using encoding 'sequential' in module 'cv32e40s_mpu'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                DIV_IDLE |                             0001 |                               00
+              DIV_DIVIDE |                             0010 |                               01
+               DIV_DUMMY |                             0100 |                               10
+              DIV_FINISH |                             1000 |                               11
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'cv32e40s_div'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                WPT_IDLE |                              001 |                               00
+          WPT_MATCH_WAIT |                              010 |                               01
+          WPT_MATCH_RESP |                              100 |                               10
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_q_reg' using encoding 'one-hot' in module 'cv32e40s_wpt'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                  iSTATE |                              000 |                              000
+                 iSTATE0 |                              001 |                              100
+                 iSTATE2 |                              010 |                              010
+                 iSTATE3 |                              011 |                              001
+                 iSTATE1 |                              100 |                              011
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_q_reg' using encoding 'sequential' in module 'cv32e40s_mpu__parameterized0'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                   RESET |                               11 |                               00
+              FUNCTIONAL |                               01 |                               01
+             DEBUG_TAKEN |                               00 |                               11
+                   SLEEP |                               10 |                               10
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'ctrl_fsm_cs_reg' using encoding 'sequential' in module 'cv32e40s_controller_fsm'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+*
+               HAVERESET |                              001 |                              001
+                 RUNNING |                              010 |                              010
+                  HALTED |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3898] No Re-encoding of one hot register 'debug_fsm_cs_reg' in module 'cv32e40s_controller_fsm'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                               00 |                               00
+               READ_WAIT |                               01 |                               01
+                     END |                               10 |                               10
+              WRITE_WAIT |                               11 |                               11
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'core2ahb3lite'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                               01 |                               00
+                   WBACK |                               11 |                               01
+                    MISS |                               10 |                               11
+                     HIT |                               00 |                               10
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'cache_16_way'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                 idle_st |                               00 |                               00
+                start_st |                               01 |                               01
+                 data_st |                               10 |                               11
+                 stop_st |                               11 |                               10
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'current_state_reg' using encoding 'sequential' in module 'UART_RX'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                 idle_st |                               00 |                               00
+                start_st |                               01 |                               01
+                 data_st |                               10 |                               11
+                 stop_st |                               11 |                               10
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'current_state_reg' using encoding 'sequential' in module 'UART_TX'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:57 ; elapsed = 00:01:00 . Memory (MB): peak = 2393.477 ; gain = 730.121 ; free physical = 307 ; free virtual = 7219
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   64 Bit       Adders := 2     
+	   2 Input   34 Bit       Adders := 1     
+	   2 Input   33 Bit       Adders := 1     
+	   2 Input   32 Bit       Adders := 12    
+	   3 Input   32 Bit       Adders := 1     
+	   2 Input   16 Bit       Adders := 16    
+	   3 Input   12 Bit       Adders := 1     
+	   2 Input    8 Bit       Adders := 1     
+	   2 Input    7 Bit       Adders := 1     
+	   2 Input    6 Bit       Adders := 3     
+	  32 Input    6 Bit       Adders := 1     
+	   3 Input    5 Bit       Adders := 1     
+	   2 Input    5 Bit       Adders := 1     
+	   2 Input    4 Bit       Adders := 12    
+	   3 Input    4 Bit       Adders := 2     
+	   4 Input    3 Bit       Adders := 1     
+	   2 Input    3 Bit       Adders := 2     
+	   2 Input    2 Bit       Adders := 6     
+	   3 Input    1 Bit       Adders := 2     
+	   2 Input    1 Bit       Adders := 5     
++---XORs : 
+	   2 Input     32 Bit         XORs := 2     
+	   2 Input      6 Bit         XORs := 3     
+	   2 Input      1 Bit         XORs := 2     
++---XORs : 
+	               38 Bit    Wide XORs := 12    
+	               32 Bit    Wide XORs := 6     
+	                8 Bit    Wide XORs := 28    
+	                5 Bit    Wide XORs := 3     
+	                3 Bit    Wide XORs := 1     
+	                1 Bit    Wide XORs := 2     
++---Registers : 
+	              155 Bit    Registers := 256   
+	              128 Bit    Registers := 18    
+	               64 Bit    Registers := 2     
+	               38 Bit    Registers := 32    
+	               33 Bit    Registers := 1     
+	               32 Bit    Registers := 47    
+	               25 Bit    Registers := 16    
+	               16 Bit    Registers := 17    
+	               13 Bit    Registers := 2     
+	               12 Bit    Registers := 1     
+	                8 Bit    Registers := 4     
+	                7 Bit    Registers := 1     
+	                6 Bit    Registers := 2     
+	                5 Bit    Registers := 8     
+	                4 Bit    Registers := 13    
+	                3 Bit    Registers := 9     
+	                2 Bit    Registers := 30    
+	                1 Bit    Registers := 946   
++---Multipliers : 
+	              32x32  Multipliers := 1     
++---RAMs : 
+	             512K Bit	(4096 X 128 bit)          RAMs := 2     
+	              128 Bit	(16 X 8 bit)          RAMs := 2     
++---Muxes : 
+	   2 Input  155 Bit        Muxes := 16    
+	   4 Input  128 Bit        Muxes := 2     
+	   2 Input   64 Bit        Muxes := 14    
+	   2 Input   38 Bit        Muxes := 1     
+	   2 Input   34 Bit        Muxes := 8     
+	   2 Input   33 Bit        Muxes := 2     
+	   4 Input   33 Bit        Muxes := 1     
+	   2 Input   32 Bit        Muxes := 129   
+	   4 Input   32 Bit        Muxes := 22    
+	  26 Input   32 Bit        Muxes := 1     
+	   3 Input   32 Bit        Muxes := 8     
+	   8 Input   32 Bit        Muxes := 1     
+	   6 Input   32 Bit        Muxes := 1     
+	  20 Input   32 Bit        Muxes := 1     
+	   2 Input   30 Bit        Muxes := 2     
+	   2 Input   25 Bit        Muxes := 1     
+	   2 Input   17 Bit        Muxes := 4     
+	   4 Input   17 Bit        Muxes := 2     
+	   3 Input   16 Bit        Muxes := 1     
+	   2 Input   16 Bit        Muxes := 33    
+	   9 Input   16 Bit        Muxes := 1     
+	   2 Input   13 Bit        Muxes := 3     
+	   2 Input   12 Bit        Muxes := 2     
+	   3 Input   12 Bit        Muxes := 2     
+	   4 Input   11 Bit        Muxes := 2     
+	   2 Input   11 Bit        Muxes := 1     
+	   2 Input   10 Bit        Muxes := 6     
+	   4 Input   10 Bit        Muxes := 2     
+	   2 Input    9 Bit        Muxes := 1     
+	   4 Input    8 Bit        Muxes := 3     
+	   2 Input    8 Bit        Muxes := 36    
+	   3 Input    8 Bit        Muxes := 1     
+	   5 Input    7 Bit        Muxes := 1     
+	   2 Input    7 Bit        Muxes := 2     
+	   4 Input    7 Bit        Muxes := 1     
+	   3 Input    6 Bit        Muxes := 1     
+	   2 Input    6 Bit        Muxes := 7     
+	   2 Input    5 Bit        Muxes := 20    
+	  57 Input    5 Bit        Muxes := 1     
+	   3 Input    5 Bit        Muxes := 3     
+	   8 Input    5 Bit        Muxes := 2     
+	   7 Input    5 Bit        Muxes := 1     
+	  10 Input    5 Bit        Muxes := 1     
+	  12 Input    5 Bit        Muxes := 1     
+	   6 Input    5 Bit        Muxes := 1     
+	   9 Input    5 Bit        Muxes := 1     
+	  23 Input    5 Bit        Muxes := 1     
+	  19 Input    5 Bit        Muxes := 1     
+	   2 Input    4 Bit        Muxes := 13    
+	   3 Input    4 Bit        Muxes := 1     
+	   8 Input    4 Bit        Muxes := 1     
+	   4 Input    4 Bit        Muxes := 4     
+	  47 Input    4 Bit        Muxes := 2     
+	  10 Input    4 Bit        Muxes := 1     
+	   7 Input    4 Bit        Muxes := 1     
+	   9 Input    4 Bit        Muxes := 2     
+	  17 Input    4 Bit        Muxes := 16    
+	   6 Input    3 Bit        Muxes := 1     
+	   4 Input    3 Bit        Muxes := 9     
+	   2 Input    3 Bit        Muxes := 21    
+	   3 Input    3 Bit        Muxes := 5     
+	  18 Input    3 Bit        Muxes := 1     
+	   5 Input    3 Bit        Muxes := 2     
+	  12 Input    3 Bit        Muxes := 1     
+	   2 Input    2 Bit        Muxes := 170   
+	   8 Input    2 Bit        Muxes := 4     
+	  11 Input    2 Bit        Muxes := 1     
+	   4 Input    2 Bit        Muxes := 23    
+	  14 Input    2 Bit        Muxes := 1     
+	   3 Input    2 Bit        Muxes := 10    
+	   5 Input    2 Bit        Muxes := 4     
+	   7 Input    2 Bit        Muxes := 5     
+	  10 Input    2 Bit        Muxes := 2     
+	  12 Input    2 Bit        Muxes := 9     
+	   6 Input    2 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 448   
+	   8 Input    1 Bit        Muxes := 11    
+	  10 Input    1 Bit        Muxes := 5     
+	   6 Input    1 Bit        Muxes := 2     
+	   4 Input    1 Bit        Muxes := 117   
+	   3 Input    1 Bit        Muxes := 38    
+	  57 Input    1 Bit        Muxes := 2     
+	  47 Input    1 Bit        Muxes := 1     
+	   5 Input    1 Bit        Muxes := 7     
+	  14 Input    1 Bit        Muxes := 1     
+	   7 Input    1 Bit        Muxes := 5     
+	  12 Input    1 Bit        Muxes := 20    
+	   9 Input    1 Bit        Muxes := 2     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 220 (col length:60)
+BRAMs: 280 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+DSP Report: Generating DSP int_result, operation Mode is: A*B.
+DSP Report: operator int_result is absorbed into DSP int_result.
+DSP Report: operator int_result is absorbed into DSP int_result.
+DSP Report: Generating DSP int_result, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator int_result is absorbed into DSP int_result.
+DSP Report: operator int_result is absorbed into DSP int_result.
+DSP Report: Generating DSP int_result, operation Mode is: A*B.
+DSP Report: operator int_result is absorbed into DSP int_result.
+DSP Report: operator int_result is absorbed into DSP int_result.
+DSP Report: Generating DSP int_result, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator int_result is absorbed into DSP int_result.
+DSP Report: operator int_result is absorbed into DSP int_result.
+WARNING: [Synth 8-3917] design TOPLEVEL has port BT_CTS driven by constant 0
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:06:37 ; elapsed = 00:06:45 . Memory (MB): peak = 2533.562 ; gain = 870.207 ; free physical = 214 ; free virtual = 7090
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Preliminary Mapping Report (see note below)
++------------+----------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name | RTL Object     | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++------------+----------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|TOPLEVEL    | ram/memory_reg | 4 K x 128(WRITE_FIRST) | W | R |                        |   |   | Port A           | 1      | 14     | 
+|TOPLEVEL    | ram/memory_reg | 4 K x 128(WRITE_FIRST) | W | R |                        |   |   | Port A           | 1      | 14     | 
++------------+----------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+Note: The table above is a preliminary report that shows the Block RAMs at the current stage of the synthesis flow. Some Block RAMs may be reimplemented as non Block RAM primitives later in the synthesis flow. Multiple instantiated Block RAMs are reported only once. 
+
+Distributed RAM: Preliminary Mapping Report (see note below)
++------------+---------------------------------+-----------+----------------------+-------------+
+|Module Name | RTL Object                      | Inference | Size (Depth x Width) | Primitives  | 
++------------+---------------------------------+-----------+----------------------+-------------+
+|TOPLEVEL    | uAHBUART/uFIFO_TX/array_reg_reg | Implied   | 16 x 8               | RAM32M x 2  | 
+|TOPLEVEL    | uAHBUART/uFIFO_RX/array_reg_reg | Implied   | 16 x 8               | RAM32M x 2  | 
++------------+---------------------------------+-----------+----------------------+-------------+
+
+Note: The table above is a preliminary report that shows the Distributed RAMs at the current stage of the synthesis flow. Some Distributed RAMs may be reimplemented as non Distributed RAM primitives later in the synthesis flow. Multiple instantiated RAMs are reported only once.
+
+DSP: Preliminary Mapping Report (see note below. The ' indicates corresponding REG is set)
++--------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name   | DSP Mapping    | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++--------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|cv32e40s_mult | A*B            | 18     | 15     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|cv32e40s_mult | (PCIN>>17)+A*B | 15     | 15     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|cv32e40s_mult | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|cv32e40s_mult | (PCIN>>17)+A*B | 18     | 15     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
++--------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:06:48 ; elapsed = 00:06:56 . Memory (MB): peak = 2533.562 ; gain = 870.207 ; free physical = 213 ; free virtual = 7067
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:07:14 ; elapsed = 00:07:23 . Memory (MB): peak = 2533.562 ; gain = 870.207 ; free physical = 284 ; free virtual = 7054
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Final Mapping Report
++------------+----------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name | RTL Object     | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++------------+----------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|TOPLEVEL    | ram/memory_reg | 4 K x 128(WRITE_FIRST) | W | R |                        |   |   | Port A           | 1      | 14     | 
+|TOPLEVEL    | ram/memory_reg | 4 K x 128(WRITE_FIRST) | W | R |                        |   |   | Port A           | 1      | 14     | 
++------------+----------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+
+Distributed RAM: Final Mapping Report
++------------+---------------------------------+-----------+----------------------+-------------+
+|Module Name | RTL Object                      | Inference | Size (Depth x Width) | Primitives  | 
++------------+---------------------------------+-----------+----------------------+-------------+
+|TOPLEVEL    | uAHBUART/uFIFO_TX/array_reg_reg | Implied   | 16 x 8               | RAM32M x 2  | 
+|TOPLEVEL    | uAHBUART/uFIFO_RX/array_reg_reg | Implied   | 16 x 8               | RAM32M x 2  | 
++------------+---------------------------------+-----------+----------------------+-------------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2MEM/ram/memory_reg_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2MEM/ram/memory_reg_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2MEM/ram/memory_reg_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2MEM/ram/memory_reg_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2MEM/ram/memory_reg_4 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2MEM/ram/memory_reg_5 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2MEM/ram/memory_reg_6 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2MEM/ram/memory_reg_7 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2MEM/ram/memory_reg_8 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2MEM/ram/memory_reg_9 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2MEM/ram/memory_reg_10 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2MEM/ram/memory_reg_11 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2MEM/ram/memory_reg_12 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2MEM/ram/memory_reg_13 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2MEM/ram/memory_reg_14 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2DMEM/ram/memory_reg_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2DMEM/ram/memory_reg_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2DMEM/ram/memory_reg_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2DMEM/ram/memory_reg_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2DMEM/ram/memory_reg_4 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2DMEM/ram/memory_reg_5 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2DMEM/ram/memory_reg_6 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2DMEM/ram/memory_reg_7 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2DMEM/ram/memory_reg_8 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2DMEM/ram/memory_reg_9 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2DMEM/ram/memory_reg_10 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2DMEM/ram/memory_reg_11 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2DMEM/ram/memory_reg_12 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2DMEM/ram/memory_reg_13 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance RI5CY_with_Caches/uAHB2DMEM/ram/memory_reg_14 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:07:44 ; elapsed = 00:07:54 . Memory (MB): peak = 2533.562 ; gain = 870.207 ; free physical = 318 ; free virtual = 7094
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[31] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[30] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[29] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[28] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[27] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[26] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[25] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[24] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[23] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[22] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[21] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[20] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[19] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[18] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[17] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[16] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[15] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[14] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[13] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[12] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[11] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[10] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[9] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[8] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[7] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[6] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[5] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[4] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[3] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[2] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[1] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S1[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[31] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[30] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[29] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[28] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[27] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[26] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[25] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[24] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[23] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[22] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[21] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[20] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[19] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[18] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[17] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[16] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[15] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[14] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[13] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[12] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[11] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[10] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[9] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[8] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[7] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[6] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[5] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[4] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[3] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[2] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[1] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S3[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[31] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[30] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[29] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[28] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[27] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[26] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[25] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[24] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[23] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[22] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[21] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[20] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[19] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[18] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[17] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[16] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[15] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[14] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[13] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[12] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[11] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[10] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[9] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[8] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[7] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[6] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[5] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[4] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[3] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[2] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[1] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S5[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S6[31] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S6[30] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S6[29] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin RI5CY_with_Caches/uAHBMUX:HRDATA_S6[28] to constant 0
+INFO: [Common 17-14] Message 'Synth 8-3295' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:08:00 ; elapsed = 00:08:10 . Memory (MB): peak = 2533.562 ; gain = 870.207 ; free physical = 291 ; free virtual = 7075
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:08:00 ; elapsed = 00:08:10 . Memory (MB): peak = 2533.562 ; gain = 870.207 ; free physical = 291 ; free virtual = 7075
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:08:13 ; elapsed = 00:08:23 . Memory (MB): peak = 2533.562 ; gain = 870.207 ; free physical = 283 ; free virtual = 7067
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:08:14 ; elapsed = 00:08:24 . Memory (MB): peak = 2533.562 ; gain = 870.207 ; free physical = 274 ; free virtual = 7058
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:08:16 ; elapsed = 00:08:26 . Memory (MB): peak = 2533.562 ; gain = 870.207 ; free physical = 272 ; free virtual = 7057
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:08:16 ; elapsed = 00:08:27 . Memory (MB): peak = 2533.562 ; gain = 870.207 ; free physical = 272 ; free virtual = 7057
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+DSP Final Report (the ' indicates corresponding REG is set)
++--------------+--------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name   | DSP Mapping  | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++--------------+--------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|cv32e40s_mult | A*B          | 17     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|cv32e40s_mult | A*B          | 17     | 17     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|cv32e40s_mult | PCIN>>17+A*B | 0      | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
++--------------+--------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+
+Report BlackBoxes: 
++------+------------------+----------+
+|      |BlackBox name     |Instances |
++------+------------------+----------+
+|1     |clock_clk_wiz_0_0 |         1|
++------+------------------+----------+
+
+Report Cell Usage: 
++------+----------------+------+
+|      |Cell            |Count |
++------+----------------+------+
+|1     |clock_clk_wiz_0 |     1|
+|2     |BUFG            |     6|
+|3     |CARRY4          |   845|
+|4     |DSP48E1         |     3|
+|5     |LUT1            |   107|
+|6     |LUT2            |  1038|
+|7     |LUT3            |  3082|
+|8     |LUT4            |  1107|
+|9     |LUT5            |  1459|
+|10    |LUT6            | 23739|
+|11    |MUXF7           |  9258|
+|12    |MUXF8           |  4293|
+|13    |RAM32M          |     2|
+|14    |RAM32X1D        |     4|
+|15    |RAMB18E1        |     2|
+|16    |RAMB36E1        |    28|
+|17    |FDCE            |  5423|
+|18    |FDPE            |    38|
+|19    |FDRE            | 37650|
+|20    |LD              |    17|
+|21    |IBUF            |     2|
+|22    |OBUF            |     6|
+|23    |OBUFT           |     3|
++------+----------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:08:17 ; elapsed = 00:08:27 . Memory (MB): peak = 2533.562 ; gain = 870.207 ; free physical = 272 ; free virtual = 7057
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 287 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:08:01 ; elapsed = 00:08:13 . Memory (MB): peak = 2533.562 ; gain = 716.504 ; free physical = 272 ; free virtual = 7057
+Synthesis Optimization Complete : Time (s): cpu = 00:08:17 ; elapsed = 00:08:27 . Memory (MB): peak = 2533.570 ; gain = 870.207 ; free physical = 272 ; free virtual = 7057
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00.98 ; elapsed = 00:00:00.97 . Memory (MB): peak = 2533.570 ; gain = 0.000 ; free physical = 612 ; free virtual = 7396
+INFO: [Netlist 29-17] Analyzing 14452 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 1 inverter(s) to 1 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.02 . Memory (MB): peak = 2533.570 ; gain = 0.000 ; free physical = 544 ; free virtual = 7335
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 23 instances were transformed.
+  LD => LDCE: 16 instances
+  LD => LDCE (inverted pins: G): 1 instance 
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 2 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 4 instances
+
+Synth Design complete | Checksum: 99d76b5f
+INFO: [Common 17-83] Releasing license: Synthesis
+347 Infos, 357 Warnings, 2 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:08:47 ; elapsed = 00:08:53 . Memory (MB): peak = 2533.570 ; gain = 1200.777 ; free physical = 536 ; free virtual = 7327
+INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 2173.664; main = 1846.916; forked = 376.305
+INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 3511.680; main = 2533.566; forked = 978.113
+INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
+INFO: [Common 17-1381] The checkpoint '/home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/E40S_PMP.runs/synth_1/TOPLEVEL.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:09 ; elapsed = 00:00:06 . Memory (MB): peak = 2605.598 ; gain = 72.027 ; free physical = 522 ; free virtual = 7323
+INFO: [runtcl-4] Executing : report_utilization -file TOPLEVEL_utilization_synth.rpt -pb TOPLEVEL_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Tue Feb 20 15:58:56 2024...

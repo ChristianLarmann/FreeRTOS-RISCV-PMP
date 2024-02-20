@@ -1,0 +1,6 @@
+xpm_cdc.sv,systemverilog,xpm,../../../../../home/christian/Apps/Xilinx/Vivado/2023.1/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv,incdir="$ref_dir/../../../../RI5CY_UA.gen/sources_1/bd/clock/ipshared/30ef"incdir="../../../../RI5CY_UA.gen/sources_1/bd/clock/ipshared/30ef"
+xpm_VCOMP.vhd,vhdl,xpm,../../../../../home/christian/Apps/Xilinx/Vivado/2023.1/data/ip/xpm/xpm_VCOMP.vhd,incdir="$ref_dir/../../../../RI5CY_UA.gen/sources_1/bd/clock/ipshared/30ef"incdir="../../../../RI5CY_UA.gen/sources_1/bd/clock/ipshared/30ef"
+clock_clk_wiz_0_0_clk_wiz.v,verilog,xil_defaultlib,../../../../RI5CY_UA.gen/sources_1/bd/clock/ip/clock_clk_wiz_0_0/clock_clk_wiz_0_0_clk_wiz.v,incdir="$ref_dir/../../../../RI5CY_UA.gen/sources_1/bd/clock/ipshared/30ef"incdir="../../../../RI5CY_UA.gen/sources_1/bd/clock/ipshared/30ef"
+clock_clk_wiz_0_0.v,verilog,xil_defaultlib,../../../../RI5CY_UA.gen/sources_1/bd/clock/ip/clock_clk_wiz_0_0/clock_clk_wiz_0_0.v,incdir="$ref_dir/../../../../RI5CY_UA.gen/sources_1/bd/clock/ipshared/30ef"incdir="../../../../RI5CY_UA.gen/sources_1/bd/clock/ipshared/30ef"
+clock.v,verilog,xil_defaultlib,../../../../RI5CY_UA.gen/sources_1/bd/clock/sim/clock.v,incdir="$ref_dir/../../../../RI5CY_UA.gen/sources_1/bd/clock/ipshared/30ef"incdir="../../../../RI5CY_UA.gen/sources_1/bd/clock/ipshared/30ef"
+glbl.v,Verilog,xil_defaultlib,glbl.v
