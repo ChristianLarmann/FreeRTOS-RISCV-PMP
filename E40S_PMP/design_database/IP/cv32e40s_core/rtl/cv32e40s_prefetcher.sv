@@ -70,7 +70,7 @@ module cv32e40s_prefetcher import cv32e40s_pkg::*;
   privlvl_t                      trans_priv_lvl_q;
 
   // Increment address (address will be made word aligned at core level)
-  assign trans_addr_incr = {trans_addr_q[31:1], 1'b0} + 32'd4;  // CL: Here the PC is actully incremented
+  assign trans_addr_incr = {trans_addr_q[31:1], 1'b0} + 32'd4;  // CL: Here the PC is actually incremented
 
   // Transaction request generation
   // alignment_buffer will request a transaction when it needs it.

@@ -376,7 +376,7 @@ module cv32e40s_controller_fsm import cv32e40s_pkg::*;
 assign ctrl_fsm_o.exception_in_wb = exception_in_wb;
 
   // Set exception cause
-  // For CLIC: Pointer fetches with PMA/PMP errors will get the exception code converted to LOAD_FAULT // CL: Interesting
+  // For CLIC: Pointer fetches with PMA/PMP errors will get the exception code converted to LOAD_FAULT
   //           Bus errors will be converted to NMI as for regular loads.
   assign exception_cause_wb = (ex_wb_pipe_i.instr.mpu_status != MPU_OK)                                                      ? EXC_CAUSE_INSTR_FAULT     :
                                ex_wb_pipe_i.instr.bus_resp.integrity_err                                                     ? EXC_CAUSE_INSTR_INTEGRITY_FAULT :

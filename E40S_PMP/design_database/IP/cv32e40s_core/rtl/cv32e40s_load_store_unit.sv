@@ -92,10 +92,7 @@ module cv32e40s_load_store_unit import cv32e40s_pkg::*;
   output logic        integrity_err_o,
   output logic        protocol_err_o,
 
-  input xsecure_ctrl_t   xsecure_ctrl_i,
-  
-  // CL: Added
-  output logic          mpu_err_o
+  input xsecure_ctrl_t   xsecure_ctrl_i
 );
 
   localparam DEPTH = 1;                           // Maximum number of outstanding transactions CL: Changed from 2 to 1
@@ -705,7 +702,7 @@ module cv32e40s_load_store_unit import cv32e40s_pkg::*;
 
     .core_one_txn_pend_n  ( cnt_is_one_next    ),
     .core_mpu_err_wait_i  ( 1'b1               ),
-    .core_mpu_err_o       ( mpu_err_o          ),  // CL: Unconnected on purpose again
+    .core_mpu_err_o       (                    ), 
     .core_trans_valid_i   ( mpu_trans_valid    ),
     .core_trans_pushpop_i ( mpu_trans_pushpop  ),
     .core_trans_ready_o   ( mpu_trans_ready    ),

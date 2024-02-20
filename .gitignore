@@ -34,3 +34,5 @@ FreeRTOS-RISC-V-PMP Software/Debug/src/
 E40S_PMP/ip_upgrade.log
 
 E40S_PMP/ssp_tb_behav.wcfg
+
+E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim/

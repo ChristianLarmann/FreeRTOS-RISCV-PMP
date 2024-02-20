@@ -161,7 +161,6 @@ module cv32e40s_obi_integrity_fifo import cv32e40s_pkg::*;
     else begin
       if (obi_req_i && obi_gnt_i) begin
         // Accepted address phase, populate FIFO with gnt parity error and PMA integrity bit
-        //fifo_q <= {fifo_q[MAX_OUTSTANDING-1:1], fifo_input, 3'b000};
         fifo_q <= {fifo_q[0], fifo_input, 3'b000}; // CL: Changed from  fifo_q <= {fifo_q[MAX_OUTSTANDING-1:1], fifo_input, 3'b000};
       end
     end

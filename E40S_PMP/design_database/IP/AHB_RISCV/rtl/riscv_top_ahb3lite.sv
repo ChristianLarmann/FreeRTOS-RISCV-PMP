@@ -113,10 +113,10 @@ cv32e40s_core
     // for all "input logic [31:0]"
     .boot_addr_i ( BOOT_ADDR   ),
     //.mtvec_addr_i ( {30'h8070, 2'h1} ) ,// ???
-    .mtvec_addr_i ( 32'h8081 ) ,// ??? CL: Should crash
-    .dm_halt_addr_i ( 32'h0             ), // ???
+    .mtvec_addr_i ( 32'h8081 ),// CL: What is the purpose of this? It gets overwritten in SW anyway
+    .dm_halt_addr_i ( 32'h0             ),
     .mhartid_i ( 32'b0 ),
-    .dm_exception_addr_i ( 32'hD ) ,// ???
+    .dm_exception_addr_i ( 32'hD ),
 
     // Instruction memory interface
     .instr_req_o ( core_instr_req    ),
@@ -168,7 +168,7 @@ cv32e40s_core
     //.apu_flags_i ( 5'd0          ),
 
     // Interrupt inputs
-    .irq_i ( (irqs)),  // CLINT interrupts + CLINT extension interrupts // CL: Removed |
+    .irq_i ((irqs)),  // CLINT interrupts + CLINT extension interrupts
     //.irq_ack_o (                   ),
     //.irq_id_o (                   ),
     

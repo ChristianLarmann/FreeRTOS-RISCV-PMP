@@ -35,7 +35,7 @@ module cv32e40s_int_controller import cv32e40s_pkg::*;
   output logic        irq_wu_ctrl_o,
 
   // From cs_registers
-  input  logic [31:0] mie_i,                    // MIE CSR  // CL: Machine Interrupt Enable Register
+  input  logic [31:0] mie_i,                    // MIE CSR
   input  mstatus_t    mstatus_i,                // MSTATUS CSR
   input  privlvl_t    priv_lvl_i,               // Current privilege level of core
 
