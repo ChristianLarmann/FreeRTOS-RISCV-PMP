@@ -1,0 +1,82 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../RI5CY_UA.gen/sources_1/bd/clock/ipshared/30ef" --include "../../../../design_database/IP/cv32e40p_core/rtl/vendor/pulp_platform_common_cells/include/common_cells" --include "../../../../design_database/IP/cv32e40s_core/bhv/include" --include "../../../../design_database/IP/cv32e40p_core/bhv" \
+"../../../../design_database/IP/AHB_DUMP/rtl/AHB2DUMP.v" \
+"../../../../design_database/IP/AHB_TIMER/rtl/AHB2TIMER.v" \
+"../../../../design_database/IP/AHB_UART/rtl/AHB2UART.v" \
+"../../../../design_database/IP/AHB_BUS/rtl/AHBDCD.v" \
+"../../../../design_database/IP/AHB_BUS/rtl/AHBMUX.v" \
+"../../../../design_database/IP/AHB_CACHE/rtl/AHB_CACHE.v" \
+"../../../../design_database/TOP_LEVEL/SECURE_PLATFORM_RI5CY/rtl/SECURE_PLATFORM_RI5CY_with_Caches.v" \
+"../../../../design_database/IP/AHB_UART/rtl/baudgen.v" \
+"../../../../design_database/IP/AHB_CACHE/rtl/bram_memory.v" \
+"../../../../design_database/IP/AHB_CACHE/rtl/cache_16_way.v" \
+"../../../../design_database/IP/AHB_TIMER/rtl/prescaler.v" \
+"../../../../design_database/IP/AHB_CACHE/rtl/set.v" \
+"../../../../design_database/IP/AHB_UART/rtl/uart_rx.v" \
+"../../../../design_database/IP/AHB_UART/rtl/uart_tx.v" \
+"../../../../design_database/IP/AHB_UART/rtl/ufifo.v" \
+
+sv xil_defaultlib  --include "../../../../RI5CY_UA.gen/sources_1/bd/clock/ipshared/30ef" --include "../../../../design_database/IP/cv32e40p_core/rtl/vendor/pulp_platform_common_cells/include/common_cells" --include "../../../../design_database/IP/cv32e40s_core/bhv/include" --include "../../../../design_database/IP/cv32e40p_core/bhv" \
+"../../../../design_database/IP/AHB_RISCV/rtl/components/core2ahb3lite_bram.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/include/cv32e40s_pkg.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_alert.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_alignment_buffer.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_alu.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_alu_b_cpop.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_b_decoder.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_clic_int_controller.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_compressed_decoder.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_controller.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_controller_bypass.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_controller_fsm.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_core.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_cs_registers.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_csr.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_data_obi_interface.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_debug_triggers.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_decoder.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_div.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_dummy_instr.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_ex_stage.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_ff_one.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_i_decoder.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_id_stage.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_if_c_obi.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_if_stage.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_instr_obi_interface.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_int_controller.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_lfsr.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_load_store_unit.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_lsu_response_filter.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_m_decoder.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_mpu.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_mult.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_obi_integrity_fifo.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_pc_check.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_pc_target.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_pma.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_pmp.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_prefetch_unit.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_prefetcher.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_rchk_check.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_register_file.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_register_file_ecc.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_register_file_wrapper.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_sequencer.sv" \
+"../../../../design_database/IP/cv32e40s_core/bhv/cv32e40s_sim_clock_gate.sv" \
+"../../../../design_database/IP/cv32e40s_core/bhv/cv32e40s_sim_sffr.sv" \
+"../../../../design_database/IP/cv32e40s_core/bhv/cv32e40s_sim_sffs.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_sleep_unit.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_wb_stage.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_wpt.sv" \
+"../../../../design_database/IP/cv32e40s_core/rtl/cv32e40s_write_buffer.sv" \
+"../../../../design_database/IP/AHB_RISCV/rtl/riscv_top_ahb3lite.sv" \
+
+verilog xil_defaultlib  --include "../../../../RI5CY_UA.gen/sources_1/bd/clock/ipshared/30ef" --include "../../../../design_database/IP/cv32e40p_core/rtl/vendor/pulp_platform_common_cells/include/common_cells" --include "../../../../design_database/IP/cv32e40s_core/bhv/include" --include "../../../../design_database/IP/cv32e40p_core/bhv" \
+"../../../../design_database/TOP_LEVEL/SECURE_PLATFORM_RI5CY/tb/SSP_tb.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
