@@ -378,6 +378,11 @@ module cv32e40s_core import cv32e40s_pkg::*;
 
   logic        unused_signals;
   
+  // For PMP interrupt
+  logic        mpu_err_if_or_lsu;
+  logic        mpu_err_if;
+  logic        mpu_err_lsu;
+  
   // Internal OBI interfaces
   cv32e40s_if_c_obi #(
     .REQ_TYPE(obi_inst_req_t), 
@@ -441,6 +446,9 @@ module cv32e40s_core import cv32e40s_pkg::*;
 
   // Gate off the internal debug_request signal if debug support is not configured.
   assign debug_req_gated = DEBUG ? debug_req_i : 1'b0;
+  
+  // MPU error from PMP of either IF or LSU
+  assign mpu_err_if_or_lsu = mpu_err_if || mpu_err_lsu;
   
   //////////////////////////////////////////////////////////////////////////////////////////////
   //   ____ _            _      __  __                                                   _    //
@@ -595,7 +603,9 @@ module cv32e40s_core import cv32e40s_pkg::*;
     .lfsr_shift_o        ( lfsr_shift_if            ),
 
     .integrity_err_o     ( integrity_err_if         ),
-    .protocol_err_o      ( protocol_err_if          )
+    .protocol_err_o      ( protocol_err_if          ),
+    
+    .mpu_err_o           ( mpu_err_if               )
 );
 
   /////////////////////////////////////////////////
@@ -815,7 +825,9 @@ module cv32e40s_core import cv32e40s_pkg::*;
     .integrity_err_o       ( lsu_integrity_err  ),
     .protocol_err_o        ( lsu_protocol_err   ),
 
-    .xsecure_ctrl_i        ( xsecure_ctrl       )
+    .xsecure_ctrl_i        ( xsecure_ctrl       ),
+    
+    .mpu_err_o             ( mpu_err_lsu        )
 );
 
   ////////////////////////////////////////////////////////////////////////////////////////
@@ -1177,7 +1189,9 @@ module cv32e40s_core import cv32e40s_pkg::*;
         .rst_n                ( rst_ni             ),
 
         // External interrupt lines
-        .irq_i                ( irq_i              ),
+        // PMP error connected to interrupt 16
+        .irq_i                ( {irq_i[31:17], mpu_err_if_or_lsu, irq_i[15:0]} ),
+
 
         // To controller
         .irq_req_ctrl_o       ( irq_req_ctrl       ),

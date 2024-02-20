@@ -138,7 +138,7 @@ module cv32e40s_data_obi_interface import cv32e40s_pkg::*;
 
       // Always check gnt parity
       // alert_major will not update when in reset
-      assign gntpar_err = (m_c_obi_data_if.s_gnt.gnt == m_c_obi_data_if.s_gnt.gntpar);
+      assign gntpar_err = 0; // Disabled for now
 
       cv32e40s_obi_integrity_fifo
         #(
@@ -176,7 +176,7 @@ module cv32e40s_data_obi_interface import cv32e40s_pkg::*;
 
       // Checking rvalid parity
       // alert_major_o will go high immediately
-      assign rvalidpar_err_resp = (m_c_obi_data_if.s_rvalid.rvalid == m_c_obi_data_if.s_rvalid.rvalidpar);
+      assign rvalidpar_err_resp = 0; // Disabled for now
 
       assign integrity_err_o = rchk_err_resp || rvalidpar_err_resp || gntpar_err;
       assign protocol_err_o  = protocol_err;

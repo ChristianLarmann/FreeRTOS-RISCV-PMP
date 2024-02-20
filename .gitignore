@@ -38,3 +38,5 @@ E40S_PMP/ssp_tb_behav.wcfg
 E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim/
 
 E40S_PMP/E40S_PMP.xpr
+
+E40S_PMP/E40S_PMP.cache/wt/xsim.wdf

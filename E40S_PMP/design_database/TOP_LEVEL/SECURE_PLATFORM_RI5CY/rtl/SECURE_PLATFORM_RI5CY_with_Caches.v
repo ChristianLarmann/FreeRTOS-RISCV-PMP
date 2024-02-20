@@ -120,7 +120,7 @@ wire				NI_TX_IRQ, NI_RX_IRQ, TIMER_IRQ, UART_IRQ;
 assign 			HRESP = 1'b0;
 
 //CM0-DS INTERRUPT SIGNALS  
-assign 			IRQ = {28'd0,NI_TX_IRQ,NI_RX_IRQ,UART_IRQ,TIMER_IRQ};
+assign 			IRQ = {30'd0,UART_IRQ,TIMER_IRQ}; // CL: Changed NI_TX_IRQ and NI_RX_IRQ because Z
 
 //assign 			LED[7] = LOCKUP;
 wire    sys_reset;

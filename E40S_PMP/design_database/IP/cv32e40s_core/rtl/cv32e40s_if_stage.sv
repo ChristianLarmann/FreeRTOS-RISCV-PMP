@@ -108,7 +108,9 @@ module cv32e40s_if_stage import cv32e40s_pkg::*;
   output  logic         lfsr_shift_o,
 
   output  logic         integrity_err_o,
-  output  logic         protocol_err_o
+  output  logic         protocol_err_o,
+  
+  output logic          mpu_err_o
 );
 
   // ALBUF_DEPTH set to 3 as the alignment_buffer will need 3 entries to function correctly
