@@ -1,112 +1,202 @@
 /*
- ============================================================================
- Name        : main.c
- Author      : Christian Larmann (originally provided by TU Delft CE department)
- Version     :
- Copyright   : Your copyright notice
- Description : PMP Setup
- ============================================================================
+ * FreeRTOS Kernel V10.2.1
+ * Copyright (C) 2019 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * Copyright (C) 2020 ETH Zurich
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * http://www.FreeRTOS.org
+ * http://aws.amazon.com/freertos
+ *
+ * 1 tab == 8 spaces!
  */
 
-//#include "headerfiles/AES.h"
-//#include "headerfiles/memoryMap.h"
-//#include "headerfiles/spi.h"
-//#include "headerfiles/timer.h"
-//#include "headerfiles/uart.h"
 
-//#include <stdio.h>
-#include <stdint.h>
+/*
+ * Create implementation of vPortSetupTimerInterrupt() if the CLINT is not
+ * available, but make sure the configCLINT_BASE_ADDRESS constant is still
+ * defined.
+ *
+ * Define vPortHandleInterrupt to whatever the interrupt handler is called.  In
+ * this case done by defining vPortHandleInterrupt=SystemIrqHandler on the
+ * assembler command line as SystemIrqHandler is referenced from both FreeRTOS
+ * code and the libraries that come with the Vega board.
+ */
 
-unsigned int multiply(unsigned int a, unsigned int b);
-int user_func();
-static inline uint64_t read_mstatus();
-static inline void write_mstatus(uint64_t mstatus);
-static inline void write_mepc(uintptr_t value);
-void pmp_violation_handler();
+/* FreeRTOS kernel includes. */
+#include <FreeRTOS.h>
+#include <task.h>
 
-int main() {
+/* c stdlib */
+#include <stdio.h>
 
-	*(unsigned int*)(0x00110000) = 33;
-	unsigned int a = *(unsigned int*)(0x00110000);
-	int result_1 = multiply(a, 2);
+/* PULPissimo includes. */
+#include "system_core_v_mcu.h"
+#include "timer_irq.h"
+#include "fll.h"
+#include "irq.h"
+#include "gpio.h"
 
+/******************************************************************************
+ * This project provides two demo applications.  A simple blinky style project,
+ * and a more comprehensive test and demo application.  The
+ * mainCREATE_SIMPLE_BLINKY_DEMO_ONLY setting (defined in this file) is used to
+ * select between the two.  The simply blinky demo is implemented and described
+ * in main_blinky.c.  The more comprehensive test and demo application is
+ * implemented and described in main_full.c.
+ *
+ * This file implements the code that is not demo specific, including the
+ * hardware setup and standard FreeRTOS hook functions.
+ *
+ * ENSURE TO READ THE DOCUMENTATION PAGE FOR THIS PORT AND DEMO APPLICATION ON
+ * THE http://www.FreeRTOS.org WEB SITE FOR FULL INFORMATION ON USING THIS DEMO
+ * APPLICATION, AND ITS ASSOCIATE FreeRTOS ARCHITECTURE PORT!
+ *
+ */
 
-	// Write PMP config for region 0
-	uint32_t pmpcfg_val = 0b01111; // All access, A=TOR
-	asm volatile("csrw pmpcfg0, %0" :: "r"(pmpcfg_val));
+/* Set mainCREATE_SIMPLE_BLINKY_DEMO_ONLY to one to run the simple blinky demo,
+or 0 to run the more comprehensive test and demo application. */
+/* #define mainCREATE_SIMPLE_BLINKY_DEMO_ONLY	0*/
 
-	// Write PMP address for region 0, Address range TOR 0- 0x100000
-	uint32_t pmpaddr_val = 0x108000;
-	asm volatile("csrw pmpaddr0, %0" :: "r"(pmpaddr_val));
+// CL: Added
+#define mainCREATE_SIMPLE_BLINKY_DEMO_ONLY 1
 
+/*
+ * main_blinky() is used when mainCREATE_SIMPLE_BLINKY_DEMO_ONLY is set to 1.
+ * main_full() is used when mainCREATE_SIMPLE_BLINKY_DEMO_ONLY is set to 0.
+ */
+#if mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1
+	extern void main_blinky( void );
+#else
+#error "Full demo is not available in this project. Check demos/ directory."
+#endif /* #if mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 */
 
-	// Enable interrupt for PMP violation
-	unsigned int mie;
-	asm volatile("csrr %0, mie" : "=r"(mie)); // Read current MIE value
-	mie |= 0b10000000000000000; // Set the bit for the interrupt
-	// mie |= 0b0000000100000000; // Set the bit for the interrupt
-	asm volatile("csrw mie, %0" :: "r"(mie)); // Write back to MIE
+/* Prototypes for the standard FreeRTOS callback/hook functions implemented
+within this file.  See https://www.freertos.org/a00016.html */
+void vApplicationMallocFailedHook( void );
+void vApplicationIdleHook( void );
+void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName );
+void vApplicationTickHook( void );
 
-	// Make interrupts vectorred
-	unsigned int mtvec;
-	asm volatile("csrr %0, mtvec" : "=r"(mtvec)); // Read current mtvec value
-	mtvec = (mtvec & ~0x3) | 0x1; // Clear the lowest two bits and set mode to 01
-	asm volatile("csrw mtvec, %0" :: "r"(mtvec)); // Write back to mtvec
+/* Prepare haredware to run the demo. */
+static void prvSetupHardware( void );
 
-	// Initiate user task
-	uintptr_t mstatus = read_mstatus();
-	mstatus &= ~(3 << 11); // Clear MPP bits
-	write_mstatus(mstatus);
+/* Send a messaage to the UART initialised in prvSetupHardware. */
+void vSendString( const char * const pcString );
 
-	// Set mepc to the user program's start address
-	write_mepc((uintptr_t)user_func);
+/*-----------------------------------------------------------*/
 
-	// Set return address manually for mret
-	asm volatile (
-	    "auipc ra, 0\n\t"       // Set ra to the current PC (plus a small offset due to the instruction itself)
-	    "addi ra, ra, 0xc\n\t"    // Add 0xC to ra
-	    : : : "ra"              // Clobber ra
-	);
+int main( void )
+{
+	prvSetupHardware();
 
-	// Use mret to switch to user mode
-	asm volatile ("mret");
-
-    return 0;
+	/* The mainCREATE_SIMPLE_BLINKY_DEMO_ONLY setting is described at the top
+	of this file. */
+	#if( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 )
+	{
+		main_blinky();
+	}
+	#else
+	{
+	#error "Full demo is not available in this project. Check demos/ directory."
+	}
+	#endif
 }
+/*-----------------------------------------------------------*/
 
-int user_func() {
-	int first_param = 6066;  // 0x17B2
-	int second_param = 11119;  // 0x2B6F
+static void prvSetupHardware( void )
+{
+	/* Init board hardware. */
+	system_init();
 
-	return multiply(first_param, second_param);
-
-	unsigned int b = *(unsigned int*)(0x00110000);
-
-	int result = multiply(b, 2);
+	/* configure led0 (spim_csn1) as gpio */
+	gpio_pin_configure(0x5, GPIO_OUTPUT_LOW);
 }
+/*-----------------------------------------------------------*/
 
-
-unsigned int multiply(unsigned int a, unsigned int b) {
-	return a * b;
+void vToggleLED( void )
+{
+	gpio_pin_toggle( 0x5 );
 }
+/*-----------------------------------------------------------*/
 
-
-static inline uint64_t read_mstatus() {
-    uint64_t mstatus;
-    asm volatile("csrr %0, mstatus" : "=r" (mstatus));
-    return mstatus;
+void vSendString( const char * const pcString )
+{
+	/* TODO: UART dumping */
+	printf( "%s", pcString );
 }
+/*-----------------------------------------------------------*/
 
-
-void pmp_violation_handler() {
-	asm volatile ("li a3, 0xCB\n\t");
+void vApplicationMallocFailedHook( void )
+{
+	/* vApplicationMallocFailedHook() will only be called if
+	configUSE_MALLOC_FAILED_HOOK is set to 1 in FreeRTOSConfig.h.  It is a hook
+	function that will get called if a call to pvPortMalloc() fails.
+	pvPortMalloc() is called internally by the kernel whenever a task, queue,
+	timer or semaphore is created.  It is also called by various parts of the
+	demo application.  If heap_1.c or heap_2.c are used, then the size of the
+	heap available to pvPortMalloc() is defined by configTOTAL_HEAP_SIZE in
+	FreeRTOSConfig.h, and the xPortGetFreeHeapSize() API function can be used
+	to query the size of free heap space that remains (although it does not
+	provide information on how the remaining heap might be fragmented). */
+	taskDISABLE_INTERRUPTS();
+	printf( "error: application malloc failed\n" );
+	__asm volatile( "ebreak" );
+	for( ;; );
 }
+/*-----------------------------------------------------------*/
 
-
-static inline void write_mstatus(uint64_t mstatus) {
-    asm volatile("csrw mstatus, %0" :: "r" (mstatus));
+void vApplicationIdleHook( void )
+{
+	/* vApplicationIdleHook() will only be called if configUSE_IDLE_HOOK is set
+	to 1 in FreeRTOSConfig.h.  It will be called on each iteration of the idle
+	task.  It is essential that code added to this hook function never attempts
+	to block in any way (for example, call xQueueReceive() with a block time
+	specified, or call vTaskDelay()).  If the application makes use of the
+	vTaskDelete() API function (as this demo application does) then it is also
+	important that vApplicationIdleHook() is permitted to return to its calling
+	function, because it is the responsibility of the idle task to clean up
+	memory allocated by the kernel to any task that has since been deleted. */
 }
+/*-----------------------------------------------------------*/
 
-static inline void write_mepc(uintptr_t value) {
-    asm volatile("csrw mepc, %0" :: "r" (value));
+void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName )
+{
+	( void ) pcTaskName;
+	( void ) pxTask;
+
+	/* Run time stack overflow checking is performed if
+	configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2.  This hook
+	function is called if a stack overflow is detected. */
+	taskDISABLE_INTERRUPTS();
+	__asm volatile( "ebreak" );
+	for( ;; );
 }
+/*-----------------------------------------------------------*/
+
+void vApplicationTickHook( void )
+{
+	/* The tests in the full demo expect some interaction with interrupts. */
+	#if( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY != 1 )
+	{
+		extern void vFullDemoTickHook( void );
+		vFullDemoTickHook();
+	}
+	#endif
+}
+/*-----------------------------------------------------------*/

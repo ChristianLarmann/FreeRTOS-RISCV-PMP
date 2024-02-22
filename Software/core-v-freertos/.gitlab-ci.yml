@@ -1,0 +1,195 @@
+# Copyright 2020 ETH Zurich
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+# Author: Robert Balas (balasr@iis.ee.ethz.ch)
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+before_script:
+  - pwd
+  - export RISCV=~balasr/.riscv
+
+stages:
+  - fetch
+  - test
+
+fetch_gcc:
+  stage: fetch
+  script:
+    - echo "FIXME using balasr hardcoded path"
+
+fetch_pulp:
+  stage: fetch
+  script:
+     - git clone https://github.com/pulp-platform/pulp
+     - cd pulp
+     # latest "stable" version
+     - git checkout 75cc0947d85cd86e63b499f5465fd054fa795e5a
+     - ./update-ips
+     - ./generate-scripts --rt-dpi
+     - make build
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - pulp/*
+
+test_demos:
+  stage: test
+  script:
+    - echo "FIXME run demos tests"
+
+test_apps:
+  stage: test
+  script:
+    - echo "FIXME add app tests"
+
+vsim_pulp_semaphore:
+  stage: test
+  script:
+    - source env/pulp.sh
+    - source pulp/setup/vsim.sh
+    - cd tests/semaphore
+    - make clean all run
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+    paths:
+     - tests/semaphore
+
+vsim_pulp_queue:
+  stage: test
+  script:
+    - source env/pulp.sh
+    - source pulp/setup/vsim.sh
+    - cd tests/queue
+    - make clean all run
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - tests/queue
+
+vsim_pulp_streambufferisr:
+  stage: test
+  script:
+    - source env/pulp.sh
+    - source pulp/setup/vsim.sh
+    - cd tests/streambufferisr
+    - make clean all run
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - tests/streambufferisr
+
+vsim_pulp_uart:
+  stage: test
+  script:
+    - source env/pulp.sh
+    - source pulp/setup/vsim.sh
+    - cd tests/uart
+    - make clean all run
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - tests/uart
+
+vsim_pulp_hello_world_pmsis:
+  stage: test
+  script:
+    - source env/pulp.sh
+    - source pulp/setup/vsim.sh
+    - cd tests/hello_world_pmsis
+    - make clean all run
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - tests/hello_world_pmsis
+
+vsim_pulp_spi:
+  stage: test
+  script:
+    - source env/pulp.sh
+    - source pulp/setup/vsim.sh
+    - cd tests/spi
+    - make clean all run DPI=yes
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - tests/spi
+
+gvsoc_pulp_hello_world:
+  stage: test
+  script:
+    - source env/pulp.sh
+    - cd nortos/hello_world
+    - make clean all run-gvsoc
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - nortos/hello_world
+
+gvsoc_pulp_setjmp:
+  stage: test
+  script:
+    - source env/pulp.sh
+    - cd nortos/setjmp
+    - make clean all run-gvsoc
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - nortos/setjmp
+
+gvsoc_pulp_uart:
+  stage: test
+  script:
+    - source env/pulp.sh
+    - cd tests/uart
+    - make clean all run-gvsoc
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - tests/uart
+
+gvsoc_pulp_semaphore:
+  stage: test
+  script:
+    - source env/pulp.sh
+    - cd tests/semaphore
+    - make clean all run-gvsoc
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+    paths:
+     - tests/semaphore
+
+gvsoc_pulp_queue:
+  stage: test
+  script:
+    - source env/pulp.sh
+    - cd tests/queue
+    - make clean all run-gvsoc
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - tests/queue
+
+gvsoc_pulp_streambufferisr:
+  stage: test
+  script:
+    - source env/pulp.sh
+    - cd tests/streambufferisr
+    - make clean all run-gvsoc
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - tests/streambufferisr

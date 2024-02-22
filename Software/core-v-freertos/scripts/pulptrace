@@ -1,0 +1,325 @@
+#!/usr/bin/env python3
+
+# Copyright 2019 ETH Zurich and University of Bologna
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+# SPDX-License-Identifier: Apache-2.0
+# Author: Robert Balas (balasr@iis.ee.ethz.ch)
+
+# History
+# 0.1.0:
+# - initial release
+# 0.1.1:
+# - Add dot to allowable character in symbolic addresses
+
+import argparse
+import sys
+import re
+import os
+import subprocess
+from functools import reduce
+from collections import OrderedDict
+import csv
+import pprint
+
+parser = argparse.ArgumentParser(prog='pulptrace',
+                                 description="""Combine objdump information
+                                 with an instruction trace log from a pulp
+                                 core""")
+
+parser.version = '0.1.1'
+parser.add_argument('trace_file', type=str, help='trace log from a pulp core')
+parser.add_argument('elf_file', type=str,
+                    help='elf file that was ran, producing the trace log')
+parser.add_argument('-e,', '--objdump', type=str, help="""use the provided objdump
+executable""")
+parser.add_argument('-o,', '--output', type=str, help="""write to file instead of
+stdout""")
+parser.add_argument('-t', '--truncate', action='store_true',
+                    help='truncate overlong text')
+parser.add_argument('-n', '--numeric', action='store_true',
+                    help='show numeric register names')
+parser.add_argument('--no-aliases', action='store_true',
+                    help='do not use aliases for instruction names')
+parser.add_argument('--cycles', action='store_true',
+                    help='show cycle count extracted from log')
+parser.add_argument('--time', action='store_true',
+                    help='show passed time extracted from log')
+parser.add_argument('--stats', action='store_true',
+                    help='extract statistics from log')
+parser.add_argument('--range', nargs=2,
+                    help='consider only instructions in the given cycle range')
+parser.add_argument('--json', type=str,
+                    help='record stats results in json file')
+parser.add_argument('--occur', type=str,
+                    help='show occurences of given function')
+parser.add_argument('--occur-json', type=str,
+                    help='store occurences of given function in json')
+parser.add_argument('--analyze-interrupt', type=str, metavar='INTERRUPT_CSV',
+                    help="""use the given interrupt cvs for analyzing interrupt
+                    latencies""")
+parser.add_argument('--interrupt', nargs=2, metavar=('INTERRUPT_ID',
+                                                     'FUNCTION_NAME'),
+                    help="""use the given interrupt cvs for analyzing interrupt
+                    latencies""")
+parser.add_argument('--interrupt-out', type=str,
+                    help="""store collected interrupt statistics to
+                    INTERRUPT_OUT""")
+
+
+args = parser.parse_args()
+
+trace_filename = args.trace_file
+elf_filename = args.elf_file
+
+# TODO: eabi
+
+regs_map = [("x0", "zero"), ("x1", "ra"), ("x2", "sp"),
+            ("x3", "gp"), ("x4", "tp"), ("x5", "t0"),
+            ("x6", "t1"), ("x7", "t2"), ("x8", "s0"),
+            ("x9", "s1"), ("x10", "a0"), ("x11", "a1"),
+            ("x12", "a2"), ("x13", "a3"), ("x14", "a4"),
+            ("x15", "a5"), ("x16", "a6"), ("x17", "a7"),
+            ("x18", "s2"), ("x19", "s3"), ("x20", "s4"),
+            ("x21", "s5"), ("x22", "s6"), ("x23", "s7"),
+            ("x24", "s8"), ("x25", "s9"), ("x26", "s10"),
+            ("x27", "s11"), ("x28", "t3"), ("x29", "t4"),
+            ("x30", "t5"), ("x31", "t6")]
+# augment regs_map with prefixes/postfixes to prevent false positives
+# ugly, but works
+tmp_regs_map = []
+for item in regs_map:
+    k, v = item
+    tmp_regs_map.append([' ' + k, ' ' + v])
+    tmp_regs_map.append(['(' + k, '(' + v])
+    tmp_regs_map.append([k + ':', v + ':'])
+    tmp_regs_map.append([k + '=', v + '='])
+
+regs_map = tmp_regs_map
+
+# we want to replace the higher numbered register first with their alias,
+# otherwise x31 could be replaced to gp1
+regs_alias = OrderedDict(reversed(regs_map))
+objdump_insns = dict()
+# parse objdump output and generate hashmap of address and insn string
+
+objdump_bin = ''
+if args.objdump:
+    objdump_bin = args.objdump
+elif os.getenv('RISCV'):
+    objdump_bin = os.getenv('RISCV') + '/bin/' + 'riscv32-unknown-elf-objdump'
+else:
+    objdump_bin = 'riscv32-unknown-elf-objdump'
+
+with subprocess.Popen([objdump_bin, "--prefix-addresses"]
+                      + (['-Mnumeric'] if args.numeric else [])
+                      + (['-Mno-aliases'] if args.no_aliases else [])
+                      + ["-d", elf_filename],
+                      stdout=subprocess.PIPE) as proc:
+    for line in proc.stdout:
+        line = line.decode("ascii")
+        if line == '':
+            break
+        match = re.match(r'^\s*([0-9a-f]+)\s+(<[0-9a-zA-Z+_.]*>)\s+(.*)', line)
+        if match:
+            # group(1) = instruction address
+            # group(2) = instruction address symbolic
+            # group(3) = instruction name
+            objdump_insns[int(match.group(1), 16)] = (
+                match.group(2), match.group(3).replace("\t", " "))
+
+
+def truncate_string(string, length):
+    return string[:length-2] + (string[length-2:] and '..')
+
+
+# redirect to stdout to file if desired
+sys.stdout = open(args.output, "w") if args.output else sys.stdout
+
+interrupt_log = []
+# get interrupt information if provided
+if args.analyze_interrupt:
+    with open(args.analyze_interrupt, "r") as csvf:
+        next(csvf, None) # skip header
+        for interrupt in csv.reader(csvf):
+            interrupt = [str.strip(i) for i in interrupt]
+            assert interrupt[0][-2:] == 'ns', "analyze_interrupt: bad time unit"
+            if (interrupt[2]) == '1': # collect only enabled interrupt_log
+                interrupt_log.append([int(interrupt[0][:-2]),
+                                   int(interrupt[1])])
+print(interrupt_log)
+# interupts latencies we are interested in (currently only 1)
+interrupts_lat = []
+if args.interrupt:
+    interrupts_lat = [(int(args.interrupt[0]), args.interrupt[1])]
+    print(interrupts_lat)
+
+
+int_times = []
+
+with open(trace_filename, "r") as f:
+    pc = 0
+    last_irq = False
+    last_cycles = 0
+    stats = {}
+    occur = []
+    int_log_idx = 0
+    int_trace = False
+    # skip trace file "header"
+    f.readline()
+    # parse instructions
+    for line in f:
+        insn_line = line.split()
+        time = insn_line[0]
+        cycles = int(insn_line[1])
+        addr = insn_line[2]
+        # insn_bytes = insn_line[3]
+        # insn_str = insn_line[4]
+        # insn_rest = insn_line[5::]
+        reg_vals = ""
+        insn_only = ""
+
+        # check if we are in the range of interest
+        if args.range:
+            if (cycles < int(args.range[0])) or (cycles >= int(args.range[1])):
+                last_cycles = cycles
+                continue
+
+        # this is a dirty heuristic which figures out if we have register
+        # values in the trace file TODO: improve
+        bound = 80
+        if len(line) > bound:
+            reg_vals = line[bound:].strip()
+            insn_only = line[:bound-1].strip()
+
+        insn_addr = int(addr.replace("x", "0"), 16)
+
+        if not(args.numeric):
+            # TODO: this might not be reliable if we have values like x10 in
+            # the registers
+            reg_vals = reduce(lambda a, kv: a.replace(*kv),
+                              regs_alias.items(), reg_vals)
+
+        if args.time:
+            print('%-12s ' % time, end='')
+
+        if args.cycles:
+            print('%-12d ' % (int(cycles)), end='')
+
+        if args.occur and (insn_addr in objdump_insns):
+            source_location, _ = objdump_insns[insn_addr]
+            # TODO: make sure function name is wrapped with <>
+            if source_location.find(args.occur) != -1:
+                occur.append(cycles)
+
+        # find interrupt handler and trace backwards to figure out latency
+        if args.analyze_interrupt and (insn_addr in objdump_insns):
+            source_location, _ = objdump_insns[insn_addr]
+            # TODO: make sure function name is wrapped with <>
+            gtime = int(time[:-2])
+            assert time[-2:] == 'ns', "analyze_interrupt: bad time unit in log"
+            fun_name = interrupts_lat[0][1]
+            int_id = interrupts_lat[0][0]
+            if source_location.find(fun_name) != -1:
+                int_time = [x[0] for x in reversed(interrupt_log) if x[0] < gtime and x[1] == int_id][0]
+                int_times.append((int_id, fun_name, int_time, gtime, gtime-int_time))
+                print("int_time %d time %d lat %d" % (int_time, gtime, gtime - int_time))
+
+        if args.stats:
+            function_name = "unknown"
+            is_call = False
+
+            # identify type of function (call, how many insn, how many cycles)
+            if insn_addr in objdump_insns:
+                source_location, _ = objdump_insns[insn_addr]
+                function_name = source_location.split("+")
+                if len(function_name) == 1:
+                    is_call = True
+                    function_name = function_name[0][1:-1]
+                else:
+                    # extract name
+                    function_name = function_name[0][1:]
+
+            delta_cycles = cycles - last_cycles
+
+            if function_name in stats.keys():
+                if is_call:
+                    stats[function_name]['calls'] += 1
+                stats[function_name]['insns'] += 1
+                stats[function_name]['cycles'] += delta_cycles
+            else:
+                stats[function_name] = {'calls': 1,
+                                        'insns': 1,
+                                        'cycles': delta_cycles}
+
+        if insn_addr in objdump_insns:
+            source_location, objdump_insn_str = objdump_insns[insn_addr]
+            if args.truncate:
+                source_location = truncate_string(source_location, 40)
+                objdump_insn_str = truncate_string(objdump_insn_str, 40)
+            print("%08x: %-40s %-40s %-20s" % (insn_addr,
+                                               source_location,
+                                               objdump_insn_str,
+                                               reg_vals))
+        else:
+            match = re.match(r'^\s*[0-9a-f]+[nmu]s\s+[0-9]+\s+[0-9a-f]+\s+[0-9a-f]+\s+(.*)',
+                             insn_only)
+            insn_str = match.group(1)
+
+            if not(args.numeric):
+                insn_str = reduce(lambda a, kv: a.replace(*kv),
+                                  regs_alias.items(), insn_str)
+
+            print("%08x: %-40s %-40s %-20s" % (insn_addr,
+                                               "",  # no objdump info
+                                               insn_str,  # insn name
+                                               reg_vals))
+
+        # update for measurments
+        last_cycles = cycles
+
+    if args.json:
+        import json
+        with open(args.json, 'w') as jsonf:
+            json.dump(stats, jsonf, indent=4)
+
+    if args.occur_json:
+        import json
+        with open(args.occur_json, 'w') as jsonf:
+            json.dump(occur, jsonf, indent=4)
+
+    if args.interrupt_out:
+        with open(args.interrupt_out, 'w') as csvf:
+            writer = csv.writer(csvf)
+            writer.writerows(int_times)
+
+    pp = pprint.PrettyPrinter(indent=4)
+    if args.stats:
+        pp.pprint("STATS")
+        pp.pprint(stats)
+
+    if args.occur:
+        pp.pprint("Occcurences of " + args.occur)
+        pp = pprint.PrettyPrinter(indent=4)
+        pp.pprint(occur)
+
+
+if args.output:
+    sys.stdout.close()
