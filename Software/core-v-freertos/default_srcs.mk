@@ -36,7 +36,7 @@ SRCS += $(dir)/portable/MemMang/heap_3.c
 CV_CPPFLAGS += -I"$(dir)/include"
 CV_CPPFLAGS += -I"$(dir)/portable/GCC/RISC-V"
 # freertos header for assembler
-CV_CPPFLAGS += -I"$(dir)/portable/GCC/RISC-V/chip_specific_extensions/PULPissimo"
+CV_CPPFLAGS += -I"$(dir)/portable/GCC/RISC-V/chip_specific_extensions/RV32I_CLINT_no_extensions"
 
 # arch (RISC-V) specific
 dir := $(FREERTOS_PROJ_ROOT)/target/arch

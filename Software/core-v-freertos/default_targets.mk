@@ -58,7 +58,8 @@ $(PROG): $(OBJS)
 
 
 # objdump, listing and size of binary
-misc-info: $(PROG).hex $(PROG).lst $(PROG).siz
+misc-info: $(PROG).hex $(PROG).lst $(PROG).siz $(PROG).srec
+
 
 $(PROG).stim: $(PROG)
 	$(PLPSTIM) -o $@ $<
@@ -72,6 +73,9 @@ $(PROG).veri: $(PROG)
 $(PROG).lst: $(PROG)
 	$(OBJDUMP) --source --all-headers --demangle --line-numbers --wide --prefix-addresses \
 		$(PROG) > $@
+
+$(PROG).srec: $(PROG)
+	$(OBJCOPY) -O srec $< $@
 
 $(PROG).siz: $(PROG)
 	$(SIZE) --format=berkeley $<

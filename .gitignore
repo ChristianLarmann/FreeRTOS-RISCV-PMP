@@ -37,8 +37,6 @@ E40S_PMP/ssp_tb_behav.wcfg
 
 E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim/
 
-E40S_PMP/E40S_PMP.xpr
-
 E40S_PMP/E40S_PMP.cache/wt/xsim.wdf
 
 Software/.settings/language.settings.xml
@@ -70,3 +68,7 @@ Software/src/blinky_demo/main_blinky.o
 Software/.settings/org.eclipse.cdt.core.prefs
 
 Software/core-v-freertos/scripts/__pycache__/
+
+E40S_PMP/E40S_PMP.runs/
+
+E40S_PMP/E40S_PMP.cache/
