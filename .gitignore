@@ -66,3 +66,7 @@ Software/src/blinky.stim
 Software/src/main.o
 
 Software/src/blinky_demo/main_blinky.o
+
+Software/.settings/org.eclipse.cdt.core.prefs
+
+Software/core-v-freertos/scripts/__pycache__/

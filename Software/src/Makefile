@@ -44,15 +44,10 @@
 #           By default 1 KiB but can be changed with MAXSTACKSIZE=your_value
 
 
-# Added to build variables in Eclipse:
-# ROOT: /home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/Software/core-v-freertos
-# FREERTOS_PROJ_ROOT: /home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/Software/core-v-freertos
-# FREERTOS_CONFIG_FAMILY core-v-mcu
-
+# Added to build in Eclipse:
 ROOT = /home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/Software/core-v-freertos
 FREERTOS_PROJ_ROOT = /home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/Software/core-v-freertos
 FREERTOS_CONFIG_FAMILY = core-v-mcu
-
 
 # indicate this repository's root folder
 # set some project specific path variables
