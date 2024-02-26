@@ -3,7 +3,7 @@
 //                                                                              //
 //Copyright (c) 2012, ARM All rights reserved.                                  //
 //                                                                              //
-//THIS END USER LICENCE AGREEMENT (“LICENCE”) IS A LEGAL AGREEMENT BETWEEN      //
+//THIS END USER LICENCE AGREEMENT (ï¿½LICENCEï¿½) IS A LEGAL AGREEMENT BETWEEN      //
 //YOU AND ARM LIMITED ("ARM") FOR THE USE OF THE SOFTWARE EXAMPLE ACCOMPANYING  //
 //THIS LICENCE. ARM IS ONLY WILLING TO LICENSE THE SOFTWARE EXAMPLE TO YOU ON   //
 //CONDITION THAT YOU ACCEPT ALL OF THE TERMS IN THIS LICENCE. BY INSTALLING OR  //
@@ -57,23 +57,23 @@ reg [15:0] dec;
 
 //REFER CM0-DS REFERENC MANUAL FOR RAM & PERIPHERAL MEMORY MAP
 //									//MEMORY MAP --> START ADDR 		END ADDR 	SIZE 
-assign HSEL_S0 = dec[0];   //MEMORY MAP --> 0x0000_0000 to 0x00FF_FFFF  16MB
-assign HSEL_S1 = dec[1];   //MEMORY MAP --> 0x1000_0000 to 0x50FF_FFFF  16MB	
-assign HSEL_S2 = dec[2];   //MEMORY MAP --> 0x5100_0000 to 0x51FF_FFFF  16MB
-assign HSEL_S3 = dec[3];   //MEMORY MAP --> 0x5200_0000 to 0x52FF_FFFF  16MB
-assign HSEL_S4 = dec[4];   //MEMORY MAP --> 0x5300_0000 to 0x53FF_FFFF  16MB
-assign HSEL_S5 = dec[5];   //MEMORY MAP --> 0x5400_0000 to 0x54FF_FFFF  16MB
-assign HSEL_S6 = dec[6];   //MEMORY MAP --> 0x5500_0000 to 0x55FF_FFFF  16MB
-assign HSEL_S7 = dec[7];   //MEMORY MAP --> 0x5600_0000 to 0x56FF_FFFF  16MB
-assign HSEL_S8 = dec[8];   //MEMORY MAP --> 0x5700_0000 to 0x57FF_FFFF  16MB
-assign HSEL_S9 = dec[9];   //MEMORY MAP --> 0x5800_0000 to 0x58FF_FFFF  16MB
+assign HSEL_S0 = dec[0];   //MEMORY MAP --> 0x1C01_0000 to 0x1C01_FFFF  64kb
+assign HSEL_S1 = dec[1];   //MEMORY MAP --> 0x1A10_0000 to 0x1A10_FFFF  64kb	
+assign HSEL_S2 = dec[2];   //MEMORY MAP --> 0x1B10_0000 to 0x1B10_FFFF  64kb
+assign HSEL_S3 = dec[3];   //MEMORY MAP --> 0x1C10_0000 to 0x1C10_FFFF  64kb
+assign HSEL_S4 = dec[4];   //MEMORY MAP --> 0x1D10_0000 to 0x1D10_FFFF  64kb
+assign HSEL_S5 = dec[5];   //MEMORY MAP --> 0x1E10_0000 to 0x1E10_FFFF  64kb
+assign HSEL_S6 = dec[6];   //MEMORY MAP --> 0x1F10_0000 to 0x1F10_FFFF  64kb
+assign HSEL_S7 = dec[7];   //MEMORY MAP --> 0x2010_0000 to 0x2010_FFFF  64kb
+assign HSEL_S8 = dec[8];   //MEMORY MAP --> undef
+assign HSEL_S9 = dec[9];   //MEMORY MAP --> undef
 assign HSEL_NOMAP = dec[15]; //REST OF REGION NOT COVERED ABOVE
     
 always@*
 begin
 
   case(HADDR[31:16])
-    16'h0010: 						//MEMORY MAP --> 0x0010_0000 to 0x0010_FFFF  64kB
+    16'h1C01:				//MEMORY MAP --> 0x0010_0000 to 0x0010_FFFF  64kB
       begin
         dec = 16'b0000_0000_00000001;
         MUX_SEL = 4'b0000;

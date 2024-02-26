@@ -34,24 +34,22 @@
 /* TODO: used to measure elapsed time since last "visit" */
 static uint32_t last_count;
 
+
+#define AHBTIMER_ADDR 				0x20100000
+#define AHBTIMER_LOAD_REG_OFFSET	(AHBTIMER_ADDR + 0x0)
+#define AHBTIMER_VALUE_REG_OFFSET	(AHBTIMER_ADDR + 0x4)
+#define AHBTIMER_CONTROL_REG_OFFSET	(AHBTIMER_ADDR + 0x8)
+#define AHBTIMER_CLEAR_REG_OFFSET  	(AHBTIMER_ADDR + 0xC)
+
+
 int timer_irq_init(uint32_t ticks)
 {
-	/* TODO: enable soc_eu timer interrupt */
+	/* Initializing uAHBTIMER */
+    /* Set value */
+	writew(ticks, (uintptr_t)(AHBTIMER_LOAD_REG_OFFSET));
 
-	/* set the interrupt interval */
-	timer_irq_set_timeout(ticks, false);
-
-	/* We use only one of the 32-bit timer, leaving the other half available
-	 * as an additional timer. We didn't opt for using both together as
-	 * 64-bit timer.
-	 *
-	 * Enable timer, use 32khz ref clock as source. Timer will reset
-	 * automatically to zero after causing an interrupt.
-	 */
-	writew(TIMER_CFG_LO_ENABLE_MASK | TIMER_CFG_LO_RESET_MASK |
-		       TIMER_CFG_LO_CCFG_MASK | TIMER_CFG_LO_MODE_MASK |
-		       TIMER_CFG_LO_IRQEN_MASK,
-	       (uintptr_t)(PULP_FC_TIMER_ADDR + TIMER_CFG_LO_OFFSET));
+	/* Configure periodic mode and enable */
+	writew(0b0011, (uintptr_t)(AHBTIMER_CONTROL_REG_OFFSET));
 
 	return 0;
 }

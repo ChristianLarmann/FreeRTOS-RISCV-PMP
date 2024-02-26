@@ -68,6 +68,9 @@ void (*isr_table[32])(void);
  */
 void system_init(void)
 {
+	extern int timer_irq_init(uint32_t ticks);
+	timer_irq_init(0x200);
+
 	/* init flls */
 	for (int i = 0; i < ARCHI_NB_FLL; i++) {
 		pi_fll_init(i, 0);

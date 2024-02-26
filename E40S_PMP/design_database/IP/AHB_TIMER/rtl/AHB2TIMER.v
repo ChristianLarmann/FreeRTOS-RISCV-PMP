@@ -3,7 +3,7 @@
 //                                                                              //
 //Copyright (c) 2012, ARM All rights reserved.                                  //
 //                                                                              //
-//THIS END USER LICENCE AGREEMENT (“LICENCE”) IS A LEGAL AGREEMENT BETWEEN      //
+//THIS END USER LICENCE AGREEMENT (ï¿½LICENCEï¿½) IS A LEGAL AGREEMENT BETWEEN      //
 //YOU AND ARM LIMITED ("ARM") FOR THE USE OF THE SOFTWARE EXAMPLE ACCOMPANYING  //
 //THIS LICENCE. ARM IS ONLY WILLING TO LICENSE THE SOFTWARE EXAMPLE TO YOU ON   //
 //CONDITION THAT YOU ACCEPT ALL OF THE TERMS IN THIS LICENCE. BY INSTALLING OR  //
@@ -35,7 +35,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module AHB2TIMER(
+module AHB2TIMER
+#(	parameter	integer AUTO_RESET = 1	)
+(
 	//Inputs
 	input wire HCLK,
 	input wire HRESETn,
@@ -73,7 +75,7 @@ module AHB2TIMER(
   reg [1:0] last_HTRANS;
 
   //internal registers
-  reg [3:0] control;
+  reg [3:0] control;  // [???, clk16?, mode, enable], mode: 0:free_running/1:periodic counter
   reg [31:0] load;
   reg clear;
   reg [31:0] value;
@@ -139,6 +141,8 @@ module AHB2TIMER(
   always @(posedge HCLK, negedge HRESETn)
     if(!HRESETn)
       timer_irq <= 1'b0;
+    else if (timer_irq == 1 && AUTO_RESET)
+      timer_irq <= 0;  // Automatic resetting after one cycle
     else
       timer_irq <= timer_irq_next;
            

@@ -221,7 +221,7 @@ RISC_V
 	.HADDR(dat_HADDR),
 	
 	.HSEL_S0(HSEL_MEM),
-	.HSEL_S1(),
+	.HSEL_S1(),  // TODO: Not connected, SOC_PERIPHERALS_ADDR in core-v-freertos
 	.HSEL_S2(HSEL_DUMP),
 	.HSEL_S3(HSEL_AES),
 	.HSEL_S4(HSEL_UART),

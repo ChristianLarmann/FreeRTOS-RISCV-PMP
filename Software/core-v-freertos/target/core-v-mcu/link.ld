@@ -253,7 +253,7 @@ SECTIONS
   } > L2
 
 
-  .data : ALIGN(4)
+  .data : ALIGN(65536)
   {
     sdata  =  .;
     _sdata  =  .;
