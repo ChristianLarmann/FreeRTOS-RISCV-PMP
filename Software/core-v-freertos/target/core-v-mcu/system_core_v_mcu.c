@@ -64,12 +64,12 @@ void (*isr_table[32])(void);
 void system_init(void)
 {
 	/* init flls */
-	for (int i = 0; i < ARCHI_NB_FLL; i++) {
-		pi_fll_init(i, 0);
-	}
+//	for (int i = 0; i < ARCHI_NB_FLL; i++) {
+//		pi_fll_init(i, 0);
+//	}
 
 	/* make sure irq (itc) is a good state */
-	pulp_irq_init();
+	// pulp_irq_init();
 
 	/* Hook up isr table. This table is temporary until we figure out how to
 	 * do proper vectored interrupts.
@@ -80,11 +80,11 @@ void system_init(void)
 	/* mtvec is set in crt0.S */
 
 	/* deactivate all soc events as they are enabled by default */
-	soc_eu_event_init();
+	//soc_eu_event_init();
 
 	/* Setup soc events handler. */
 	/* pi_fc_event_handler_init(FC_SOC_EVENT); */
-	pi_fc_event_handler_init(26); /* TODO: FIX THIS */
+	// pi_fc_event_handler_init(26); /* TODO: FIX THIS */
 
 	/* TODO: I$ enable*/
 	/* enable core level interrupt (mie) */

@@ -125,7 +125,7 @@ static void prvSetupHardware( void )
 	system_init();
 
 	/* configure led0 (spim_csn1) as gpio */
-	gpio_pin_configure(0x5, GPIO_OUTPUT_LOW);
+	//gpio_pin_configure(0x5, GPIO_OUTPUT_LOW); // TODO: Adapt to E40E
 }
 /*-----------------------------------------------------------*/
 

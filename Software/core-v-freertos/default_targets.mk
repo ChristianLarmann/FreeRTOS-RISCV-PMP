@@ -71,7 +71,7 @@ $(PROG).veri: $(PROG)
 	$(OBJCOPY) -O verilog $(PROG) $@
 
 $(PROG).lst: $(PROG)
-	$(OBJDUMP) --source --all-headers --demangle --line-numbers --wide --prefix-addresses \
+	$(OBJDUMP) --source --all-headers --demangle --line-numbers --wide --prefix-addresses --full-contents \
 		$(PROG) > $@
 
 $(PROG).srec: $(PROG)

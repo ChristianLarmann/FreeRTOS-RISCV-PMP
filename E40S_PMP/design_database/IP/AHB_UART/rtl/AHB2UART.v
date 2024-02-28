@@ -3,7 +3,7 @@
 //                                                                              //
 //Copyright (c) 2012, ARM All rights reserved.                                  //
 //                                                                              //
-//THIS END USER LICENCE AGREEMENT (“LICENCE”) IS A LEGAL AGREEMENT BETWEEN      //
+//THIS END USER LICENCE AGREEMENT (ï¿½LICENCEï¿½) IS A LEGAL AGREEMENT BETWEEN      //
 //YOU AND ARM LIMITED ("ARM") FOR THE USE OF THE SOFTWARE EXAMPLE ACCOMPANYING  //
 //THIS LICENCE. ARM IS ONLY WILLING TO LICENSE THE SOFTWARE EXAMPLE TO YOU ON   //
 //CONDITION THAT YOU ACCEPT ALL OF THE TERMS IN THIS LICENCE. BY INSTALLING OR  //
@@ -112,11 +112,12 @@ module AHB2UART(
 	if (!HRESETn)
 		b_rate <= 1'b0;
 	else if (last_HTRANS[1] & last_HWRITE & last_HSEL & (last_HADDR[7:0]==8'h04))
-	   b_rate <= HWDATA[0];
+	   b_rate <= HWDATA[0];  // Baudrate 0: 9600, 1: 19200
   end
   
-  //If Read and FIFO_RX is empty - wait.
-  assign HREADYOUT = ~tx_full;
+  // Allways readyy because otherwise MUX doesnt switch to other regions once fifo is full
+  // Whether FIFO is full shall be checked in SW
+  assign HREADYOUT = 1;
    
   //UART  write select  (address xxxxxx00)
   assign uart_wr = last_HTRANS[1] & last_HWRITE & last_HSEL& (last_HADDR[7:0]==8'h00);

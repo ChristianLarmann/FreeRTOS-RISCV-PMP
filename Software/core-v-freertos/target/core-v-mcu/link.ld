@@ -108,7 +108,7 @@ SECTIONS
 
   /* make sure we start filling fc data into the correct bank */
   /* read-only sections */
-  .rodata MAX(0x1c008000, ALIGN(4)) :
+  .rodata MAX(0x1c008000, ALIGN(65536)) :
   {
     *(.rodata .rodata.* .gnu.linkonce.r.*)
   } > L2
@@ -253,7 +253,7 @@ SECTIONS
   } > L2
 
 
-  .data : ALIGN(65536)
+  .data : ALIGN(4)
   {
     sdata  =  .;
     _sdata  =  .;

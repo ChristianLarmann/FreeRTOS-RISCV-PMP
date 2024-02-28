@@ -279,6 +279,11 @@ static inline uint32_t pulp_cluster_id()
 	return (mhartid >> 5) & 0x3f;
 }
 
+bool isUartFifoFull() {
+	uint32_t uart_status = readw((uintptr_t) AHBUART_STDOUT_STATUS_ADDR);
+	return uart_status & 0x1;  // status = {6'b000000,tx_full,rx_empty};
+}
+
 ssize_t _write(int file, const void *ptr, size_t len)
 {
 	/* fuse stout and stderr. remains to be seen if this is a good idea */
@@ -288,11 +293,13 @@ ssize_t _write(int file, const void *ptr, size_t len)
 	}
 
 	const void *eptr = ptr + len;
-	while (ptr != eptr)
+	while (ptr != eptr) {
+		// Check whether tx fifo is not full
+		while (readb( (uintptr_t) AHBUART_STDOUT_STATUS_ADDR) & 0x2) {}
+
 		writew(*(unsigned char *)(ptr++),
-		       (uintptr_t)(PULP_STDOUT_ADDR + STDOUT_PUTC_OFFSET +
-				   (pulp_core_id() << 3) +
-				   (pulp_cluster_id() << 7)));
+		       (uintptr_t)(AHBUART_STDOUT_ADDR));  // CL: Here connect to my AHBUART
+	}
 	return len;
 }
 

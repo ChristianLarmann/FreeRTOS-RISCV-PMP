@@ -69,15 +69,18 @@ void (*isr_table[32])(void);
 void system_init(void)
 {
 	extern int timer_irq_init(uint32_t ticks);
-	timer_irq_init(0x200);
+	timer_irq_init(0x1000);
 
 	/* init flls */
-	for (int i = 0; i < ARCHI_NB_FLL; i++) {
-		pi_fll_init(i, 0);
-	}
+//	for (int i = 0; i < ARCHI_NB_FLL; i++) {
+//		pi_fll_init(i, 0);
+//	}
+	//init_uart();
 
-	/* make sure irq (itc) is a good state */
-	pulp_irq_init();
+	/* the debug module could have enabled irq so we disable it during
+	 * initialization
+	 */
+	irq_disable(0xffffffff);
 
 	/* Hook up isr table. This table is temporary until we figure out how to
 	 * do proper vectored interrupts.
@@ -87,7 +90,7 @@ void system_init(void)
 	/* mtvec is set in crt0.S */
 
 	/* deactivate all soc events as they are enabled by default */
-	soc_eu_event_init();
+//	soc_eu_event_init();
 
 	/* TODO: enable uart */
 	/* TODO: I$ enable*/
