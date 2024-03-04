@@ -110,7 +110,7 @@ module AHB2UART(
   always @(posedge HCLK, negedge HRESETn)
   begin
 	if (!HRESETn)
-		b_rate <= 1'b0;
+		b_rate <= 1'b1; // CL: Changed
 	else if (last_HTRANS[1] & last_HWRITE & last_HSEL & (last_HADDR[7:0]==8'h04))
 	   b_rate <= HWDATA[0];  // Baudrate 0: 9600, 1: 19200
   end

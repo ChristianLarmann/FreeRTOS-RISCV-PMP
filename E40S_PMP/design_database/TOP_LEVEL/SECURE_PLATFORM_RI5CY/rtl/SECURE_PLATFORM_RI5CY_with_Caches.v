@@ -314,7 +314,7 @@ assign HADDR_INST = (ins_HADDR-BOOT_ADDR);
 
 
 //AHBLite Data Memory
-assign HADDR_MEM = {16'd0,dat_HADDR[15:0]};
+assign HADDR_MEM = {16'd0,dat_HADDR[15:0]};  // addr - 1c01_0000
 AHB_CACHE #(.MEM_ADDR_BITS(12),.INSTRUCTION(0)) uAHB2DMEM (
 	//AHBLITE Signals
 	.HSEL(HSEL_MEM),
