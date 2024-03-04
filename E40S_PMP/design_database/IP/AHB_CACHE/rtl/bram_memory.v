@@ -47,6 +47,7 @@ begin
     begin
        mem_rdata 			<= mem_wdata;
        memory[mem_addr] 	<= mem_wdata;		
+       data_valid           <= 1;
     end
     else
     begin
