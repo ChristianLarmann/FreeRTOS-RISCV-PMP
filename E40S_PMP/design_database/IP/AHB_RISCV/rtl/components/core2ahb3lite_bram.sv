@@ -43,10 +43,10 @@ module core2ahb3lite
   wire  [2:0]	size;
   //ASSIGNS
   
-  //assign gnt_o 		= req_i & ( (state != IDLE) ) ? 1'b1 : 1'b0;
+  //assign gnt_o 		= req_i & ( (state != IDLE) ) ? 1'b1 : 1'b0; CL: Maybe better, try this later
   assign gnt_o 		= req_i;
   assign rvalid_o	= ((state != IDLE) | last_was_op) & HREADY_i;
-  assign rdata_o	= we_i ? 0 : HRDATA_i;
+  assign rdata_o	= HRDATA_i; // we_i ? 0 : HRDATA_i; CL: Changed because we_i can go high during read
   
   //SIZE ENCODER
   wire cond_1 = (be_i[3] & be_i[2]);
@@ -75,7 +75,7 @@ module core2ahb3lite
 	// out of FSM
   always @(*)
   begin
-	HADDR_o			= addr_q;
+	//HADDR_o			= addr_q;
 	HWDATA_o		= 0;
 	HWRITE_o		= 1'b0;
 	HSIZE_o			= size;
@@ -98,7 +98,7 @@ module core2ahb3lite
 		end
 	  end
 	  READ_WAIT: begin     
-			HADDR_o 	= addr_q;
+			//HADDR_o 	= addr_q;
 			HTRANS_o	= 2'd0;
 			
 			if (req_i) begin
@@ -112,7 +112,7 @@ module core2ahb3lite
       end
 	  END:
 	  begin
-			HADDR_o 	= addr_q;
+			//HADDR_o 	= addr_q;
 			HTRANS_o	= 2'd0;			
 			HWDATA_o	= wdata_q;
 
@@ -129,7 +129,7 @@ module core2ahb3lite
 	  end
       WRITE_WAIT:
       begin
-			HADDR_o 	= addr_q;
+			//HADDR_o 	= addr_q;
 			HTRANS_o	= 2'd0;
 
 			if (req_i) begin
@@ -155,7 +155,7 @@ module core2ahb3lite
 		last_was_op	<= 0;
 	end
 	else begin
-		addr_q		<= addr_i;
+		//addr_q		<= addr_i;
 		wdata_q	<= wdata_i;
 		last_was_op	<= req_i & (state == END);
 	end

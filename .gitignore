@@ -72,3 +72,5 @@ Software/core-v-freertos/scripts/__pycache__/
 E40S_PMP/E40S_PMP.runs/
 
 E40S_PMP/E40S_PMP.cache/
+
+E40S_PMP/E40S_PMP.srcs/utils_1/imports/synth_1/TOPLEVEL.dcp
