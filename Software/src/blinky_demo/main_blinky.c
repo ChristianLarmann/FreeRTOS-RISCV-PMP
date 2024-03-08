@@ -115,32 +115,31 @@ void main_blinky(void)
 //	printf("Calling %s\n", __func__);
 //	printf("testing if 2nd call comes\n");
 	/* Create the queue. */
-	printf("123456 Hello World!\n");
-	xQueue = xQueueCreate(mainQUEUE_LENGTH, sizeof(uint32_t));
+	//xQueue = xQueueCreate(mainQUEUE_LENGTH, sizeof(uint32_t));
 
-	if (xQueue != NULL) {
+//	if (xQueue != NULL) {
 //		printf("Creating two tasks (xTaskCreate)\n");
 		/* Start the two tasks as described in the comments at the top of this
 		file. */
-		xTaskCreate(
-			prvQueueReceiveTask, /* The function that implements the task. */
-			"Rx", /* The text name assigned to the task - for debug only as it is not used by the kernel. */
-			configMINIMAL_STACK_SIZE *
-				2U, /* The size of the stack to allocate to the task. */
-			NULL, /* The parameter passed to the task - not used in this case. */
-			mainQUEUE_RECEIVE_TASK_PRIORITY, /* The priority assigned to the task. */
-			NULL); /* The task handle is not required, so NULL is passed. */
+//		xTaskCreate(
+//			prvQueueReceiveTask, /* The function that implements the task. */
+//			"Rx", /* The text name assigned to the task - for debug only as it is not used by the kernel. */
+//			configMINIMAL_STACK_SIZE *
+//				2U, /* The size of the stack to allocate to the task. */
+//			NULL, /* The parameter passed to the task - not used in this case. */
+//			mainQUEUE_RECEIVE_TASK_PRIORITY, /* The priority assigned to the task. */
+//			NULL); /* The task handle is not required, so NULL is passed. */
 //		printf("created prvQueueReceveiTask\n");
 
 		xTaskCreate(prvQueueSendTask, "TX",
 			    configMINIMAL_STACK_SIZE * 2U, NULL,
-			    mainQUEUE_SEND_TASK_PRIORITY, NULL);
+			    3, NULL);
 //		printf("created prvQueueSendTask\n");
 
 //		printf("Starting scheduler (vTaskStartScheduler)\n");
 		/* Start the tasks and timer running. */
 		vTaskStartScheduler();
-	}
+//	}
 
 	/* If all is well, the scheduler will now be running, and the following
 	line will never be reached.  If the following line does execute, then
@@ -159,7 +158,7 @@ static void prvQueueSendTask(void *pvParameters)
 	const unsigned long ulValueToSend = 100UL;
 	BaseType_t xReturned;
 
-	printf("Calling %s\n", __func__);
+	// printf("Calling %s\n", __func__);
 	/* Remove compiler warning about unused parameter. */
 	(void)pvParameters;
 
@@ -174,8 +173,10 @@ static void prvQueueSendTask(void *pvParameters)
 		toggle the LED.  0 is used as the block time so the sending operation
 		will not block - it shouldn't need to block as the queue should always
 		be empty at this point in the code. */
-		xReturned = xQueueSend(xQueue, &ulValueToSend, 0U);
-		configASSERT(xReturned == pdPASS);
+		//xReturned = xQueueSend(xQueue, &ulValueToSend, 0U);
+		//configASSERT(xReturned == pdPASS);
+		asm volatile("li x29, 0xFEDA");
+		asm volatile("li x29, 0xEDAF");
 	}
 }
 /*-----------------------------------------------------------*/

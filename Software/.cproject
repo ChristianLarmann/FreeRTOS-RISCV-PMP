@@ -63,6 +63,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/libs/sys_lib/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/assemblyStartup}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/core-v-freertos/kernel/portable/GCC/RISC-V}&quot;"/>
 								</option>
 								<inputType id="ilg.gnumcueclipse.managedbuild.cross.riscv.tool.assembler.input.1564231988" superClass="ilg.gnumcueclipse.managedbuild.cross.riscv.tool.assembler.input"/>
 							</tool>
