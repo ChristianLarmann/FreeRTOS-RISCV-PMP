@@ -134,6 +134,11 @@ assign          BT_RST = 1;   //UART doesn't drive RST pin
 
 assign	sys_reset_N = ~reset;
 
+// Debug
+wire unmapped_addr_requested;
+wire dmem_access_req_debug;
+assign unmapped_addr_requested = dmem_access_req_debug && HSEL_NOMAP;
+
 
 //clk_wiz_0
 //clk_wiz_0
@@ -212,7 +217,9 @@ RISC_V
 				  .debug_resume_i  ( 1'b0              ),
 				  //CPU CONTROL
 				  .fetch_enable_i(fetch_enable),
-				  .core_busy_o()
+				  .core_busy_o(),
+				  
+				  .dmem_access_req_debug_o ( dmem_access_req_debug )
 );
 
 //Address Decoder 

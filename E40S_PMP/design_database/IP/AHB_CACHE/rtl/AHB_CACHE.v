@@ -69,25 +69,13 @@ wire                            cache_req;
 wire                            cache_rdy;
 wire    [31:0]                  cache_din;
 
-// WIRES BETWEEN CACHE AND UA MODULE
-wire	[MEM_DATA_BITS-1:0]		cache_ua_rdata;
-wire	[MEM_DATA_BITS-1:0]		cache_ua_wdata;
-wire	[MEM_ADDR_BITS-1:0]		cache_ua_addr;
-wire							cache_ua_req;
-wire							cache_ua_write;
-wire							cache_ua_rdy;
-
-// WIRES TO MEMORY MODULE
-wire	[MEM_DATA_BITS-1:0]		mem_rdata;
-wire	[MEM_DATA_BITS-1:0]		mem_wdata;
-wire	[MEM_ADDR_BITS-1:0]		mem_addr;
-wire							mem_req;
-wire							mem_write;
-wire							mem_rdy;
-
-
-reg		[31:0]					delay;
-
+// WIRES BETWEEN CACHE AND BRAM
+wire	[MEM_DATA_BITS-1:0]		cache_mem_rdata;
+wire	[MEM_DATA_BITS-1:0]		cache_mem_wdata;
+wire	[MEM_ADDR_BITS-1:0]		cache_mem_addr;
+wire							cache_mem_req;
+wire							cache_mem_write;
+wire							cache_mem_rdy;
 
 
 reg cache_req_reg;
@@ -107,7 +95,7 @@ begin
         if(cache_rdy) begin
             cache_ctr = cache_ctr + 1;
         end
-        if(mem_rdy & !mem_write) begin
+        if(cache_mem_rdy & !cache_mem_write) begin
             mem_ctr = mem_ctr + 1;
         end 
     end	
@@ -230,66 +218,15 @@ cache
 		.cpu_byte_en	({byte3,byte2,byte1,byte0}),
 
 		// Memory side
-//		.mem_req		(mem_req),
-//		.mem_rw_enable 	(mem_write),
-//		.mem_address	(mem_addr),
-//		.mem_dout 		(mem_wdata),		
-//		.mem_ready		(mem_rdy),		
-//		.mem_din 		(mem_rdata)
-		
-		// To UA
-        .mem_req		(cache_ua_req),
-		.mem_rw_enable 	(cache_ua_write),
-		.mem_address	(cache_ua_addr),
-		.mem_dout 		(cache_ua_wdata),		
-		.mem_ready		(cache_ua_rdy),		
-		.mem_din 		(cache_ua_rdata)
+        .mem_req		(cache_mem_req),
+		.mem_rw_enable 	(cache_mem_write),
+		.mem_address	(cache_mem_addr),
+		.mem_dout 		(cache_mem_wdata),		
+		.mem_ready		(cache_mem_rdy),		
+		.mem_din 		(cache_mem_rdata)
     );
     
 
-    
-    
-// UA INSTANTIATION
-
-//(* dont_touch = "true" *) 
-//UA_encrypt
-//    #(
-    
-//    )
-//UA
-//    (
-//        .clock              (HCLK),
-//        .reset              (!HRESETn),
-        
-//        .cache_rdata        (cache_ua_rdata),
-//        .cache_wdata        (cache_ua_wdata),
-//        .cache_address      (cache_ua_addr),
-//        .cache_req          (cache_ua_req),
-//        .cache_rw_enable    (cache_ua_write),
-//        .cache_ready        (cache_ua_rdy),
-        
-//        .mem_rdata          (mem_rdata),
-//        .mem_wdata          (mem_wdata),
-//        .mem_address        (mem_addr),
-//        .mem_req            (mem_req),
-//        .mem_rw_enable      (mem_write),
-//        .mem_ready          (mem_rdy),
-        
-//        //.interrupt          (interrupt),
-        
-//        .debug              (UA_debug)
-//    );
-    
-/*
-ram1 ram (
-    .addra_0(mem_addr),
-    .clka_0(HCLK),
-    .dina_0(mem_wdata),
-    .douta_0(mem_rdata),
-    .ena_0(mem_req),
-    .wea_0(mem_write)
-);
-*/
 bram_memory
 		#(
 			.MEM_DATA_BITS(MEM_DATA_BITS),
@@ -299,36 +236,13 @@ bram_memory
 ram
 		(
 			.clk(HCLK),
-			.mem_req(cache_ua_req),
-			.mem_write(cache_ua_write),
-			.mem_addr(cache_ua_addr),
-			.mem_wdata(cache_ua_wdata),
-			.mem_rdata(cache_ua_rdata),
-			.data_valid(cache_ua_rdy)
-			
-//			.cache_rdata        (cache_ua_rdata),
-//        .cache_wdata        (cache_ua_wdata),
-//        .cache_address      (cache_ua_addr),
-//        .cache_req          (cache_ua_req),
-//        .cache_rw_enable    (cache_ua_write),
-//        .cache_ready        (cache_ua_rdy),
+			.rst(HRESETn),
+			.mem_req(cache_mem_req),
+			.mem_write(cache_mem_write),
+			.mem_addr(cache_mem_addr),
+			.mem_wdata(cache_mem_wdata),
+			.mem_rdata(cache_mem_rdata),
+            .mem_valid(cache_mem_rdy)  // TODO: Change
 		);
-//*/
 
-// Reading from memory 
-  
-  always @(posedge HCLK, negedge HRESETn)
-	begin
-		if (~HRESETn)
-			delay <= 0;
-		else
-			if (mem_req & (delay < MAIN_MEM_DELAY))
-				delay <= delay + 1;
-			else
-				delay <= 0;
-	end
-					
-    assign mem_rdy = (delay == MAIN_MEM_DELAY);
-    
 endmodule
-

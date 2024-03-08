@@ -8,7 +8,6 @@ LSU_RE_char = "0+!"
 
 # Address
 LSU_ADDR_char = "*!"
-# LSU_RVALID_char = ")!"  # Weird that there is no wvalid but it seems to work for both
 
 # Data
 LSU_WDATA_char = ".!"
@@ -36,13 +35,10 @@ success_counter = 0
 error_counter = 0
 
 
-def is_next_clock_cycle(signal_name: str):
-    if signal_name == "":
+def is_next_clock_cycle(name: str):
+    if name == "":
         return False
-    elif signal_name[0] == '#':
-        return True
-    else:
-        return False
+    return name[0] == '#'
 
 
 def extract_value_from_line(line_with_value):
@@ -71,7 +67,7 @@ def process_write_mem_access(timestamp):
 
     if we_at_req:  # Only write access relevant at lsu_req
         memory[offset] = current_write_data
-        # print( f"--- \tWrite {hex(current_write_data)} to {hex(current_address)} ")
+        print( f"--- \tWrite {hex(current_write_data)} to {hex(current_address)} ")
         address_was_written_to[offset] = True
         last_write_timestamp[offset] = timestamp
 
@@ -100,7 +96,8 @@ def get_timestamp(timestamp_line):
     return int(timestamp_line[1:])
 
 
-with open("mem_interface.vcd", 'r') as vcd:
+# with open("mem_interface.vcd", 'r') as vcd:
+with open("mem_interface_final.vcd", 'r') as vcd:
     for i, line in enumerate(vcd):
         if True:  # i < 1000000:  # Process only the first 10 lines
             signal_name: str = line.split(" ")[-1].strip()  # strip for removing \n

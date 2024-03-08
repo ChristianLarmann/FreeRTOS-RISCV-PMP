@@ -63,7 +63,10 @@ module riscv_top_ahb3lite #(
 
 					// CPU Control Signals
 					input  wire        fetch_enable_i,
-					output wire        core_busy_o
+					output wire        core_busy_o,
+					
+					// Debug
+					output wire        dmem_access_req_debug_o
 );
 
 wire			core_instr_req;
@@ -80,6 +83,10 @@ wire			core_lsu_we;
 wire [3:0]		core_lsu_be;
 wire [31:0]		core_lsu_rdata;
 wire [31:0]		core_lsu_wdata;
+
+
+// Debug
+assign dmem_access_req_debug_o = core_lsu_req;
 
 integer i;
 reg  [4:0] irq_id;
