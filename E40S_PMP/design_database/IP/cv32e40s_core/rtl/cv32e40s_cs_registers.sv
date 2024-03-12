@@ -1007,15 +1007,22 @@ module cv32e40s_cs_registers import cv32e40s_pkg::*;
 
     dcsr_n        = csr_next_value(dcsr_t'{
                                             xdebugver : dcsr_rdata.xdebugver,
+                                            zero2     : 10'b0,
+                                            ebreakvs  : 1'b0,
+                                            ebreakvu  : 1'b0,
                                             ebreakm   : csr_wdata_int[15],
+                                            zero1     : 1'b0,
+                                            ebreaks   : 1'b0,
                                             ebreaku   : dcsr_ebreaku_resolve(dcsr_rdata.ebreaku, csr_wdata_int[DCSR_EBREAKU_BIT]),
                                             stepie    : csr_wdata_int[11],
                                             stopcount : csr_wdata_int[10],
-                                            mprven    : dcsr_rdata.mprven,
-                                            step      : csr_wdata_int[2],
-                                            prv       : dcsr_prv_resolve(dcsr_rdata.prv, csr_wdata_int[DCSR_PRV_BIT_HIGH:DCSR_PRV_BIT_LOW]),
+                                            stoptime  : 1'b0,
                                             cause     : dcsr_rdata.cause,
-                                            default   : 'd0
+                                            v         : 1'b0,
+                                            mprven    : dcsr_rdata.mprven,
+                                            nmip      : 1'b0,
+                                            step      : csr_wdata_int[2],
+                                            prv       : dcsr_prv_resolve(dcsr_rdata.prv, csr_wdata_int[DCSR_PRV_BIT_HIGH:DCSR_PRV_BIT_LOW])
                                           },
                                     CSR_DCSR_MASK, DCSR_RESET_VAL);
     dcsr_we       = 1'b0;
