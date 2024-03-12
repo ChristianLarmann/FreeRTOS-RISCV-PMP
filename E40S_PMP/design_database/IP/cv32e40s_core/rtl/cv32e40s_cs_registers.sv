@@ -1035,12 +1035,28 @@ module cv32e40s_cs_registers import cv32e40s_pkg::*;
     tinfo_we      = 1'b0;
 
     mstatus_n     = csr_next_value(mstatus_t'{
+                                                sd: 1'b0,
+                                                zero3: 8'b0,
+                                                tsr: 1'b0,
                                               tw:   mstatus_tw_resolve(mstatus_rdata.tw, csr_wdata_int[MSTATUS_TW_BIT]),
-                                              mprv: mstatus_mprv_resolve(mstatus_rdata.mprv, csr_wdata_int[MSTATUS_MPRV_BIT]),
-                                              mpp:  mstatus_mpp_resolve(mstatus_rdata.mpp, csr_wdata_int[MSTATUS_MPP_BIT_HIGH:MSTATUS_MPP_BIT_LOW]),
+                                                tvm: 1'b0,
+                                                mxr: 1'b0,
+                                                sum: 1'b0,
+                                              mprv: mstatus_mprv_resolve(mstatus_rdata.mprv, csr_wdata_int[MSTATUS_MPRV_BIT]),                                            
+                                                xs: 2'b0,
+                                                fs: 2'b0,
+                                              mpp:  mstatus_mpp_resolve(mstatus_rdata.mpp, csr_wdata_int[MSTATUS_MPP_BIT_HIGH:MSTATUS_MPP_BIT_LOW]),                                                
+                                                vs: 2'b0,
+                                                spp: 1'b0,
                                               mpie: csr_wdata_int[MSTATUS_MPIE_BIT],
+                                                ube: 1'b0,
+                                                spie: 1'b0,
+                                                zero2: 1'b0,
                                               mie:  csr_wdata_int[MSTATUS_MIE_BIT],
-                                              default: 'b0
+                                                zero1: 1'b0,
+                                                sie: 1'b0,
+                                                zero0: 1'b0
+                                                // default: 'b0, /* If done like this then it behaves differently */
                                             },
                                   CSR_MSTATUS_MASK, MSTATUS_RESET_VAL);
     mstatus_we    = 1'b0;
