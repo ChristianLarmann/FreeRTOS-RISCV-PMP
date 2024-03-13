@@ -27,8 +27,6 @@
 
 #include "FreeRTOSConfig.h"
 
-#define DEFAULT_SYSTEM_CLOCK 50000000u /* Default System clock value */
-
 extern volatile uint32_t system_core_clock;
 
 void system_init(void);

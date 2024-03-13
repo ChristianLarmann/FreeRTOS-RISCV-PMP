@@ -52,7 +52,7 @@ __attribute__((section(".heap"), used)) uint8_t ucHeap[configTOTAL_HEAP_SIZE];
  */
 uint32_t __heap_size = configTOTAL_HEAP_SIZE;
 
-uint32_t volatile system_core_clock = DEFAULT_SYSTEM_CLOCK;
+uint32_t volatile system_core_clock = configCPU_CLOCK_HZ;
 
 /* FreeRTOS task handling */
 BaseType_t xTaskIncrementTick(void);
@@ -135,7 +135,8 @@ void vPortSetupTimerInterrupt(void)
 
 	/* No CLINT so use the PULP timer to generate the tick interrupt. */
 	/* TODO: configKERNEL_INTERRUPT_PRIORITY - 1 ? */
-	timer_irq_init(0xA00);//ARCHI_REF_CLOCK / configTICK_RATE_HZ);
+	timer_irq_init(configCPU_CLOCK_HZ / configTICK_RATE_HZ ); // Period 1ms (100MHz * (1 / 1000Hz))
+
 	/* TODO: allow setting interrupt priority (to super high(?)) */
 	irq_enable( (1UL << 0xb) ); // TODO: Rename
 }

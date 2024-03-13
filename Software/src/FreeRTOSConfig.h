@@ -31,9 +31,6 @@
 
 /* #include "clock_config.h" */ /* TODO: figure out our FLL/clock setup */
 
-
-#define DEFAULT_SYSTEM_CLOCK           50000000u /* Default System clock value */
-
 /*-----------------------------------------------------------
  * Application specific definitions.
  *
@@ -64,7 +61,7 @@
 #define configUSE_PREEMPTION			 1
 #define configUSE_IDLE_HOOK				 1
 #define configUSE_TICK_HOOK				 1
-#define configCPU_CLOCK_HZ				 DEFAULT_SYSTEM_CLOCK
+#define configCPU_CLOCK_HZ				 100000000u
 #define configTICK_RATE_HZ				 ( ( TickType_t ) 1000 )
 #define configMAX_PRIORITIES			 ( 5 )
 #define configMINIMAL_STACK_SIZE		 ( ( unsigned short ) 200 ) /* Can be as low as 60 but some of the demo tasks that use this constant require it to be higher. */
