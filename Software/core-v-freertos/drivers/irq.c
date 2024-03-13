@@ -34,12 +34,18 @@ void irq_mask(uint32_t mask)
 
 void irq_enable(uint32_t mask)
 {
-	writew(mask, (uintptr_t)(PULP_FC_IRQ_ADDR + IRQ_REG_MASK_SET_OFFSET));
+	uint32_t mie;
+	asm volatile("csrr %0, mie" : "=r"(mie));
+	mie |= mask;
+	asm volatile("csrw mie, %0" :: "r"(mie));
 }
 
 void irq_disable(uint32_t mask)
 {
-	writew(mask, (uintptr_t)(PULP_FC_IRQ_ADDR + IRQ_REG_MASK_CLEAR_OFFSET));
+	uint32_t mie;
+	asm volatile("csrr %0, mie" : "=r"(mie));
+	mie &= (~mask);
+	asm volatile("csrw mie, %0" :: "r"(mie));
 }
 
 /* utility functions for the core level interrupt (CLINT) described in the

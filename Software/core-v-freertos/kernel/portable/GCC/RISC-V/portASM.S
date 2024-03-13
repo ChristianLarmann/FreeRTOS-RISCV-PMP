@@ -414,12 +414,12 @@ freertos_risc_v_ctxt_handler:
 .func
 xPortStartFirstTask:
 
-#if( portasmHAS_SIFIVE_CLINT != 0 )
+#if( portasmHAS_SIFIVE_CLINT != 0 ) /* TODO: Can be 0? */
 	/* If there is a clint then interrupts can branch directly to the FreeRTOS
 	trap handler.  Otherwise the interrupt controller will need to be configured
 	outside of this file. */
-	la t0, freertos_risc_v_trap_handler
-	csrw mtvec, t0
+	// la t0, freertos_risc_v_trap_handler
+	// csrw mtvec, t0
 #endif /* portasmHAS_CLILNT */
 
 	load_x  sp, pxCurrentTCB			/* Load pxCurrentTCB. */

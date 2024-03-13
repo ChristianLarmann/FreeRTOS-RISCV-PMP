@@ -68,8 +68,8 @@ void (*isr_table[32])(void);
  */
 void system_init(void)
 {
-	extern int timer_irq_init(uint32_t ticks);
-	timer_irq_init(0x1000);
+//	extern int timer_irq_init(uint32_t ticks);
+//	timer_irq_init(0x50000);
 
 	/* init flls */
 //	for (int i = 0; i < ARCHI_NB_FLL; i++) {
@@ -85,7 +85,7 @@ void system_init(void)
 	/* Hook up isr table. This table is temporary until we figure out how to
 	 * do proper vectored interrupts.
 	 */
-	isr_table[0xa] = timer_irq_handler;
+	// isr_table[0xa] = timer_irq_handler; Not needed because in vector table already
 
 	/* mtvec is set in crt0.S */
 
@@ -135,9 +135,9 @@ void vPortSetupTimerInterrupt(void)
 
 	/* No CLINT so use the PULP timer to generate the tick interrupt. */
 	/* TODO: configKERNEL_INTERRUPT_PRIORITY - 1 ? */
-	timer_irq_init(ARCHI_REF_CLOCK / configTICK_RATE_HZ);
+	timer_irq_init(0xA00);//ARCHI_REF_CLOCK / configTICK_RATE_HZ);
 	/* TODO: allow setting interrupt priority (to super high(?)) */
-	irq_enable(IRQ_FC_EVT_TIMER0_LO);
+	irq_enable( (1UL << 0xb) ); // TODO: Rename
 }
 
 void vSystemIrqHandler(uint32_t mcause)
