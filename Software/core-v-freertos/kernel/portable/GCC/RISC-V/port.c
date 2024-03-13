@@ -151,6 +151,7 @@ BaseType_t xPortStartScheduler( void )
 {
 extern void xPortStartFirstTask( void );
 
+	// CL: Called
 	#if( configASSERT_DEFINED == 1 )
 	{
 		volatile uint32_t mtvec = 0;
@@ -162,6 +163,7 @@ extern void xPortStartFirstTask( void );
 		 * vector mode */
 		//configASSERT( ( mtvec & 0x03UL ) == 0 );
 
+		// CL: Called
 
 		/* Check alignment of the interrupt stack - which is the same as the
 		stack that was being used by main() prior to the scheduler being
@@ -176,25 +178,31 @@ extern void xPortStartFirstTask( void );
 	}
 	#endif /* configASSERT_DEFINED */
 
+	// CL: Called
+
 	/* If there is a CLINT then it is ok to use the default implementation
 	in this file, otherwise vPortSetupTimerInterrupt() must be implemented to
 	configure whichever clock is to be used to generate the tick interrupt. */
 	vPortSetupTimerInterrupt();
 
+	// CL: Called
 	#if( ( configMTIME_BASE_ADDRESS != 0 ) && ( configMTIMECMP_BASE_ADDRESS != 0 ) )
 	{
 		/* Enable mtime and external interrupts.  1<<7 for timer interrupt, 1<<11
 		for external interrupt.  _RB_ What happens here when mtime is not present as
 		with pulpino? */
 		__asm volatile( "csrs mie, %0" :: "r"(0x880) );
+		printf("Z4\n");
 	}
 	#else
 	{
+		// CL: Called
 		/* Enable external interrupts. */
 		__asm volatile( "csrs mie, %0" :: "r"(0x800) );
 	}
 	#endif /* ( configMTIME_BASE_ADDRESS != 0 ) && ( configMTIMECMP_BASE_ADDRESS != 0 ) */
 
+	// CL: Called
 	xPortStartFirstTask();
 
 	/* Should not get here as after calling xPortStartFirstTask() only tasks

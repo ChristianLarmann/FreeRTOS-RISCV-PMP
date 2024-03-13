@@ -104,7 +104,7 @@ void vSendString( const char * const pcString );
 int main( void )
 {
 	prvSetupHardware();
-	// printf("Hi!\n");
+	printf("q\n");
 
 	/* The mainCREATE_SIMPLE_BLINKY_DEMO_ONLY setting is described at the top
 	of this file. */
