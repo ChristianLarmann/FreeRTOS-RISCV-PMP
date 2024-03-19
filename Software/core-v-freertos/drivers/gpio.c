@@ -122,8 +122,8 @@ inline int gpio_port_clear_bits_raw(uint32_t mask)
 inline int gpio_port_toggle_bits(uint32_t mask)
 {
 	uint32_t outval =
-		readw((uintptr_t)(PULP_GPIO_ADDR + GPIO_PADOUT_OFFSET));
-	writew(outval ^ mask, (uintptr_t)(PULP_GPIO_ADDR + GPIO_PADOUT_OFFSET));
+		readw((uintptr_t)AHBDUMP_ADDR);
+	writew(outval ^ mask, (uintptr_t)AHBDUMP_ADDR);
 
 	return 0;
 }
