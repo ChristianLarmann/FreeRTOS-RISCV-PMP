@@ -79,7 +79,7 @@
 
 /* The rate at which data is sent to the queue.  The 200ms value is converted
 to ticks using the pdMS_TO_TICKS() macro. */
-#define mainQUEUE_SEND_FREQUENCY_MS pdMS_TO_TICKS(10)
+#define mainQUEUE_SEND_FREQUENCY_MS pdMS_TO_TICKS(4)
 
 /* The maximum number items the queue can hold.  The priority of the receiving
 task is above the priority of the sending task, so the receiving task will
@@ -108,39 +108,32 @@ static void prvQueueSendTask(void *pvParameters);
 /* The queue used by both tasks. */
 static QueueHandle_t xQueue = NULL;
 
-/*-----------------------------------------------------------*/
 
+/*-----------------------------------------------------------*/
 void main_blinky(void)
 {
-//	printf("Calling %s\n", __func__);
-//	printf("testing if 2nd call comes\n");
 	/* Create the queue. */
-	//xQueue = xQueueCreate(mainQUEUE_LENGTH, sizeof(uint32_t));
+	xQueue = xQueueCreate(mainQUEUE_LENGTH, sizeof(uint32_t));
 
-//	if (xQueue != NULL) {
-//		printf("Creating two tasks (xTaskCreate)\n");
+	if (xQueue != NULL) {
 		/* Start the two tasks as described in the comments at the top of this
 		file. */
-//		xTaskCreate(
-//			prvQueueReceiveTask, /* The function that implements the task. */
-//			"Rx", /* The text name assigned to the task - for debug only as it is not used by the kernel. */
-//			configMINIMAL_STACK_SIZE *
-//				2U, /* The size of the stack to allocate to the task. */
-//			NULL, /* The parameter passed to the task - not used in this case. */
-//			mainQUEUE_RECEIVE_TASK_PRIORITY, /* The priority assigned to the task. */
-//			NULL); /* The task handle is not required, so NULL is passed. */
-//		printf("created prvQueueReceveiTask\n");
+		xTaskCreate(
+			prvQueueReceiveTask, /* The function that implements the task. */
+			"Rx", /* The text name assigned to the task - for debug only as it is not used by the kernel. */
+			configMINIMAL_STACK_SIZE *
+				2U, /* The size of the stack to allocate to the task. */
+			NULL, /* The parameter passed to the task - not used in this case. */
+			mainQUEUE_RECEIVE_TASK_PRIORITY, /* The priority assigned to the task. */
+			NULL); /* The task handle is not required, so NULL is passed. */
 
 		xTaskCreate(prvQueueSendTask, "TX",
 			    configMINIMAL_STACK_SIZE * 2U, NULL,
-			    3, NULL);
-//		printf("created prvQueueSendTask\n");
+			    mainQUEUE_SEND_TASK_PRIORITY, NULL);
 
-	    printf("vSS\n");
-//		printf("Starting scheduler (vTaskStartScheduler)\n");
 		/* Start the tasks and timer running. */
 		vTaskStartScheduler();
-//	}
+	}
 
 	/* If all is well, the scheduler will now be running, and the following
 	line will never be reached.  If the following line does execute, then
@@ -159,7 +152,6 @@ static void prvQueueSendTask(void *pvParameters)
 	const unsigned long ulValueToSend = 100UL;
 	BaseType_t xReturned;
 
-//	printf("HI!");
 	/* Remove compiler warning about unused parameter. */
 	(void)pvParameters;
 
@@ -168,19 +160,14 @@ static void prvQueueSendTask(void *pvParameters)
 
 	for (;;) {
 		/* Place this task in the blocked state until it is time to run again. */
-
-		asm volatile("li x29, 0xFEDA");
-		asm volatile("li x29, 0xEDAF");
 		vTaskDelayUntil(&xNextWakeTime, mainQUEUE_SEND_FREQUENCY_MS);
 
-		asm volatile("li x29, 0xAAAA");
-		asm volatile("li x29, 0xCCCC");
 		/* Send to the queue - causing the queue receive task to unblock and
 		toggle the LED.  0 is used as the block time so the sending operation
 		will not block - it shouldn't need to block as the queue should always
 		be empty at this point in the code. */
-		//xReturned = xQueueSend(xQueue, &ulValueToSend, 0U);
-		//configASSERT(xReturned == pdPASS);
+		xReturned = xQueueSend(xQueue, &ulValueToSend, 0U);
+		configASSERT(xReturned == pdPASS);
 	}
 }
 /*-----------------------------------------------------------*/
@@ -194,7 +181,6 @@ static void prvQueueReceiveTask(void *pvParameters)
 	extern void vSendString(const char *const pcString);
 	extern void vToggleLED(void);
 
-//	printf("Calling %s\n", __func__);
 	/* Remove compiler warning about unused parameter. */
 	(void)pvParameters;
 
@@ -207,12 +193,15 @@ static void prvQueueReceiveTask(void *pvParameters)
 		/*  To get here something must have been received from the queue, but
 		is it the expected value?  If it is, toggle the LED. */
 		if (ulReceivedValue == ulExpectedValue) {
-			vSendString(pcPassMessage);
+//			vSendString(pcPassMessage);
 			vToggleLED();
+			asm volatile("li x29, 0xaaaa");
+			asm volatile("li x29, 0xbbbb");
 			ulReceivedValue = 0U;
-		} else {
-			vSendString(pcFailMessage);
 		}
+//		else {
+////			vSendString(pcFailMessage);
+//		}
 	}
 }
-/*-----------------------------------------------------------*/
+

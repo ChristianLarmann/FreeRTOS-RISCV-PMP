@@ -14,12 +14,12 @@ module bram_memory
 				input [MEM_DATA_BITS-1:0]	mem_wdata,
 				
 				output reg [MEM_DATA_BITS-1:0]	mem_rdata,
-				output reg                  mem_ready,  // CL: Probably not used as ready but as valid
-                output wire                  mem_valid   // memory available after delay
+				output reg                  mem_ready,
+                output wire                  mem_valid   // data available after artificial mem-access delay
 			);
 
 // Memory Array initialization
-reg     [MEM_DATA_BITS:0]       memory[0:(2**(MEM_ADDR_BITS)-1)];
+reg     [MEM_DATA_BITS-1:0]       memory[0:(2**(MEM_ADDR_BITS)-1)];
 //wire we;
 integer i;
 reg		[31:0]					delay;
@@ -47,13 +47,15 @@ end
 // we = mem_req & mem_write; 
 always @(posedge clk, negedge rst)
 begin
-    if (~rst)
+    if (~rst) 
+    begin
         delay <= 0;
+        mem_ready <= 1;
+    end
     else 
     begin
         if(mem_write)
         begin
-           mem_rdata 			<= mem_wdata;
            memory[mem_addr] 	<= mem_wdata;		
         end
         else
