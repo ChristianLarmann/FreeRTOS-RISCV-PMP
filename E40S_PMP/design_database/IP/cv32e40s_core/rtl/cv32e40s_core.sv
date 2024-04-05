@@ -1190,7 +1190,8 @@ module cv32e40s_core import cv32e40s_pkg::*;
 
         // External interrupt lines
         // PMP error connected to interrupt 16
-        .irq_i                ( {irq_i[31:17], mpu_err_if_or_lsu, irq_i[15:0]} ),
+       // .irq_i                ( {irq_i[31:17], mpu_err_if_or_lsu, irq_i[15:0]} ),
+       .irq_i                ( irq_i ),
 
 
         // To controller
