@@ -115,19 +115,19 @@ static QueueHandle_t xQueue = NULL;
 void main_blinky(void)
 {
 	/* Create the queue. */
-	// xQueue = xQueueCreate(mainQUEUE_LENGTH, sizeof(uint32_t));
+	xQueue = xQueueCreate(mainQUEUE_LENGTH, sizeof(uint32_t));
 
-	// if (xQueue != NULL) {
+	if (xQueue != NULL) {
 		/* Start the two tasks as described in the comments at the top of this
 		file. */
-		// xTaskCreate(
-		// 	prvQueueReceiveTask, /* The function that implements the task. */
-		// 	"Rx", /* The text name assigned to the task - for debug only as it is not used by the kernel. */
-		// 	configMINIMAL_STACK_SIZE *
-		// 		2U, /* The size of the stack to allocate to the task. */
-		// 	NULL, /* The parameter passed to the task - not used in this case. */
-		// 	mainQUEUE_RECEIVE_TASK_PRIORITY, /* The priority assigned to the task. */
-		// 	NULL); /* The task handle is not required, so NULL is passed. */
+		xTaskCreate(
+			prvQueueReceiveTask, /* The function that implements the task. */
+			"Rx", /* The text name assigned to the task - for debug only as it is not used by the kernel. */
+			configMINIMAL_STACK_SIZE *
+				2U, /* The size of the stack to allocate to the task. */
+			NULL, /* The parameter passed to the task - not used in this case. */
+			mainQUEUE_RECEIVE_TASK_PRIORITY, /* The priority assigned to the task. */
+			NULL); /* The task handle is not required, so NULL is passed. */
 
 		xTaskCreate(prvQueueSendTask, "TX",
 			    configMINIMAL_STACK_SIZE * 2U, NULL,
@@ -150,7 +150,7 @@ void main_blinky(void)
 
 		/* Start the tasks and timer running. */
 		vTaskStartScheduler();
-	// }
+	}
 
 	/* If all is well, the scheduler will now be running, and the following
 	line will never be reached.  If the following line does execute, then
@@ -205,8 +205,8 @@ static void prvQueueSendTask(void *pvParameters)
 		toggle the LED.  0 is used as the block time so the sending operation
 		will not block - it shouldn't need to block as the queue should always
 		be empty at this point in the code. */
-		// xReturned = xQueueSend(xQueue, &ulValueToSend, 0U);
-		// configASSERT(xReturned == pdPASS);
+		xReturned = xQueueSend(xQueue, &ulValueToSend, 0U);
+		configASSERT(xReturned == pdPASS);
 	}
 }
 /*-----------------------------------------------------------*/
@@ -233,9 +233,9 @@ static void prvQueueReceiveTask(void *pvParameters)
 		is it the expected value?  If it is, toggle the LED. */
 		if (ulReceivedValue == ulExpectedValue) {
 //			vSendString(pcPassMessage);
-			vToggleLED();
-			asm volatile("li x29, 0xaaaa");
-			asm volatile("li x29, 0xbbbb");
+			// vToggleLED();
+			asm volatile("li x29, 0xbcda");
+			asm volatile("li x29, 0xdddd");
 			ulReceivedValue = 0U;
 		}
 //		else {
