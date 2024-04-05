@@ -70,6 +70,12 @@ extern "C" {
 #if ( configUSE_NEWLIB_REENTRANT == 1 )
 	#include <reent.h>
 #endif
+
+/* Enable assertion messages */
+#ifdef __PULP_USE_LIBC
+	#include <assert.h>
+#endif
+
 /*
  * Check all the required application specific macros have been defined.
  * These macros are application specific and (as downloaded) are defined
@@ -988,7 +994,7 @@ currently used in ARMv8M ports. */
 /* Set configENABLE_FPU to 1 to enable FPU support and 0 to disable it. This is
 currently used in ARMv8M ports. */
 #ifndef configENABLE_FPU
-	#define configENABLE_FPU 1
+	#define configENABLE_FPU 0
 #endif
 
 /* Set configENABLE_TRUSTZONE to 1 enable TrustZone support and 0 to disable it.

@@ -40,14 +40,14 @@ vector_table:
 	j freertos_risc_v_trap_handler
 	j freertos_risc_v_trap_handler
 #ifdef PULP_FREERTOS_VECTORED_CONTEXT_SWITCH
-	j freertos_risc_v_ctxt_handler
+	j freertos_risc_v_trap_handler
 #else
 	j freertos_risc_v_trap_handler
 #endif
 #ifdef __HACK_FIRMWARE_OPT1 /* TODO: properly do this with weak symbols */
 	j TIMER1_IRQ_handler
 #else
-	j freertos_risc_v_ctxt_handler
+	j freertos_risc_v_trap_handler
 #endif
 	j freertos_risc_v_trap_handler
 	j freertos_risc_v_trap_handler

@@ -146,3 +146,8 @@ void vSystemIrqHandler(uint32_t mcause)
 	extern void (*isr_table[32])(void);
 	isr_table[mcause & 0x1f]();
 }
+
+void vSystemExcHandler(uint32_t mcause)
+{
+	while (true) {}
+}

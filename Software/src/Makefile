@@ -66,15 +66,24 @@ include $(FREERTOS_PROJ_ROOT)/metal_srcs.mk
 PROG = blinky
 
 # application/user specific code
-USER_SRCS = main.c blinky_demo/main_blinky.c
+USER_SRCS = main.c blinky_demo/main_blinky.c 
 
 # user headers
 CPPFLAGS += $(addprefix -I$(VPATH)/, ".")
 #CFLAGS += -gdwarf-4
 
 # point to irq handler
-CPPFLAGS += -DportasmHANDLE_INTERRUPT=vSystemIrqHandler
+CPPFLAGS += -DportHANDLE_INTERRUPT=vSystemIrqHandler
+CPPFLAGS += -DportHANDLE_EXCEPTION=vSystemIrqHandler
 CPPFLAGS += -DmainCREATE_SIMPLE_BLINKY_DEMO_ONLY=1
 
 # compile, simulation and analysis targets
 include $(FREERTOS_PROJ_ROOT)/default_targets.mk
+
+# Shorten the filenames in the .lst file
+$(shell sed -i 's/home\/christian\/Documents\/CESE\/Thesis\/FreeRTOS-RISCV-PMP\/Software/PROJ_ROOT/g' blinky.lst)
+# Generate and move .dat files to the Vivado Simulation Folder
+$(shell bash ./srec2dat.sh)
+$(shell cp ./code.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
+$(shell cp ./data.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
+

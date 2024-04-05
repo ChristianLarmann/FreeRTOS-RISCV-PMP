@@ -32,6 +32,9 @@ SRCS += $(dir)/portable/GCC/RISC-V/port.c
 SRCS += $(dir)/portable/GCC/RISC-V/portASM.S
 # memory managment
 SRCS += $(dir)/portable/MemMang/heap_1.c
+# MPU wrappers
+SRCS += $(dir)/portable/Common/mpu_wrappers.c
+SRCS += $(dir)/portable/GCC/RISC-V/pmp.c
 # freertos generic headers
 CV_CPPFLAGS += -I"$(dir)/include"
 CV_CPPFLAGS += -I"$(dir)/portable/GCC/RISC-V"

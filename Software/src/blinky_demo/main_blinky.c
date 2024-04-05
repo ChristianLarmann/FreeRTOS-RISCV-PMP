@@ -72,6 +72,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
+#include "mpu_prototypes.h"
 
 /* Priorities used by the tasks. */
 #define mainQUEUE_RECEIVE_TASK_PRIORITY (tskIDLE_PRIORITY + 2)
@@ -102,6 +103,7 @@ void main_blinky(void);
  */
 static void prvQueueReceiveTask(void *pvParameters);
 static void prvQueueSendTask(void *pvParameters);
+static void prvLedTask(void *pvParameters);
 
 /*-----------------------------------------------------------*/
 
@@ -113,27 +115,42 @@ static QueueHandle_t xQueue = NULL;
 void main_blinky(void)
 {
 	/* Create the queue. */
-	xQueue = xQueueCreate(mainQUEUE_LENGTH, sizeof(uint32_t));
+	// xQueue = xQueueCreate(mainQUEUE_LENGTH, sizeof(uint32_t));
 
-	if (xQueue != NULL) {
+	// if (xQueue != NULL) {
 		/* Start the two tasks as described in the comments at the top of this
 		file. */
-		xTaskCreate(
-			prvQueueReceiveTask, /* The function that implements the task. */
-			"Rx", /* The text name assigned to the task - for debug only as it is not used by the kernel. */
-			configMINIMAL_STACK_SIZE *
-				2U, /* The size of the stack to allocate to the task. */
-			NULL, /* The parameter passed to the task - not used in this case. */
-			mainQUEUE_RECEIVE_TASK_PRIORITY, /* The priority assigned to the task. */
-			NULL); /* The task handle is not required, so NULL is passed. */
+		// xTaskCreate(
+		// 	prvQueueReceiveTask, /* The function that implements the task. */
+		// 	"Rx", /* The text name assigned to the task - for debug only as it is not used by the kernel. */
+		// 	configMINIMAL_STACK_SIZE *
+		// 		2U, /* The size of the stack to allocate to the task. */
+		// 	NULL, /* The parameter passed to the task - not used in this case. */
+		// 	mainQUEUE_RECEIVE_TASK_PRIORITY, /* The priority assigned to the task. */
+		// 	NULL); /* The task handle is not required, so NULL is passed. */
 
 		xTaskCreate(prvQueueSendTask, "TX",
 			    configMINIMAL_STACK_SIZE * 2U, NULL,
 			    mainQUEUE_SEND_TASK_PRIORITY, NULL);
 
+
+		// TaskParameters_t xLedTaskParams =
+		// {
+		// 	.pvTaskCode		= prvLedTask,
+		// 	.pcName			= "LED",
+		// 	.usStackDepth	= configMINIMAL_STACK_SIZE,
+		// 	.pvParameters	= NULL,
+		// 	.uxPriority		= 1,
+		// 	.puxStackBuffer	= NULL,
+		// 	.xRegions		= NULL
+		// };
+
+		// xTaskCreateRestricted(&xLedTaskParams, NULL);
+
+
 		/* Start the tasks and timer running. */
 		vTaskStartScheduler();
-	}
+	// }
 
 	/* If all is well, the scheduler will now be running, and the following
 	line will never be reached.  If the following line does execute, then
@@ -145,6 +162,25 @@ void main_blinky(void)
 		;
 }
 /*-----------------------------------------------------------*/
+static void prvLedTask(void *pvParameters){
+
+	TickType_t xNextWakeTime;
+	const unsigned long ulValueToSend = 100UL;
+	BaseType_t xReturned;
+
+	/* Remove compiler warning about unused parameter. */
+	(void)pvParameters;
+
+	/* Initialise xNextWakeTime - this only needs to be done once. */
+	xNextWakeTime = xTaskGetTickCount();
+
+	for (;;) {
+		/* Place this task in the blocked state until it is time to run again. */
+		vTaskDelayUntil(&xNextWakeTime, pdMS_TO_TICKS(3));
+		gpio_pin_toggle( 0x1 );
+	}
+
+}
 
 static void prvQueueSendTask(void *pvParameters)
 {
@@ -160,14 +196,17 @@ static void prvQueueSendTask(void *pvParameters)
 
 	for (;;) {
 		/* Place this task in the blocked state until it is time to run again. */
+		asm volatile("li x29, 0xaaaa");
+		asm volatile("li x29, 0xbbbb");
+
 		vTaskDelayUntil(&xNextWakeTime, mainQUEUE_SEND_FREQUENCY_MS);
 
 		/* Send to the queue - causing the queue receive task to unblock and
 		toggle the LED.  0 is used as the block time so the sending operation
 		will not block - it shouldn't need to block as the queue should always
 		be empty at this point in the code. */
-		xReturned = xQueueSend(xQueue, &ulValueToSend, 0U);
-		configASSERT(xReturned == pdPASS);
+		// xReturned = xQueueSend(xQueue, &ulValueToSend, 0U);
+		// configASSERT(xReturned == pdPASS);
 	}
 }
 /*-----------------------------------------------------------*/

@@ -106,6 +106,12 @@ int main( void )
 	prvSetupHardware();
 	printf("q\n");
 
+	static __attribute__ ((aligned(16))) StackType_t xISRStack[ configMINIMAL_STACK_SIZE  + 1 ] __attribute__ ((section (".heap"))) ;
+	extern BaseType_t xPortFreeRTOSInit( StackType_t xIsrStack );
+    if ( 0 != xPortFreeRTOSInit((StackType_t)&( xISRStack[ ( (configMINIMAL_STACK_SIZE - 1) & ~portBYTE_ALIGNMENT_MASK ) ] ))) {
+		_exit(-1);
+	}
+
 	/* The mainCREATE_SIMPLE_BLINKY_DEMO_ONLY setting is described at the top
 	of this file. */
 	#if( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 )

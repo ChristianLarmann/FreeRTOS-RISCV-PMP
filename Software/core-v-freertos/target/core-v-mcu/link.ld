@@ -79,6 +79,7 @@ SECTIONS
 
   .text __boot_address :
   {
+    __unprivileged_section_start__ = .;
     _stext = .;
     *(.text.start)
     *(.text)
@@ -265,8 +266,7 @@ SECTIONS
     __sdata_begin = .;
     *(.sdata);
     *(.sdata.*)
-    *(.sdata2.*) /* FreeRTOS xISRStackTop, __global_impure_ptr */
-    *(.heapl2ram)
+    *(.sdata2.*) /* FreeRTOS xISRStackTop, __global_impure_ptr */ *(.heapl2ram)
     *(.fcTcdm)
     *(.fcTcdm.*)
     *(.fcTcdm_g)
@@ -291,8 +291,26 @@ SECTIONS
     __bss_end = .;
     _bss_end = .;
     _end = .; /* man 3 end: first addr after bss */
+    __unprivileged_section_end__ = .;
+
+
+    /* Sub section for e.g. privilege_status to avoid overlapping PMP regions as this variable is write-only */
+    . = . + 128;
+    . = ALIGN(8); 
+    __unprivileged_RO_section_start__ = .; 
+    KEEP(*(.unprivileged_RO_section)) 
+    __unprivileged_RO_section_end__ = .; 
   } > L2
 
+  .privileged_data (NOLOAD) : ALIGN(32) {
+        __privileged_data_start__ = .;
+		*(privileged_data)
+		/* Non kernel data is kept out of the first _Privileged_Data_Region_Size
+		bytes of SRAM. */
+        . = ALIGN(32);
+		__privileged_data_end__ = .;
+	} > L2
+ 
 
   /* The compiler uses this to access data in the .sdata, .data, .sbss and .bss
      sections with fewer instructions (relaxation). This reduces code size. */

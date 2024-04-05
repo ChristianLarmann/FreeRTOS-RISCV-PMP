@@ -32,6 +32,8 @@ SRCS += $(dir)/portable/GCC/RISC-V/port.c
 SRCS += $(dir)/portable/GCC/RISC-V/portASM.S
 # memory managment
 SRCS += $(dir)/portable/MemMang/heap_1.c
+# FreeRTOS init
+SRCS += $(FREERTOS_PROJ_ROOT)/src/init.c
 # freertos generic headers
 CV_CPPFLAGS += -I"$(dir)/include"
 CV_CPPFLAGS += -I"$(dir)/portable/GCC/RISC-V"

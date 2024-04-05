@@ -88,3 +88,5 @@ Software/.vscode/c_cpp_properties.json
 Software/.vscode/tasks.json
 
 Software/.vscode/settings.json
+
+*.pyc

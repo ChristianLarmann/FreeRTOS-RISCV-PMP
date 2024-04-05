@@ -43,16 +43,6 @@
  * See http://www.freertos.org/a00110.html.
  *----------------------------------------------------------*/
 
-#include <stddef.h>
-#ifdef __PULP_USE_LIBC
-	#include <assert.h>
-#endif
-
-/* Ensure stdint is only used by the compiler, and not the assembler. */
-#if defined( __GNUC__ )
-    #include <stdint.h>
-#endif
-
 // CL: Deprecated and replaced
 // #define configCLINT_BASE_ADDRESS		 0 /* There is no CLINT so the base address must be set to 0. */
 #define configMTIME_BASE_ADDRESS 0
