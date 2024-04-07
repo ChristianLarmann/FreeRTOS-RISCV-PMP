@@ -133,19 +133,20 @@ void main_blinky(void)
 			    configMINIMAL_STACK_SIZE * 2U, NULL,
 			    mainQUEUE_SEND_TASK_PRIORITY, NULL);
 
+    	char ledTaskStack[ 1024 ] __attribute__((aligned(1024)));
 
-		// TaskParameters_t xLedTaskParams =
-		// {
-		// 	.pvTaskCode		= prvLedTask,
-		// 	.pcName			= "LED",
-		// 	.usStackDepth	= configMINIMAL_STACK_SIZE,
-		// 	.pvParameters	= NULL,
-		// 	.uxPriority		= 1,
-		// 	.puxStackBuffer	= NULL,
-		// 	.xRegions		= NULL
-		// };
+		TaskParameters_t xLedTaskParams =
+		{
+			.pvTaskCode		= prvLedTask,
+			.pcName			= "LED",
+			.usStackDepth	= configMINIMAL_STACK_SIZE,
+			.pvParameters	= NULL,
+			.uxPriority		= 1,
+			.puxStackBuffer	= ledTaskStack,
+			.xRegions		= NULL
+		};
 
-		// xTaskCreateRestricted(&xLedTaskParams, NULL);
+		xTaskCreateRestricted(&xLedTaskParams, NULL);
 
 
 		/* Start the tasks and timer running. */
@@ -177,7 +178,9 @@ static void prvLedTask(void *pvParameters){
 	for (;;) {
 		/* Place this task in the blocked state until it is time to run again. */
 		vTaskDelayUntil(&xNextWakeTime, pdMS_TO_TICKS(3));
-		gpio_pin_toggle( 0x1 );
+		// gpio_pin_toggle( 0x1 );
+		asm volatile("li x29, 0x6666");
+		asm volatile("li x29, 0x7777");
 	}
 
 }
