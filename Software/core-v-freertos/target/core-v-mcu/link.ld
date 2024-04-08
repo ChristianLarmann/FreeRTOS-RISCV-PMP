@@ -40,7 +40,7 @@ MEMORY
 SECTIONS
 {
 
-  PROVIDE(__boot_address = 0x1c000880);
+  PROVIDE(__boot_address = 0x1c005000);
   /* stack and heap related settings */
   __stack_size = DEFINED(__stack_size) ? __stack_size : 0x800;
   PROVIDE(__stack_size = __stack_size);
@@ -76,6 +76,10 @@ SECTIONS
     __vector_start = .;
     KEEP(*(.vectors))
   } > L2
+
+  .privileged_functions : ALIGN(256) {
+		*(privileged_functions)
+	} > L2
 
   .text __boot_address :
   {
@@ -295,7 +299,6 @@ SECTIONS
 
 
     /* Sub section for e.g. privilege_status to avoid overlapping PMP regions as this variable is write-only */
-    . = . + 128;
     . = ALIGN(8); 
     __unprivileged_RO_section_start__ = .; 
     KEEP(*(.unprivileged_RO_section)) 
@@ -317,7 +320,7 @@ SECTIONS
     PROVIDE(__global_pointer$ = MIN(__sdata_begin + 0x800,
 			    MAX(__data_begin + 0x800, __bss_end - 0x800)));
 
-  .heap : ALIGN(16)
+  .heap : ALIGN(4096)
   {
     __heap_start = .;
     /* . += __heap_size; */
@@ -329,7 +332,7 @@ SECTIONS
   } > L2
 
 
-  .stack : ALIGN(16)
+  .stack : ALIGN(4096)
   {
     stack_start = .;
     __stack_bottom = .;

@@ -56,7 +56,8 @@ module SECURE_PLATFORM_RI5CY
 
 wire [7:0] LEDS;
 assign output_LEDS = LEDS[7:0];
-localparam BOOT_ADDR = 32'h1c000800;
+localparam BOOT_ADDR = 32'h1c005000;
+localparam INST_BASE_ADDR = 32'h1c000800;
 
 //Address, Control & Write Data Signals
 wire [31:0]		HADDR_INST; //Do not get confuse with this signal
@@ -170,7 +171,7 @@ assign sys_clock = clock;
 
 (* dont_touch = "true" *) riscv_top_ahb3lite 
 #(
-	.BOOT_ADDR(BOOT_ADDR + 8'h80)
+	.BOOT_ADDR(BOOT_ADDR)
 )
 RISC_V
 (
@@ -282,7 +283,7 @@ RISC_V
 ///////////////////////////////////////////
 
 //AHBLite Instruction Memory 
-assign HADDR_INST = (ins_HADDR-BOOT_ADDR);
+assign HADDR_INST = (ins_HADDR-INST_BASE_ADDR);
 
  AHB_CACHE #(.MEM_ADDR_BITS(12),.INSTRUCTION(1)) uAHB2MEM (
 	//AHBLITE Signals
