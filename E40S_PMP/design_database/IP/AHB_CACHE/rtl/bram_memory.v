@@ -45,7 +45,7 @@ end
 
 // MAIN MEMORY INSTANTIATION
 // we = mem_req & mem_write; 
-always @(posedge clk, negedge rst)
+always @(posedge clk)  // CL: if rst is included in sensitivity list, synthesis fails
 begin
     if (~rst) 
     begin
