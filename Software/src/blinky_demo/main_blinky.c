@@ -120,6 +120,7 @@ void main_blinky(void)
 	if (xQueue != NULL) {
 		/* Start the two tasks as described in the comments at the top of this
 		file. */
+		asm volatile("li x28, 0x10" ::: "x28");
 		xTaskCreate(
 			prvQueueReceiveTask, /* The function that implements the task. */
 			"Rx", /* The text name assigned to the task - for debug only as it is not used by the kernel. */
@@ -129,6 +130,7 @@ void main_blinky(void)
 			mainQUEUE_RECEIVE_TASK_PRIORITY, /* The priority assigned to the task. */
 			NULL); /* The task handle is not required, so NULL is passed. */
 
+		asm volatile("li x28, 0x20" ::: "x28");
 		xTaskCreate(prvQueueSendTask, "TX",
 			    configMINIMAL_STACK_SIZE * 2U, NULL,
 			    mainQUEUE_SEND_TASK_PRIORITY, NULL);
@@ -146,6 +148,7 @@ void main_blinky(void)
 			.xRegions		= NULL
 		};
 
+		asm volatile("li x28, 0x30" ::: "x28");
 		xTaskCreateRestricted(&xLedTaskParams, NULL);
 
 
@@ -175,14 +178,18 @@ static void prvLedTask(void *pvParameters){
 	/* Initialise xNextWakeTime - this only needs to be done once. */
 	xNextWakeTime = xTaskGetTickCount();
 
+	uint32_t* heapVar = (uint32_t*) MPU_pvPortMalloc(sizeof(uint32_t));
+	
+	asm volatile("li x28, 0x70" ::: "x28");
+	asm volatile("mv x28, %0" :: "r" (heapVar) : "x28");
+
 	for (;;) {
 		/* Place this task in the blocked state until it is time to run again. */
 		vTaskDelayUntil(&xNextWakeTime, pdMS_TO_TICKS(3));
 		// gpio_pin_toggle( 0x1 );
-		asm volatile("li x29, 0x6666");
-		asm volatile("li x29, 0x7777");
+		asm volatile("li x29, 0x6666" ::: "x29");
+		asm volatile("li x29, 0x7777" ::: "x29");
 	}
-
 }
 
 static void prvQueueSendTask(void *pvParameters)
@@ -197,10 +204,16 @@ static void prvQueueSendTask(void *pvParameters)
 	/* Initialise xNextWakeTime - this only needs to be done once. */
 	xNextWakeTime = xTaskGetTickCount();
 
+	// *heapVar = 0x4ea5;
+
 	for (;;) {
 		/* Place this task in the blocked state until it is time to run again. */
-		asm volatile("li x29, 0xaaaa");
-		asm volatile("li x29, 0xbbbb");
+		asm volatile("li x29, 0xaaaa" ::: "x29");
+
+		// asm volatile("mv x28, %0" :: "r" (heapVar) : "x28");
+		// asm volatile("lw x29, 0(x28)" ::: "x29");
+
+		asm volatile("li x29, 0xbbbb" ::: "x29");
 
 		vTaskDelayUntil(&xNextWakeTime, mainQUEUE_SEND_FREQUENCY_MS);
 
@@ -218,8 +231,8 @@ static void prvQueueReceiveTask(void *pvParameters)
 {
 	unsigned long ulReceivedValue;
 	const unsigned long ulExpectedValue = 100UL;
-	const char *const pcPassMessage = "Blink\r\n";
-	const char *const pcFailMessage = "Unexpected value received\r\n";
+	// const char *const pcPassMessage = "Blink\r\n";
+	// const char *const pcFailMessage = "Unexpected value received\r\n";
 	extern void vSendString(const char *const pcString);
 	extern void vToggleLED(void);
 
@@ -237,8 +250,8 @@ static void prvQueueReceiveTask(void *pvParameters)
 		if (ulReceivedValue == ulExpectedValue) {
 //			vSendString(pcPassMessage);
 			// vToggleLED();
-			asm volatile("li x29, 0xbcda");
-			asm volatile("li x29, 0xdddd");
+			asm volatile("li x29, 0x2222" ::: "x29");
+			asm volatile("li x29, 0x3333" ::: "x29");
 			ulReceivedValue = 0U;
 		}
 //		else {

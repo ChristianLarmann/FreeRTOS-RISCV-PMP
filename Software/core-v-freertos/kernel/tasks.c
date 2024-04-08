@@ -694,6 +694,7 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 			on the implementation of the port malloc function and whether or
 			not static allocation is being used. */
 			pxNewTCB = ( TCB_t * ) pvPortMalloc( sizeof( TCB_t ) );
+			    asm volatile("mv x28, %0" :: "r" (pxNewTCB) : "x28");
 
 			if( pxNewTCB != NULL )
 			{
@@ -772,10 +773,13 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 			/* Allocate space for the stack used by the task being created. */
 			pxStack = pvPortMalloc( ( ( ( size_t ) usStackDepth ) * sizeof( StackType_t ) ) ); /*lint !e9079 All values returned by pvPortMalloc() have at least the alignment required by the MCU's stack and this allocation is the stack. */
 
+
+
 			if( pxStack != NULL )
 			{
 				/* Allocate space for the TCB. */
 				pxNewTCB = ( TCB_t * ) pvPortMalloc( sizeof( TCB_t ) ); /*lint !e9087 !e9079 All values returned by pvPortMalloc() have at least the alignment required by the MCU's stack, and the first member of TCB_t is always a pointer to the task's stack. */
+			asm volatile("mv x28, %0" :: "r" (pxNewTCB) : "x28");
 
 				if( pxNewTCB != NULL )
 				{
