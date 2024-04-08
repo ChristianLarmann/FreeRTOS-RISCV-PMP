@@ -126,6 +126,9 @@ module cv32e40s_controller_fsm import cv32e40s_pkg::*;
   output logic        fencei_flush_req_o,
   input logic         fencei_flush_ack_i,
 
+  // CL: Added to not miss interrupts
+  output logic irq_gnt_ctrl_o,
+
   // Data OBI interface monitor
   cv32e40s_if_c_obi.monitor m_c_obi_data_if
 );
@@ -1511,5 +1514,6 @@ assign ctrl_fsm_o.exception_in_wb = exception_in_wb;
   assign ctrl_fsm_o.debug_havereset = debug_fsm_cs[HAVERESET_INDEX];
   assign ctrl_fsm_o.debug_running   = debug_fsm_cs[RUNNING_INDEX];
   assign ctrl_fsm_o.debug_halted    = debug_fsm_cs[HALTED_INDEX];
+  assign irq_gnt_ctrl_o = pending_interrupt && interrupt_allowed;
 
 endmodule

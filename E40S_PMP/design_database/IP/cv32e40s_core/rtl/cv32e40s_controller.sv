@@ -95,6 +95,8 @@ module cv32e40s_controller import cv32e40s_pkg::*;
   input  logic        irq_clic_shv_i,
   input  logic [7:0]  irq_clic_level_i,
   input  logic [1:0]  irq_clic_priv_i,
+  // CL: Added
+  output logic        irq_gnt_ctrl_o,
 
   input  logic        wu_wfe_i,
 
@@ -210,6 +212,8 @@ module cv32e40s_controller import cv32e40s_pkg::*;
     .irq_clic_shv_i              ( irq_clic_shv_i           ),
     .irq_clic_level_i            ( irq_clic_level_i         ),
     .irq_clic_priv_i             ( irq_clic_priv_i          ),
+    // CL: Interrupt gnt to not miss signals
+    .irq_gnt_ctrl_o              (irq_gnt_ctrl_o            ),
 
     .wu_wfe_i                    ( wu_wfe_i                 ),
 

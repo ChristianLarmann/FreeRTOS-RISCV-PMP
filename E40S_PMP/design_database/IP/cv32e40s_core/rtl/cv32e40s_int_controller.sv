@@ -30,9 +30,12 @@ module cv32e40s_int_controller import cv32e40s_pkg::*;
   input  logic [31:0] irq_i,                    // Level-triggered interrupt inputs
 
   // To controller
-  output logic        irq_req_ctrl_o,
+  output reg          irq_req_ctrl_o,
   output logic  [4:0] irq_id_ctrl_o,
   output logic        irq_wu_ctrl_o,
+
+  // From controller
+  input logic         irq_gnt_ctrl_i,
 
   // From cs_registers
   input  logic [31:0] mie_i,                    // MIE CSR
@@ -73,7 +76,21 @@ module cv32e40s_int_controller import cv32e40s_pkg::*;
   assign global_irq_enable = mstatus_i.mie || (priv_lvl_i < PRIV_LVL_M);
 
   // Request to take interrupt if there is a locally enabled interrupt while interrupts are also enabled globally
-  assign irq_req_ctrl_o = (|irq_local_qual) && global_irq_enable;
+  //assign irq_req_ctrl_o = (|irq_local_qual) && global_irq_enable;
+  
+  always @(posedge clk, negedge rst_n) begin
+    if (rst_n == 1'b0) begin
+        irq_req_ctrl_o <= 0;
+    end
+  
+    if ((|irq_local_qual) && global_irq_enable)
+    begin
+        irq_req_ctrl_o <= 1;
+    end
+    else if (irq_gnt_ctrl_i) begin
+        irq_req_ctrl_o <= 0;
+    end
+  end
 
   // Interrupt Encoder
   //

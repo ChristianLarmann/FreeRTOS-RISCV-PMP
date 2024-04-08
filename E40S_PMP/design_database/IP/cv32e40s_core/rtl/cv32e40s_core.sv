@@ -360,6 +360,8 @@ module cv32e40s_core import cv32e40s_pkg::*;
   logic                       mnxti_irq_pending;
   logic [CLIC_ID_WIDTH-1:0]   mnxti_irq_id;
   logic [7:0]                 mnxti_irq_level;
+  // CL
+  logic                       irq_gnt_ctrl;
 
   // Used (only) by verification environment
   logic        irq_ack;
@@ -1082,6 +1084,7 @@ module cv32e40s_core import cv32e40s_pkg::*;
     .irq_clic_shv_i                 ( irq_clic_shv           ),
     .irq_clic_level_i               ( irq_clic_level         ),
     .irq_clic_priv_i                ( irq_clic_priv          ),
+    .irq_gnt_ctrl_o                 ( irq_gnt_ctrl           ),
 
     // Priviledge level
     .priv_lvl_i                     ( priv_lvl               ),
@@ -1164,6 +1167,7 @@ module cv32e40s_core import cv32e40s_pkg::*;
         .irq_clic_shv_o       ( irq_clic_shv       ),
         .irq_clic_level_o     ( irq_clic_level     ),
         .irq_clic_priv_o      ( irq_clic_priv      ),
+       
 
         // From cs_registers
         .mstatus_i            ( mstatus            ),
@@ -1198,6 +1202,8 @@ module cv32e40s_core import cv32e40s_pkg::*;
         .irq_req_ctrl_o       ( irq_req_ctrl       ),
         .irq_id_ctrl_o        ( irq_id_ctrl[4:0]   ),
         .irq_wu_ctrl_o        ( irq_wu_ctrl        ),
+         // CL: From controller
+        .irq_gnt_ctrl_i       ( irq_gnt_ctrl       ),
 
         // To with cs_registers
         .mie_i                ( mie                ),
