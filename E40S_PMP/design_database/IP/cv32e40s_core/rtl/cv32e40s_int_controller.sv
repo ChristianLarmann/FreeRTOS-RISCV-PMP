@@ -82,13 +82,14 @@ module cv32e40s_int_controller import cv32e40s_pkg::*;
     if (rst_n == 1'b0) begin
         irq_req_ctrl_o <= 0;
     end
-  
-    if ((|irq_local_qual) && global_irq_enable)
-    begin
-        irq_req_ctrl_o <= 1;
-    end
-    else if (irq_gnt_ctrl_i) begin
-        irq_req_ctrl_o <= 0;
+    else begin
+        if ((|irq_local_qual) && global_irq_enable)
+        begin
+            irq_req_ctrl_o <= 1;
+        end
+        else if (irq_gnt_ctrl_i) begin
+            irq_req_ctrl_o <= 0;
+        end
     end
   end
 
