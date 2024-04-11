@@ -178,7 +178,7 @@ static void prvLedTask(void *pvParameters){
 	/* Initialise xNextWakeTime - this only needs to be done once. */
 	xNextWakeTime = xTaskGetTickCount();
 
-	uint32_t* heapVar = (uint32_t*) MPU_pvPortMalloc(sizeof(uint32_t));
+	uint32_t* heapVar = (uint32_t*) MPU_pvPmpMalloc(10 * sizeof(uint32_t));
 	
 	asm volatile("li x28, 0x70" ::: "x28");
 	asm volatile("mv x28, %0" :: "r" (heapVar) : "x28");
@@ -204,7 +204,6 @@ static void prvQueueSendTask(void *pvParameters)
 	/* Initialise xNextWakeTime - this only needs to be done once. */
 	xNextWakeTime = xTaskGetTickCount();
 
-	// *heapVar = 0x4ea5;
 
 	for (;;) {
 		/* Place this task in the blocked state until it is time to run again. */

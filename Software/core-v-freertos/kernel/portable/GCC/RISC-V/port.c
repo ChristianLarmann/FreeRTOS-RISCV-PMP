@@ -877,6 +877,105 @@ void vPortStoreTaskMPUSettings( xMPU_SETTINGS *xPMPSettings,
 	}
 }
 /*-----------------------------------------------------------*/
+
+/**
+ * @brief Add newly created dynamic memory region to task's PMP
+ * 		  settings so it can access it.
+ *
+ * @param[in]   pv        		pointer of start of allocated memory
+ * @param[in]   size 			size of allocated memory region
+
+ * @return 		BaseType_t  	error code (pdFAIL or pdPASS)
+ */
+BaseType_t xAddMallocPMP(void *pv, size_t size)  
+{
+		uint32_t ul;
+		uint32_t temp = portNUM_CONFIGURABLE_REGIONS_REAL (xPmpInfo.nb_pmp) + 2;
+		printf("w");
+		iprintf("%d", temp);
+		printf("y");
+
+		for( ul = 3; ul < 8; ul++ )
+		{
+			uint8_t pmpConfig = 0xEE; // Different value than 0 to make sure it will be overwritten
+			size_t pmpAddr = 0;
+			read_pmp_config(&xPmpInfo, ul, &pmpConfig, &pmpAddr);
+
+			/* If config == 0 (PMP_OFF), new slots for malloc regions are found */
+			if (0 == pmpConfig) {
+				// Configure new region for allocated memory
+
+				/* Address Beginning */
+				size_t pmp_addr_checked_beginning = pmpConfig;  // TODO: Why = pmpconfig?
+				addr_modifier(xPmpInfo.granularity,
+							 (size_t) pv,
+							 &pmp_addr_checked_beginning);
+
+				/* Address End */
+				size_t pmp_addr_checked_end = 0;
+				addr_modifier(xPmpInfo.granularity,
+							 ((size_t) pv ) + size,
+							 &pmp_addr_checked_end);
+
+				/* TOR config */
+				uint8_t configBeginning = ((portPMP_REGION_READ_WRITE) |
+                            (portPMP_REGION_ADDR_MATCH_NA4));
+				uint8_t configEnd = ((portPMP_REGION_READ_WRITE) |
+                            (portPMP_REGION_ADDR_MATCH_TOR));
+
+				/**
+				 * a0: xPmpInfo.nb_pmp - 3 (3 because We use 3 pmp config by default)
+				 * a1: pxCurrentTCB->xPMPSettings (supposed to be the 2nd element of structure TCB_t)
+				 */
+				uint32_t offset_addr = (ul - 3) * 4;
+				assert(offset_addr >= 0);
+
+				#if( __riscv_xlen == 32 )
+					__asm__ __volatile__ (
+						"addi a0, %0, -3	\n\t"
+						"addi a1, %1, 4		\n\t"
+
+						"addi t0, a1, 32 \n" /* get pmp address configs */
+
+						"addi t1, %4, 0 \n" // Get offset 
+						"lw t2, 0(t1) \n" 
+
+						/* Store start address according register */
+						"add t0, t0, t2 \n" // Add offset to base address in t0
+						"sw %2, 0(t0) \n" /* Store begin config in xMPUSettings */
+
+						/* Store ending address in following register */
+						"add t0, t0, 4 \n" 
+						"sw %3, 0(t0) \n" 
+
+						:: "r"(xPmpInfo.nb_pmp), "r"(pxCurrentTCB), 
+						"r"(pmp_addr_checked_beginning), "r"(pmp_addr_checked_end), 
+						"r"(&offset_addr) : "a0", "a1", "t0", "t1", "t2"
+					);
+				#endif /* ( __riscv_xlen == 32 ) */
+				#if( __riscv_xlen == 64 )
+					__asm__ __volatile__ (
+						"addi a0, %0, -3	\n\t"
+						"addi a1, %1, 8		\n\t"
+						:: "r"(xPmpInfo.nb_pmp), "r"(pxCurrentTCB) : "a0", "a1"
+					);
+
+					/* TODO: Writing to MPUSettings */
+				#endif /* ( __riscv_xlen == 64 ) */
+
+				/* Also write it directly to the CSRs, otherwise it will be first accessible in 
+				next period because the PMP is only reconfigured during task switch */
+				write_pmp_config(&xPmpInfo, ul, configBeginning, pmp_addr_checked_beginning);
+				write_pmp_config(&xPmpInfo, ul + 1, configEnd, pmp_addr_checked_end);
+
+				return pdPASS;
+			}
+		}
+		
+		/* No slot available */
+		return 0x34;
+}
+/*-----------------------------------------------------------*/
 #endif
 
 __attribute__((naked)) void vPortUpdatePrivilegeStatus( UBaseType_t status ) PRIVILEGED_FUNCTION
