@@ -889,91 +889,77 @@ void vPortStoreTaskMPUSettings( xMPU_SETTINGS *xPMPSettings,
  */
 BaseType_t xAddMallocPMP(void *pv, size_t size)  
 {
-		uint32_t ul;
-		uint32_t temp = portNUM_CONFIGURABLE_REGIONS_REAL (xPmpInfo.nb_pmp) + 2;
-		printf("w");
-		iprintf("%d", temp);
-		printf("y");
+	uint32_t indexRegion;
+	for( indexRegion = portFIRST_CONFIGURABLE_REGION; indexRegion < portLAST_CONFIGURABLE_REGION; indexRegion++ )
+	{
+		uint8_t pmpConfig = NULL;
+		size_t pmpAddr = NULL;
+		read_pmp_config(&xPmpInfo, indexRegion, &pmpConfig, &pmpAddr);
 
-		for( ul = 3; ul < 8; ul++ )
-		{
-			uint8_t pmpConfig = 0xEE; // Different value than 0 to make sure it will be overwritten
-			size_t pmpAddr = 0;
-			read_pmp_config(&xPmpInfo, ul, &pmpConfig, &pmpAddr);
+		/* If config == 0 (PMP_OFF), new slots for malloc regions are found */
+		if (0 == pmpConfig) {
+			// Configure new region for allocated memory
 
-			/* If config == 0 (PMP_OFF), new slots for malloc regions are found */
-			if (0 == pmpConfig) {
-				// Configure new region for allocated memory
+			/* Address Beginning */
+			size_t pmp_addr_checked_beginning = 0;
+			addr_modifier(xPmpInfo.granularity,
+							(size_t) pv,
+							&pmp_addr_checked_beginning);
 
-				/* Address Beginning */
-				size_t pmp_addr_checked_beginning = pmpConfig;  // TODO: Why = pmpconfig?
-				addr_modifier(xPmpInfo.granularity,
-							 (size_t) pv,
-							 &pmp_addr_checked_beginning);
+			/* Address End */
+			size_t pmp_addr_checked_end = 0;
+			addr_modifier(xPmpInfo.granularity,
+							((size_t) pv ) + size,
+							&pmp_addr_checked_end);
 
-				/* Address End */
-				size_t pmp_addr_checked_end = 0;
-				addr_modifier(xPmpInfo.granularity,
-							 ((size_t) pv ) + size,
-							 &pmp_addr_checked_end);
+			// First three regions are not configurable and not in MPUSettings
+			uint32_t offset_addr = indexRegion - 3;  
 
-				/* TOR config */
-				uint8_t configBeginning = ((portPMP_REGION_READ_WRITE) |
-                            (portPMP_REGION_ADDR_MATCH_NA4));
-				uint8_t configEnd = ((portPMP_REGION_READ_WRITE) |
-                            (portPMP_REGION_ADDR_MATCH_TOR));
+			#if( __riscv_xlen == 32 )
+				/* PMP Addresses */
+				UBaseType_t * pTCBCast = (UBaseType_t*) pxCurrentTCB;
 
-				/**
-				 * a0: xPmpInfo.nb_pmp - 3 (3 because We use 3 pmp config by default)
-				 * a1: pxCurrentTCB->xPMPSettings (supposed to be the 2nd element of structure TCB_t)
-				 */
-				uint32_t offset_addr = (ul - 3) * 4;
-				assert(offset_addr >= 0);
+				UBaseType_t * pMPUSettings = &pTCBCast[1];
+				UBaseType_t * pRegionBaseAddresses = pMPUSettings + 2 * portTOTAL_NUM_CFG_REG;
 
-				#if( __riscv_xlen == 32 )
-					__asm__ __volatile__ (
-						"addi a0, %0, -3	\n\t"
-						"addi a1, %1, 4		\n\t"
+				pRegionBaseAddresses[offset_addr] = pmp_addr_checked_beginning;
+				pRegionBaseAddresses[offset_addr + 1] = pmp_addr_checked_end;
 
-						"addi t0, a1, 32 \n" /* get pmp address configs */
+				/* PMP Configs */
+				uint8_t configBeginning = ((portPMP_REGION_READ_WRITE) | 
+                            (portPMP_REGION_ADDR_MATCH_NA4)); 
+				uint8_t configEnd = ((portPMP_REGION_READ_WRITE) | 
+                            (portPMP_REGION_ADDR_MATCH_TOR)); 
 
-						"addi t1, %4, 0 \n" // Get offset 
-						"lw t2, 0(t1) \n" 
+				// Reg Attributes
+				UBaseType_t * pConfigRegAttributes = pMPUSettings + 0;
+				pConfigRegAttributes[portGET_PMPCFG_IDX(indexRegion)] += 
+					((UBaseType_t) configBeginning <<
+					portPMPCFG_BIT_SHIFT(indexRegion));
+				pConfigRegAttributes[portGET_PMPCFG_IDX(indexRegion + 1)] += 
+					((UBaseType_t) configEnd <<
+					portPMPCFG_BIT_SHIFT(indexRegion + 1));
 
-						/* Store start address according register */
-						"add t0, t0, t2 \n" // Add offset to base address in t0
-						"sw %2, 0(t0) \n" /* Store begin config in xMPUSettings */
+				// Reg Masks
+				UBaseType_t * pConfigRegMask = pMPUSettings + portTOTAL_NUM_CFG_REG;
+				pConfigRegMask[portGET_PMPCFG_IDX(indexRegion)] +=
+					((UBaseType_t) 0xFF << portPMPCFG_BIT_SHIFT(indexRegion));
+				pConfigRegMask[portGET_PMPCFG_IDX(indexRegion +  1)] +=
+					((UBaseType_t) 0xFF << portPMPCFG_BIT_SHIFT(indexRegion + 1));
+			#endif /* ( __riscv_xlen == 32 ) */
 
-						/* Store ending address in following register */
-						"add t0, t0, 4 \n" 
-						"sw %3, 0(t0) \n" 
 
-						:: "r"(xPmpInfo.nb_pmp), "r"(pxCurrentTCB), 
-						"r"(pmp_addr_checked_beginning), "r"(pmp_addr_checked_end), 
-						"r"(&offset_addr) : "a0", "a1", "t0", "t1", "t2"
-					);
-				#endif /* ( __riscv_xlen == 32 ) */
-				#if( __riscv_xlen == 64 )
-					__asm__ __volatile__ (
-						"addi a0, %0, -3	\n\t"
-						"addi a1, %1, 8		\n\t"
-						:: "r"(xPmpInfo.nb_pmp), "r"(pxCurrentTCB) : "a0", "a1"
-					);
+			/* Also write it directly to the CSRs, otherwise it will be first accessible in 
+			next period because the PMP is only reconfigured during task switch */
+			write_pmp_config(&xPmpInfo, indexRegion, configBeginning, pmp_addr_checked_beginning);
+			write_pmp_config(&xPmpInfo, indexRegion + 1, configEnd, pmp_addr_checked_end);
 
-					/* TODO: Writing to MPUSettings */
-				#endif /* ( __riscv_xlen == 64 ) */
-
-				/* Also write it directly to the CSRs, otherwise it will be first accessible in 
-				next period because the PMP is only reconfigured during task switch */
-				write_pmp_config(&xPmpInfo, ul, configBeginning, pmp_addr_checked_beginning);
-				write_pmp_config(&xPmpInfo, ul + 1, configEnd, pmp_addr_checked_end);
-
-				return pdPASS;
-			}
+			return pdPASS;
 		}
-		
-		/* No slot available */
-		return 0x34;
+	}
+	
+	/* No slot available */
+	return pdFAIL;
 }
 /*-----------------------------------------------------------*/
 #endif

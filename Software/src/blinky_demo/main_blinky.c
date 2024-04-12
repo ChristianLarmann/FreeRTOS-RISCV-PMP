@@ -185,10 +185,11 @@ static void prvLedTask(void *pvParameters){
 
 	for (;;) {
 		/* Place this task in the blocked state until it is time to run again. */
-		vTaskDelayUntil(&xNextWakeTime, pdMS_TO_TICKS(3));
+		vTaskDelayUntil(&xNextWakeTime, pdMS_TO_TICKS(2));
 		// gpio_pin_toggle( 0x1 );
 		asm volatile("li x29, 0x6666" ::: "x29");
 		asm volatile("li x29, 0x7777" ::: "x29");
+		uint32_t* heapVar2 = (uint32_t*) MPU_pvPmpMalloc(30 * sizeof(uint32_t));
 	}
 }
 
