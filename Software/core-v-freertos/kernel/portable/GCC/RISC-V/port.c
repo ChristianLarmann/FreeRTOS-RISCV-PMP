@@ -962,6 +962,67 @@ BaseType_t xAddMallocPMP(void *pv, size_t size)
 	return pdFAIL;
 }
 /*-----------------------------------------------------------*/
+
+BaseType_t xRemoveFreePMP( void *pv ) 
+{
+	BaseType_t beginningAddress = (BaseType_t) pv;
+
+	uint32_t indexRegion;
+	// iprintf("%x", beginningAddress);
+	for( indexRegion = portFIRST_CONFIGURABLE_REGION; indexRegion < portLAST_CONFIGURABLE_REGION; indexRegion++ )
+	{
+		iprintf("%x", indexRegion);
+		uint8_t pmpConfig = NULL;
+		size_t pmpAddrRaw = NULL;
+		read_pmp_config(&xPmpInfo, indexRegion, &pmpConfig, &pmpAddrRaw);
+
+		/* If true, PMP regions are found that protected that free'd memory */
+		size_t pmpAddr = pmpAddrRaw << 2; // TODO: Make flexible depending on pmp granularity
+		if (beginningAddress == pmpAddr) {
+			iprintf("S");
+
+			// First three regions are not configurable and not in MPUSettings
+			uint32_t offset_addr = indexRegion - 3;  
+
+			#if( __riscv_xlen == 32 )
+				/* PMP Addresses */
+				UBaseType_t * pTCBCast = (UBaseType_t*) pxCurrentTCB;
+
+				UBaseType_t * pMPUSettings = &pTCBCast[1];
+				UBaseType_t * pRegionBaseAddresses = pMPUSettings + 2 * portTOTAL_NUM_CFG_REG;
+
+				pRegionBaseAddresses[offset_addr] = 0x00;
+				pRegionBaseAddresses[offset_addr + 1] = 0x00;
+
+				// Reg Attributes
+				UBaseType_t * pConfigRegAttributes = pMPUSettings + 0;
+				pConfigRegAttributes[portGET_PMPCFG_IDX(indexRegion)] += 
+					((UBaseType_t) 0x00 <<
+					portPMPCFG_BIT_SHIFT(indexRegion));
+				pConfigRegAttributes[portGET_PMPCFG_IDX(indexRegion + 1)] += 
+					((UBaseType_t) 0x00 <<
+					portPMPCFG_BIT_SHIFT(indexRegion + 1));
+
+				// Reg Masks
+				UBaseType_t * pConfigRegMask = pMPUSettings + portTOTAL_NUM_CFG_REG;
+				pConfigRegMask[portGET_PMPCFG_IDX(indexRegion)] +=
+					((UBaseType_t) 0x00 << portPMPCFG_BIT_SHIFT(indexRegion));
+				pConfigRegMask[portGET_PMPCFG_IDX(indexRegion +  1)] +=
+					((UBaseType_t) 0x00 << portPMPCFG_BIT_SHIFT(indexRegion + 1));
+			#endif /* ( __riscv_xlen == 32 ) */
+
+
+			/* Also write it directly to the CSRs, otherwise it will be first accessible in 
+			next period because the PMP is only reconfigured during task switch */
+			write_pmp_config(&xPmpInfo, indexRegion, 0x00, 0x00);
+			write_pmp_config(&xPmpInfo, indexRegion + 1, 0x00, 0x00);
+
+			return pdPASS;
+		}
+	}
+
+	return pdFAIL;
+}
 #endif
 
 __attribute__((naked)) void vPortUpdatePrivilegeStatus( UBaseType_t status ) PRIVILEGED_FUNCTION

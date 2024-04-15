@@ -63,11 +63,11 @@ void vPortResetPrivilege( BaseType_t xRunningPrivileged );
 
 /**
  * @brief Needed for PMP protected malloc. If MPU is used
- * tasks are not able to allocate memory dynamically without this
- * function.
+ * tasks are not able to allocate memory dynamically without these
+ * functions.
  */
 BaseType_t xAddMallocPMP(void *pv, size_t size);
-
+BaseType_t xRemoveFreePMP(void *pv);
 
 BaseType_t xPortRaisePrivilege( void ) /* FREERTOS_SYSTEM_CALL */
 {
@@ -943,6 +943,17 @@ BaseType_t xRunningPrivileged = xPortRaisePrivilege();
 	BaseType_t xRunningPrivileged = xPortRaisePrivilege();
 
 		vPortFree( pv );
+
+		vPortResetPrivilege( xRunningPrivileged );
+	}
+
+	void MPU_pvPmpFree( void *pv ) /* FREERTOS_SYSTEM_CALL */ 
+	{
+		BaseType_t xRunningPrivileged = xPortRaisePrivilege();
+
+		// vPortFree( pv ); is not possible in heap1.c ....
+
+	    xRemoveFreePMP( pv );
 
 		vPortResetPrivilege( xRunningPrivileged );
 	}
