@@ -821,10 +821,11 @@ parameter logic [31:0] TDATA1_RST_VAL = {
 ///////////////////////////////////////////////
 
 // Enable Security Features
-parameter SECURE = 1;
+parameter SECURE = 0;
 
 // Enable User Mode
-parameter bit USER = SECURE;
+// parameter bit USER = SECURE;
+parameter bit USER = 1;
 
 // Lowest supported privilege level
 parameter privlvl_t PRIV_LVL_LOWEST = (USER) ? PRIV_LVL_U : PRIV_LVL_M;

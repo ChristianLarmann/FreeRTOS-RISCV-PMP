@@ -143,11 +143,13 @@ module cv32e40s_cs_registers import cv32e40s_pkg::*;
   input  logic [3:0]                    lsu_be_ex_i
 );
 
-  localparam bit PMP = SECURE;
+  // localparam bit PMP = SECURE;
+  localparam bit PMP = 1;
 
   localparam PMP_ADDR_WIDTH = (PMP_GRANULARITY > 0) ? 33 - PMP_GRANULARITY : 32;
 
-  localparam bit USER = SECURE;
+  // localparam bit USER = SECURE;
+  localparam bit USER = 1;
 
   localparam logic [31:0] MISA_VALUE =
     (32'(1)             <<  2) | // C - Compressed extension

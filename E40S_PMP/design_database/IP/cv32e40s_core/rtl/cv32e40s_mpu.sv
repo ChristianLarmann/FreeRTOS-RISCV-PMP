@@ -73,7 +73,8 @@ module cv32e40s_mpu import cv32e40s_pkg::*;
    output logic core_mpu_err_o
    );
 
-  localparam bit PMP = SECURE;
+  //localparam bit PMP = SECURE;
+  localparam bit PMP = 1;
 
   logic        pma_err;
   logic        pmp_err;
