@@ -1845,5 +1845,272 @@ typedef struct packed {
 
   // State machine definition
   typedef enum logic [3:0] { S_IDLE, S_PUSH, S_POP, S_DMOVE, S_RA, S_SP, S_A0, S_RET} seq_state_e;
+  
+  
+  // CL: To avoid warnings
+  function privlvl_t convert_to_privlvl_t(bit [1:0] bits);
+    case (bits)
+        2'b00: convert_to_privlvl_t = PRIV_LVL_U;
+        2'b01: convert_to_privlvl_t = PRIV_LVL_S;
+        2'b10: convert_to_privlvl_t = PRIV_LVL_H;
+        2'b11: convert_to_privlvl_t = PRIV_LVL_M;
+    endcase
+  endfunction
+  
+  // CL: To avoid warnings
+  function csr_num_e csr_num_from_bits(bit [11:0] bits);
+    case (bits)
+        12'h017: csr_num_from_bits = CSR_JVT;
+        12'h300: csr_num_from_bits = CSR_MSTATUS;
+        12'h301: csr_num_from_bits = CSR_MISA;
+         
+        12'h304: csr_num_from_bits = CSR_MIE;  
+        12'h305: csr_num_from_bits = CSR_MTVEC;
+        
+        12'h306: csr_num_from_bits = CSR_MCOUNTEREN;
+        12'h307: csr_num_from_bits = CSR_MTVT;
+        12'h30C: csr_num_from_bits = CSR_MSTATEEN0;
+        12'h30D: csr_num_from_bits = CSR_MSTATEEN1;
+        12'h30E: csr_num_from_bits = CSR_MSTATEEN2;
+        12'h30F: csr_num_from_bits = CSR_MSTATEEN3;
+        12'h310: csr_num_from_bits = CSR_MSTATUSH;
+        
+        12'h31C: csr_num_from_bits = CSR_MSTATEEN0H;
+        12'h31D: csr_num_from_bits = CSR_MSTATEEN1H;
+        12'h31E: csr_num_from_bits = CSR_MSTATEEN2H;
+        12'h31F: csr_num_from_bits = CSR_MSTATEEN3H;
+        
+        // Performance counters
+        12'h320: csr_num_from_bits = CSR_MCOUNTINHIBIT;
+        12'h323: csr_num_from_bits = CSR_MHPMEVENT3;
+        12'h324: csr_num_from_bits = CSR_MHPMEVENT4;
+        12'h325: csr_num_from_bits = CSR_MHPMEVENT5;
+        12'h326: csr_num_from_bits = CSR_MHPMEVENT6;
+        12'h327: csr_num_from_bits = CSR_MHPMEVENT7;
+        12'h328: csr_num_from_bits = CSR_MHPMEVENT8;
+        12'h329: csr_num_from_bits = CSR_MHPMEVENT9;
+        12'h32A: csr_num_from_bits = CSR_MHPMEVENT10;
+        12'h32B: csr_num_from_bits = CSR_MHPMEVENT11;
+        12'h32C: csr_num_from_bits = CSR_MHPMEVENT12;
+        12'h32D: csr_num_from_bits = CSR_MHPMEVENT13;
+        12'h32E: csr_num_from_bits = CSR_MHPMEVENT14;
+        12'h32F: csr_num_from_bits = CSR_MHPMEVENT15;
+        12'h330: csr_num_from_bits = CSR_MHPMEVENT16;
+        12'h331: csr_num_from_bits = CSR_MHPMEVENT17;
+        12'h332: csr_num_from_bits = CSR_MHPMEVENT18;
+        12'h333: csr_num_from_bits = CSR_MHPMEVENT19;
+        12'h334: csr_num_from_bits = CSR_MHPMEVENT20;
+        12'h335: csr_num_from_bits = CSR_MHPMEVENT21;
+        12'h336: csr_num_from_bits = CSR_MHPMEVENT22;
+        12'h337: csr_num_from_bits = CSR_MHPMEVENT23;
+        12'h338: csr_num_from_bits = CSR_MHPMEVENT24;
+        12'h339: csr_num_from_bits = CSR_MHPMEVENT25;
+        12'h33A: csr_num_from_bits = CSR_MHPMEVENT26;
+        12'h33B: csr_num_from_bits = CSR_MHPMEVENT27;
+        12'h33C: csr_num_from_bits = CSR_MHPMEVENT28;
+        12'h33D: csr_num_from_bits = CSR_MHPMEVENT29;
+        12'h33E: csr_num_from_bits = CSR_MHPMEVENT30;
+        12'h33F: csr_num_from_bits = CSR_MHPMEVENT31;
+        
+        // Machine trap handling
+        12'h340: csr_num_from_bits = CSR_MSCRATCH;
+        12'h341: csr_num_from_bits = CSR_MEPC;
+        12'h342: csr_num_from_bits = CSR_MCAUSE;
+        12'h343: csr_num_from_bits = CSR_MTVAL;
+        12'h344: csr_num_from_bits = CSR_MIP;
+        12'h345: csr_num_from_bits = CSR_MNXTI;
+        12'h347: csr_num_from_bits = CSR_MINTTHRESH;
+        12'h348: csr_num_from_bits = CSR_MSCRATCHCSW;
+        12'h349: csr_num_from_bits = CSR_MSCRATCHCSWL;
+        12'h34A: csr_num_from_bits = CSR_MCLICBASE;
+        
+        // Physical memory protection (PMP)
+        12'h3A0: csr_num_from_bits = CSR_PMPCFG0;
+        12'h3A1: csr_num_from_bits = CSR_PMPCFG1;
+        12'h3A2: csr_num_from_bits = CSR_PMPCFG2;
+        12'h3A3: csr_num_from_bits = CSR_PMPCFG3;
+        12'h3A4: csr_num_from_bits = CSR_PMPCFG4;
+        12'h3A5: csr_num_from_bits = CSR_PMPCFG5;
+        12'h3A6: csr_num_from_bits = CSR_PMPCFG6;
+        12'h3A7: csr_num_from_bits = CSR_PMPCFG7;
+        12'h3A8: csr_num_from_bits = CSR_PMPCFG8;
+        12'h3A9: csr_num_from_bits = CSR_PMPCFG9;
+        12'h3AA: csr_num_from_bits = CSR_PMPCFG10;
+        12'h3AB: csr_num_from_bits = CSR_PMPCFG11;
+        12'h3AC: csr_num_from_bits = CSR_PMPCFG12;
+        12'h3AD: csr_num_from_bits = CSR_PMPCFG13;
+        12'h3AE: csr_num_from_bits = CSR_PMPCFG14;
+        12'h3AF: csr_num_from_bits = CSR_PMPCFG15;
+        
+        12'h3B0: csr_num_from_bits = CSR_PMPADDR0;
+        12'h3B1: csr_num_from_bits = CSR_PMPADDR1;
+        12'h3B2: csr_num_from_bits = CSR_PMPADDR2;
+        12'h3B3: csr_num_from_bits = CSR_PMPADDR3;
+        12'h3B4: csr_num_from_bits = CSR_PMPADDR4;
+        12'h3B5: csr_num_from_bits = CSR_PMPADDR5;
+        12'h3B6: csr_num_from_bits = CSR_PMPADDR6;
+        12'h3B7: csr_num_from_bits = CSR_PMPADDR7;
+        12'h3B8: csr_num_from_bits = CSR_PMPADDR8;
+        12'h3B9: csr_num_from_bits = CSR_PMPADDR9;
+        12'h3BA: csr_num_from_bits = CSR_PMPADDR10;
+        12'h3BB: csr_num_from_bits = CSR_PMPADDR11;
+        12'h3BC: csr_num_from_bits = CSR_PMPADDR12;
+        12'h3BD: csr_num_from_bits = CSR_PMPADDR13;
+        12'h3BE: csr_num_from_bits = CSR_PMPADDR14;
+        12'h3BF: csr_num_from_bits = CSR_PMPADDR15;
+        12'h3C0: csr_num_from_bits = CSR_PMPADDR16;
+        12'h3C1: csr_num_from_bits = CSR_PMPADDR17;
+        12'h3C2: csr_num_from_bits = CSR_PMPADDR18;
+        12'h3C3: csr_num_from_bits = CSR_PMPADDR19;
+        12'h3C4: csr_num_from_bits = CSR_PMPADDR20;
+        12'h3C5: csr_num_from_bits = CSR_PMPADDR21;
+        12'h3C6: csr_num_from_bits = CSR_PMPADDR22;
+        12'h3C7: csr_num_from_bits = CSR_PMPADDR23;
+        12'h3C8: csr_num_from_bits = CSR_PMPADDR24;
+        12'h3C9: csr_num_from_bits = CSR_PMPADDR25;
+        12'h3CA: csr_num_from_bits = CSR_PMPADDR26;
+        12'h3CB: csr_num_from_bits = CSR_PMPADDR27;
+        12'h3CC: csr_num_from_bits = CSR_PMPADDR28;
+        12'h3CD: csr_num_from_bits = CSR_PMPADDR29;
+        12'h3CE: csr_num_from_bits = CSR_PMPADDR30;
+        12'h3CF: csr_num_from_bits = CSR_PMPADDR31;
+        12'h3D0: csr_num_from_bits = CSR_PMPADDR32;
+        12'h3D1: csr_num_from_bits = CSR_PMPADDR33;
+        12'h3D2: csr_num_from_bits = CSR_PMPADDR34;
+        12'h3D3: csr_num_from_bits = CSR_PMPADDR35;
+        12'h3D4: csr_num_from_bits = CSR_PMPADDR36;
+        12'h3D5: csr_num_from_bits = CSR_PMPADDR37;
+        12'h3D6: csr_num_from_bits = CSR_PMPADDR38;
+        12'h3D7: csr_num_from_bits = CSR_PMPADDR39;
+        12'h3D8: csr_num_from_bits = CSR_PMPADDR40;
+        12'h3D9: csr_num_from_bits = CSR_PMPADDR41;
+        12'h3DA: csr_num_from_bits = CSR_PMPADDR42;
+        12'h3DB: csr_num_from_bits = CSR_PMPADDR43;
+        12'h3DC: csr_num_from_bits = CSR_PMPADDR44;
+        12'h3DD: csr_num_from_bits = CSR_PMPADDR45;
+        12'h3DE: csr_num_from_bits = CSR_PMPADDR46;
+        12'h3DF: csr_num_from_bits = CSR_PMPADDR47;
+        12'h3E0: csr_num_from_bits = CSR_PMPADDR48;
+        12'h3E1: csr_num_from_bits = CSR_PMPADDR49;
+        12'h3E2: csr_num_from_bits = CSR_PMPADDR50;
+        12'h3E3: csr_num_from_bits = CSR_PMPADDR51;
+        12'h3E4: csr_num_from_bits = CSR_PMPADDR52;
+        12'h3E5: csr_num_from_bits = CSR_PMPADDR53;
+        12'h3E6: csr_num_from_bits = CSR_PMPADDR54;
+        12'h3E7: csr_num_from_bits = CSR_PMPADDR55;
+        12'h3E8: csr_num_from_bits = CSR_PMPADDR56;
+        12'h3E9: csr_num_from_bits = CSR_PMPADDR57;
+        12'h3EA: csr_num_from_bits = CSR_PMPADDR58;
+        12'h3EB: csr_num_from_bits = CSR_PMPADDR59;
+        12'h3EC: csr_num_from_bits = CSR_PMPADDR60;
+        12'h3ED: csr_num_from_bits = CSR_PMPADDR61;
+        12'h3EE: csr_num_from_bits = CSR_PMPADDR62;
+        12'h3EF: csr_num_from_bits = CSR_PMPADDR63;
+        // Machine configuration
+        12'h30A: csr_num_from_bits = CSR_MENVCFG;
+        12'h31A: csr_num_from_bits = CSR_MENVCFGH;
+        12'h747: csr_num_from_bits = CSR_MSECCFG;
+        12'h757: csr_num_from_bits = CSR_MSECCFGH;
+        
+        // Trigger
+        12'h7A0: csr_num_from_bits = CSR_TSELECT;
+        12'h7A1: csr_num_from_bits = CSR_TDATA1;
+        12'h7A2: csr_num_from_bits = CSR_TDATA2;
+        12'h7A4: csr_num_from_bits = CSR_TINFO;
+        
+        // Debug/trace
+        12'h7B0: csr_num_from_bits = CSR_DCSR;
+        12'h7B1: csr_num_from_bits = CSR_DPC;
+        
+        // Debug
+        12'h7B2: csr_num_from_bits = CSR_DSCRATCH0;
+        12'h7B3: csr_num_from_bits = CSR_DSCRATCH1;
+        
+        // Hardware Performance Monitor
+        12'hB00: csr_num_from_bits = CSR_MCYCLE;
+        12'hB02: csr_num_from_bits = CSR_MINSTRET;
+        12'hB03: csr_num_from_bits = CSR_MHPMCOUNTER3;
+        12'hB04: csr_num_from_bits = CSR_MHPMCOUNTER4;
+        12'hB05: csr_num_from_bits = CSR_MHPMCOUNTER5;
+        12'hB06: csr_num_from_bits = CSR_MHPMCOUNTER6;
+        12'hB07: csr_num_from_bits = CSR_MHPMCOUNTER7;
+        12'hB08: csr_num_from_bits = CSR_MHPMCOUNTER8;
+        12'hB09: csr_num_from_bits = CSR_MHPMCOUNTER9;
+        12'hB0A: csr_num_from_bits = CSR_MHPMCOUNTER10;
+        12'hB0B: csr_num_from_bits = CSR_MHPMCOUNTER11;
+        12'hB0C: csr_num_from_bits = CSR_MHPMCOUNTER12;
+        12'hB0D: csr_num_from_bits = CSR_MHPMCOUNTER13;
+        12'hB0E: csr_num_from_bits = CSR_MHPMCOUNTER14;
+        12'hB0F: csr_num_from_bits = CSR_MHPMCOUNTER15;
+        12'hB10: csr_num_from_bits = CSR_MHPMCOUNTER16;
+        12'hB11: csr_num_from_bits = CSR_MHPMCOUNTER17;
+        12'hB12: csr_num_from_bits = CSR_MHPMCOUNTER18;
+        12'hB13: csr_num_from_bits = CSR_MHPMCOUNTER19;
+        12'hB14: csr_num_from_bits = CSR_MHPMCOUNTER20;
+        12'hB15: csr_num_from_bits = CSR_MHPMCOUNTER21;
+        12'hB16: csr_num_from_bits = CSR_MHPMCOUNTER22;
+        12'hB17: csr_num_from_bits = CSR_MHPMCOUNTER23;
+        12'hB18: csr_num_from_bits = CSR_MHPMCOUNTER24;
+        12'hB19: csr_num_from_bits = CSR_MHPMCOUNTER25;
+        12'hB1A: csr_num_from_bits = CSR_MHPMCOUNTER26;
+        12'hB1B: csr_num_from_bits = CSR_MHPMCOUNTER27;
+        12'hB1C: csr_num_from_bits = CSR_MHPMCOUNTER28;
+        12'hB1D: csr_num_from_bits = CSR_MHPMCOUNTER29;
+        12'hB1E: csr_num_from_bits = CSR_MHPMCOUNTER30;
+        12'hB1F: csr_num_from_bits = CSR_MHPMCOUNTER31;
+        12'hB80: csr_num_from_bits = CSR_MCYCLEH;
+        12'hB82: csr_num_from_bits = CSR_MINSTRETH;
+        12'hB83: csr_num_from_bits = CSR_MHPMCOUNTER3H;
+        12'hB84: csr_num_from_bits = CSR_MHPMCOUNTER4H;
+        12'hB85: csr_num_from_bits = CSR_MHPMCOUNTER5H;
+        12'hB86: csr_num_from_bits = CSR_MHPMCOUNTER6H;
+        12'hB87: csr_num_from_bits = CSR_MHPMCOUNTER7H;
+        12'hB88: csr_num_from_bits = CSR_MHPMCOUNTER8H;
+        12'hB89: csr_num_from_bits = CSR_MHPMCOUNTER9H;
+        12'hB8A: csr_num_from_bits = CSR_MHPMCOUNTER10H;
+        12'hB8B: csr_num_from_bits = CSR_MHPMCOUNTER11H;
+        12'hB8C: csr_num_from_bits = CSR_MHPMCOUNTER12H;
+        12'hB8D: csr_num_from_bits = CSR_MHPMCOUNTER13H;
+        12'hB8E: csr_num_from_bits = CSR_MHPMCOUNTER14H;
+        12'hB8F: csr_num_from_bits = CSR_MHPMCOUNTER15H;
+        12'hB90: csr_num_from_bits = CSR_MHPMCOUNTER16H;
+        12'hB91: csr_num_from_bits = CSR_MHPMCOUNTER17H;
+        12'hB92: csr_num_from_bits = CSR_MHPMCOUNTER18H;
+        12'hB93: csr_num_from_bits = CSR_MHPMCOUNTER19H;
+        12'hB94: csr_num_from_bits = CSR_MHPMCOUNTER20H;
+        12'hB95: csr_num_from_bits = CSR_MHPMCOUNTER21H;
+        12'hB96: csr_num_from_bits = CSR_MHPMCOUNTER22H;
+        12'hB97: csr_num_from_bits = CSR_MHPMCOUNTER23H;
+        12'hB98: csr_num_from_bits = CSR_MHPMCOUNTER24H;
+        12'hB99: csr_num_from_bits = CSR_MHPMCOUNTER25H;
+        12'hB9A: csr_num_from_bits = CSR_MHPMCOUNTER26H;
+        12'hB9B: csr_num_from_bits = CSR_MHPMCOUNTER27H;
+        12'hB9C: csr_num_from_bits = CSR_MHPMCOUNTER28H;
+        12'hB9D: csr_num_from_bits = CSR_MHPMCOUNTER29H;
+        12'hB9E: csr_num_from_bits = CSR_MHPMCOUNTER30H;
+        12'hB9F: csr_num_from_bits = CSR_MHPMCOUNTER31H;
+        
+        // Machine information
+        12'hF11: csr_num_from_bits = CSR_MVENDORID;
+        12'hF12: csr_num_from_bits = CSR_MARCHID;
+        12'hF13: csr_num_from_bits = CSR_MIMPID;
+        12'hF14: csr_num_from_bits = CSR_MHARTID;
+        12'hF15: csr_num_from_bits = CSR_MCONFIGPTR;
+        12'hFB1: csr_num_from_bits = CSR_MINTSTATUS;
+        
+        // Xsecure custom CSRs
+        12'hBF0: csr_num_from_bits = CSR_CPUCTRL;
+        12'hBF9: csr_num_from_bits = CSR_SECURESEED0;
+        12'hBFA: csr_num_from_bits = CSR_SECURESEED1;
+        12'hBFC: csr_num_from_bits = CSR_SECURESEED2;
+
+        // Add all other mappings here
+        default: begin
+            $error("Invalid csr_num_e value assigned");
+            csr_num_from_bits = CSR_JVT;
+        end
+    endcase
+  endfunction
+
 
 endpackage

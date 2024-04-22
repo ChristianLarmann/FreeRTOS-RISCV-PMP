@@ -1,9 +1,9 @@
 //Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 //Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
-//Tool Version: Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-//Date        : Tue Feb 20 15:03:46 2024
-//Host        : christian-ThinkPad-X270-W10DG running 64-bit Ubuntu 22.04.3 LTS
+//Tool Version: Vivado v.2023.1.1 (lin64) Build 3900603 Fri Jun 16 19:30:25 MDT 2023
+//Date        : Mon Apr 22 13:14:54 2024
+//Host        : TP-T480s running 64-bit Ubuntu 22.04.4 LTS
 //Command     : generate_target clock_wrapper.bd
 //Design      : clock_wrapper
 //Purpose     : IP block netlist

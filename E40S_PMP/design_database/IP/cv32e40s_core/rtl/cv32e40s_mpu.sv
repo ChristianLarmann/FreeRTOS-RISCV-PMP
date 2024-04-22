@@ -218,7 +218,7 @@ module cv32e40s_mpu import cv32e40s_pkg::*;
   );
 
   assign pmp_req_addr = {2'b00, core_trans_i.addr};
-  assign pmp_priv_lvl = privlvl_t'(core_trans_i.prot[2:1]);  // CL: How to understand this?
+  assign pmp_priv_lvl = privlvl_t'(convert_to_privlvl_t(core_trans_i.prot[2:1]));
 
   generate
     if (PMP) begin: pmp

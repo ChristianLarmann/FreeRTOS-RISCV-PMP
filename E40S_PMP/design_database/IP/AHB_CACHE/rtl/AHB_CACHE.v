@@ -72,7 +72,7 @@ wire    [31:0]                  cache_din;
 // WIRES BETWEEN CACHE AND BRAM
 wire	[MEM_DATA_BITS-1:0]		cache_mem_rdata;
 wire	[MEM_DATA_BITS-1:0]		cache_mem_wdata;
-wire	[MEM_ADDR_BITS-1:0]		cache_mem_addr;
+wire	[CPU_ADDR_BITS-2-1:0]	cache_mem_addr;
 wire							cache_mem_req;
 wire							cache_mem_write;
 wire							cache_mem_rdy;
@@ -239,7 +239,7 @@ ram
 			.rst(HRESETn),
 			.mem_req(cache_mem_req),
 			.mem_write(cache_mem_write),
-			.mem_addr(cache_mem_addr),
+			.mem_addr(cache_mem_addr[MEM_ADDR_BITS-1:0]),
 			.mem_wdata(cache_mem_wdata),
 			.mem_rdata(cache_mem_rdata),
             .mem_valid(cache_mem_rdy)  // TODO: Change
