@@ -41,7 +41,6 @@ inline byte random_byte(unsigned int i) {
   return (byte) (0xac + (0xdd ^ i));
 }
 
-
 __attribute__((section(".secure_bootloader")))
 void secure_bootloader() {
   byte scratchpad[128];
@@ -64,23 +63,18 @@ void secure_bootloader() {
   for (unsigned int i=0; i<32; i++) {
     scratchpad[i] = random_byte(i);
   }
-
-  /* On a real device, the platform must provide a secure root device
-     keystore. For testing purposes we hardcode a known private/public
-     keypair */
-  // TEST Device key
-  #include "use_test_keys.h"
   
   // Derive {SK_D, PK_D} (device keys) from a 32 B random seed
   //ed25519_create_keypair(sanctum_dev_public_key, sanctum_dev_secret_key, scratchpad);
 
   // Measure SM
   sha3_init(&hash_ctx, 64);
-  size_t code_size = __secure_boot_end_address__ - __secure_boot_start_address__;
+  size_t code_size = (size_t) (__secure_boot_end_address__ - __secure_boot_start_address__);
   sha3_update(&hash_ctx, __secure_boot_start_address__, sanctum_sm_size);
   sha3_final(sanctum_sm_hash, &hash_ctx);
 
   // Endorse the SM
+  extern int memcpy (void * restrict, const void * restrict, size_t);
   memcpy(scratchpad, sanctum_sm_hash, 64);
   memcpy(scratchpad + 64, sanctum_sm_public_key, 32);
   // Sign (H_SM, PK_SM) with SK_D
@@ -88,6 +82,7 @@ void secure_bootloader() {
 
   // Clean up
   // Erase SK_D
+  extern int memset (void *, int, size_t);
   memset((void*)sanctum_dev_secret_key, 0, sizeof(*sanctum_dev_secret_key));
 
   // caller will clean core state and memory (including the stack), and boot.
