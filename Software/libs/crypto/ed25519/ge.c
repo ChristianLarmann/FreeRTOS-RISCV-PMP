@@ -1,6 +1,10 @@
 #include "ge.h"
 #include "precomp_data.h"
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Wconversion"
+
 
 /*
 r = p + q
@@ -465,3 +469,5 @@ void ge_tobytes(unsigned char *s, const ge_p2 *h) {
     fe_tobytes(s, y);
     s[31] ^= fe_isnegative(x) << 7;
 }
+
+#pragma GCC diagnostic pop

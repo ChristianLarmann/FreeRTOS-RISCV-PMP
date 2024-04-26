@@ -1,6 +1,11 @@
 #include "fixedint.h"
 #include "sc.h"
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Wconversion"
+
+
 static uint64_t load_3(const unsigned char *in) {
     uint64_t result;
 
@@ -807,3 +812,5 @@ void sc_muladd(unsigned char *s, const unsigned char *a, const unsigned char *b,
     s[30] = (unsigned char) (s11 >> 9);
     s[31] = (unsigned char) (s11 >> 17);
 }
+
+#pragma GCC diagnostic pop

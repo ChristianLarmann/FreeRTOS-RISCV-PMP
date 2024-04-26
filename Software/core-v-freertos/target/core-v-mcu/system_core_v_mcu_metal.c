@@ -96,15 +96,6 @@ void system_init(void)
 	irq_clint_enable();
 }
 
-void timer_irq_handler(void)
-{
-#warning requires critical section if interrupt nesting is used.
-
-	if (xTaskIncrementTick() != 0) {
-		vTaskSwitchContext();
-	}
-}
-
 void undefined_handler(void)
 {
 #ifdef __PULP_USE_LIBC

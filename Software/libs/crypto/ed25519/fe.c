@@ -1,6 +1,8 @@
 #include "fixedint.h"
 #include "fe.h"
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-conversion"
 
 /*
     helper functions
@@ -1489,3 +1491,5 @@ void fe_tobytes(unsigned char *s, const fe h) {
     s[30] = (unsigned char) (h9 >> 10);
     s[31] = (unsigned char) (h9 >> 18);
 }
+
+#pragma GCC diagnostic pop

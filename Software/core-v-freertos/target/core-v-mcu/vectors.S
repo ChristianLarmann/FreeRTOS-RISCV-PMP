@@ -33,22 +33,6 @@ vector_table:
 	j freertos_risc_v_trap_handler
 	j freertos_risc_v_trap_handler
 	j freertos_risc_v_trap_handler
-	j timer_irq_handler
-	j freertos_risc_v_trap_handler
-	j freertos_risc_v_trap_handler
-	j freertos_risc_v_trap_handler
-	j freertos_risc_v_trap_handler
-	j freertos_risc_v_trap_handler
-#ifdef PULP_FREERTOS_VECTORED_CONTEXT_SWITCH
-	j freertos_risc_v_trap_handler
-#else
-	j freertos_risc_v_trap_handler
-#endif
-#ifdef __HACK_FIRMWARE_OPT1 /* TODO: properly do this with weak symbols */
-	j TIMER1_IRQ_handler
-#else
-	j freertos_risc_v_trap_handler
-#endif
 	j freertos_risc_v_trap_handler
 	j freertos_risc_v_trap_handler
 	j freertos_risc_v_trap_handler
@@ -69,14 +53,14 @@ vector_table:
 	j freertos_risc_v_trap_handler
 	j freertos_risc_v_trap_handler
 	j freertos_risc_v_trap_handler
-
-/* this is fixed to 0x8000, used for PULP_SECURE=0. We redirect this entry to the
-new vector table (which is at mtvec) */
-/* .section .legacy_irq, "ax" */
-/*	j vector_table */
-/*	j __no_irq_handler */
-/*	j __no_irq_handler */
-/*	j __no_irq_handler */
+	j freertos_risc_v_trap_handler
+	j freertos_risc_v_trap_handler
+	j freertos_risc_v_trap_handler
+	j freertos_risc_v_trap_handler
+	j freertos_risc_v_trap_handler
+	j freertos_risc_v_trap_handler
+	j freertos_risc_v_trap_handler
+	j freertos_risc_v_trap_handler
 
 .section .text.vecs
 /* exception handling */
@@ -84,7 +68,6 @@ __no_irq_handler:
 	la a0, no_exception_handler_msg
 	jal ra, puts
 	j __no_irq_handler
-
 
 sw_irq_handler:
 	csrr t0, mcause

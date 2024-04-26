@@ -144,8 +144,8 @@ void main_blinky(void)
 			.usStackDepth	= configMINIMAL_STACK_SIZE,
 			.pvParameters	= NULL,
 			.uxPriority		= 1,
-			.puxStackBuffer	= ledTaskStack,
-			.xRegions		= NULL
+			.puxStackBuffer	= (StackType_t*) ledTaskStack,
+			.xRegions		= { {0, 0, 0} }
 		};
 
 		asm volatile("li x28, 0x30" ::: "x28");
@@ -168,9 +168,10 @@ void main_blinky(void)
 /*-----------------------------------------------------------*/
 static void prvLedTask(void *pvParameters){
 
+    extern void *MPU_pvPmpMalloc( size_t xSize );
+	extern void MPU_pvPmpFree( void *pv );
+
 	TickType_t xNextWakeTime;
-	const unsigned long ulValueToSend = 100UL;
-	BaseType_t xReturned;
 
 	/* Remove compiler warning about unused parameter. */
 	(void)pvParameters;

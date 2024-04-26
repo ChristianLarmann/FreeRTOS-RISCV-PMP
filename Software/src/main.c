@@ -98,6 +98,8 @@ static void prvSetupHardware( void );
 /* Send a messaage to the UART initialised in prvSetupHardware. */
 void vSendString( const char * const pcString );
 
+extern void _exit(int exit_status);
+
 /*-----------------------------------------------------------*/
 
 int main( void )

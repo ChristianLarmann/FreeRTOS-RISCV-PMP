@@ -31,16 +31,11 @@
 #include "timer.h"
 #include "timer_irq.h"
 
-/* TODO: used to measure elapsed time since last "visit" */
-static uint32_t last_count;
-
-
 #define AHBTIMER_ADDR 				0x20100000
 #define AHBTIMER_LOAD_REG_OFFSET	(AHBTIMER_ADDR + 0x0)
 #define AHBTIMER_VALUE_REG_OFFSET	(AHBTIMER_ADDR + 0x4)
 #define AHBTIMER_CONTROL_REG_OFFSET	(AHBTIMER_ADDR + 0x8)
 #define AHBTIMER_CLEAR_REG_OFFSET  	(AHBTIMER_ADDR + 0xC)
-
 
 int timer_irq_init(uint32_t ticks)
 {

@@ -38,7 +38,7 @@ extern byte sanctum_sm_signature[64];
 /* Update this to generate valid entropy for target platform*/
 inline byte random_byte(unsigned int i) {
 #warning Bootloader does not have entropy source, keys are for TESTING ONLY
-  return 0xac + (0xdd ^ i);
+  return (byte) (0xac + (0xdd ^ i));
 }
 
 
