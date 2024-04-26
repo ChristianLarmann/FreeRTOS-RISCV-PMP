@@ -318,7 +318,7 @@ int32_t write_pmp_config (pmp_info_t * pmp_info, uint32_t region,
 int32_t read_pmp_config (pmp_info_t * pmp_info, uint32_t region,
                          uint8_t * pmp_config, size_t * address)
 {
-    uint8_t pmp_config_temp = 0;
+    uint32_t pmp_config_temp = 0;
 
     if ( (NULL == pmp_info) || (NULL == pmp_config) || (NULL == address) ) {
         return(PMP_INVALID_POINTER);

@@ -107,7 +107,7 @@ reg  [4:0] irq_id;
 cv32e40s_core
  #(
   .PMP_GRANULARITY ( 0 ),  // 2^(PMP_GRANULARITY+2), 4 -> 64 bytes
-  .PMP_NUM_REGIONS ( 8 ),
+  .PMP_NUM_REGIONS ( 16 ),
   .DEBUG ( 0 )
  )
  RISCV_CORE
@@ -201,7 +201,10 @@ cv32e40s_core
     // Maybe this must be connected to the cache to make sure everything is written 
     // before the next instruction is fetched. However, this is most probably not 
     // needed as the core waits for the memory to finish.
-    .fencei_flush_ack_i (1'b1)  
+    .fencei_flush_ack_i ( 1'b1 ),
+    
+    .mimpid_patch_i( 4'b0100 ),  // Arbitrary number for machine implementation ID  
+    .wu_wfe_i( 1'b0 )  // Wake-for-event wakeup not used
   );
     
  

@@ -33,7 +33,7 @@
 						
 						input	[(LINE_WIDTH*8)-1	:0]	mem_din,
 						output	[(LINE_WIDTH*8)-1	:0]	mem_dout,
-						output	[ADDRESS_SIZE-2-1	:0]		mem_address,
+						output	[ADDRESS_SIZE-2-1	:0]	mem_address,
 						output							mem_req,
 						output							mem_rw_enable,
 						input							mem_ready

@@ -143,11 +143,13 @@ module cv32e40s_cs_registers import cv32e40s_pkg::*;
   input  logic [3:0]                    lsu_be_ex_i
 );
 
-  localparam bit PMP = SECURE;
+  // localparam bit PMP = SECURE;
+  localparam bit PMP = 1;
 
   localparam PMP_ADDR_WIDTH = (PMP_GRANULARITY > 0) ? 33 - PMP_GRANULARITY : 32;
 
-  localparam bit USER = SECURE;
+  // localparam bit USER = SECURE;
+  localparam bit USER = 1;
 
   localparam logic [31:0] MISA_VALUE =
     (32'(1)             <<  2) | // C - Compressed extension
@@ -427,7 +429,7 @@ module cv32e40s_cs_registers import cv32e40s_pkg::*;
   assign csr_raddr = csr_num_e'((id_ex_pipe_i.csr_en && id_ex_pipe_i.instr_valid) ? id_ex_pipe_i.alu_operand_b[11:0] : 12'b0);
 
   // Not suppressing csr_waddr to zero when unused since its source are dedicated flipflops and would not save power as for raddr
-  assign csr_waddr = csr_num_e'(ex_wb_pipe_i.csr_addr);
+  assign csr_waddr = csr_num_e'(csr_num_from_bits(ex_wb_pipe_i.csr_addr));
   assign csr_wdata = ex_wb_pipe_i.csr_wdata;
 
   assign csr_op    =  ex_wb_pipe_i.csr_op;
@@ -2267,7 +2269,7 @@ module cv32e40s_cs_registers import cv32e40s_pkg::*;
     .rd_error_o     ( priv_lvl_rd_error     )
   );
 
-  assign priv_lvl_q = privlvl_t'(priv_lvl_q_int);
+  assign priv_lvl_q = privlvl_t'(convert_to_privlvl_t(priv_lvl_q_int));
 
   // Generate priviledge level for the IF stage
   // Since MRET may change the priviledge level and can is taken from ID,
@@ -2327,7 +2329,7 @@ module cv32e40s_cs_registers import cv32e40s_pkg::*;
 
         if (i < PMP_NUM_REGIONS) begin: pmp_region
 
-          assign pmpncfg_wr_addr_match[i] = (csr_waddr == csr_num_e'(CSR_PMPCFG0 + i));
+          assign pmpncfg_wr_addr_match[i] = (csr_waddr == csr_num_e'(csr_num_from_bits(CSR_PMPCFG0 + i)));
 
           assign pmpncfg_n_int[i] = csr_wdata_int[(i%4)*PMPNCFG_W+:PMPNCFG_W];
 
@@ -2402,7 +2404,7 @@ module cv32e40s_cs_registers import cv32e40s_pkg::*;
                                        (pmpncfg_locked[i+1] && pmpncfg_q[i+1].mode == PMP_MODE_TOR);
           end
 
-          assign pmpaddr_wr_addr_match[i] = (csr_waddr == csr_num_e'(CSR_PMPADDR0 + i));
+          assign pmpaddr_wr_addr_match[i] = (csr_waddr == csr_num_e'(csr_num_from_bits(CSR_PMPADDR0 + i)));
 
           // Keep old data if PMPADDR is locked
           // Bit 0 needs special handling because modification of the read data in TOR and OFF mode could lead to
