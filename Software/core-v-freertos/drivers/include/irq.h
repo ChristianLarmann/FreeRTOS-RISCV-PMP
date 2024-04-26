@@ -335,7 +335,7 @@ static inline void __irq_clear_pending(simple_irqn_e IRQn)
 static inline uint32_t __irq_get_active(simple_irqn_e IRQn)
 {
 	assert(0);
-	return -1;
+	return (uint32_t) -1;
 }
 
 static inline uint32_t __irq_forge_it_vect(uint32_t ItBaseAddr,

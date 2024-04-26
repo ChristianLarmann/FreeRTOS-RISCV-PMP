@@ -1,19 +1,14 @@
 /* Copyright 2018 SiFive, Inc */
 /* SPDX-License-Identifier: Apache-2.0 */
 
+#ifndef PMP_H
+#define PMP_H
+
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include "portmacro.h"
 
-#define MAX_PMP_REGION              (16UL)
-
-#if __riscv_xlen == 32
-#define NB_PMP_CFG_REG              (4)
-#define SIZE_PMP_CFG_REG            (4)
-#elif __riscv_xlen == 64
-#define NB_PMP_CFG_REG              (2)
-#define SIZE_PMP_CFG_REG            (8)
-#endif
 
 #define PMP_CFG_1_BIT_MASK          (1)
 #define PMP_CFG_2_BIT_MASK          (3)
@@ -163,7 +158,7 @@ int32_t write_pmp_config (pmp_info_t * pmp_info, uint32_t region,
  * @return int32_t  <0 otherwise
  */
 int32_t read_pmp_config (pmp_info_t * pmp_info, uint32_t region,
-                         uint8_t * pmp_config, size_t * address);
+                         uint8_t * pmp_config, UBaseType_t * address);
 
 /**
  * @brief write all PMP pmpcfgx registers in one time
@@ -243,3 +238,6 @@ int32_t napot_addr_modifier (size_t granularity,
                             size_t address_in,
                             size_t * address_out,
                             size_t size);
+
+
+#endif /* PMP_H */

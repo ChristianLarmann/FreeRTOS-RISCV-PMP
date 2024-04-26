@@ -33,6 +33,8 @@
 extern "C" {
 #endif
 
+#include "FreeRTOSConfig.h"
+
 /* ------------------------------------------------------------------
  * This file is originally taken from the FreeRTOS-metal project by
  * SiFive. It has been adapted to be run on the CV32E40S by OpenHW
@@ -155,6 +157,16 @@ to be guarded with a critical section. */
 /* PMP regions for FreeRTOS */
 /****************************/
 
+/* USER Config */
+#define MAX_PMP_REGION              (16UL)
+#if __riscv_xlen == 32
+#define NB_PMP_CFG_REG              (4)
+#define SIZE_PMP_CFG_REG            (4)
+#elif __riscv_xlen == 64
+#define NB_PMP_CFG_REG              (2)
+#define SIZE_PMP_CFG_REG            (8)
+#endif
+
 /* Start of unprivileged section that contain code to execute */
 #define portUNPRIVILEGED_EXECUTE_REGION_START   ( 0UL )
 /* End of unprivileged section that contain code to execute */
@@ -219,7 +231,7 @@ typedef struct MPU_SETTINGS
 	UBaseType_t uxRegionBaseAddress [ portTOTAL_NUM_REGIONS ];
 } xMPU_SETTINGS;
 
-extern __attribute__((naked)) void vPortSyscall( unsigned int );
+extern void vPortSyscall( unsigned int );
 
 /**
  * @brief Do ecall to raise privilege

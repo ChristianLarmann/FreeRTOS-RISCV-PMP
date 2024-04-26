@@ -4,7 +4,6 @@
 module TOPLEVEL
 (
     input clk_125,
-    input reset,
     output [3:0] output_LEDS
     //output [5:0] output_LEDS,
     //input BT_RX,
@@ -15,16 +14,12 @@ module TOPLEVEL
     
     wire    system_clock;
     wire    system_reset;
-    wire    clk_out;
     wire    locked;
     wire    I_interrupt;
     wire    D_interrupt;
     
-    
-    assign  system_clock    =   clk_out;
 //    assign  output_LEDS[5]  =   I_interrupt;
 //    assign  output_LEDS[4]  =   D_interrupt;
-    assign  system_reset    =   ~reset;
     
 //    debounce
 //    reset_debounce
@@ -39,7 +34,7 @@ module TOPLEVEL
    (
         .clk_in1(clk_125), 
         .reset(system_reset), 
-        .clk_out1(clk_out), 
+        .clk_out1(system_clock), 
         .locked(locked)
     );
    

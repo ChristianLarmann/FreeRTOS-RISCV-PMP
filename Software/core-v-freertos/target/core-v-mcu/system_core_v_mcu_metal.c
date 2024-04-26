@@ -26,9 +26,7 @@
 
 #include "system_core_v_mcu_metal.h"
 
-#include "fll.h"
 #include "irq.h"
-#include "soc_eu.h"
 
 #ifndef DISABLE_WDOG
 #define DISABLE_WDOG 1
@@ -96,18 +94,6 @@ void system_init(void)
 	/* TODO: I$ enable*/
 	/* enable core level interrupt (mie) */
 	irq_clint_enable();
-}
-
-//
-void system_core_clock_update()
-{
-	system_core_clock = pi_fll_get_frequency(FLL_SOC, 0);
-}
-
-void system_core_clock_get(void)
-{
-	system_core_clock_update();
-	//return system_core_clock; CL: Commented out
 }
 
 void timer_irq_handler(void)

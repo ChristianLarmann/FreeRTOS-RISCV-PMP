@@ -33,6 +33,9 @@
 .type _start, @function
 
 _start:
+
+# call secure_bootloader
+
 /* initialize global pointer */
 .option push
 .option norelax

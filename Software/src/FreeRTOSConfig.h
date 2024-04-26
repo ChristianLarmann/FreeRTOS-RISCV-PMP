@@ -43,8 +43,7 @@
  * See http://www.freertos.org/a00110.html.
  *----------------------------------------------------------*/
 
-// CL: Deprecated and replaced
-// #define configCLINT_BASE_ADDRESS		 0 /* There is no CLINT so the base address must be set to 0. */
+#define configCLINT_BASE_ADDRESS		 0x1c000880 
 #define configMTIME_BASE_ADDRESS 0
 #define configMTIMECMP_BASE_ADDRESS 0
 

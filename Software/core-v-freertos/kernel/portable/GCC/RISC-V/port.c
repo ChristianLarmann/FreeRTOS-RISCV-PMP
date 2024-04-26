@@ -101,7 +101,7 @@ task stack, not the ISR stack). */
 #endif /* configCHECK_FOR_STACK_OVERFLOW > 2 */
 
 #if( portUSING_MPU_WRAPPERS == 1 )
-void vResetPrivilege( void ) __attribute__ (( naked ));
+void vResetPrivilege( void );
 
 pmp_info_t xPmpInfo = {0,0};
 
@@ -339,8 +339,7 @@ BaseType_t xPortFreeRTOSInit( StackType_t xIsrTop ) PRIVILEGED_FUNCTION
  *
  */
 #if( portUSING_MPU_WRAPPERS == 1 )
-__attribute__ (( naked )) void vPortPmpSwitch (	uint32_t ulNbPmp,
-												xMPU_SETTINGS * xPMPSettings) PRIVILEGED_FUNCTION
+void vPortPmpSwitch (	uint32_t ulNbPmp, xMPU_SETTINGS * xPMPSettings) PRIVILEGED_FUNCTION
 #else
 __attribute__ (( naked )) void vPortPmpSwitch (	uint32_t ulNbPmp) PRIVILEGED_FUNCTION
 #endif
@@ -657,7 +656,7 @@ void vPortEndScheduler( void )
 /*-----------------------------------------------------------*/
 
 #if( portUSING_MPU_WRAPPERS == 1 )
-__attribute__((naked)) void vPortSyscall( unsigned int Value ) PRIVILEGED_FUNCTION
+void vPortSyscall( unsigned int Value ) PRIVILEGED_FUNCTION
 {
 	/* Remove compiler warning about unused parameter. */
 	( void ) Value;
@@ -670,7 +669,7 @@ __attribute__((naked)) void vPortSyscall( unsigned int Value ) PRIVILEGED_FUNCTI
 }
 /*-----------------------------------------------------------*/
 
-__attribute__((naked)) void vRaisePrivilege( void ) PRIVILEGED_FUNCTION
+void vRaisePrivilege( void ) PRIVILEGED_FUNCTION
 {
 	__asm__ __volatile__ (
 		"	.extern privilege_status \n"
@@ -685,7 +684,7 @@ __attribute__((naked)) void vRaisePrivilege( void ) PRIVILEGED_FUNCTION
 }
 /*-----------------------------------------------------------*/
 
-__attribute__((naked)) void vResetPrivilege( void ) PRIVILEGED_FUNCTION
+void vResetPrivilege( void ) PRIVILEGED_FUNCTION
 {
 	__asm__ __volatile__ (
 		"	.extern privilege_status \n"
@@ -892,8 +891,8 @@ BaseType_t xAddMallocPMP(void *pv, size_t size)
 	uint32_t indexRegion;
 	for( indexRegion = portFIRST_CONFIGURABLE_REGION; indexRegion < portLAST_CONFIGURABLE_REGION; indexRegion++ )
 	{
-		uint8_t pmpConfig = NULL;
-		size_t pmpAddr = NULL;
+		uint8_t pmpConfig = 0;
+		UBaseType_t pmpAddr = 0;
 		read_pmp_config(&xPmpInfo, indexRegion, &pmpConfig, &pmpAddr);
 
 		/* If config == 0 (PMP_OFF), new slots for malloc regions are found */
@@ -965,19 +964,19 @@ BaseType_t xAddMallocPMP(void *pv, size_t size)
 
 BaseType_t xRemoveFreePMP( void *pv ) 
 {
-	BaseType_t beginningAddress = (BaseType_t) pv;
+	UBaseType_t beginningAddress = (UBaseType_t) pv;
 
 	uint32_t indexRegion;
 	// iprintf("%x", beginningAddress);
 	for( indexRegion = portFIRST_CONFIGURABLE_REGION; indexRegion < portLAST_CONFIGURABLE_REGION; indexRegion++ )
 	{
-		iprintf("%x", indexRegion);
-		uint8_t pmpConfig = NULL;
-		size_t pmpAddrRaw = NULL;
+		iprintf("%lx", indexRegion);
+		uint8_t pmpConfig = 0;
+		UBaseType_t pmpAddrRaw = 0;
 		read_pmp_config(&xPmpInfo, indexRegion, &pmpConfig, &pmpAddrRaw);
 
 		/* If true, PMP regions are found that protected that free'd memory */
-		size_t pmpAddr = pmpAddrRaw << 2; // TODO: Make flexible depending on pmp granularity
+		UBaseType_t pmpAddr = pmpAddrRaw << 2; // TODO: Make flexible depending on pmp granularity
 		if (beginningAddress == pmpAddr) {
 			iprintf("S");
 
@@ -1025,7 +1024,7 @@ BaseType_t xRemoveFreePMP( void *pv )
 }
 #endif
 
-__attribute__((naked)) void vPortUpdatePrivilegeStatus( UBaseType_t status ) PRIVILEGED_FUNCTION
+void vPortUpdatePrivilegeStatus( UBaseType_t status ) PRIVILEGED_FUNCTION
 {
 	/* Remove compiler warning about unused parameter. */
 	( void ) status;

@@ -2009,8 +2009,7 @@ BaseType_t xReturn;
 		}
 	}
 	#else
-	{ // CL: This is being called
-	    printf("it\n");
+	{
 		/* The Idle task is being created using dynamically allocated RAM. */
 		xReturn = xTaskCreate(	prvIdleTask,
 								configIDLE_TASK_NAME,
@@ -2025,13 +2024,10 @@ BaseType_t xReturn;
 	{
 		if( xReturn == pdPASS )
 		{
-			// CL: This is being called
-			printf("tt\n");
 			xReturn = xTimerCreateTimerTask();
 		}
 		else
-		{ // CL: Not called
-			printf("Yo3\n");
+		{
 			mtCOVERAGE_TEST_MARKER();
 		}
 	}
@@ -2039,13 +2035,11 @@ BaseType_t xReturn;
 
 	if( xReturn == pdPASS )
 	{
-		//CL: CALLED
 		/* freertos_tasks_c_additions_init() should only be called if the user
 		definable macro FREERTOS_TASKS_C_ADDITIONS_INIT() is defined, as that is
 		the only macro called by the function. */
 		#ifdef FREERTOS_TASKS_C_ADDITIONS_INIT
 		{
-			// CL: NOT CALLED
 			freertos_tasks_c_additions_init();
 		}
 		#endif
@@ -2097,13 +2091,11 @@ BaseType_t xReturn;
 	}
 	else
 	{
-		printf("Yo0\n");
 		/* This line will only be reached if the kernel could not be started,
 		because there was not enough FreeRTOS heap to create the idle task
 		or the timer task. */
 		configASSERT( xReturn != errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY );
 	}
-	printf("Yo10\n");
 
 	/* Prevent compiler warnings if INCLUDE_xTaskGetIdleTaskHandle is set to 0,
 	meaning xIdleTaskHandle is not used anywhere else. */

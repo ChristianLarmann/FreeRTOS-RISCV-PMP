@@ -25,7 +25,6 @@
 
 #include "target.h"
 #include "memory_map.h"
-#include "soc_eu.h"
 #include "bits.h"
 
 /** UDMA Global configuration - Register Layout Typedef */

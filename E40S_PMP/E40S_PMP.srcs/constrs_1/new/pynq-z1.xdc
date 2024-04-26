@@ -16,8 +16,7 @@ set_property IOSTANDARD LVCMOS33 [get_ports BT_TX]
 
 ## Clock signal 125 MHz
 
-set_property -dict {PACKAGE_PIN H16 IOSTANDARD LVCMOS33} [get_ports clk_125]
-create_clock -period 8.000 -name sys_clk_pin -waveform {0.000 4.000} -add [get_ports clk_125]
+#set_property -dict {PACKAGE_PIN H16 IOSTANDARD LVCMOS33} [get_ports clk_125]
 
 ##Switches
 
@@ -42,7 +41,7 @@ set_property -dict {PACKAGE_PIN M14 IOSTANDARD LVCMOS33} [get_ports {output_LEDS
 
 ##Buttons
 
-set_property -dict {PACKAGE_PIN D19 IOSTANDARD LVCMOS33} [get_ports reset]
+# set_property -dict {PACKAGE_PIN D19 IOSTANDARD LVCMOS33} [get_ports reset]
 #set_property -dict { PACKAGE_PIN D20   IOSTANDARD LVCMOS33 } [get_ports { btn[1] }]; #IO_L4N_T0_35 Sch=btn[1]
 #set_property -dict { PACKAGE_PIN L20   IOSTANDARD LVCMOS33 } [get_ports { btn[2] }]; #IO_L9N_T1_DQS_AD3N_35 Sch=btn[2]
 #set_property -dict { PACKAGE_PIN L19   IOSTANDARD LVCMOS33 } [get_ports { btn[3] }]; #IO_L9P_T1_DQS_AD3P_35 Sch=btn[3]
@@ -199,21 +198,8 @@ set_property -dict {PACKAGE_PIN D19 IOSTANDARD LVCMOS33} [get_ports reset]
 
 #set_property -dict { PACKAGE_PIN J15   IOSTANDARD LVCMOS33 } [get_ports { crypto_sda }]; #IO_25_35 Sch=crypto_sda
 
-create_debug_core u_ila_0 ila
-set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0]
-set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_0]
-set_property C_ADV_TRIGGER false [get_debug_cores u_ila_0]
-set_property C_DATA_DEPTH 2048 [get_debug_cores u_ila_0]
-set_property C_EN_STRG_QUAL false [get_debug_cores u_ila_0]
-set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_0]
-set_property C_TRIGIN_EN false [get_debug_cores u_ila_0]
-set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0]
-set_property port_width 1 [get_debug_ports u_ila_0/clk]
-connect_debug_port u_ila_0/clk [get_nets [list RI5CY_with_Caches/RISC_V/clk]]
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
-set_property port_width 31 [get_debug_ports u_ila_0/probe0]
-connect_debug_port u_ila_0/probe0 [get_nets [list {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[1]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[2]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[3]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[4]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[5]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[6]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[7]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[8]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[9]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[10]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[11]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[12]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[13]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[14]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[15]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[16]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[17]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[18]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[19]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[20]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[21]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[22]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[23]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[24]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[25]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[26]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[27]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[28]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[29]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[30]} {RI5CY_with_Caches/RISC_V/RISCV_CORE/pc_if[31]}]]
-set_property C_CLK_INPUT_FREQ_HZ 300000000 [get_debug_cores dbg_hub]
-set_property C_ENABLE_CLK_DIVIDER false [get_debug_cores dbg_hub]
-set_property C_USER_SCAN_CHAIN 1 [get_debug_cores dbg_hub]
-connect_debug_port dbg_hub/clk [get_nets u_ila_0_clk]
+
+
+
+
+

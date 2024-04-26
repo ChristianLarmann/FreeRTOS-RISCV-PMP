@@ -22,7 +22,6 @@
 #include "pmsis_task.h"
 
 #include "uart.h"
-#include "fll.h"
 #include "device.h"
 #include "events.h"
 #include "udma_core.h"

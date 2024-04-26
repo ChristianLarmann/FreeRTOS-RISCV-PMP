@@ -45,10 +45,7 @@ module AHB_CACHE
             output wire [9:0]   debug
 	);
 	
-	assign debug[9]    =       cache_rdy;
-	assign debug[8]    =       cache_req;
-	assign debug[7:0]  =       UA_debug;
-	
+
 wire    [7:0]                   UA_debug;
 	
 	
@@ -116,6 +113,10 @@ end
 // Select correct data to cache to deal with non-standard AHB behaviour
 assign cache_din = (DataPhase) ? HWDATA : APhase_HWDATA;
 assign HREADYOUT = APhase_HREADYOUT;
+
+assign debug[9]    =       cache_rdy;
+assign debug[8]    =       cache_req;
+assign debug[7:0]  =       UA_debug;
 
 // Main process to sample signals
 always @(posedge HCLK, negedge HRESETn)

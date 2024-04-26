@@ -15,11 +15,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # Author: Robert Balas (balasr@iis.ee.ethz.ch)
 
-SRCS += $(dir)/fll.c
 SRCS += $(dir)/timer_irq.c
 SRCS += $(dir)/irq.c
-SRCS += $(dir)/soc_eu.c
 SRCS += $(dir)/gpio.c
-SRCS += $(dir)/pinmux.c
 
 CV_CPPFLAGS += -I$(dir)/include

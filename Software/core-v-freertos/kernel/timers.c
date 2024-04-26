@@ -452,7 +452,7 @@ Timer_t * pxTimer =  xTimer;
 		}
 		else
 		{
-			pxTimer->ucStatus &= ~tmrSTATUS_IS_AUTORELOAD;
+			pxTimer->ucStatus &= (uint8_t)~tmrSTATUS_IS_AUTORELOAD;
 		}
 	}
 	taskEXIT_CRITICAL();
@@ -536,7 +536,7 @@ Timer_t * const pxTimer = ( Timer_t * ) listGET_OWNER_OF_HEAD_ENTRY( pxCurrentTi
 	}
 	else
 	{
-		pxTimer->ucStatus &= ~tmrSTATUS_IS_ACTIVE;
+		pxTimer->ucStatus &= (uint8_t)~tmrSTATUS_IS_ACTIVE;
 		mtCOVERAGE_TEST_MARKER();
 	}
 
@@ -826,7 +826,7 @@ TickType_t xTimeNow;
 				case tmrCOMMAND_STOP :
 				case tmrCOMMAND_STOP_FROM_ISR :
 					/* The timer has already been removed from the active list. */
-					pxTimer->ucStatus &= ~tmrSTATUS_IS_ACTIVE;
+					pxTimer->ucStatus &= (uint8_t)~tmrSTATUS_IS_ACTIVE;
 					break;
 
 				case tmrCOMMAND_CHANGE_PERIOD :
@@ -856,7 +856,7 @@ TickType_t xTimeNow;
 						}
 						else
 						{
-							pxTimer->ucStatus &= ~tmrSTATUS_IS_ACTIVE;
+							pxTimer->ucStatus &= (uint8_t)~tmrSTATUS_IS_ACTIVE;
 						}
 					}
 					#else

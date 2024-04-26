@@ -52,9 +52,7 @@ include $(dir)/makefile.mk
 endif
 
 # target/platform specific includes and srcs
-ifeq ($(FREERTOS_CONFIG_FAMILY),core-v-mcu)
-#  $(warning "FREERTOS_CONFIG_FAMILY: unused") CL: Commented out
-else
+ifndef FREERTOS_CONFIG_FAMILY
 $(error "FREERTOS_CONFIG_FAMILY is unset. Run `source env/platform-you-want.sh' \
 	from the freertos project's root folder.")
 endif

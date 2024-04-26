@@ -48,7 +48,6 @@
 /* PULPissimo includes. */
 #include "system_core_v_mcu.h"
 #include "timer_irq.h"
-#include "fll.h"
 #include "irq.h"
 #include "gpio.h"
 
@@ -139,7 +138,8 @@ static void prvSetupHardware( void )
 
 void vToggleLED( void )
 {
-	gpio_pin_toggle( 0x5 );
+	gpio_pin_toggle( 0x2 );
+	gpio_pin_toggle( 0x1 );
 }
 /*-----------------------------------------------------------*/
 

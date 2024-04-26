@@ -57,7 +57,7 @@ reg [15:0] dec;
 
 //REFER CM0-DS REFERENC MANUAL FOR RAM & PERIPHERAL MEMORY MAP
 //									//MEMORY MAP --> START ADDR 		END ADDR 	SIZE 
-assign HSEL_S0 = dec[0];   //MEMORY MAP --> 0x1C01_0000 to 0x1C01_FFFF  64kb
+assign HSEL_S0 = dec[0];   //MEMORY MAP --> 0x1C05_0000 to 0x1C05_FFFF  64kb
 assign HSEL_S1 = dec[1];   //MEMORY MAP --> 0x1A10_0000 to 0x1A10_FFFF  64kb	
 assign HSEL_S2 = dec[2];   //MEMORY MAP --> 0x1B10_0000 to 0x1B10_FFFF  64kb
 assign HSEL_S3 = dec[3];   //MEMORY MAP --> 0x1C10_0000 to 0x1C10_FFFF  64kb
@@ -73,7 +73,7 @@ always@*
 begin
 
   case(HADDR[31:16])
-    16'h1C01:				//MEMORY MAP --> 0x0010_0000 to 0x0010_FFFF  64kB
+    16'h1C05:				//MEMORY MAP --> 0x0010_0000 to 0x0010_FFFF  64kB
       begin
         dec = 16'b0000_0000_00000001;
         MUX_SEL = 4'b0000;

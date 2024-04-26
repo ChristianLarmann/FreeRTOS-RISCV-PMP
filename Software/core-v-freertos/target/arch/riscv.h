@@ -175,7 +175,7 @@ __attribute__((always_inline)) static inline void __enable_irq(void)
 __attribute__((always_inline)) static inline int __disable_irq(void)
 {
 	uint32_t val = csr_read_clear(MSTATUS_ADDR, BIT(MSTATUS_MIE_Pos));
-	return val;
+	return (int) val;
 }
 
 

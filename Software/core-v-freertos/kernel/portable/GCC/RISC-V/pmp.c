@@ -7,7 +7,8 @@
  * @brief get the mxlen from misa register
  *
  */
-static __attribute__((naked, unused)) int32_t get_mxlen (void)
+static int32_t get_mxlen (void) __attribute__((unused));
+static int32_t get_mxlen (void)
 {
     __asm__ __volatile__ (
         " csrr a0, misa \n" /* get misa reg. */
@@ -53,10 +54,10 @@ static int32_t _get_detected_granularity(size_t address) {
  */
 int32_t init_pmp (pmp_info_t * pmp_info)
 {
-    int32_t result = PMP_DEFAULT_ERROR;
+    int32_t result = (int32_t) PMP_DEFAULT_ERROR;
     size_t i = 0;
     uint8_t pmp_config = 0;
-    size_t address = 0;
+    UBaseType_t address = 0;
 
     if ( NULL == pmp_info ) {
         return(PMP_INVALID_POINTER);
@@ -68,13 +69,12 @@ int32_t init_pmp (pmp_info_t * pmp_info)
 
         pmp_config = 0;
         address = 0;
-        // CL: Writes addr and cfg
         result = write_pmp_config (pmp_info, i, pmp_config, address);
         if(PMP_SUCCESS > result) {
             return(result);
         }
 
-        address = -1;
+        address = (UBaseType_t) -1;
         result = write_pmp_config (pmp_info, i, pmp_config, address);
         if(PMP_SUCCESS > result) {
             return(result);
@@ -91,7 +91,7 @@ int32_t init_pmp (pmp_info_t * pmp_info)
             if(PMP_SUCCESS > result) {
                 return(result);
             }
-            pmp_info->granularity = result;
+            pmp_info->granularity = (uint32_t) result;
         }
 
         /* Check number of active region */
@@ -134,7 +134,7 @@ int32_t set_pmp_config (pmp_cfg_t * config, uint8_t * register_val)
     case PMP_TOR:
     case PMP_NA4:
     case PMP_NAPOT:
-        reg_temp |= config->A << PMP_ADDRESS_RIGHT_OFFSET;
+        reg_temp |= (uint8_t) (config->A << PMP_ADDRESS_RIGHT_OFFSET);
         break;
     default:
         return(PMP_INVALID_PARAM);
@@ -316,7 +316,7 @@ int32_t write_pmp_config (pmp_info_t * pmp_info, uint32_t region,
 }
 
 int32_t read_pmp_config (pmp_info_t * pmp_info, uint32_t region,
-                         uint8_t * pmp_config, size_t * address)
+                         uint8_t * pmp_config, UBaseType_t * address)
 {
     uint32_t pmp_config_temp = 0;
 

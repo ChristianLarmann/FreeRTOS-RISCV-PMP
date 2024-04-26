@@ -16,4 +16,3 @@
 # Author: Robert Balas (balasr@iis.ee.ethz.ch)
 
 SRCS += $(dir)/syscalls.c
-SRCS += $(dir)/pulp_malloc.c

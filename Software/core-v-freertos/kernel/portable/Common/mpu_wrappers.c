@@ -58,6 +58,8 @@ task.h is included from an application file. */
  * code to reset the privilege, otherwise does nothing.
  */
 void vPortResetPrivilege( BaseType_t xRunningPrivileged );
+
+void vToggleLED( void );
 /*-----------------------------------------------------------*/
 
 
@@ -90,6 +92,7 @@ void vPortResetPrivilege( BaseType_t xRunningPrivileged )
 {
 	if( xRunningPrivileged != pdTRUE )
 	{
+		vToggleLED();
 		portRESET_PRIVILEGE();
 	}
 }

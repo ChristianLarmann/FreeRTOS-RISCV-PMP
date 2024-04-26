@@ -130,9 +130,11 @@ int _execve(const char *name, char *const argv[], char *const env[])
 
 void _exit(int exit_status)
 {
-	writew(exit_status | (1 << APB_SOC_STATUS_EOC_BIT),
+	writew((uint32_t)(exit_status | (1 << APB_SOC_STATUS_EOC_BIT)),
 	       (uintptr_t)(PULP_APB_SOC_CTRL_ADDR + APB_SOC_CORESTATUS_OFFSET));
 	asm volatile("wfi");
+
+	while(1); // Infinite loop to avoid noreturn warning
 }
 
 int _faccessat(int dirfd, const char *file, int mode, int flags)
@@ -161,11 +163,12 @@ int _fstatat(int dirfd, const char *file, struct stat *st, int flags)
 	return -1;
 }
 
-int _ftime(struct timeb *tp)
-{
-	errno = ENOSYS;
-	return -1;
-}
+// CL: Commented out because it caused a warning as timeb is not defined
+// int _ftime(struct timeb *tp)
+// {
+// 	errno = ENOSYS;
+// 	return -1;
+// }
 
 char *_getcwd(char *buf, size_t size)
 {
@@ -243,7 +246,7 @@ long _sysconf(int name)
 
 clock_t _times(struct tms *buf)
 {
-	return -1;
+	return (unsigned long) -1;
 }
 
 int _unlink(const char *name)
@@ -252,11 +255,12 @@ int _unlink(const char *name)
 	return -1;
 }
 
-int _utime(const char *path, const struct utimbuf *times)
-{
-	errno = ENOSYS;
-	return -1;
-}
+// CL: Commented out because of warning
+// int _utime(const char *path, const struct utimbuf *times)
+// {
+// 	errno = ENOSYS;
+// 	return -1;
+// }
 
 int _wait(int *status)
 {
@@ -300,7 +304,7 @@ ssize_t _write(int file, const void *ptr, size_t len)
 		writew(*(unsigned char *)(ptr++),
 		       (uintptr_t)(AHBUART_STDOUT_ADDR));  // CL: Here connect to my AHBUART
 	}
-	return len;
+	return (int) len;
 }
 
 extern char __heap_start[];
