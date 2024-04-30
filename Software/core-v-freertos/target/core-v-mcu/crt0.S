@@ -34,7 +34,6 @@
 
 _start:
 
-# call secure_bootloader
 
 /* initialize global pointer */
 .option push
@@ -42,6 +41,7 @@ _start:
 1:	auipc gp, %pcrel_hi(__global_pointer$) // gp = x3, __global_p... at 1c010170
 	addi  gp, gp, %pcrel_lo(1b)  // 1b: first occurence fo 1 backwards
 .option pop
+
 
 #if defined(ARCHI_HAS_CLUSTER)
 	/* TODO */
@@ -67,6 +67,8 @@ _start:
 	call atexit
 	call __libc_init_array
 #endif
+
+# call secure_bootloader
 
 /* call main */
 	lw a0, 0(sp)                    /* a0 = argc */

@@ -92,6 +92,5 @@ include $(FREERTOS_PROJ_ROOT)/default_targets.mk
 $(shell sed -i 's/home\/christian\/Documents\/CESE\/Thesis\/FreeRTOS-RISCV-PMP\/Software/PROJ_ROOT/g' blinky.lst)
 # Generate and move .dat files to the Vivado Simulation Folder
 $(shell bash ./srec2dat.sh)
-$(shell cp ./code.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
-$(shell cp ./data.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
+$(shell cp ./code_and_data.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
 

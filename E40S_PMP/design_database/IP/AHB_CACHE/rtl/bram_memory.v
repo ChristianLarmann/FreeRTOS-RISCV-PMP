@@ -2,7 +2,6 @@ module bram_memory
 			#(
 				parameter MEM_DATA_BITS = 128,
 				parameter MEM_ADDR_BITS = 12,
-				parameter INSTRUCTION = 1,
                 parameter MAIN_MEM_DELAY = 5
 			)
 			(
@@ -26,16 +25,14 @@ reg		[31:0]					delay;
 
 initial  
 begin
-if (INSTRUCTION)
     //$readmemh("code128_orig.dat", memory);
-    $readmemh("code.dat", memory);
+    $readmemh("code_and_data.dat", memory);
     //$readmemh("code128_siphash_S.dat", memory);
     //$readmemh("code128_siphash_D.dat", memory);
     //$readmemh("code128_prince_siphash_S.dat", memory);    
     //$readmemh("code128_prince_siphash_D.dat", memory);    
-else
     //$readmemh("data128_orig.dat", memory);
-    $readmemh("data.dat", memory);
+    //$readmemh("data.dat", memory);
     //$readmemh("data128_siphash_S.dat", memory);
     //$readmemh("data128_siphash_D.dat", memory);
     //$readmemh("data128_prince_siphash_S.dat", memory);

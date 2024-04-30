@@ -92,3 +92,9 @@ Software/.vscode/settings.json
 *.pyc
 
 E40S_PMP/E40S_PMP.xpr
+
+*.o
+
+Software/src/data.dat
+
+Software/src/code.dat

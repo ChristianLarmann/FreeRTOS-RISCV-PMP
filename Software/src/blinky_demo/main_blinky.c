@@ -194,20 +194,22 @@ static void prvLedTask(void *pvParameters){
 		asm volatile("li x29, 0x7777" ::: "x29");
 
 
-		uint32_t* heapVar2 = (uint32_t*) MPU_pvPmpMalloc(10 * sizeof(uint32_t));
+		if (counter_free > 3) {
+			uint32_t* heapVar2 = (uint32_t*) MPU_pvPmpMalloc(10 * sizeof(uint32_t));
 
-		if (counter_free == 0) {
-			heapVar[0] = 0xAF;
-			MPU_pvPmpFree(heapVar);
-		}
-		if (counter_free == 3) {
-			uint32_t* heapVarLater = (uint32_t*) MPU_pvPmpMalloc(6 * sizeof(uint32_t));
-			heapVarLater[0] = 0xBF;
-		}
+			if (counter_free == 0) {
+				heapVar[0] = 0xAF;
+				MPU_pvPmpFree(heapVar);
+			}
+			if (counter_free == 3) {
+				uint32_t* heapVarLater = (uint32_t*) MPU_pvPmpMalloc(6 * sizeof(uint32_t));
+				// heapVarLater[0] = 0xBF;
+			}
 
-		if (counter_free == 4) {
-			MPU_pvPmpFree(heapVar2);
-			heapVar2[0] = 0xCF;
+			if (counter_free == 4) {
+				MPU_pvPmpFree(heapVar2);
+				// heapVar2[0] = 0xCF;
+			}
 		}
 		counter_free += 1;
 	}

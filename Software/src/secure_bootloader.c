@@ -22,8 +22,8 @@
 typedef unsigned char byte;
 
 // Sanctum header fields in DRAM
-extern void* __secure_boot_start_address__;
-extern void* __secure_boot_end_address__;
+extern uintptr_t __secure_boot_start_address__;
+extern uintptr_t __secure_boot_end_address__;
 extern void* __boot_address_;
 
 extern byte sanctum_dev_public_key[32];
@@ -69,8 +69,10 @@ void secure_bootloader() {
 
   // Measure SM
   sha3_init(&hash_ctx, 64);
-  size_t code_size = (size_t) (__secure_boot_end_address__ - __secure_boot_start_address__);
-  sha3_update(&hash_ctx, __secure_boot_start_address__, sanctum_sm_size);
+
+  size_t code_size = (size_t) ((void*)&__secure_boot_end_address__ - (void*)&__secure_boot_start_address__);
+
+  sha3_update(&hash_ctx, (void*)&__secure_boot_start_address__, code_size);
   sha3_final(sanctum_sm_hash, &hash_ctx);
 
   // Endorse the SM
