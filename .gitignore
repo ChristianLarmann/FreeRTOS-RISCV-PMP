@@ -110,3 +110,7 @@ E40S_PMP/E40S_PMP.hw/hw_1/hw.xml
 E40S_PMP/E40S_PMP.ip_user_files/bd/clock/sim/clock.v
 
 E40S_PMP/RI5CY_UA.gen/sources_1/bd/clock/
+
+Software/libs/crypto/keys-openssl/C-reference-implementation/myprogram
+
+Software/libs/crypto/C-reference-implementation/myprogram

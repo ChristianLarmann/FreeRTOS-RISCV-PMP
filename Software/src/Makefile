@@ -72,7 +72,7 @@ USER_SRCS += secure_bootloader.c
 CRYLIB = ../libs/crypto
 CV_CPPFLAGS += -I"$(CRYLIB)/ed25519"
 CV_CPPFLAGS += -I"$(CRYLIB)/sha3"
-USER_SRCS += $(CRYLIB)/ed25519/fe.c $(CRYLIB)/ed25519/ge.c $(CRYLIB)/ed25519/keypair.c $(CRYLIB)/ed25519/sc.c $(CRYLIB)/ed25519/sign.c
+USER_SRCS += $(CRYLIB)/ed25519/fe.c $(CRYLIB)/ed25519/ge.c $(CRYLIB)/ed25519/keypair.c $(CRYLIB)/ed25519/sc.c $(CRYLIB)/ed25519/verify.c $(CRYLIB)/ed25519/sign.c
 USER_SRCS += $(CRYLIB)/sha3/sha3.c
 
 
