@@ -55,7 +55,7 @@ module SECURE_PLATFORM_RI5CY
 		);
 
 localparam BOOT_ADDR = 32'h1c005000;
-localparam INST_BASE_ADDR = 32'h1c000800;
+localparam INST_BASE_ADDR = 32'h1c000000;
 localparam SIZE_MEMORY = 'h60000;
 
 wire [7:0] LEDS;
@@ -232,6 +232,7 @@ RISC_V
 
 (* dont_touch = "true" *) AHBDCD uAHBDCD (
 	.HADDR(dat_HADDR),
+	.RESET(sys_reset_N),
 	
 	.HSEL_S0(HSEL_MEM),
 	.HSEL_S1(),  // TODO: Not connected, SOC_PERIPHERALS_ADDR in core-v-freertos

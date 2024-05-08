@@ -98,3 +98,15 @@ E40S_PMP/E40S_PMP.xpr
 Software/src/data.dat
 
 Software/src/code.dat
+
+E40S_PMP/E40S_PMP.ip_user_files/bd/clock/ip/clock_clk_wiz_0_0/clock_clk_wiz_0_0_sim_netlist.v
+
+E40S_PMP/E40S_PMP.ip_user_files/bd/clock/ip/clock_clk_wiz_0_0/clock_clk_wiz_0_0_sim_netlist.vhdl
+
+E40S_PMP/E40S_PMP.hw/E40S_PMP.lpr
+
+E40S_PMP/E40S_PMP.hw/hw_1/hw.xml
+
+E40S_PMP/E40S_PMP.ip_user_files/bd/clock/sim/clock.v
+
+E40S_PMP/RI5CY_UA.gen/sources_1/bd/clock/
