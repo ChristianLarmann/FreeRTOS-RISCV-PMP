@@ -72,7 +72,7 @@ USER_SRCS += secure_bootloader.c
 CRYLIB = ../libs/crypto
 CV_CPPFLAGS += -I"$(CRYLIB)/ed25519"
 CV_CPPFLAGS += -I"$(CRYLIB)/sha3"
-USER_SRCS += $(CRYLIB)/ed25519/fe.c $(CRYLIB)/ed25519/ge.c $(CRYLIB)/ed25519/keypair.c $(CRYLIB)/ed25519/sc.c $(CRYLIB)/ed25519/sign.c
+USER_SRCS += $(CRYLIB)/ed25519/fe.c $(CRYLIB)/ed25519/ge.c $(CRYLIB)/ed25519/keypair.c $(CRYLIB)/ed25519/sc.c $(CRYLIB)/ed25519/verify.c $(CRYLIB)/ed25519/sign.c
 USER_SRCS += $(CRYLIB)/sha3/sha3.c
 
 
@@ -92,6 +92,5 @@ include $(FREERTOS_PROJ_ROOT)/default_targets.mk
 $(shell sed -i 's/home\/christian\/Documents\/CESE\/Thesis\/FreeRTOS-RISCV-PMP\/Software/PROJ_ROOT/g' blinky.lst)
 # Generate and move .dat files to the Vivado Simulation Folder
 $(shell bash ./srec2dat.sh)
-$(shell cp ./code.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
-$(shell cp ./data.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
+$(shell cp ./code_and_data.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
 

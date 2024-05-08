@@ -54,10 +54,12 @@ module SECURE_PLATFORM_RI5CY
 				//input					ni_pkt_accepted
 		);
 
+localparam BOOT_ADDR = 32'h1c005000;
+localparam INST_BASE_ADDR = 32'h1c000000;
+localparam SIZE_MEMORY = 'h60000;
+
 wire [7:0] LEDS;
 assign output_LEDS = LEDS[7:0];
-localparam BOOT_ADDR = 32'h1c005000;
-localparam INST_BASE_ADDR = 32'h1c000800;
 
 //Address, Control & Write Data Signals
 wire [31:0]		HADDR_INST; //Do not get confuse with this signal
@@ -91,6 +93,7 @@ wire 				HSEL_DUMP;
 wire 				HSEL_AES;
 wire 				HSEL_UART;
 wire 				HSEL_TIMER;
+wire                HSEL_SECURE_BOOT_INSTR_MEM;
 //wire 				HSEL_MONITOR;
 
 //SLAVE READ DATA
@@ -100,6 +103,7 @@ wire [31:0] 	HRDATA_DUMP;
 wire [31:0] 	HRDATA_AES;
 wire [31:0] 	HRDATA_UART;
 wire [31:0] 	HRDATA_TIMER;
+wire [31:0]     HRDATA_SECURE_BOOT_INSTR_MEM;
 //wire [31:0] 	HRDATA_MONITOR;
 
 //SLAVE HREADYOUT
@@ -109,6 +113,7 @@ wire 				HREADYOUT_DUMP;
 wire 				HREADYOUT_AES;
 wire 				HREADYOUT_UART;
 wire 				HREADYOUT_TIMER;
+wire                HREADYOUT_SECURE_BOOT_INSTR_MEM;
 //wire 				HREADYOUT_MONITOR;
 
 //CM0-DS Sideband signals
@@ -227,6 +232,7 @@ RISC_V
 
 (* dont_touch = "true" *) AHBDCD uAHBDCD (
 	.HADDR(dat_HADDR),
+	.RESET(sys_reset_N),
 	
 	.HSEL_S0(HSEL_MEM),
 	.HSEL_S1(),  // TODO: Not connected, SOC_PERIPHERALS_ADDR in core-v-freertos
@@ -234,7 +240,7 @@ RISC_V
 	.HSEL_S3(HSEL_AES),
 	.HSEL_S4(HSEL_UART),
 	.HSEL_S5(),
-	.HSEL_S6(),
+	.HSEL_S6(HSEL_SECURE_BOOT_INSTR_MEM),
 	.HSEL_S7(HSEL_TIMER),
 	.HSEL_S8(),
 	.HSEL_S9(),
@@ -256,7 +262,7 @@ RISC_V
 	.HRDATA_S3(HRDATA_AES),
 	.HRDATA_S4(HRDATA_UART),
 	.HRDATA_S5(),
-	.HRDATA_S6(),
+	.HRDATA_S6(HRDATA_SECURE_BOOT_INSTR_MEM),
 	.HRDATA_S7(HRDATA_TIMER),
 	.HRDATA_S8(),
 	.HRDATA_S9(),
@@ -268,7 +274,7 @@ RISC_V
 	.HREADYOUT_S3(HREADYOUT_AES),
 	.HREADYOUT_S4(HREADYOUT_UART),
 	.HREADYOUT_S5(1'b1),
-	.HREADYOUT_S6(1'b1),
+	.HREADYOUT_S6(HREADYOUT_SECURE_BOOT_INSTR_MEM),
 	.HREADYOUT_S7(HREADYOUT_TIMER),
 	.HREADYOUT_S8(1'b1),
 	.HREADYOUT_S9(1'b1),
@@ -281,11 +287,38 @@ RISC_V
 ///////////////////////////////////////////
 // AHBLite Peripherals
 ///////////////////////////////////////////
+localparam NUMBER_BRAM_ENTRIES = SIZE_MEMORY / 'h10;  // 16 byte per bram line
+localparam BRAM_ADDR_BITS = $clog2(NUMBER_BRAM_ENTRIES + 1);
+
+
+// SIGNALS BETWEEN BRAM AND BRAM-FSM
+wire	[128-1:0]              cache_mem_rdata;
+reg	[128-1:0]		           cache_mem_wdata;
+reg	[BRAM_ADDR_BITS-1:0]       cache_mem_addr;
+reg                            cache_mem_req;
+reg						       cache_mem_write;
+wire                           cache_mem_rdy;
+
+// SIGNALS BETWEEN CACHES AND BRAM-FSM
+wire	[31:0]		           inst_cache_mem_rdata;
+wire	[128-1:0]		       inst_cache_mem_wdata;
+wire	[BRAM_ADDR_BITS-1:0]   inst_cache_mem_addr;
+wire                           inst_cache_mem_req;
+wire						   inst_cache_mem_write;
+reg                            inst_cache_mem_rdy;
+
+wire	[31:0]		           data_cache_mem_rdata;
+wire	[128-1:0]		       data_cache_mem_wdata;
+wire	[BRAM_ADDR_BITS-1:0]   data_cache_mem_addr;
+wire                           data_cache_mem_req;
+wire						   data_cache_mem_write;
+reg						       data_cache_mem_rdy;
+
 
 //AHBLite Instruction Memory 
 assign HADDR_INST = (ins_HADDR-INST_BASE_ADDR);
 
- AHB_CACHE #(.MEM_ADDR_BITS(12),.INSTRUCTION(1)) uAHB2MEM (
+AHB_CACHE #(.MEM_ADDR_BITS(BRAM_ADDR_BITS)) uAHB2MEM (
 	//AHBLITE Signals
 	.HSEL(1'b1),
 	.HCLK(sys_clock), 
@@ -300,30 +333,21 @@ assign HADDR_INST = (ins_HADDR-INST_BASE_ADDR);
 	.HRDATA(ins_HRDATA), 
 	.HREADYOUT(ins_HREADY),
 	
+	.BRAM_MEM_REQ(inst_cache_mem_req),
+	.BRAM_MEM_WRITE(inst_cache_mem_write),
+	.BRAM_MEM_ADDR(inst_cache_mem_addr),
+	.BRAM_WDATA(inst_cache_mem_wdata),
+	.BRAM_RDATA(cache_mem_rdata),
+	.BRAM_MEM_VALID(inst_cache_mem_rdy),
+	
     .interrupt(I_interrupt)
 	//.debug(I_debug)
 );
-//AHB2MEM_I uAHB2MEM (
-//	//AHBLITE Signals
-//	.HSEL(1'b1),
-//	.HCLK(sys_clock), 
-//	.HRESETn(sys_reset_N), 
-//	.HREADY(ins_HREADY),     
-//	.HADDR((ins_HADDR-BOOT_ADDR)),
-//	.HTRANS(ins_HTRANS), 
-//	.HWRITE(ins_HWRITE),
-//	.HSIZE(ins_HSIZE),
-//	.HWDATA(ins_HWDATA), 
-	
-//	.HRDATA(ins_HRDATA), 
-//	.HREADYOUT(ins_HREADY)	
-//);
-
 
 
 //AHBLite Data Memory
-assign HADDR_MEM = {16'd0,dat_HADDR[15:0]};  // addr - 1c01_0000
-AHB_CACHE #(.MEM_ADDR_BITS(12),.INSTRUCTION(0)) uAHB2DMEM (
+assign HADDR_MEM = (dat_HADDR-INST_BASE_ADDR);  // 4 because 4 bits are cut off when accessing the bram
+AHB_CACHE #(.MEM_ADDR_BITS(BRAM_ADDR_BITS)) uAHB2DMEM (
 	//AHBLITE Signals
 	.HSEL(HSEL_MEM),
 	.HCLK(sys_clock), 
@@ -338,51 +362,79 @@ AHB_CACHE #(.MEM_ADDR_BITS(12),.INSTRUCTION(0)) uAHB2DMEM (
 	.HRDATA(HRDATA_MEM), 
 	.HREADYOUT(HREADYOUT_MEM),
 	
+	.BRAM_MEM_REQ(data_cache_mem_req),
+	.BRAM_MEM_WRITE(data_cache_mem_write),
+	.BRAM_MEM_ADDR(data_cache_mem_addr),
+	.BRAM_WDATA(data_cache_mem_wdata),
+	.BRAM_RDATA(cache_mem_rdata),
+	.BRAM_MEM_VALID(data_cache_mem_rdy),
+	
 	.interrupt(D_interrupt)
 	//.debug(D_debug)
 );
 
-//AHBLite Network Interface (MULTICORE Interface)
-/*
-assign HADDR_NI = {16'd0,dat_HADDR[15:0]};
-(* dont_touch = "true" *) AHB2NI #(
-	.FIFO_SIZE(10'd32),
-	.MY_ADDRESS(MY_ADDRESS),
-	.CACHE_ADDRESS(10'd0),
-	.XLEN(XLEN),
-	.PHYS_ADDR_SIZE(XLEN),
-	.FLIT_SIZE(FLIT_SIZE)
-)
-AHB2NI  (
-	.resetN(sys_reset_N),
-	.clock(sys_clock),
 
-	.HSEL(HSEL_NI),
+reg inst_mem_req_ongoing;
 
-	.HADDR(HADDR_NI),
-	.HWDATA(dat_HWDATA),
-	.HWRITE(dat_HWRITE),
-	.HSIZE(dat_HSIZE),
-	.HBURST(dat_HBURST),
-	.HPROT(dat_HPROT),
-	.HTRANS(dat_HTRANS),
-	//.HMASTLOCK(dat_HMASTLOCK),
+// BRAM-FSM: Arbiter for two caches wanting to access one memory
+always @(posedge sys_clock)
+begin
+    if (reset) begin
+        inst_mem_req_ongoing <= 0;
+    end
+    
+    // Data accesses are being prioritized because it definitely will
+    // lead to a stall. However, if an instruction fetch is active at 
+    // the arrival of a data request, the data request has to wait.
+    else if (data_cache_mem_req && !inst_mem_req_ongoing)
+    begin
+       cache_mem_req <= 1;
+       cache_mem_write <= data_cache_mem_write;
+       cache_mem_addr <= data_cache_mem_addr;
+       cache_mem_wdata <= data_cache_mem_wdata;
+       data_cache_mem_rdy <= cache_mem_rdy;
+    end
+    
+    else if(inst_cache_mem_req)
+    begin
+       cache_mem_req <= 1;
+       cache_mem_write <= inst_cache_mem_write;
+       cache_mem_addr <= inst_cache_mem_addr;
+       cache_mem_wdata <= inst_cache_mem_wdata;
+       inst_cache_mem_rdy <= cache_mem_rdy;
+       
+       inst_mem_req_ongoing <= 1;
+    end
+    
+    else
+    begin
+       cache_mem_req <= 0;
+       cache_mem_write <= 0;
+       cache_mem_addr <= 0;
+       cache_mem_wdata <= 0;
+       
+       inst_mem_req_ongoing <= 0;
+    end
+end
 
-	.HRDATA(HRDATA_NI),
-	.HREADY(HREADYOUT_NI),
-	//.HRESP(),
 
-	//Interrupts
-	.interrupt_irq_recv(NI_RX_IRQ),
-	.interrupt_irq_send(NI_TX_IRQ),
+// BRAM connected to caches
+bram_memory	#(.MEM_ADDR_BITS(BRAM_ADDR_BITS))
+ram (
+    .clk(sys_clock),
+    .rst(sys_reset_N),
+    
+    // Inputs
+    .mem_req(cache_mem_req),
+    .mem_write(cache_mem_write),
+    .mem_addr(cache_mem_addr),
+    .mem_wdata(cache_mem_wdata),
+    
+    // Outputs
+    .mem_rdata(cache_mem_rdata),
+    .mem_valid(cache_mem_rdy)
+);
 
-	.packet_input(noc_pkt),
-	.packet_input_ready(noc_pkt_ready),
-	.packet_input_accepted(noc_pkt_accepted),
-	.packet_output(ni_pkt),
-	.packet_output_ready(ni_pkt_ready),
-	.packet_output_accepted(ni_pkt_accepted) );
-*/
 
 //AHBLite Dump Peripheral (Simple Debug purposes)
 assign HADDR_DUMP = {16'd0,dat_HADDR[15:0]};	
@@ -441,28 +493,5 @@ assign HADDR_TIMER = {16'd0,dat_HADDR[15:0]};
     
     .timer_irq(TIMER_IRQ)
   );
-
-
-//AHBLite HW Monitor
-//assign HADDR_MONITOR = {16'd0,dat_HADDR[15:0]};
-/*
-AHB2MONITOR uAHB2MONITOR (
-	//AHBLITE Signals
-	.HSEL(HSEL_MONITOR),
-	.HCLK(sys_clock), 
-	.HRESETn(sys_reset_N), 
-	.HREADY(dat_HREADY),     
-	.HADDR(HADDR_MONITOR),
-	.HTRANS(dat_HTRANS), 
-	.HWRITE(dat_HWRITE),
-	.HSIZE(dat_HSIZE),
-	.HWDATA(dat_HWDATA), 
-	
-	.HRDATA(HRDATA_MONITOR), 
-	.HREADYOUT(HREADYOUT_MONITOR),
-	
-	.MONITOR_CLOCK(mon_clock)
-);	
-*/
-
+  
 endmodule

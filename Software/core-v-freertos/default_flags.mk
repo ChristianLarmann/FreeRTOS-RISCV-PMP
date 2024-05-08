@@ -149,6 +149,7 @@ LDLIBS      += -lgcc -lc -lm -lgcc
 endif
 
 CV_CPPFLAGS    += -D__PULP_USE_LIBC
+CV_CPPFLAGS    += -D__SECURE_BOOT_ACTIVATED
 endif
 
 # stack debugging information

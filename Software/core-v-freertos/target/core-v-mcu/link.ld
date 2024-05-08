@@ -41,17 +41,23 @@ SECTIONS
   PROVIDE(__heap_size = __heap_size);
   PROVIDE(__data_start_address = 0x1c050000);
 
-  INCLUDE ../core-v-freertos/target/core-v-mcu/secure_boot_keys.ld
+  .key_material MAX(0x1c000000, ALIGN(256)) :
+  {
+    __secure_boot_start_address__ = .;
+   __small_secure_boot_start_address__ = .;
+    INCLUDE ../core-v-freertos/target/core-v-mcu/secure_boot_keys.ld 
+  } > BRAM
+  
 
   .vectors MAX(0x1c000800, ALIGN(256)) :
   {
     __irq_vector_base = .;
     __vector_start = .;
     KEEP(*(.vectors))
+   __small_secure_boot_end_address__ = .;
   } > BRAM
 
   .privileged_functions : ALIGN(256) {
-    __secure_boot_start_address__ = .;
 		*(privileged_functions)
 	} > BRAM
 
@@ -71,6 +77,14 @@ SECTIONS
     *(.rodata.*)
   } > BRAM
 
+  .privileged_data (NOLOAD) : ALIGN(32) {
+    __privileged_data_start__ = .;
+		*(privileged_data)
+		/* Non kernel data is kept out of the first _Privileged_Data_Region_Size
+		bytes of SRAM. */
+    . = ALIGN(32);
+		__privileged_data_end__ = .;
+	} > BRAM
 
   .data : ALIGN(4)
   {
@@ -108,15 +122,6 @@ SECTIONS
      sections with fewer instructions (relaxation). This reduces code size. */
   PROVIDE(__global_pointer$ = MIN(__sdata_begin + 0x800,
 	  MAX(__data_begin + 0x800, __bss_end - 0x800)));
-
-  .privileged_data (NOLOAD) : ALIGN(32) {
-    __privileged_data_start__ = .;
-		*(privileged_data)
-		/* Non kernel data is kept out of the first _Privileged_Data_Region_Size
-		bytes of SRAM. */
-    . = ALIGN(32);
-		__privileged_data_end__ = .;
-	} > BRAM
 
   .heap : ALIGN(256)
   {

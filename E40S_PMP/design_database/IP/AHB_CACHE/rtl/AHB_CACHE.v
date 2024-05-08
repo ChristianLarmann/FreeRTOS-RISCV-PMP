@@ -39,7 +39,15 @@ module AHB_CACHE
 			
         //Interrupt output of hash 
             output wire interrupt,
-			
+
+		// TO BRAM
+		    output wire BRAM_MEM_REQ,
+		    output wire BRAM_MEM_WRITE,
+		    output wire [MEM_ADDR_BITS-1:0] BRAM_MEM_ADDR,
+		    output wire [MEM_DATA_BITS-1:0] BRAM_WDATA,
+		    input wire [MEM_DATA_BITS-1:0] BRAM_RDATA,
+		    input wire BRAM_MEM_VALID,
+		    output wire BRAM_RDY,
 			
         // Debug output
             output wire [9:0]   debug
@@ -66,13 +74,6 @@ wire                            cache_req;
 wire                            cache_rdy;
 wire    [31:0]                  cache_din;
 
-// WIRES BETWEEN CACHE AND BRAM
-wire	[MEM_DATA_BITS-1:0]		cache_mem_rdata;
-wire	[MEM_DATA_BITS-1:0]		cache_mem_wdata;
-wire	[CPU_ADDR_BITS-2-1:0]	cache_mem_addr;
-wire							cache_mem_req;
-wire							cache_mem_write;
-wire							cache_mem_rdy;
 
 
 reg cache_req_reg;
@@ -92,7 +93,7 @@ begin
         if(cache_rdy) begin
             cache_ctr = cache_ctr + 1;
         end
-        if(cache_mem_rdy & !cache_mem_write) begin
+        if(BRAM_RDY & !BRAM_MEM_WRITE) begin
             mem_ctr = mem_ctr + 1;
         end 
     end	
@@ -219,31 +220,12 @@ cache
 		.cpu_byte_en	({byte3,byte2,byte1,byte0}),
 
 		// Memory side
-        .mem_req		(cache_mem_req),
-		.mem_rw_enable 	(cache_mem_write),
-		.mem_address	(cache_mem_addr),
-		.mem_dout 		(cache_mem_wdata),		
-		.mem_ready		(cache_mem_rdy),		
-		.mem_din 		(cache_mem_rdata)
+        .mem_req		(BRAM_MEM_REQ),
+		.mem_rw_enable 	(BRAM_MEM_WRITE),
+		.mem_address	(BRAM_MEM_ADDR),
+		.mem_dout 		(BRAM_WDATA),		
+		.mem_ready		(BRAM_MEM_VALID),
+		.mem_din 		(BRAM_RDATA)
     );
-    
-
-bram_memory
-		#(
-			.MEM_DATA_BITS(MEM_DATA_BITS),
-			.MEM_ADDR_BITS(MEM_ADDR_BITS),
-			.INSTRUCTION(INSTRUCTION)
-		)
-ram
-		(
-			.clk(HCLK),
-			.rst(HRESETn),
-			.mem_req(cache_mem_req),
-			.mem_write(cache_mem_write),
-			.mem_addr(cache_mem_addr[MEM_ADDR_BITS-1:0]),
-			.mem_wdata(cache_mem_wdata),
-			.mem_rdata(cache_mem_rdata),
-            .mem_valid(cache_mem_rdy)  // TODO: Change
-		);
 
 endmodule

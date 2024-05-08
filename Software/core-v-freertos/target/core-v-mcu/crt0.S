@@ -34,7 +34,6 @@
 
 _start:
 
-# call secure_bootloader
 
 /* initialize global pointer */
 .option push
@@ -42,6 +41,7 @@ _start:
 1:	auipc gp, %pcrel_hi(__global_pointer$) // gp = x3, __global_p... at 1c010170
 	addi  gp, gp, %pcrel_lo(1b)  // 1b: first occurence fo 1 backwards
 .option pop
+
 
 #if defined(ARCHI_HAS_CLUSTER)
 	/* TODO */
@@ -67,6 +67,17 @@ _start:
 	call atexit
 	call __libc_init_array
 #endif
+
+#if defined(__SECURE_BOOT_ACTIVATED)
+	// Perform secure boot
+	call secure_bootloader
+
+	# Write anything to 0x1A10... to block LSU accesses to the Instruction-memory
+    lui a0, 0x1A100
+    addi a0, a0, 0
+    sw zero, 0(a0) 
+#endif
+
 
 /* call main */
 	lw a0, 0(sp)                    /* a0 = argc */
