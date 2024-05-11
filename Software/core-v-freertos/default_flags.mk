@@ -30,6 +30,8 @@ OBJCOPY		= $(RISCV_PREFIX)objcopy
 OBJDUMP		= $(RISCV_PREFIX)objdump
 SIZE		= $(RISCV_PREFIX)size
 
+export CC
+
 # set some project specific path variables
 ifndef FREERTOS_PROJ_ROOT
 $(error "FREERTOS_PROJ_ROOT is unset. Point it to this project's root directory.")
@@ -97,7 +99,6 @@ GCC_GTEQ_8 = $(shell expr `$(CC) -dumpversion | cut -f1 -d.` \>= 8)
 # User controllable standard makeflags
 CFLAGS = -Os -g3
 CPPFLAGS =
-LDFLAGS =
 LDLIBS =
 ASFLAGS = -Os -g3
 

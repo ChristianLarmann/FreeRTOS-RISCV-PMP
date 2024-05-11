@@ -43,9 +43,15 @@ DEPS = $(addsuffix .d, $(basename $(SRCS)))
 # other possibly generated files
 SU  = $(addsuffix .su, $(basename $(SRCS)))
 
+# Include external file in linking process
+LDFLAGS += -L../libs/crypto/sbi -lsbi
+
 
 ## Compile and link executable. Obeys standard GNU variables used by implicit rules.
-all: $(PROG) $(PROG).stim misc-info
+all: external $(PROG) $(PROG).stim misc-info
+
+external:
+	$(MAKE) -C ../libs/crypto/sbi
 
 %.o: %.S
 	$(CC) $(CV_ASFLAGS) $(ASFLAGS) $(CV_CPPFLAGS) $(CPPFLAGS) -c -o $@ $<
@@ -54,7 +60,8 @@ all: $(PROG) $(PROG).stim misc-info
 	$(CC) $(CV_CFLAGS) $(CFLAGS) $(CV_CPPFLAGS) $(CPPFLAGS) -c -o $@ $<
 
 $(PROG): $(OBJS)
-	$(CC) $(CV_CFLAGS) $(CFLAGS) $(CV_LDFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
+	$(CC) $(CV_CFLAGS) $(CFLAGS) $(CV_LDFLAGS) $(LDFLAGS) $(OBJS) -o $@ -L../libs/crypto/sbi -lsbi $(LDLIBS)
+
 
 
 # objdump, listing and size of binary

@@ -5,11 +5,11 @@ PROVIDE( sanctum_m_public_key = . );
 . += 0x20;
 
 /* 32 Bytes : device public key */
-PROVIDE( sanctum_dev_public_key = . );
+PROVIDE( ks_dev_public_key = . );
 . += 0x20;
 
 /* 64 Bytes : device secret key */
-PROVIDE( sanctum_dev_secret_key = . );
+PROVIDE( ks_dev_secret_key = . );
 . += 0x40;
 
 /* ## security_monitor_keys : */

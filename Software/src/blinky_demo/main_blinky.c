@@ -73,6 +73,7 @@
 #include "task.h"
 #include "queue.h"
 #include "mpu_prototypes.h"
+#include "sealing_key.h"
 
 /* Priorities used by the tasks. */
 #define mainQUEUE_RECEIVE_TASK_PRIORITY (tskIDLE_PRIORITY + 2)
@@ -183,6 +184,13 @@ static void prvLedTask(void *pvParameters){
 	
 	asm volatile("li x28, 0x70" ::: "x28");
 	asm volatile("mv x28, %0" :: "r" (heapVar) : "x28");
+
+	// Request sealing key
+	struct sealing_key key_buffer;
+	char *key_identifier = "identifier";
+
+	unsigned long ret = get_sealing_key((uintptr_t)&key_buffer, sizeof(key_buffer),
+							(uintptr_t)key_identifier, strlen(key_identifier));
 
 	uint32_t counter_free = 0;
 

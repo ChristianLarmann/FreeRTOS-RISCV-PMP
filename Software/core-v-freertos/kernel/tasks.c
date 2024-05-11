@@ -39,6 +39,7 @@ task.h is included from an application file. */
 #include "task.h"
 #include "timers.h"
 #include "stack_macros.h"
+#include "sealing_key.h"
 
 /* Lint e9021, e961 and e750 are suppressed as a MISRA exception justified
 because the MPU ports require MPU_WRAPPERS_INCLUDED_FROM_API_FILE to be defined
@@ -280,6 +281,9 @@ typedef struct tskTaskControlBlock 			/* The old naming convention is used to pr
 		UBaseType_t		uxBasePriority;		/*< The priority last assigned to the task - used by the priority inheritance mechanism. */
 		UBaseType_t		uxMutexesHeld;
 	#endif
+
+	// For sealing key (sha3 -> 64 byte)
+	unsigned char taskHash[64];
 
 	#if ( configUSE_APPLICATION_TASK_TAG == 1 )
 		TaskHookFunction_t pxTaskTag;
@@ -809,6 +813,8 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 				pxNewTCB->ucStaticallyAllocated = tskDYNAMICALLY_ALLOCATED_STACK_AND_TCB;
 			}
 			#endif /* tskSTATIC_AND_DYNAMIC_ALLOCATION_POSSIBLE */
+
+			calculateHashOfTask(pxTaskCode, 64, pxNewTCB->taskHash);
 
 			prvInitialiseNewTask( pxTaskCode, pcName, ( uint32_t ) usStackDepth, pvParameters, uxPriority, pxCreatedTask, pxNewTCB, NULL );
 			prvAddNewTaskToReadyList( pxNewTCB );

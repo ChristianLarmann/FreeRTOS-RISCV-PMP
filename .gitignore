@@ -114,3 +114,5 @@ E40S_PMP/RI5CY_UA.gen/sources_1/bd/clock/
 Software/libs/crypto/keys-openssl/C-reference-implementation/myprogram
 
 Software/libs/crypto/C-reference-implementation/myprogram
+
+Software/libs/crypto/sbi/libsbi.a
