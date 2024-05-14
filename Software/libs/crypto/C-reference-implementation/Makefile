@@ -5,7 +5,7 @@ CC=gcc
 CFLAGS=-Wall -g
 
 # Define any directories containing header files other than /usr/include	
-INCLUDES=-I../../ed25519 -I../../sha3 -I../../sealing_key
+INCLUDES=-I../ed25519 -I../sha3 -I../sealing_key -I../../../core-v-freertos/kernel/include -I../../../src -I../../../core-v-freertos/kernel/portable/GCC/RISC-V
 
 # Define library paths in addition to /usr/lib
 LFLAGS=
@@ -14,7 +14,7 @@ LFLAGS=
 LIBS=
 
 # Define the C source files
-SRCS=main.c ../../ed25519/sign.c ../../ed25519/fe.c ../../ed25519/ge.c ../../ed25519/sc.c ../../ed25519/verify.c ../../sha3/sha3.c ../../ed25519/keypair.c ../../sealing_key/sealing_key.c
+SRCS=main.c ../ed25519/sign.c ../ed25519/fe.c ../ed25519/ge.c ../ed25519/sc.c ../ed25519/verify.c ../sha3/sha3.c ../ed25519/keypair.c 
 
 # Define the C object files
 OBJS=$(SRCS:.c=.o)

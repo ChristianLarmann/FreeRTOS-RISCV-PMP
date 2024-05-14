@@ -1,8 +1,13 @@
-/* ## manufacturer_keys : */
+/* ## Hash used for both secure boot and key sealing */
 
-/* 32 Bytes : manufacturer public key */
-PROVIDE( sanctum_m_public_key = . );
-. += 0x20;
+
+. += 0x40;
+
+/* 64 Bytes : hash of kernel */
+PROVIDE( FreeRTOS_kernel_hash = . );
+. += 0x40;
+
+/* ## Key sealing */
 
 /* 32 Bytes : device public key */
 PROVIDE( ks_dev_public_key = . );
@@ -12,19 +17,15 @@ PROVIDE( ks_dev_public_key = . );
 PROVIDE( ks_dev_secret_key = . );
 . += 0x40;
 
-/* ## security_monitor_keys : */
-
-/* 64 Bytes : hash of kernel */
-PROVIDE( FreeRTOS_kernel_hash = . );
+/* 64 Bytes : device signature */
+PROVIDE( ks_signature = . );
 . += 0x40;
+
+/* ## Secure boot */
 
 /* 178 Bytes : secure boot public key */
 PROVIDE( secure_boot_public_key = . );
 . += 0xC0;
-
-/* 64 Bytes : security monitor secret key */
-PROVIDE( sanctum_sm_secret_key = . );
-. += 0x40;
 
 /* 70 Bytes : secure boot signature */
 PROVIDE( secure_boot_signature = . );

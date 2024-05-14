@@ -5,8 +5,11 @@
 
 typedef unsigned char byte;
 
-#define ARRAY_FORMAT 0
+#define ARRAY_FORMAT 1
 #define USE_TEST_KEYS 1
+
+
+#define configUSE_NEWLIB_REENTRANT 0
 
 void printHexFormat(byte* value, int len, bool arrayFormat);
 
@@ -43,18 +46,16 @@ int main() {
 	sha3_final(FreeRTOS_kernel_hash, &hash_ctx);
 
 	printf("\nHash:");
-	for(int i=0; i < 64; i++) {
-		if (i % 16 == 0) {
-			printf("\n");
-		}
-		printf("%02x ", FreeRTOS_kernel_hash[i]);
-	}
+	printHexFormat(FreeRTOS_kernel_hash, 64, ARRAY_FORMAT);
 	printf("\n");
 
 	byte secure_boot_private_key[32];
 	byte secure_boot_public_key[32];
 	byte secure_boot_signature[70];
 
+	byte ks_dev_secret_key[32];
+	byte ks_dev_public_key[70];
+	
 	#ifdef USE_TEST_KEYS
 	#include "use_test_keys.h"
 	#else
@@ -84,7 +85,8 @@ int main() {
 
 	// Corrupting the signature
 	//secure_boot_signature[20] = 0xf2;
-	int secure_boot_success = ed25519_verify(secure_boot_signature, FreeRTOS_kernel_hash, 64, secure_boot_public_key);
+	int secure_boot_success = ed25519_verify(secure_boot_signature, 
+		FreeRTOS_kernel_hash, 64, secure_boot_public_key);
 
 	if (secure_boot_success)
 	{
