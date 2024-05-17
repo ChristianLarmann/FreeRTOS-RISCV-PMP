@@ -65,6 +65,7 @@ only for ports that are using the MPU. */
 		#define xTaskGetTickCount						MPU_xTaskGetTickCount
 		#define uxTaskGetNumberOfTasks					MPU_uxTaskGetNumberOfTasks
 		#define pcTaskGetName							MPU_pcTaskGetName
+		#define xDeriveNewSealingKey					MPU_xDeriveNewSealingKey
 		#define xTaskGetHandle							MPU_xTaskGetHandle
 		#define uxTaskGetStackHighWaterMark				MPU_uxTaskGetStackHighWaterMark
 		#define uxTaskGetStackHighWaterMark2			MPU_uxTaskGetStackHighWaterMark2

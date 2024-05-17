@@ -29,6 +29,12 @@ typedef unsigned int		u32;
 typedef int			int32_t;
 typedef unsigned int		uint32_t;
 
+#ifndef __riscv_xlen
+#warning "__riscv_xlen not defined; Set to 32"
+#define __riscv_xlen 32
+#endif
+
+
 #if __riscv_xlen == 64
 typedef long			s64;
 typedef unsigned long		u64;
@@ -38,8 +44,9 @@ typedef unsigned long		uint64_t;
 #elif __riscv_xlen == 32
 typedef long long		s64;
 typedef unsigned long long	u64;
-typedef long long		int64_t;
-typedef unsigned long long	uint64_t;
+/* commented out because it contradicts previous typedefs */
+// typedef long long		int64_t;
+// typedef unsigned long long	uint64_t;
 #define PRILX			"08lx"
 #else
 #error "Unexpected __riscv_xlen"
@@ -59,8 +66,9 @@ typedef uint16_t		le16_t;
 typedef uint16_t		be16_t;
 typedef uint32_t		le32_t;
 typedef uint32_t		be32_t;
-typedef uint64_t		le64_t;
-typedef uint64_t		be64_t;
+/* commented out because it contradicts previous typedefs */
+// typedef uint64_t		le64_t;
+// typedef uint64_t		be64_t;
 
 #define true			1
 #define false			0

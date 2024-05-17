@@ -21,6 +21,14 @@ PROVIDE( ks_dev_secret_key = . );
 PROVIDE( ks_signature = . );
 . += 0x40;
 
+/* 64 Bytes : freertos secret key */
+PROVIDE( ks_freertos_secret_key = . );
+. += 0x40;
+
+/* 64 Bytes : freertos public key */
+PROVIDE( ks_freertos_public_key = . );
+. += 0x40;
+
 /* ## Secure boot */
 
 /* 178 Bytes : secure boot public key */

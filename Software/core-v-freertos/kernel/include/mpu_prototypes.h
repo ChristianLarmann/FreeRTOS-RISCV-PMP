@@ -63,6 +63,7 @@ BaseType_t MPU_xTaskResumeAll( void ) FREERTOS_SYSTEM_CALL;
 TickType_t MPU_xTaskGetTickCount( void ) FREERTOS_SYSTEM_CALL;
 UBaseType_t MPU_uxTaskGetNumberOfTasks( void ) FREERTOS_SYSTEM_CALL;
 char * MPU_pcTaskGetName( TaskHandle_t xTaskToQuery ) FREERTOS_SYSTEM_CALL;
+BaseType_t xDeriveNewSealingKey(unsigned char *output_key, const unsigned char *key_ident, size_t key_ident_size) FREERTOS_SYSTEM_CALL;
 TaskHandle_t MPU_xTaskGetHandle( const char *pcNameToQuery ) FREERTOS_SYSTEM_CALL;
 UBaseType_t MPU_uxTaskGetStackHighWaterMark( TaskHandle_t xTask ) FREERTOS_SYSTEM_CALL;
 configSTACK_DEPTH_TYPE MPU_uxTaskGetStackHighWaterMark2( TaskHandle_t xTask ) FREERTOS_SYSTEM_CALL;

@@ -8,6 +8,8 @@ OBJECTS := $(SOURCES:.c=.o)
 # Output
 LIBRARY := libsbi.a
 
+CV_CPPFLAGS += -I"../../../core-v-freertos/kernel/include"
+
 .PHONY: all clean
 
 all: $(LIBRARY)

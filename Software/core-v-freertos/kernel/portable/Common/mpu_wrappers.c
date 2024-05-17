@@ -41,6 +41,7 @@ task.h is included from an application file. */
 #include "queue.h"
 #include "timers.h"
 #include "event_groups.h"
+#include "sealing_key.h"
 #include "stream_buffer.h"
 #include "mpu_prototypes.h"
 
@@ -338,6 +339,16 @@ BaseType_t xRunningPrivileged = xPortRaisePrivilege();
 	pcReturn = pcTaskGetName( xTaskToQuery );
 	vPortResetPrivilege( xRunningPrivileged );
 	return pcReturn;
+}
+
+BaseType_t MPU_xDeriveNewSealingKey(unsigned char *output_key, const unsigned char *key_ident,
+	size_t key_ident_size) /* FREERTOS_SYSTEM_CALL */
+{
+BaseType_t xRunningPrivileged = xPortRaisePrivilege();
+
+	BaseType_t xReturn = xDeriveNewSealingKey(output_key, key_ident, key_ident_size);
+	vPortResetPrivilege( xRunningPrivileged );
+	return xReturn;
 }
 /*-----------------------------------------------------------*/
 
@@ -1410,6 +1421,7 @@ BaseType_t xRunningPrivileged = xPortRaisePrivilege();
 	vPortResetPrivilege( xRunningPrivileged );
 }
 */
+
 
 #if configINCLUDE_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS == 1
 	#include "application_defined_privileged_functions.h"

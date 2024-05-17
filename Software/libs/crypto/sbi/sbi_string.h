@@ -11,6 +11,7 @@
 #define __STRING_H__
 
 #include "sbi_types.h"
+#include "mpu_wrappers.h"
 
 /*
   Provides sbi_strcmp for the completeness of supporting string functions.

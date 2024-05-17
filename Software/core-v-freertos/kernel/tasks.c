@@ -283,7 +283,7 @@ typedef struct tskTaskControlBlock 			/* The old naming convention is used to pr
 	#endif
 
 	// For sealing key (sha3 -> 64 byte)
-	unsigned char taskHash[64];
+	unsigned char taskHash[TASK_HASH_LEN];
 
 	#if ( configUSE_APPLICATION_TASK_TAG == 1 )
 		TaskHookFunction_t pxTaskTag;
@@ -814,7 +814,11 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 			}
 			#endif /* tskSTATIC_AND_DYNAMIC_ALLOCATION_POSSIBLE */
 
-			calculateHashOfTask(pxTaskCode, 64, pxNewTCB->taskHash);
+			#define SKIP_TASK_HASH_CALCULATION
+
+			#ifdef SKIP_TASK_HASH_CALCULATION
+			calculateHashOfTask(pxTaskCode, 1, &pxNewTCB->taskHash); // TODO: 1 is debug
+			#endif
 
 			prvInitialiseNewTask( pxTaskCode, pcName, ( uint32_t ) usStackDepth, pvParameters, uxPriority, pxCreatedTask, pxNewTCB, NULL );
 			prvAddNewTaskToReadyList( pxNewTCB );
@@ -2377,6 +2381,29 @@ TCB_t *pxTCB;
 	pxTCB = prvGetTCBFromHandle( xTaskToQuery );
 	configASSERT( pxTCB );
 	return &( pxTCB->pcTaskName[ 0 ] );
+}
+
+BaseType_t xDeriveNewSealingKey(unsigned char *output_key, const unsigned char *key_ident,
+                          size_t key_ident_size) 
+{
+
+	// info = taskHash || key_ident
+  	unsigned char info[MDSIZE + key_ident_size];
+
+  	unsigned char taskHash[64];
+	sbi_memcpy(taskHash, pxCurrentTCB->taskHash, TASK_HASH_LEN);
+	sbi_memcpy(info, taskHash, MDSIZE);
+	sbi_memcpy(info + MDSIZE, key_ident, key_ident_size);
+
+	/*
+	* The key is derived without a salt because we have no entropy source
+	* available to generate the salt.
+	*/
+
+	extern unsigned char ks_freertos_secret_key[];
+	return hkdf_sha3_512(NULL, (size_t) 0,
+				(const unsigned char *)ks_freertos_secret_key, PRIVATE_KEY_SIZE,
+				info, MDSIZE + key_ident_size, output_key, SEALING_KEY_SIZE);
 }
 /*-----------------------------------------------------------*/
 

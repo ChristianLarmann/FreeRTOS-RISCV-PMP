@@ -109,7 +109,7 @@ char *sbi_strrchr(const char *s, int c)
 	else
 		return (char *)last;
 }
-void *sbi_memset(void *s, int c, size_t count)
+void *sbi_memset(void *s, int c, size_t count) FREERTOS_SYSTEM_CALL
 {
 	char *temp = s;
 
@@ -121,7 +121,7 @@ void *sbi_memset(void *s, int c, size_t count)
 	return s;
 }
 
-void *sbi_memcpy(void *dest, const void *src, size_t count)
+void *sbi_memcpy(void *dest, const void *src, size_t count) FREERTOS_SYSTEM_CALL
 {
 	char *temp1	  = dest;
 	const char *temp2 = src;
