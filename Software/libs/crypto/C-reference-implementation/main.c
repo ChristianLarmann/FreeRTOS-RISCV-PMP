@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <string.h>
 
 #define __riscv_xlen 32
 #include "crypto_constants.h"
@@ -9,16 +11,22 @@
 typedef unsigned char byte;
 
 #define ARRAY_FORMAT 1
-#define USE_TEST_KEYS 0
+// #define USE_TEST_KEYS 0
 
 
 #define configUSE_NEWLIB_REENTRANT 0
 
-void printHexFormat(byte* value, int len, bool arrayFormat);
+int hkdf_sha3_512(const unsigned char *salt, size_t salt_len,
+                  const unsigned char *ikm, size_t ikm_len,
+                  const unsigned char *info, size_t info_len,
+                  unsigned char *okm, size_t okm_len);
+				  
+void printHexFormat(byte* value, int len, char *description);
 
-void printHexFormat(byte* value, int len, bool arrayFormat) {
+void printHexFormat(byte* value, int len, char *description) {
 	
-	if (arrayFormat) {
+	printf("\n%s:", description);
+	if (ARRAY_FORMAT) {
 		for(int i=0; i < len; i++) {
 		  	if (i % 16 == 0) {
 		  		printf("\n");
@@ -33,6 +41,7 @@ void printHexFormat(byte* value, int len, bool arrayFormat) {
 		  	printf("%02x ", value[i]);
 		}
 	}	
+	printf("\n");
 }
 
 byte secure_boot_private_key[32];
@@ -43,8 +52,11 @@ byte ks_dev_secret_key[32];
 byte ks_dev_public_key[70];
 
 // SK_SM and PK_SM
-byte ks_freertos_secret_key[];
-byte ks_freertos_public_key[];
+byte ks_freertos_secret_key[64];
+byte ks_freertos_public_key[64];
+
+byte precomputedTaskHash[TASK_HASH_LEN];
+
 
 int xDeriveNewSealingKey(unsigned char *output_key, const unsigned char *key_ident,
                           size_t key_ident_size) 
@@ -54,10 +66,10 @@ int xDeriveNewSealingKey(unsigned char *output_key, const unsigned char *key_ide
 	sbi_memset(minTCB.taskHash, 0, TASK_HASH_LEN);
 
 	// info = taskHash || key_ident
-  	unsigned char info[MDSIZE + key_ident_size];
+  	byte info[MDSIZE + key_ident_size];
 
-  	unsigned char taskHash[64];
-	sbi_memcpy(taskHash, minTCB.taskHash, TASK_HASH_LEN); // Here continue... Could be a bit difficult: Task hash must be computed before
+  	byte taskHash[64];
+	sbi_memcpy(taskHash, minTCB.taskHash, TASK_HASH_LEN);
 	sbi_memcpy(info, taskHash, MDSIZE);
 	sbi_memcpy(info + MDSIZE, key_ident, key_ident_size);
 
@@ -74,18 +86,23 @@ int xDeriveNewSealingKey(unsigned char *output_key, const unsigned char *key_ide
 
 void displayKeysAndSignature() 
 {
-	printf("\nsecure_boot_public_key:");
-	printHexFormat(secure_boot_public_key, 32, ARRAY_FORMAT);
-	printf("\n");
+	printHexFormat(secure_boot_public_key, 32, "secure_boot_public_key");
+	printHexFormat(secure_boot_private_key, 32, "secure_boot_private_key");
+	printHexFormat(secure_boot_signature, 64, "Signature");
+}
 
-	printf("\nsecure_boot_private_key:");
-	printHexFormat(secure_boot_private_key, 32, ARRAY_FORMAT);
-	printf("\n");
+void precomputeTaskHashFrom0() 
+{
+	sha3_ctx_t hash_ctx_precomp;
 
+	// Hash over kernel, here only \x00
+	byte kernel_small = 0;
 
-	printf("\nSignature:");
-	printHexFormat(secure_boot_signature, 64, ARRAY_FORMAT);
-	printf("\n");
+	sha3_init(&hash_ctx_precomp, 64);
+	sha3_update(&hash_ctx_precomp, &kernel_small, 1); // TODO: Change back to code_size; 1 is only to make the simulation faster
+	sha3_final(precomputedTaskHash, &hash_ctx_precomp);
+
+	printHexFormat(precomputedTaskHash, 64, "precomputedTaskHash");
 }
 
 int main() 
@@ -100,9 +117,7 @@ int main()
 	sha3_update(&hash_ctx_boot, (void*)&kernel_small, 1); // TODO: Change back to code_size; 1 is only to make the simulation faster
 	sha3_final(FreeRTOS_kernel_hash, &hash_ctx_boot);
 
-	printf("\nHash:");
-	printHexFormat(FreeRTOS_kernel_hash, 64, ARRAY_FORMAT);
-	printf("\n");
+	printHexFormat(FreeRTOS_kernel_hash, 64, "Kernel Hash");
 
 	
 	#ifdef USE_TEST_KEYS
@@ -117,7 +132,7 @@ int main()
 	#endif
 
 	// Display keys and signature
-	displayKeysAndSignature();
+	// displayKeysAndSignature();
 
 	// Check signature
 
@@ -135,13 +150,13 @@ int main()
 		}
 	#endif
 
-	// Calculate seed_hash
+	// 1. Calculate seedHash
 	// sha( dev_secret_key || kernel_hash )
 
 	byte seedHash[128];
 	sha3_ctx_t hash_ctx_seed;
 	sha3_init(&hash_ctx_seed, 64);
-	sha3_update(&hash_ctx_seed, ks_dev_secret_key, 1);
+	sha3_update(&hash_ctx_seed, ks_dev_secret_key, 1); // ATTENTION: SMALL HASH
 	sha3_update(&hash_ctx_seed, FreeRTOS_kernel_hash, 1);
 	sha3_final(seedHash, &hash_ctx_seed);
 
@@ -149,17 +164,20 @@ int main()
 	//(NIST endorses SHA512 truncation as safe)
 	ed25519_create_keypair(ks_freertos_public_key, ks_freertos_secret_key, seedHash);
 
-	printf("\nks_freertos_secret_key:");
-	printHexFormat(ks_freertos_secret_key, 32, ARRAY_FORMAT);
-	printf("\n");
+	printHexFormat(ks_freertos_secret_key, 64, "ks_freertos_secret_key");
+
+	// 2. Calculate taskHash
+	precomputeTaskHashFrom0();
+
+    // 3. Derive new key
+	byte newSealingKey[SEALING_KEY_SIZE];
+    byte *keyIdentifier = "identifier";
 
 
-    // Derive new key
-	byte newSealingKey[128];
-	char *keyIdentifier = "identifier";
+	xDeriveNewSealingKey(newSealingKey, keyIdentifier, strlen((char *) keyIdentifier));
 
-	xDeriveNewSealingKey(newSealingKey,keyIdentifier, strlen(keyIdentifier));
-	printHexFormat(newSealingKey, 128, ARRAY_FORMAT);
+	printHexFormat(newSealingKey, 128, "newSealingKey");
+	printHexFormat(newSealingKey, SEALING_KEY_SIZE, "Sealing Key");
 
 	return 0;
 }

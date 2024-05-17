@@ -22,7 +22,7 @@
 #define PROVIDE_FREERTOS_HASH
 #define SKIP_SECURE_BOOT_VERIFICATION
 #define SMALL_HASH
-#define REUSE_FREERTOS_HASH_TO_SPEED_UP
+// #define REUSE_FREERTOS_HASH_TO_SPEED_UP
 
 
 extern uintptr_t __small_secure_boot_start_address__;

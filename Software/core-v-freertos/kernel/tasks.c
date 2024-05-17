@@ -817,6 +817,11 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 			#define SKIP_TASK_HASH_CALCULATION
 
 			#ifdef SKIP_TASK_HASH_CALCULATION
+			// ATTENTION: It uses the FreeRTOS_ker... only because I know the 1st byte 00
+			// It normally should be the pxTaskCode as below
+			extern byte FreeRTOS_kernel_hash[64];
+			memcpy(&pxNewTCB->taskHash, FreeRTOS_kernel_hash, TASK_HASH_LEN);
+			#else
 			calculateHashOfTask(pxTaskCode, 1, &pxNewTCB->taskHash); // TODO: 1 is debug
 			#endif
 

@@ -189,7 +189,7 @@ static void prvLedTask(void *pvParameters){
 	byte newSealingKey[SEALING_KEY_SIZE];
 	char *keyIdentifier = "identifier";
 
-	BaseType_t ret = xDeriveNewSealingKey(newSealingKey,keyIdentifier, strlen(keyIdentifier));
+	BaseType_t ret = xDeriveNewSealingKey(newSealingKey, keyIdentifier, strlen(keyIdentifier));
 
 	uint32_t counter_free = 0;
 
