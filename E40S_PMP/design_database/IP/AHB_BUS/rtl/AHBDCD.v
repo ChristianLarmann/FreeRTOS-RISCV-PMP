@@ -84,7 +84,7 @@ always@*
 begin
 
   case(HADDR[31:16])
-    16'h1C05: // MEMORY MAP --> 0x0050_0000 to 0x0050_FFFF  64kB
+    16'h1C05, 16'h1C06: // MEMORY MAP --> 0x0050_0000 to 0x0050_FFFF  64kB
       begin
         dec = 16'b0000_0000_00000001;
         MUX_SEL = 4'b0000;

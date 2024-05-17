@@ -142,7 +142,7 @@ void main_blinky(void)
 		{
 			.pvTaskCode		= prvLedTask,
 			.pcName			= "LED",
-			.usStackDepth	= configMINIMAL_STACK_SIZE,
+			.usStackDepth	= configMINIMAL_STACK_SIZE * 10,
 			.pvParameters	= NULL,
 			.uxPriority		= 1,
 			.puxStackBuffer	= (StackType_t*) ledTaskStack,
@@ -186,11 +186,10 @@ static void prvLedTask(void *pvParameters){
 	asm volatile("mv x28, %0" :: "r" (heapVar) : "x28");
 
 	// Request sealing key
-	struct sealing_key key_buffer;
-	char *key_identifier = "identifier";
+	byte newSealingKey[SEALING_KEY_SIZE];
+	char *keyIdentifier = "identifier";
 
-	unsigned long ret = get_sealing_key((uintptr_t)&key_buffer, sizeof(key_buffer),
-							(uintptr_t)key_identifier, strlen(key_identifier));
+	BaseType_t ret = xDeriveNewSealingKey(newSealingKey,keyIdentifier, strlen(keyIdentifier));
 
 	uint32_t counter_free = 0;
 
@@ -216,7 +215,7 @@ static void prvLedTask(void *pvParameters){
 
 			if (counter_free == 4) {
 				MPU_pvPmpFree(heapVar2);
-				// heapVar2[0] = 0xCF;
+				heapVar2[0] = 0xCF;
 			}
 		}
 		counter_free += 1;
