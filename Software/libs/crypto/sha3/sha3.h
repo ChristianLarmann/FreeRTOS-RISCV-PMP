@@ -11,6 +11,8 @@
 #define KECCAKF_ROUNDS 24
 #endif
 
+typedef unsigned char byte;
+
 #ifndef ROTL64
 #define ROTL64(x, y) (((x) << (y)) | ((x) >> (64 - (y))))
 #endif
