@@ -186,10 +186,10 @@ static void prvLedTask(void *pvParameters){
 	asm volatile("mv x28, %0" :: "r" (heapVar) : "x28");
 
 	// Request sealing key
-	byte newSealingKey[SEALING_KEY_SIZE];
 	char *keyIdentifier = "identifier";
+	struct sealing_key newSealingKey;
 
-	BaseType_t ret = xDeriveNewSealingKey(newSealingKey, keyIdentifier, strlen(keyIdentifier));
+	BaseType_t ret = xDeriveNewSealingKey(&newSealingKey, keyIdentifier, strlen(keyIdentifier));
 
 	uint32_t counter_free = 0;
 

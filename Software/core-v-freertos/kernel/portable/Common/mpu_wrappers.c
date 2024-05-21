@@ -341,12 +341,12 @@ BaseType_t xRunningPrivileged = xPortRaisePrivilege();
 	return pcReturn;
 }
 
-BaseType_t MPU_xDeriveNewSealingKey(unsigned char *output_key, const unsigned char *key_ident,
+BaseType_t MPU_xDeriveNewSealingKey(uintptr_t sealing_key, const unsigned char *key_ident,
 	size_t key_ident_size) /* FREERTOS_SYSTEM_CALL */
 {
 BaseType_t xRunningPrivileged = xPortRaisePrivilege();
 
-	BaseType_t xReturn = xDeriveNewSealingKey(output_key, key_ident, key_ident_size);
+	BaseType_t xReturn = xDeriveNewSealingKey(sealing_key, key_ident, key_ident_size);
 	vPortResetPrivilege( xRunningPrivileged );
 	return xReturn;
 }

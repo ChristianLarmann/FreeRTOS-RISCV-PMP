@@ -814,7 +814,7 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 			}
 			#endif /* tskSTATIC_AND_DYNAMIC_ALLOCATION_POSSIBLE */
 
-			#define SKIP_TASK_HASH_CALCULATION
+			// #define SKIP_TASK_HASH_CALCULATION
 
 			#ifdef SKIP_TASK_HASH_CALCULATION
 			// ATTENTION: It uses the FreeRTOS_ker... only because I know the 1st byte 00
@@ -822,7 +822,7 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 			extern byte FreeRTOS_kernel_hash[64];
 			memcpy(&pxNewTCB->taskHash, FreeRTOS_kernel_hash, TASK_HASH_LEN);
 			#else
-			calculateHashOfTask(pxTaskCode, 1, &pxNewTCB->taskHash); // TODO: 1 is debug
+			calculateHashOfTask(pxTaskCode, 16, &pxNewTCB->taskHash); // TODO: 16 is arbitrary; How would I found out the size of the task??
 			#endif
 
 			prvInitialiseNewTask( pxTaskCode, pcName, ( uint32_t ) usStackDepth, pvParameters, uxPriority, pxCreatedTask, pxNewTCB, NULL );
@@ -2388,9 +2388,10 @@ TCB_t *pxTCB;
 	return &( pxTCB->pcTaskName[ 0 ] );
 }
 
-BaseType_t xDeriveNewSealingKey(unsigned char *output_key, const unsigned char *key_ident,
+BaseType_t xDeriveNewSealingKey(uintptr_t sealing_key, const unsigned char *key_ident,
                           size_t key_ident_size) 
 {
+	struct sealing_key *key_struct = (struct sealing_key *)sealing_key;
 
 	// info = taskHash || key_ident
   	unsigned char info[MDSIZE + key_ident_size];
@@ -2406,9 +2407,14 @@ BaseType_t xDeriveNewSealingKey(unsigned char *output_key, const unsigned char *
 	*/
 
 	extern unsigned char ks_freertos_secret_key[];
-	return hkdf_sha3_512(NULL, (size_t) 0,
+	int ret = hkdf_sha3_512(NULL, (size_t) 0,
 				(const unsigned char *)ks_freertos_secret_key, PRIVATE_KEY_SIZE,
-				info, MDSIZE + key_ident_size, output_key, SEALING_KEY_SIZE);
+				info, MDSIZE + key_ident_size, (unsigned char *)key_struct->key, SEALING_KEY_SIZE);
+
+	ed25519_sign((void *)key_struct->signature, (void *)key_struct->key,
+          SEALING_KEY_SIZE);
+
+	return;
 }
 /*-----------------------------------------------------------*/
 
