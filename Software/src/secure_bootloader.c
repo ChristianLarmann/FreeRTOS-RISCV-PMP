@@ -21,7 +21,7 @@
 
 #define PROVIDE_FREERTOS_HASH
 #define SKIP_SECURE_BOOT_VERIFICATION
-#define SMALL_HASH
+// #define SMALL_HASH
 // #define REUSE_FREERTOS_HASH_TO_SPEED_UP
 
 
@@ -40,6 +40,7 @@ extern byte ks_signature[];
 // SK_SM and PK_SM
 extern byte ks_freertos_secret_key[];
 extern byte ks_freertos_public_key[];
+extern byte ks_freertos_signature[];
 
 // Only for generation of signature
 // extern byte secure_boot_private_key[32];
@@ -101,9 +102,16 @@ void derive_secret_key_freertos() {
   ed25519_create_keypair(ks_freertos_public_key, ks_freertos_secret_key, seedHash);
   #endif /* REUSE_...HASH... */
 
+
+  // Endorse the FreeRTOS kernel
+  memcpy(seedHash, FreeRTOS_kernel_hash, 64);
+  memcpy(seedHash + 64, ks_freertos_public_key, 32);
+  // Sign (H_SM, PK_SM) with SK_D
+  ed25519_sign(ks_freertos_signature, seedHash, 64 + 32, ks_dev_public_key, ks_dev_secret_key);
+
   // Clean up
   // Erase SK_D
-  memset(ks_dev_secret_key, 0, sizeof(ks_dev_secret_key));
+  memset((void*)ks_dev_secret_key, 0, sizeof(*ks_dev_secret_key));
 
   // caller will clean core state and memory (including the stack), and boot. TODO: CL
   return;

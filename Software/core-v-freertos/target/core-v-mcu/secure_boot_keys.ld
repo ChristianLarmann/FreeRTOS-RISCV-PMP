@@ -25,6 +25,10 @@ PROVIDE( ks_signature = . );
 PROVIDE( ks_freertos_secret_key = . );
 . += 0x40;
 
+/* 64 Bytes : freertos kernel signature */
+PROVIDE( ks_freertos_signature = . );
+. += 0x40;
+
 /* 64 Bytes : freertos public key */
 PROVIDE( ks_freertos_public_key = . );
 . += 0x40;
