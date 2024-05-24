@@ -27,6 +27,7 @@ SRCS += $(dir)/queue.c
 SRCS += $(dir)/stream_buffer.c
 SRCS += $(dir)/tasks.c
 SRCS += $(dir)/timers.c
+SRCS += $(FREERTOS_PROJ_ROOT)/../libs/crypto/sealing_key/sealing_key.c
 # RISC-V port files
 SRCS += $(dir)/portable/GCC/RISC-V/port.c
 SRCS += $(dir)/portable/GCC/RISC-V/portASM.S
@@ -49,12 +50,6 @@ include $(dir)/makefile.mk
 ifneq ($(LIBC),no)
 dir := $(FREERTOS_PROJ_ROOT)/libc
 include $(dir)/makefile.mk
-endif
-
-# target/platform specific includes and srcs
-ifndef FREERTOS_CONFIG_FAMILY
-$(error "FREERTOS_CONFIG_FAMILY is unset. Run `source env/platform-you-want.sh' \
-	from the freertos project's root folder.")
 endif
 
 # runtime

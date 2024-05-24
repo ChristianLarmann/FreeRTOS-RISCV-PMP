@@ -261,6 +261,7 @@ BaseType_t xReturn = pdFAIL;
 			xReturn = xTaskCreate(	prvTimerTask,
 									configTIMER_SERVICE_TASK_NAME,
 									configTIMER_TASK_STACK_DEPTH,
+									0, // No hash
 									NULL,
 									( ( UBaseType_t ) configTIMER_TASK_PRIORITY ) | portPRIVILEGE_BIT,
 									&xTimerTaskHandle );

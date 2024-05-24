@@ -47,7 +47,6 @@
 # Added to build in Eclipse:
 ROOT = /home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/Software/core-v-freertos
 FREERTOS_PROJ_ROOT = /home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/Software/core-v-freertos
-FREERTOS_CONFIG_FAMILY = core-v-mcu
 
 # indicate this repository's root folder
 # set some project specific path variables
@@ -56,11 +55,16 @@ $(error "FREERTOS_PROJ_ROOT is unset. Run `source env/platform-you-want.sh' \
 	from the freertos project's root folder.")
 endif
 
+
+
 # good defaults for many environment variables
 include $(FREERTOS_PROJ_ROOT)/default_flags.mk
+$(info ------------------- default_flags finished)
+
 
 # rtos and pulp sources
 include $(FREERTOS_PROJ_ROOT)/metal_srcs.mk
+$(info ------------------- metal_srcs finished)
 
 # application name
 PROG = blinky
@@ -70,27 +74,103 @@ USER_SRCS = main.c blinky_demo/main_blinky.c
 # Secure Boot
 USER_SRCS += secure_bootloader.c
 CRYLIB = ../libs/crypto
+CV_CPPFLAGS += -I"$(CRYLIB)"
 CV_CPPFLAGS += -I"$(CRYLIB)/ed25519"
+CV_CPPFLAGS += -I"$(CRYLIB)/hkdf_sha3_512"
+CV_CPPFLAGS += -I"$(CRYLIB)/hmac_sha3"
+CV_CPPFLAGS += -I"$(CRYLIB)/sealing_key"
 CV_CPPFLAGS += -I"$(CRYLIB)/sha3"
 USER_SRCS += $(CRYLIB)/ed25519/fe.c $(CRYLIB)/ed25519/ge.c $(CRYLIB)/ed25519/keypair.c $(CRYLIB)/ed25519/sc.c $(CRYLIB)/ed25519/verify.c $(CRYLIB)/ed25519/sign.c
 USER_SRCS += $(CRYLIB)/sha3/sha3.c
+USER_SRCS += $(CRYLIB)/hkdf_sha3_512/hkdf_sha3_512.c
+USER_SRCS += $(CRYLIB)/hmac_sha3/hmac_sha3.c
 
+# Tasks
+CV_CPPFLAGS += -I"blinky_demo/tasks"
+USER_SRCS += blinky_demo/tasks/LedTask.c 
+USER_SRCS += blinky_demo/tasks/QueueReceiveTask.c 
+USER_SRCS += blinky_demo/tasks/QueueSendTask.c 
 
 # user headers
 CPPFLAGS += $(addprefix -I$(VPATH)/, ".")
 #CFLAGS += -gdwarf-4
 
-# point to irq handler
-CPPFLAGS += -DportHANDLE_INTERRUPT=vSystemIrqHandler
-CPPFLAGS += -DportHANDLE_EXCEPTION=vSystemIrqHandler
-CPPFLAGS += -DmainCREATE_SIMPLE_BLINKY_DEMO_ONLY=1
+# Set additional compiler flags
+CV_CPPFLAGS += -DportHANDLE_INTERRUPT=vSystemIrqHandler
+CV_CPPFLAGS += -DportHANDLE_EXCEPTION=vSystemIrqHandler
+CV_CPPFLAGS += -DmainCREATE_SIMPLE_BLINKY_DEMO_ONLY=1
 
-# compile, simulation and analysis targets
-include $(FREERTOS_PROJ_ROOT)/default_targets.mk
+# Compile
 
-# Shorten the filenames in the .lst file
-$(shell sed -i 's/home\/christian\/Documents\/CESE\/Thesis\/FreeRTOS-RISCV-PMP\/Software/PROJ_ROOT/g' blinky.lst)
+ifeq ($(strip $(PROG)),)
+$(error "PROG is invalid or empty. Won't be able to compile.")
+endif
+
+# make sure we compile by default
+.DEFAULT_GOAL := all
+
+# derived variables for compiling
+SRCS += $(USER_SRCS)
+OBJS = $(addsuffix .o, $(basename $(SRCS))) # .S and .c replaced
+DEPS = $(addsuffix .d, $(basename $(SRCS)))
+
+# other possibly generated files
+SU  = $(addsuffix .su, $(basename $(SRCS)))
+
+# Include external file in linking process
+# Compiled separately to avoid typedef collisions
+LDFLAGS += -L../libs/crypto/sbi -lsbi
+
+
+## Compile and link executable. Obeys standard GNU variables used by implicit rules.
+all: external $(PROG) misc-info
+
+
+
+external:
+	$(MAKE) -C ../libs/crypto/sbi
+	$(info ------------------- external finished)
+
+%.o: %.S
+	$(CC) $(CV_ASFLAGS) $(ASFLAGS) $(CV_CPPFLAGS) $(CPPFLAGS) -c -o $@ $<
+	$(info -------------------.S finished)
+
+%.o: %.c
+	$(info -------------------$@ : $< begin)
+	$(CC) $(CV_CFLAGS) $(CFLAGS) $(CV_CPPFLAGS) $(CPPFLAGS) -c -o $@ $<
+	$(info -------------------.c finished)
+
+$(PROG): $(OBJS)
+	$(info Yippieeee)
+	$(CC) $(CV_CFLAGS) $(CFLAGS) $(CV_LDFLAGS) $(LDFLAGS) $(OBJS) -o $@ -L../libs/crypto/sbi -lsbi $(LDLIBS)
+	$(info ------------------- OBJS finished)
+
+
+# objdump, listing and size of binary
+misc-info: $(PROG).hex $(PROG).lst $(PROG).siz $(PROG).srec
+
+
+$(PROG).hex: $(PROG)
+	$(OBJCOPY) -O ihex $(PROG)  $@
+
+$(PROG).lst: $(PROG)
+	$(OBJDUMP) --source --all-headers --demangle --line-numbers --wide --prefix-addresses --full-contents \
+		$(PROG) > $@
+
+$(PROG).srec: $(PROG)
+	$(OBJCOPY) -O srec $< $@
+
+$(PROG).siz: $(PROG)
+	$(SIZE) --format=berkeley $<
+
+
+.PHONY: clean
+## Clean object files
+clean:
+	rm -f $(OBJS) $(PROG) $(DEPS) $(SU) \
+		$(PROG).hex $(PROG).lst $(PROG).siz memory.map \
+
+
 # Generate and move .dat files to the Vivado Simulation Folder
 $(shell bash ./srec2dat.sh)
 $(shell cp ./code_and_data.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
-

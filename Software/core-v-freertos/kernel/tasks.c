@@ -39,6 +39,7 @@ task.h is included from an application file. */
 #include "task.h"
 #include "timers.h"
 #include "stack_macros.h"
+#include "sealing_key.h"
 
 /* Lint e9021, e961 and e750 are suppressed as a MISRA exception justified
 because the MPU ports require MPU_WRAPPERS_INCLUDED_FROM_API_FILE to be defined
@@ -280,6 +281,9 @@ typedef struct tskTaskControlBlock 			/* The old naming convention is used to pr
 		UBaseType_t		uxBasePriority;		/*< The priority last assigned to the task - used by the priority inheritance mechanism. */
 		UBaseType_t		uxMutexesHeld;
 	#endif
+
+	// For sealing key (sha3 -> 64 byte)
+	unsigned char taskHash[TASK_HASH_LEN];
 
 	#if ( configUSE_APPLICATION_TASK_TAG == 1 )
 		TaskHookFunction_t pxTaskTag;
@@ -734,6 +738,7 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 	BaseType_t xTaskCreate(	TaskFunction_t pxTaskCode,
 							const char * const pcName,		/*lint !e971 Unqualified char types are allowed for strings and single characters only. */
 							const configSTACK_DEPTH_TYPE usStackDepth,
+							const uint32_t taskSizeInBytes,
 							void * const pvParameters,
 							UBaseType_t uxPriority,
 							TaskHandle_t * const pxCreatedTask )
@@ -809,6 +814,17 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 				pxNewTCB->ucStaticallyAllocated = tskDYNAMICALLY_ALLOCATED_STACK_AND_TCB;
 			}
 			#endif /* tskSTATIC_AND_DYNAMIC_ALLOCATION_POSSIBLE */
+
+			// #define SKIP_TASK_HASH_CALCULATION
+
+			#ifdef SKIP_TASK_HASH_CALCULATION
+			// ATTENTION: It uses the FreeRTOS_ker... only because I know the 1st byte 00
+			// It normally should be the pxTaskCode as below
+			extern byte FreeRTOS_kernel_hash[64];
+			memcpy(&pxNewTCB->taskHash, FreeRTOS_kernel_hash, TASK_HASH_LEN);
+			#else
+			calculateHashOfTask(pxTaskCode, taskSizeInBytes, &pxNewTCB->taskHash);
+			#endif
 
 			prvInitialiseNewTask( pxTaskCode, pcName, ( uint32_t ) usStackDepth, pvParameters, uxPriority, pxCreatedTask, pxNewTCB, NULL );
 			prvAddNewTaskToReadyList( pxNewTCB );
@@ -2014,6 +2030,7 @@ BaseType_t xReturn;
 		xReturn = xTaskCreate(	prvIdleTask,
 								configIDLE_TASK_NAME,
 								configMINIMAL_STACK_SIZE,
+								0, // No hash
 								( void * ) NULL,
 								portPRIVILEGE_BIT, /* In effect ( tskIDLE_PRIORITY | portPRIVILEGE_BIT ), but tskIDLE_PRIORITY is zero. */
 								&xIdleTaskHandle ); /*lint !e961 MISRA exception, justified as it is not a redundant explicit cast to all supported compilers. */
@@ -2371,6 +2388,35 @@ TCB_t *pxTCB;
 	pxTCB = prvGetTCBFromHandle( xTaskToQuery );
 	configASSERT( pxTCB );
 	return &( pxTCB->pcTaskName[ 0 ] );
+}
+
+BaseType_t xDeriveNewSealingKey(uintptr_t sealing_key, const unsigned char *key_ident,
+                          size_t key_ident_size) 
+{
+	struct sealing_key *key_struct = (struct sealing_key *)sealing_key;
+
+	// info = taskHash || key_ident
+  	unsigned char info[MDSIZE + key_ident_size];
+
+  	unsigned char taskHash[64];
+	sbi_memcpy(taskHash, pxCurrentTCB->taskHash, TASK_HASH_LEN);
+	sbi_memcpy(info, taskHash, MDSIZE);
+	sbi_memcpy(info + MDSIZE, key_ident, key_ident_size);
+
+	/*
+	* The key is derived without a salt because we have no entropy source
+	* available to generate the salt.
+	*/
+
+	extern unsigned char ks_freertos_secret_key[];
+	int ret = hkdf_sha3_512(NULL, (size_t) 0,
+				(const unsigned char *)ks_freertos_secret_key, PRIVATE_KEY_SIZE,
+				info, MDSIZE + key_ident_size, (unsigned char *)key_struct->key, SEALING_KEY_SIZE);
+
+	ed25519_sign((void *)key_struct->signature, (void *)key_struct->key,
+          SEALING_KEY_SIZE);
+
+	return;
 }
 /*-----------------------------------------------------------*/
 

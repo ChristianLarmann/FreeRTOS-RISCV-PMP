@@ -33,6 +33,7 @@
 	#error "include FreeRTOS.h must appear in source files before include task.h"
 #endif
 
+#include "crypto_constants.h"
 #include "list.h"
 
 #ifdef __cplusplus
@@ -330,6 +331,7 @@ is used in assert() statements. */
 	BaseType_t xTaskCreate(	TaskFunction_t pxTaskCode,
 							const char * const pcName,	/*lint !e971 Unqualified char types are allowed for strings and single characters only. */
 							const configSTACK_DEPTH_TYPE usStackDepth,
+							const uint32_t taskSizeInBytes,
 							void * const pvParameters,
 							UBaseType_t uxPriority,
 							TaskHandle_t * const pxCreatedTask ) PRIVILEGED_FUNCTION;
@@ -1398,6 +1400,14 @@ UBaseType_t uxTaskGetNumberOfTasks( void ) PRIVILEGED_FUNCTION;
  */
 char *pcTaskGetName( TaskHandle_t xTaskToQuery ) PRIVILEGED_FUNCTION; /*lint !e971 Unqualified char types are allowed for strings and single characters only. */
 
+
+
+/**
+ * task. h
+ * TODO
+ *
+ */
+BaseType_t pcTaskGetHash() PRIVILEGED_FUNCTION; 
 /**
  * task. h
  * <PRE>TaskHandle_t xTaskGetHandle( const char *pcNameToQuery );</PRE>

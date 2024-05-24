@@ -30,6 +30,8 @@ OBJCOPY		= $(RISCV_PREFIX)objcopy
 OBJDUMP		= $(RISCV_PREFIX)objdump
 SIZE		= $(RISCV_PREFIX)size
 
+export CC
+
 # set some project specific path variables
 ifndef FREERTOS_PROJ_ROOT
 $(error "FREERTOS_PROJ_ROOT is unset. Point it to this project's root directory.")
@@ -97,7 +99,6 @@ GCC_GTEQ_8 = $(shell expr `$(CC) -dumpversion | cut -f1 -d.` \>= 8)
 # User controllable standard makeflags
 CFLAGS = -Os -g3
 CPPFLAGS =
-LDFLAGS =
 LDLIBS =
 ASFLAGS = -Os -g3
 
@@ -174,22 +175,6 @@ endif
 ifeq ($(LTO),yes)
 CV_CFLAGS += -flto
 endif
-
-# use dpi during simulation
-ifeq ($(DPI),yes)
-DPI_LIBS += $(SUPPORT_ROOT)/install/lib/libpulpdpi.so
-endif
-
-# script paths
-PLPSTIM   = $(SCRIPTS_ROOT)/pulpstim
-PULPTRACE = $(SCRIPTS_ROOT)/pulptrace
-MEMCONV   = $(SCRIPTS_ROOT)/mem.tcl
-
-# simulation names and paths
-VSIM   = vsim
-SIMDIR = sim
-GVSIMDIR = gvsim
-PULP_RISCV_GCC_TOOLCHAIN=$(RISCV) # for gvsoc
 
 # force SRCS to be a "simply expanded variable"
 SRCS :=

@@ -73,9 +73,11 @@ _start:
 	call secure_bootloader
 
 	# Write anything to 0x1A10... to block LSU accesses to the Instruction-memory
-    lui a0, 0x1A100
-    addi a0, a0, 0
-    sw zero, 0(a0) 
+    # lui a0, 0x1A100
+    # addi a0, a0, 0
+    # sw zero, 0(a0) 
+
+	call derive_secret_key_freertos
 #endif
 
 

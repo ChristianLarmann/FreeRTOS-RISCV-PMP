@@ -41,6 +41,7 @@ task.h is included from an application file. */
 #include "queue.h"
 #include "timers.h"
 #include "event_groups.h"
+#include "sealing_key.h"
 #include "stream_buffer.h"
 #include "mpu_prototypes.h"
 
@@ -125,12 +126,12 @@ void vPortResetPrivilege( BaseType_t xRunningPrivileged )
 /*-----------------------------------------------------------*/
 
 #if( configSUPPORT_DYNAMIC_ALLOCATION == 1 )
-	BaseType_t MPU_xTaskCreate( TaskFunction_t pvTaskCode, const char * const pcName, uint16_t usStackDepth, void *pvParameters, UBaseType_t uxPriority, TaskHandle_t *pxCreatedTask ) /* FREERTOS_SYSTEM_CALL */
+	BaseType_t MPU_xTaskCreate( TaskFunction_t pvTaskCode, const char * const pcName, uint16_t usStackDepth, const uint32_t taskSizeInBytes, void *pvParameters, UBaseType_t uxPriority, TaskHandle_t *pxCreatedTask ) /* FREERTOS_SYSTEM_CALL */
 	{
 	BaseType_t xReturn;
 	BaseType_t xRunningPrivileged = xPortRaisePrivilege();
 
-		xReturn = xTaskCreate( pvTaskCode, pcName, usStackDepth, pvParameters, uxPriority, pxCreatedTask );
+		xReturn = xTaskCreate( pvTaskCode, pcName, usStackDepth, taskSizeInBytes, pvParameters, uxPriority, pxCreatedTask );
 		vPortResetPrivilege( xRunningPrivileged );
 		return xReturn;
 	}
@@ -338,6 +339,16 @@ BaseType_t xRunningPrivileged = xPortRaisePrivilege();
 	pcReturn = pcTaskGetName( xTaskToQuery );
 	vPortResetPrivilege( xRunningPrivileged );
 	return pcReturn;
+}
+
+BaseType_t MPU_xDeriveNewSealingKey(uintptr_t sealing_key, const unsigned char *key_ident,
+	size_t key_ident_size) /* FREERTOS_SYSTEM_CALL */
+{
+BaseType_t xRunningPrivileged = xPortRaisePrivilege();
+
+	BaseType_t xReturn = xDeriveNewSealingKey(sealing_key, key_ident, key_ident_size);
+	vPortResetPrivilege( xRunningPrivileged );
+	return xReturn;
 }
 /*-----------------------------------------------------------*/
 
@@ -1410,6 +1421,7 @@ BaseType_t xRunningPrivileged = xPortRaisePrivilege();
 	vPortResetPrivilege( xRunningPrivileged );
 }
 */
+
 
 #if configINCLUDE_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS == 1
 	#include "application_defined_privileged_functions.h"
