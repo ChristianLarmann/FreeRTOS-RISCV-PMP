@@ -85,6 +85,12 @@ USER_SRCS += $(CRYLIB)/sha3/sha3.c
 USER_SRCS += $(CRYLIB)/hkdf_sha3_512/hkdf_sha3_512.c
 USER_SRCS += $(CRYLIB)/hmac_sha3/hmac_sha3.c
 
+# Tasks
+CV_CPPFLAGS += -I"blinky_demo/tasks"
+USER_SRCS += blinky_demo/tasks/LedTask.c 
+USER_SRCS += blinky_demo/tasks/QueueReceiveTask.c 
+USER_SRCS += blinky_demo/tasks/QueueSendTask.c 
+
 # user headers
 CPPFLAGS += $(addprefix -I$(VPATH)/, ".")
 #CFLAGS += -gdwarf-4
@@ -119,9 +125,6 @@ LDFLAGS += -L../libs/crypto/sbi -lsbi
 ## Compile and link executable. Obeys standard GNU variables used by implicit rules.
 all: external $(PROG) misc-info
 
-
-# $(info  --- $(SRCS) 89898989898989)
-# $(info  --- $(PROG): $(OBJS) !!!!!!!!!!!!! )
 
 
 external:

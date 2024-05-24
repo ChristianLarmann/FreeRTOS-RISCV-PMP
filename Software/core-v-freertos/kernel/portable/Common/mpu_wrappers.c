@@ -126,12 +126,12 @@ void vPortResetPrivilege( BaseType_t xRunningPrivileged )
 /*-----------------------------------------------------------*/
 
 #if( configSUPPORT_DYNAMIC_ALLOCATION == 1 )
-	BaseType_t MPU_xTaskCreate( TaskFunction_t pvTaskCode, const char * const pcName, uint16_t usStackDepth, void *pvParameters, UBaseType_t uxPriority, TaskHandle_t *pxCreatedTask ) /* FREERTOS_SYSTEM_CALL */
+	BaseType_t MPU_xTaskCreate( TaskFunction_t pvTaskCode, const char * const pcName, uint16_t usStackDepth, const uint32_t taskSizeInBytes, void *pvParameters, UBaseType_t uxPriority, TaskHandle_t *pxCreatedTask ) /* FREERTOS_SYSTEM_CALL */
 	{
 	BaseType_t xReturn;
 	BaseType_t xRunningPrivileged = xPortRaisePrivilege();
 
-		xReturn = xTaskCreate( pvTaskCode, pcName, usStackDepth, pvParameters, uxPriority, pxCreatedTask );
+		xReturn = xTaskCreate( pvTaskCode, pcName, usStackDepth, taskSizeInBytes, pvParameters, uxPriority, pxCreatedTask );
 		vPortResetPrivilege( xRunningPrivileged );
 		return xReturn;
 	}

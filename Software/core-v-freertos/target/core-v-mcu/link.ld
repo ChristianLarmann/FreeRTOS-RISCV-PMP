@@ -86,6 +86,11 @@ SECTIONS
 		__privileged_data_end__ = .;
 	} > BRAM
 
+  .TasksSection :
+  {
+      *(.TasksSection.*)
+  } > BRAM
+
   .data : ALIGN(4)
   {
     __data_begin = .;
