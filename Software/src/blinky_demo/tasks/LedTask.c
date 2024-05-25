@@ -23,7 +23,7 @@ void prvLedTask(void *pvParameters){
 	char *keyIdentifier = "identifier";
 	struct sealing_key newSealingKey;
 
-	BaseType_t ret = xDeriveNewSealingKey(&newSealingKey, keyIdentifier, strlen(keyIdentifier));
+	xDeriveNewSealingKey(&newSealingKey, keyIdentifier, strlen(keyIdentifier));
 
 	uint32_t counter_free = 0;
 
@@ -43,7 +43,8 @@ void prvLedTask(void *pvParameters){
 				MPU_pvPmpFree(heapVar);
 			}
 			if (counter_free == 3) {
-				uint32_t* heapVarLater = (uint32_t*) MPU_pvPmpMalloc(6 * sizeof(uint32_t));
+				MPU_pvPmpMalloc(6 * sizeof(uint32_t));
+				// uint32_t* heapVarLater = (uint32_t*) MPU_pvPmpMalloc(6 * sizeof(uint32_t));
 				// heapVarLater[0] = 0xBF;
 			}
 

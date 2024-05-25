@@ -131,6 +131,9 @@ external:
 	$(MAKE) -C ../libs/crypto/sbi
 	$(info ------------------- external finished)
 
+clean_external:
+	$(MAKE) -C ../libs/crypto/sbi clean
+
 %.o: %.S
 	$(CC) $(CV_ASFLAGS) $(ASFLAGS) $(CV_CPPFLAGS) $(CPPFLAGS) -c -o $@ $<
 	$(info -------------------.S finished)
@@ -166,7 +169,7 @@ $(PROG).siz: $(PROG)
 
 .PHONY: clean
 ## Clean object files
-clean:
+clean : clean_external
 	rm -f $(OBJS) $(PROG) $(DEPS) $(SU) \
 		$(PROG).hex $(PROG).lst $(PROG).siz memory.map \
 

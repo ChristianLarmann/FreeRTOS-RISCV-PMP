@@ -7,6 +7,7 @@
 #include "FreeRTOS.h"
 #include "sha3.h"
 #include "hkdf_sha3_512.h"
+#include "ed25519.h"
 
 #define SIGNATURE_SIZE 64
 
@@ -14,10 +15,10 @@
 typedef unsigned int enclave_id;
 
 /* sealing key structure */
-struct sealing_key {
+typedef struct sealing_key {
   uint8_t key[SEALING_KEY_SIZE];
   uint8_t signature[SIGNATURE_SIZE];
-};
+} SealingKey;
 
 void *sbi_memset(void *s, int c, size_t count);
 void *sbi_memcpy(void *dest, const void *src, size_t count);

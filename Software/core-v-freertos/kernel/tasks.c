@@ -823,7 +823,7 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 			extern byte FreeRTOS_kernel_hash[64];
 			memcpy(&pxNewTCB->taskHash, FreeRTOS_kernel_hash, TASK_HASH_LEN);
 			#else
-			calculateHashOfTask(pxTaskCode, taskSizeInBytes, &pxNewTCB->taskHash);
+			calculateHashOfTask(pxTaskCode, taskSizeInBytes, pxNewTCB->taskHash);
 			#endif
 
 			prvInitialiseNewTask( pxTaskCode, pcName, ( uint32_t ) usStackDepth, pvParameters, uxPriority, pxCreatedTask, pxNewTCB, NULL );
@@ -2390,10 +2390,10 @@ TCB_t *pxTCB;
 	return &( pxTCB->pcTaskName[ 0 ] );
 }
 
-BaseType_t xDeriveNewSealingKey(uintptr_t sealing_key, const unsigned char *key_ident,
+BaseType_t xDeriveNewSealingKey(SealingKey *sealing_key, const char *key_ident,
                           size_t key_ident_size) 
 {
-	struct sealing_key *key_struct = (struct sealing_key *)sealing_key;
+	/* sm_derive_sealing_key */
 
 	// info = taskHash || key_ident
   	unsigned char info[MDSIZE + key_ident_size];
@@ -2403,20 +2403,20 @@ BaseType_t xDeriveNewSealingKey(uintptr_t sealing_key, const unsigned char *key_
 	sbi_memcpy(info, taskHash, MDSIZE);
 	sbi_memcpy(info + MDSIZE, key_ident, key_ident_size);
 
-	/*
-	* The key is derived without a salt because we have no entropy source
-	* available to generate the salt.
-	*/
-
+	// The key is derived without a salt because we have no entropy source
+	// available to generate the salt.
 	extern unsigned char ks_freertos_secret_key[];
-	int ret = hkdf_sha3_512(NULL, (size_t) 0,
-				(const unsigned char *)ks_freertos_secret_key, PRIVATE_KEY_SIZE,
-				info, MDSIZE + key_ident_size, (unsigned char *)key_struct->key, SEALING_KEY_SIZE);
+	BaseType_t ret = hkdf_sha3_512(NULL, (size_t) 0,
+		(const unsigned char *)ks_freertos_secret_key, PRIVATE_KEY_SIZE,
+		info, MDSIZE + key_ident_size, (unsigned char *)sealing_key->key, SEALING_KEY_SIZE);
 
-	ed25519_sign((void *)key_struct->signature, (void *)key_struct->key,
-          SEALING_KEY_SIZE);
+	/* sm_sign */
+	extern byte ks_freertos_public_key[];
+	extern byte ks_freertos_secret_key[];
+	ed25519_sign((void *)sealing_key->signature, (void *)sealing_key->key,
+        SEALING_KEY_SIZE, ks_freertos_public_key, ks_freertos_secret_key);
 
-	return;
+	return ret;
 }
 /*-----------------------------------------------------------*/
 

@@ -58,7 +58,7 @@ byte ks_freertos_public_key[64];
 byte precomputedTaskHash[TASK_HASH_LEN];
 
 
-int xDeriveNewSealingKey(unsigned char *output_key, const unsigned char *key_ident,
+int xDeriveNewSealingKey(sealing_key *output_key, const unsigned char *key_ident,
                           size_t key_ident_size) 
 {
 

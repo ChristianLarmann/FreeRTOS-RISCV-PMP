@@ -74,6 +74,8 @@ void secure_bootloader() {
   return;
 }
 
+extern void *sbi_memset(void *s, int c, size_t count);
+extern void *sbi_memcpy(void *dest, const void *src, size_t count);
 
 void derive_secret_key_freertos() {
   
@@ -104,14 +106,14 @@ void derive_secret_key_freertos() {
 
 
   // Endorse the FreeRTOS kernel
-  memcpy(seedHash, FreeRTOS_kernel_hash, 64);
-  memcpy(seedHash + 64, ks_freertos_public_key, 32);
+  sbi_memcpy(seedHash, FreeRTOS_kernel_hash, 64);
+  sbi_memcpy(seedHash + 64, ks_freertos_public_key, 32);
   // Sign (H_SM, PK_SM) with SK_D
   ed25519_sign(ks_freertos_signature, seedHash, 64 + 32, ks_dev_public_key, ks_dev_secret_key);
 
   // Clean up
   // Erase SK_D
-  memset((void*)ks_dev_secret_key, 0, sizeof(*ks_dev_secret_key));
+  sbi_memset((void*)ks_dev_secret_key, 0, sizeof(*ks_dev_secret_key));
 
   // caller will clean core state and memory (including the stack), and boot. TODO: CL
   return;

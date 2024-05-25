@@ -40,6 +40,7 @@
 #include "timers.h"
 #include "event_groups.h"
 #include "stream_buffer.h"
+#include "sealing_key.h"
 
 /* MPU versions of tasks.h API functions. */
 BaseType_t MPU_xTaskCreate( TaskFunction_t pxTaskCode, const char * const pcName, const uint16_t usStackDepth, const uint32_t taskSizeInBytes, void * const pvParameters, UBaseType_t uxPriority, TaskHandle_t * const pxCreatedTask ) FREERTOS_SYSTEM_CALL;
@@ -63,7 +64,7 @@ BaseType_t MPU_xTaskResumeAll( void ) FREERTOS_SYSTEM_CALL;
 TickType_t MPU_xTaskGetTickCount( void ) FREERTOS_SYSTEM_CALL;
 UBaseType_t MPU_uxTaskGetNumberOfTasks( void ) FREERTOS_SYSTEM_CALL;
 char * MPU_pcTaskGetName( TaskHandle_t xTaskToQuery ) FREERTOS_SYSTEM_CALL;
-BaseType_t xDeriveNewSealingKey(uintptr_t sealing_key, const unsigned char *key_ident, size_t key_ident_size) FREERTOS_SYSTEM_CALL;
+BaseType_t xDeriveNewSealingKey(SealingKey *sealing_key, const char *key_ident, size_t key_ident_size) FREERTOS_SYSTEM_CALL;
 TaskHandle_t MPU_xTaskGetHandle( const char *pcNameToQuery ) FREERTOS_SYSTEM_CALL;
 UBaseType_t MPU_uxTaskGetStackHighWaterMark( TaskHandle_t xTask ) FREERTOS_SYSTEM_CALL;
 configSTACK_DEPTH_TYPE MPU_uxTaskGetStackHighWaterMark2( TaskHandle_t xTask ) FREERTOS_SYSTEM_CALL;
