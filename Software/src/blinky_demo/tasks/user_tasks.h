@@ -15,8 +15,8 @@
 #include "taskMacros.h"
 
 /* Tasks */
-ADD_ENCLAVE_TASK(QueueReceive)
-ADD_ENCLAVE_TASK(QueueSend)
-ADD_ENCLAVE_TASK(Led)
+ADD_ENCLAVE_TASK_SIGNATURE(QueueReceive)
+ADD_ENCLAVE_TASK_SIGNATURE(QueueSend)
+ADD_ENCLAVE_TASK_SIGNATURE(Led)
 
 #endif

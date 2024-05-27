@@ -1,7 +1,3 @@
-#define TASK_END_LABEL_HELPER(taskName) asm volatile (".globl _end_" #taskName "Task\n" \
-                                                      "_end_" #taskName "Task:");
-#define TASK_END_LABEL(taskName) TASK_END_LABEL_HELPER(taskName)
-
 #define TASK_FUNCTION_HEADER_HELPER(taskName) void prv ## taskName ## Task(void *pvParameters)
 #define TASK_FUNCTION_HEADER(taskName) TASK_FUNCTION_HEADER_HELPER(taskName)
 
@@ -28,14 +24,15 @@
  *     }
  * 
  */
-#define ADD_ENCLAVE_TASK_HELPER(taskName) void prv ## taskName ## Task(void *pvParameters) \
-        __attribute__((section(".TasksSection." #taskName "Task"))); \
+#define ADD_ENCLAVE_TASK_SIG_HELPER(taskName) void prv ## taskName ## Task(void *pvParameters) \
+        __attribute__((section("." #taskName "Task"))); \
     static inline uint32_t get ## taskName ## TaskSize(void) \
-        __attribute__((section(".TasksSection." #taskName "Task"))); \
+        __attribute__((section("." #taskName "Task"))); \
     static inline uint32_t get ## taskName ## TaskSize(void) { \
         extern char _end_ ## taskName ## Task; \
+        extern char _start_ ## taskName ## Task; \
         return (uint32_t)((uintptr_t)&_end_ ## taskName ## Task - \
-        (uintptr_t)prv ## taskName ## Task); }
-#define ADD_ENCLAVE_TASK(taskName) ADD_ENCLAVE_TASK_HELPER(taskName)
+        (uintptr_t)&_start_ ## taskName ## Task); }
+#define ADD_ENCLAVE_TASK_SIGNATURE(taskName) ADD_ENCLAVE_TASK_SIG_HELPER(taskName)
 
 

@@ -31,8 +31,6 @@ TASK_FUNCTION_HEADER(TASK_NAME)
 			asm volatile("li x29, 0x3333" ::: "x29");
 			ulReceivedValue = 0U;
 		}
-		
-		TASK_END_LABEL(TASK_NAME)
 	}
 }
 
