@@ -37,7 +37,5 @@ TASK_FUNCTION_HEADER(TASK_NAME)
 		be empty at this point in the code. */
 		xReturned = xQueueSend(xQueue, &ulValueToSend, 0U);
 		configASSERT(xReturned == pdPASS);
-
-		TASK_END_LABEL(TASK_NAME)
 	}
 }

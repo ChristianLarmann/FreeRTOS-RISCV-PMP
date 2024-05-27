@@ -123,7 +123,7 @@ LDFLAGS += -L../libs/crypto/sbi -lsbi
 
 
 ## Compile and link executable. Obeys standard GNU variables used by implicit rules.
-all: external $(PROG) misc-info
+all: external extract-task-names $(PROG) misc-info
 
 
 
@@ -133,6 +133,24 @@ external:
 
 clean_external:
 	$(MAKE) -C ../libs/crypto/sbi clean
+
+
+TASK_LINKER_FILE := ../core-v-freertos/target/core-v-mcu/tasks.ld
+extract-task-names:
+
+	$(eval RAW_OUTPUT := $(shell grep 'ADD_ENCLAVE_TASK_SIGNATURE' ./blinky_demo/tasks/user_tasks.h))
+	@echo "RAW_OUTPUT: $(RAW_OUTPUT)"
+	$(eval NAMES := $(shell echo "$(RAW_OUTPUT)" | sed 's/ADD_ENCLAVE_TASK_SIGNATURE(/\n/g' | sed 's/)//g' | grep -v '^$$'))
+	@echo "Names extracted: $(NAMES)"
+
+	@echo "Generating linker script sections for tasks..."
+	@echo "" > $(TASK_LINKER_FILE)  # This creates a new linker_script.ld or truncates the existing one
+	@$(foreach name,$(NAMES),echo "$(name)Task :" >> $(TASK_LINKER_FILE); \
+	  echo "{" >> $(TASK_LINKER_FILE); \
+	  echo "	_start_$(name)Task = .;" >> $(TASK_LINKER_FILE); \
+      echo "    *(.$(name)Task*)" >> $(TASK_LINKER_FILE); \
+      echo "	_end_$(name)Task = .;" >> $(TASK_LINKER_FILE); \
+	  echo "} > BRAM\n" >> $(TASK_LINKER_FILE);)
 
 %.o: %.S
 	$(CC) $(CV_ASFLAGS) $(ASFLAGS) $(CV_CPPFLAGS) $(CPPFLAGS) -c -o $@ $<
@@ -144,7 +162,6 @@ clean_external:
 	$(info -------------------.c finished)
 
 $(PROG): $(OBJS)
-	$(info Yippieeee)
 	$(CC) $(CV_CFLAGS) $(CFLAGS) $(CV_LDFLAGS) $(LDFLAGS) $(OBJS) -o $@ -L../libs/crypto/sbi -lsbi $(LDLIBS)
 	$(info ------------------- OBJS finished)
 

@@ -48,6 +48,18 @@ extern byte ks_freertos_signature[];
 __attribute__((section(".secure_bootloader")))
 void secure_bootloader() {
 
+  uint32_t *first_key = (uint32_t *) 0x1d101000;
+  volatile uint32_t number0 = first_key[0];
+  volatile uint32_t number1 = first_key[1];
+  volatile uint32_t number2 = first_key[2];
+  volatile uint32_t number3 = first_key[3];
+
+  uint32_t *second_key = (uint32_t *) 0x1d101100;
+  volatile uint32_t number0_1 = second_key[0];
+  volatile uint32_t number1_1 = second_key[1];
+  volatile uint32_t number2_1 = second_key[2];
+  volatile uint32_t number3_1 = second_key[3];
+
   // Hash over kernel (or other)
   #ifndef PROVIDE_FREERTOS_HASH
   sha3_ctx_t hash_ctx;

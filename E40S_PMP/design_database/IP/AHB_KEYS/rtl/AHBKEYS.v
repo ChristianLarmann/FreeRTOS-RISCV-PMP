@@ -33,116 +33,86 @@
 //EXAMPLE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE EXAMPLE. FOR THE AVOIDANCE/
 // OF DOUBT, NO PATENT LICENSES ARE BEING LICENSED UNDER THIS LICENSE AGREEMENT.//
 //////////////////////////////////////////////////////////////////////////////////
- 
 
-module AHBDCD(
+
+module AHBKEYS
+(
+	//Inputs
+  input wire HCLK,
+  input wire HRESETn,
   input wire [31:0] HADDR,
-  input wire RESET,
+  input wire HWRITE,
+  input wire HSEL,
+  input wire HREADY,
   
-  output wire HSEL_S0,
-  output wire HSEL_S1,
-  output wire HSEL_S2,
-  output wire HSEL_S3,
-  output wire HSEL_S4,
-  output wire HSEL_S5,
-  output wire HSEL_S6,
-  output wire HSEL_S7,
-  output wire HSEL_S8,
-  output wire HSEL_S9,
-  output wire HSEL_NOMAP,
-  
-  output reg [3:0] MUX_SEL
-    );
+	//Output
+  output reg [31:0] HRDATA,
+  output wire HREADYOUT
+);
 
-reg [15:0] dec;
+// KEY0 at 0x1000
+localparam [31:0] KEY0_WORD0 = 32'hAAAAAAAA;
+localparam [31:0] KEY0_WORD1 = 32'hBBBBBBBB;
+localparam [31:0] KEY0_WORD2 = 32'hCCCCCCCC;
+localparam [31:0] KEY0_WORD3 = 32'hDDDDDDDD;
 
-reg instr_mem_access_locked;
+// KEY1 at 0x1100
+localparam [31:0] KEY1_WORD0 = 32'hEEEEEEEE;
+localparam [31:0] KEY1_WORD1 = 32'hFFFFFFFF;
+localparam [31:0] KEY1_WORD2 = 32'h11111111;
+localparam [31:0] KEY1_WORD3 = 32'h22222222;
 
-//REFER CM0-DS REFERENC MANUAL FOR RAM & PERIPHERAL MEMORY MAP
-//									//MEMORY MAP --> START ADDR 		END ADDR 	SIZE 
-assign HSEL_S0 = dec[0];   //MEMORY MAP --> 0x1C05_0000 to 0x1C05_FFFF  64kb
-assign HSEL_S1 = dec[1];   //MEMORY MAP --> 0x1A10_0000 to 0x1A10_FFFF  64kb	
-assign HSEL_S2 = dec[2];   //MEMORY MAP --> 0x1B10_0000 to 0x1B10_FFFF  64kb
-assign HSEL_S3 = dec[3];   //MEMORY MAP --> 0x1C10_0000 to 0x1C10_FFFF  64kb
-assign HSEL_S4 = dec[4];   //MEMORY MAP --> 0x1D10_0000 to 0x1D10_FFFF  64kb
-assign HSEL_S5 = dec[5];   //MEMORY MAP --> 0x1E10_0000 to 0x1E10_FFFF  64kb
-assign HSEL_S6 = dec[6];   //MEMORY MAP --> 0x1F10_0000 to 0x1F10_FFFF  64kb
-assign HSEL_S7 = dec[7];   //MEMORY MAP --> 0x2010_0000 to 0x2010_FFFF  64kb
-assign HSEL_S8 = dec[8];   //MEMORY MAP --> undef
-assign HSEL_S9 = dec[9];   //MEMORY MAP --> undef
-assign HSEL_NOMAP = dec[15]; //REST OF REGION NOT COVERED ABOVE
-    
-    
-always@ (negedge RESET)
-begin
-  if(!RESET)
-    instr_mem_access_locked <= 1'h0;
-end
-  
+assign HREADYOUT = 1;
 
-always@*
-begin
-
-  case(HADDR[31:16])
-    16'h1C05, 16'h1C06: // MEMORY MAP --> 0x0050_0000 to 0x0050_FFFF  64kB
+//Set Registers for AHB Address State
+  always@ (posedge HCLK)
+  begin
+    if(HSEL && !HWRITE)
+    begin
+      
+      if (HADDR[11:8] == 4'h0) 
       begin
-        dec = 16'b0000_0000_00000001;
-        MUX_SEL = 4'b0000;
-      end
-    
-    16'h1C00, 16'h1C01: // Secure boot accessing PRGM-RAM instructions
-      begin
-        if (!instr_mem_access_locked) begin
-            dec = 16'b0000_0000_00000001;
-            MUX_SEL = 4'b0000;
-        end else begin
-            // Same as NOMAP, default case
-            dec = 16'b1000_0000_00000000;
-            MUX_SEL = 4'b1111;
+        if (HADDR[7:0] == 8'h0)  
+        begin
+            HRDATA <= KEY0_WORD0;
+        end
+        else if (HADDR[7:0] == 8'h4) 
+        begin
+            HRDATA <= KEY0_WORD1;
+        end
+        else if (HADDR[7:0] == 8'h8) 
+        begin
+            HRDATA <= KEY0_WORD2;
+        end
+        else if (HADDR[7:0] == 8'hc) 
+        begin
+            HRDATA <= KEY0_WORD3;
         end
       end
-    16'h1A10: //MEMORY MAP --> 0x1A10_0000 to 0x1A10_FFFF  64kB 
-      begin		
-			dec = 16'b0000_0000_0000_0010;
-			MUX_SEL = 4'b0001;
-			instr_mem_access_locked = 'h1;
-      end
-	16'h1B10:  
-		begin
-			dec = 16'b0000_0000_0000_0100;
-			MUX_SEL = 4'b0010;
-		end
-	16'h1C10:  
-		begin
-			dec = 16'b0000_0000_0000_1000;
-			MUX_SEL = 4'b0011;
-		end
-	16'h1E10:  
-		begin
-			dec = 16'b0000_0000_0001_0000;
-			MUX_SEL = 4'b0100;
-		end	
-	16'h1D10:  // Keys
-		begin
-			dec = 16'b0000_0000_0010_0000;
-			MUX_SEL = 4'b0101;
-		end	
-	16'h1C01:  
-		begin
-			dec = 16'b0000_0000_0100_0000;
-			MUX_SEL = 4'b0110;
-		end		
-	16'h2010:  
-		begin
-			dec = 16'b0000_0000_1000_0000;
-			MUX_SEL = 4'b0111;
-		end
-    default: //NOMAP
+      
+      if (HADDR[11:8] == 4'h1) 
       begin
-        dec = 16'b1000_0000_00000000;
-        MUX_SEL = 4'b1111;
+        if (HADDR[7:0] == 8'h0)  
+        begin
+            HRDATA <= KEY1_WORD0;
+        end
+        else if (HADDR[7:0] == 8'h4) 
+        begin
+            HRDATA <= KEY1_WORD1;
+        end
+        else if (HADDR[7:0] == 8'h8) 
+        begin
+            HRDATA <= KEY1_WORD2;
+        end
+        else if (HADDR[7:0] == 8'hc) 
+        begin
+            HRDATA <= KEY1_WORD3;
+        end
       end
-  endcase
-end
-
+    end
+    else
+    begin
+      HRDATA <= 32'h4;
+    end
+  end  
 endmodule
