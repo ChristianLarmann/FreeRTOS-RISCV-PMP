@@ -114,34 +114,66 @@ void main_blinky(void)
 		/* Start the two tasks as described in the comments at the top of this
 		file. */
 		asm volatile("li x28, 0x10" ::: "x28");
-		xTaskCreate(
-			prvQueueReceiveTask, /* The function that implements the task. */
-			"Rx", /* The text name assigned to the task - for debug only as it is not used by the kernel. */
-			configMINIMAL_STACK_SIZE *
-				2U, /* The size of the stack to allocate to the task. */
-			getQueueReceiveTaskSize(),
-			NULL, /* The parameter passed to the task - not used in this case. */
-			mainQUEUE_RECEIVE_TASK_PRIORITY, /* The priority assigned to the task. */
-			NULL); /* The task handle is not required, so NULL is passed. */
 
-		asm volatile("li x28, 0x20" ::: "x28");
-		xTaskCreate(prvQueueSendTask, "TX",
-			    configMINIMAL_STACK_SIZE * 2U,
-				getQueueSendTaskSize(),
-				NULL,
-			    mainQUEUE_SEND_TASK_PRIORITY, NULL);
+	 	// const uint16_t recvStackSize = configMINIMAL_STACK_SIZE * 2; 
+    	// char recvTaskStack[ recvStackSize ] __attribute__((aligned(512)));
+		// extern char _start_QueueReceiveTask;
+		// TaskParameters_t xQueueReceiveTaskParams =
+		// {
+		// 	.pvTaskCode		= prvQueueReceiveTask,
+		// 	.pcName			= "RX",
+		// 	.usStackDepth	= recvStackSize,
+		// 	.pvParameters	= NULL,
+		// 	.uxPriority		= 1,
+		// 	.puxStackBuffer	= (StackType_t*) recvTaskStack,
+		// 	/* xRegions - Protects the task's program code */
+		// 	// .xRegions		= {
+		// 	// 	/* Base address   		   Length                     Parameters */
+		// 	// 	{ (void *)_start_QueueReceiveTask, getQueueReceiveTaskSize(), portPMP_REGION_EXECUTE }
+		// 	// }
+		// };
+		// xTaskCreateRestricted(&xQueueReceiveTaskParams, NULL);
 
-    	char ledTaskStack[ 1024 ] __attribute__((aligned(1024)));
 
+		// asm volatile("li x28, 0x20" ::: "x28");
+	 	// const uint16_t sendStackSize = configMINIMAL_STACK_SIZE * 2; 
+    	// char sendTaskStack[ sendStackSize ] __attribute__((aligned(512)));
+		// extern char _start_QueueSendTask;
+		// TaskParameters_t xQueueSendTaskParams =
+		// {
+		// 	.pvTaskCode		= prvQueueSendTask,
+		// 	.pcName			= "TX",
+		// 	.usStackDepth	= sendStackSize,
+		// 	.pvParameters	= NULL,
+		// 	.uxPriority		= 1,
+		// 	.puxStackBuffer	= (StackType_t*) sendTaskStack,
+		// 	.xRegions		= { {0, 0, 0} }
+		// 	// .xRegions		= {
+		// 	// 	/* Base address   		   Length                     Parameters */
+		// 	// 	{ (void *)_start_QueueSendTask, getQueueSendTaskSize(), portPMP_REGION_EXECUTE }
+		// 	// }
+		// };
+		// xTaskCreateRestricted(&xQueueSendTaskParams, NULL);
+
+     
+	 	uint16_t ledStackSize = configMINIMAL_STACK_SIZE * 10;
+
+    	// const char ledTaskStack[ ledStackSize ] __attribute__((aligned(512)));
+		extern char _start_LedTask;
+
+		char ledTaskStack[ 1024 ] __attribute__((aligned(1024)));
 		TaskParameters_t xLedTaskParams =
 		{
 			.pvTaskCode		= prvLedTask,
 			.pcName			= "LED",
-			.usStackDepth	= configMINIMAL_STACK_SIZE * 10,
+			.usStackDepth	= ledStackSize,
 			.pvParameters	= NULL,
 			.uxPriority		= 1,
 			.puxStackBuffer	= (StackType_t*) ledTaskStack,
-			.xRegions		= { {0, 0, 0} }
+			.xRegions = {
+				/* Base address   		 Length            Parameters */
+				{(void*)&_start_LedTask, getLedTaskSize(), portPMP_REGION_EXECUTE },
+			}
 		};
 
 		asm volatile("li x28, 0x30" ::: "x28");

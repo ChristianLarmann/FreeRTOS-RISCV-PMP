@@ -722,6 +722,19 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 										pxCreatedTask, pxNewTCB,
 										pxTaskDefinition->xRegions );
 
+				#define SKIP_TASK_HASH_CALCULATION
+
+				#ifdef SKIP_TASK_HASH_CALCULATION
+				// ATTENTION: It uses the FreeRTOS_ker... only because I know the 1st byte 00
+				// It normally should be the pxTaskCode as below
+				extern byte FreeRTOS_kernel_hash[64];
+				memcpy(&pxNewTCB->taskHash, FreeRTOS_kernel_hash, TASK_HASH_LEN);
+				#else
+				const uintptr_t startOfTask = (uintptr_t) pxTaskDefinition->xRegions[0].pvBaseAddress;
+				const size_t taskSize = (size_t) pxTaskDefinition->xRegions[0].ulLengthInBytes;
+				calculateHashOfTask((void *) startOfTask, taskSize, pxNewTCB->taskHash);
+				#endif
+
 				prvAddNewTaskToReadyList( pxNewTCB );
 				xReturn = pdPASS;
 			}
@@ -815,16 +828,6 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 			}
 			#endif /* tskSTATIC_AND_DYNAMIC_ALLOCATION_POSSIBLE */
 
-			// #define SKIP_TASK_HASH_CALCULATION
-
-			#ifdef SKIP_TASK_HASH_CALCULATION
-			// ATTENTION: It uses the FreeRTOS_ker... only because I know the 1st byte 00
-			// It normally should be the pxTaskCode as below
-			extern byte FreeRTOS_kernel_hash[64];
-			memcpy(&pxNewTCB->taskHash, FreeRTOS_kernel_hash, TASK_HASH_LEN);
-			#else
-			calculateHashOfTask(pxTaskCode, taskSizeInBytes, pxNewTCB->taskHash);
-			#endif
 
 			prvInitialiseNewTask( pxTaskCode, pcName, ( uint32_t ) usStackDepth, pvParameters, uxPriority, pxCreatedTask, pxNewTCB, NULL );
 			prvAddNewTaskToReadyList( pxNewTCB );

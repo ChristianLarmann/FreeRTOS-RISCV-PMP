@@ -20,7 +20,7 @@
  *     static inline uint32_t getExampleTaskSize(void) __attribute__((section(".ExampleTask")));
  *     static inline uint32_t getExampleTaskSize(void) {
  *         extern char _end_ExampleTask;
- *         return (uint32_t)((uintptr_t)&_end_ExampleTask - (uintptr_t)prvExampleTask);
+ *         return (uint32_t)((uintptr_t)&_end_ExampleTask - (uintptr_t)_start_ExampleTask);
  *     }
  * 
  */

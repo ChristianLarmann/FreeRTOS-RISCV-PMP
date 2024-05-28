@@ -106,7 +106,10 @@ reg  [4:0] irq_id;
  
 cv32e40s_core
  #(
-  .PMP_GRANULARITY ( 0 ),  // 2^(PMP_GRANULARITY+2), 4 -> 64 bytes
+   // Attention: If the granularity is changed here, it also has to be changed
+   // in the FreeRTOS-PMP Makefile. This is important because the tasks are 
+   // aligned accordingly in memory so they can be PMP protected.
+  .PMP_GRANULARITY ( 0 ),  // 2^(PMP_GRANULARITY+2), -> 4 byte
   .PMP_NUM_REGIONS ( 16 ),
   .DEBUG ( 0 )
  )

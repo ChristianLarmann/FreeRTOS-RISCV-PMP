@@ -136,6 +136,7 @@ clean_external:
 
 
 TASK_LINKER_FILE := ../core-v-freertos/target/core-v-mcu/tasks.ld
+PMP_GRANULARITY := 4 # 2^(PMP_GRANULARITY+2) -> PMP_GRA..= 0 -> 4 bytes
 extract-task-names:
 
 	$(eval RAW_OUTPUT := $(shell grep 'ADD_ENCLAVE_TASK_SIGNATURE' ./blinky_demo/tasks/user_tasks.h))
@@ -143,12 +144,14 @@ extract-task-names:
 	$(eval NAMES := $(shell echo "$(RAW_OUTPUT)" | sed 's/ADD_ENCLAVE_TASK_SIGNATURE(/\n/g' | sed 's/)//g' | grep -v '^$$'))
 	@echo "Names extracted: $(NAMES)"
 
-	@echo "Generating linker script sections for tasks..."
+	@echo "Generating linker script sections for tasks... Aligning functions to pmp granularity"
 	@echo "" > $(TASK_LINKER_FILE)  # This creates a new linker_script.ld or truncates the existing one
-	@$(foreach name,$(NAMES),echo "$(name)Task :" >> $(TASK_LINKER_FILE); \
+	@$(foreach name,$(NAMES),echo "$(name)Task :"  >> $(TASK_LINKER_FILE); \
 	  echo "{" >> $(TASK_LINKER_FILE); \
+	  echo "	. = ALIGN($(PMP_GRANULARITY));" >> $(TASK_LINKER_FILE); \
 	  echo "	_start_$(name)Task = .;" >> $(TASK_LINKER_FILE); \
       echo "    *(.$(name)Task*)" >> $(TASK_LINKER_FILE); \
+	  echo "	. = ALIGN($(PMP_GRANULARITY));" >> $(TASK_LINKER_FILE); \
       echo "	_end_$(name)Task = .;" >> $(TASK_LINKER_FILE); \
 	  echo "} > BRAM\n" >> $(TASK_LINKER_FILE);)
 
