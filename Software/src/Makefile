@@ -146,13 +146,19 @@ extract-task-names:
 
 	@echo "Generating linker script sections for tasks... Aligning functions to pmp granularity"
 	@echo "" > $(TASK_LINKER_FILE)  # This creates a new linker_script.ld or truncates the existing one
-	@$(foreach name,$(NAMES),echo "$(name)Task :"  >> $(TASK_LINKER_FILE); \
+	@$(foreach name,$(NAMES),echo "$(name)TaskCode :"  >> $(TASK_LINKER_FILE); \
 	  echo "{" >> $(TASK_LINKER_FILE); \
 	  echo "	. = ALIGN($(PMP_GRANULARITY));" >> $(TASK_LINKER_FILE); \
-	  echo "	_start_$(name)Task = .;" >> $(TASK_LINKER_FILE); \
-      echo "    *(.$(name)Task*)" >> $(TASK_LINKER_FILE); \
+	  echo "	_start_$(name)TaskCode = .;" >> $(TASK_LINKER_FILE); \
+      echo "    *(.$(name)TaskCode*)" >> $(TASK_LINKER_FILE); \
 	  echo "	. = ALIGN($(PMP_GRANULARITY));" >> $(TASK_LINKER_FILE); \
-      echo "	_end_$(name)Task = .;" >> $(TASK_LINKER_FILE); \
+      echo "	_end_$(name)TaskCode = .;" >> $(TASK_LINKER_FILE); \
+	  echo "} > BRAM\n" >> $(TASK_LINKER_FILE); \
+	  \
+	  echo "$(name)TaskData :"  >> $(TASK_LINKER_FILE); \
+	  echo "{" >> $(TASK_LINKER_FILE); \
+	  echo "	. = ALIGN($(PMP_GRANULARITY));" >> $(TASK_LINKER_FILE); \
+      echo "    *(.$(name)TaskData*)" >> $(TASK_LINKER_FILE); \
 	  echo "} > BRAM\n" >> $(TASK_LINKER_FILE);)
 
 %.o: %.S

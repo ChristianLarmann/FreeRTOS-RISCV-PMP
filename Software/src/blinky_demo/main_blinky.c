@@ -156,12 +156,11 @@ void main_blinky(void)
 		// xTaskCreateRestricted(&xQueueSendTaskParams, NULL);
 
      
-	 	uint16_t ledStackSize = configMINIMAL_STACK_SIZE * 10;
+	 	#define ledStackSize 1024
+   		static StackType_t ledTaskStack[ ledStackSize ] __attribute__((section(".LedTaskData")));
+		extern char _start_LedTaskCode;
 
-    	// const char ledTaskStack[ ledStackSize ] __attribute__((aligned(512)));
-		extern char _start_LedTask;
 
-		char ledTaskStack[ 1024 ] __attribute__((aligned(1024)));
 		TaskParameters_t xLedTaskParams =
 		{
 			.pvTaskCode		= prvLedTask,
@@ -172,7 +171,7 @@ void main_blinky(void)
 			.puxStackBuffer	= (StackType_t*) ledTaskStack,
 			.xRegions = {
 				/* Base address   		 Length            Parameters */
-				{(void*)&_start_LedTask, getLedTaskSize(), portPMP_REGION_EXECUTE },
+				{(void*)&_start_LedTaskCode, getLedTaskSize(), portPMP_REGION_EXECUTE },
 			}
 		};
 

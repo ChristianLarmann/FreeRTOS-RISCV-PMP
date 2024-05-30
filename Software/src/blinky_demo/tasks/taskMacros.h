@@ -25,14 +25,14 @@
  * 
  */
 #define ADD_ENCLAVE_TASK_SIG_HELPER(taskName) void prv ## taskName ## Task(void *pvParameters) \
-        __attribute__((section("." #taskName "Task"))); \
+        __attribute__((section("." #taskName "TaskCode"))); \
     static inline uint32_t get ## taskName ## TaskSize(void) \
-        __attribute__((section("." #taskName "Task"))); \
+        __attribute__((section("." #taskName "TaskCode"))); \
     static inline uint32_t get ## taskName ## TaskSize(void) { \
-        extern char _end_ ## taskName ## Task; \
-        extern char _start_ ## taskName ## Task; \
-        return (uint32_t)((uintptr_t)&_end_ ## taskName ## Task - \
-        (uintptr_t)&_start_ ## taskName ## Task); }
+        extern char _end_ ## taskName ## TaskCode; \
+        extern char _start_ ## taskName ## TaskCode; \
+        return (uint32_t)((uintptr_t)&_end_ ## taskName ## TaskCode - \
+        (uintptr_t)&_start_ ## taskName ## TaskCode); }
 #define ADD_ENCLAVE_TASK_SIGNATURE(taskName) ADD_ENCLAVE_TASK_SIG_HELPER(taskName)
 
 
