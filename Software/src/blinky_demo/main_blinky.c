@@ -116,11 +116,10 @@ void main_blinky(void)
 		asm volatile("li x28, 0x10" ::: "x28");
 
 	 	#define recvStackSize configMINIMAL_STACK_SIZE * 8
-    	static StackType_t recvTaskStack[ recvStackSize ] __attribute__((section(".QueueReceiveTaskData")));
-		extern char _start_QueueReceiveTaskCode;
+    	static StackType_t recvTaskStack[ recvStackSize ] ENCLAVE_DATA(QueueReceive);
 		TaskParameters_t xQueueReceiveTaskParams =
 		{
-			.pvTaskCode		= prvQueueReceiveTask,
+			.pvTaskCode		= TASK_FUNCTION_NAME(QueueReceive),
 			.pcName			= "RX",
 			.usStackDepth	= recvStackSize,
 			.pvParameters	= NULL,
@@ -129,7 +128,7 @@ void main_blinky(void)
 			/* xRegions - Protects the task's program code */
 			.xRegions		= {
 				/* Base address   		   Length                     Parameters */
-				{(void*)&_start_QueueReceiveTaskCode, getQueueReceiveTaskSize(), portPMP_REGION_EXECUTE },
+				{ TASK_CODE_REGION(QueueReceive) },
 			}
 		};
 		xTaskCreateRestricted(&xQueueReceiveTaskParams, NULL);
@@ -137,11 +136,10 @@ void main_blinky(void)
 
 		asm volatile("li x28, 0x20" ::: "x28");
 	 	#define sendStackSize 0x200 * 0x2
-    	static StackType_t sendTaskStack[ sendStackSize ] __attribute__((section(".QueueSendTaskData")));
-		extern char _start_QueueSendTaskCode;
+    	static StackType_t sendTaskStack[ sendStackSize ] ENCLAVE_DATA(QueueSend);
 		TaskParameters_t xQueueSendTaskParams =
 		{
-			.pvTaskCode		= prvQueueSendTask,
+			.pvTaskCode		= TASK_FUNCTION_NAME(QueueSend),
 			.pcName			= "TX",
 			.usStackDepth	= sendStackSize,
 			.pvParameters	= NULL,
@@ -150,21 +148,20 @@ void main_blinky(void)
 			// .xRegions		= { {0, 0, 0} }
 			.xRegions		= {
 				/* Base address   		   Length                     Parameters */
-				// { (void *)_start_QueueSendTask, getQueueSendTaskSize(), portPMP_REGION_EXECUTE }
-				{(void*)&_start_QueueSendTaskCode, getQueueSendTaskSize(), portPMP_REGION_EXECUTE },
+				{ TASK_CODE_REGION(QueueSend) },
 			}
 		};
 		xTaskCreateRestricted(&xQueueSendTaskParams, NULL);
 
      
 	 	#define ledStackSize 1024
-   		static StackType_t ledTaskStack[ ledStackSize ] __attribute__((section(".LedTaskData")));
+   		static StackType_t ledTaskStack[ ledStackSize ] ENCLAVE_DATA(Led);
 		extern char _start_LedTaskCode;
 
 
 		TaskParameters_t xLedTaskParams =
 		{
-			.pvTaskCode		= prvLedTask,
+			.pvTaskCode		= TASK_FUNCTION_NAME(Led),
 			.pcName			= "LED",
 			.usStackDepth	= ledStackSize,
 			.pvParameters	= NULL,
@@ -172,7 +169,7 @@ void main_blinky(void)
 			.puxStackBuffer	= (StackType_t*) ledTaskStack,
 			.xRegions = {
 				/* Base address   		 Length            Parameters */
-				{(void*)&_start_LedTaskCode, getLedTaskSize(), portPMP_REGION_EXECUTE },
+				{ TASK_CODE_REGION(Led) },
 			}
 		};
 

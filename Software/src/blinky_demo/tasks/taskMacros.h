@@ -32,7 +32,27 @@
         extern char _end_ ## taskName ## TaskCode; \
         extern char _start_ ## taskName ## TaskCode; \
         return (uint32_t)((uintptr_t)&_end_ ## taskName ## TaskCode - \
-        (uintptr_t)&_start_ ## taskName ## TaskCode); }
+        (uintptr_t)&_start_ ## taskName ## TaskCode); } \
+    static inline void* get ## taskName ## TaskBeginning(void) \
+        __attribute__((section("." #taskName "TaskCode"))); \
+    static inline void* get ## taskName ## TaskBeginning(void) { \
+        extern char _start_ ## taskName ## TaskCode; \
+        return (void*)&_start_ ## taskName ## TaskCode;}
+
 #define ADD_ENCLAVE_TASK_SIGNATURE(taskName) ADD_ENCLAVE_TASK_SIG_HELPER(taskName)
 
 
+
+/* For task initialization */
+
+#define TASK_FUNCTION_NAME(taskName) prv ## taskName ## Task
+
+#define TASK_CODE_REGION(taskName) get ## taskName ##TaskBeginning(), \
+                                   get ## taskName ##TaskSize(), \
+                                   portPMP_REGION_EXECUTE
+
+/* The stack task does not necessarily need to be put in its own section but there
+   is the risk that the linker puts the stack data in the normal data section. This
+   is a problem because then the stack's PMP region will overlap with the unprivileged
+   data region or the system call region which can lead to unexpected behaviour. */
+#define ENCLAVE_DATA(taskName) __attribute__((section("." #taskName "TaskData")))
