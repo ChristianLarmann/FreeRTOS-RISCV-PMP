@@ -226,7 +226,7 @@ RISC_V
 				  .debug_halt_i    ( 1'b0              ),
 				  .debug_resume_i  ( 1'b0              ),
 				  //CPU CONTROL
-				  .fetch_enable_i(fetch_enable),
+				  .fetch_enable_i(1'b1),
 				  .core_busy_o(),
 				  
 				  .dmem_access_req_debug_o ( dmem_access_req_debug )
@@ -299,9 +299,8 @@ localparam BRAM_ADDR_BITS = $clog2(NUMBER_BRAM_ENTRIES + 1);
 wire	[128-1:0]              cache_mem_rdata;
 reg	[128-1:0]		           cache_mem_wdata;
 reg	[BRAM_ADDR_BITS-1:0]       cache_mem_addr;
-reg                            cache_mem_req;
 reg						       cache_mem_write;
-wire                           cache_mem_rdy;
+wire                           cache_mem_rdy;   
 
 // SIGNALS BETWEEN CACHES AND BRAM-FSM
 wire	[31:0]		           inst_cache_mem_rdata;
@@ -317,6 +316,23 @@ wire	[BRAM_ADDR_BITS-1:0]   data_cache_mem_addr;
 wire                           data_cache_mem_req;
 wire						   data_cache_mem_write;
 reg						       data_cache_mem_rdy;
+
+
+// WIRES BETWEEN CACHE AND UA MODULE
+// BRAM_ADDR_BITS was MEM_ADDR_BITS
+wire	[128-1:0]	            cache_ua_inst_rdata;
+wire	[128-1:0]	            cache_ua_inst_wdata;
+wire	[32-1:0]	            cache_ua_inst_addr;
+wire							cache_ua_inst_req;
+wire							cache_ua_inst_write;
+wire							cache_ua_inst_rdy;
+
+wire	[128-1:0]           	cache_ua_data_rdata;
+wire	[128-1:0]            	cache_ua_data_wdata;
+wire	[BRAM_ADDR_BITS-1:0]	cache_ua_data_addr;
+wire							cache_ua_data_req;
+wire							cache_ua_data_write;
+wire							cache_ua_data_rdy;
 
 
 //AHBLite Instruction Memory 
@@ -337,12 +353,12 @@ AHB_CACHE #(.MEM_ADDR_BITS(BRAM_ADDR_BITS)) uAHB2MEM (
 	.HRDATA(ins_HRDATA), 
 	.HREADYOUT(ins_HREADY),
 	
-	.BRAM_MEM_REQ(inst_cache_mem_req),
-	.BRAM_MEM_WRITE(inst_cache_mem_write),
-	.BRAM_MEM_ADDR(inst_cache_mem_addr),
-	.BRAM_WDATA(inst_cache_mem_wdata),
-	.BRAM_RDATA(cache_mem_rdata),
-	.BRAM_MEM_VALID(inst_cache_mem_rdy),
+	.BRAM_MEM_REQ(cache_ua_inst_req),
+	.BRAM_MEM_WRITE(cache_ua_inst_write),
+	.BRAM_MEM_ADDR(cache_ua_inst_addr),
+	.BRAM_WDATA(cache_ua_inst_wdata),
+	.BRAM_RDATA(cache_ua_inst_rdata),
+	.BRAM_MEM_VALID( cache_ua_inst_rdy ),
 	
     .interrupt(I_interrupt)
 	//.debug(I_debug)
@@ -366,17 +382,26 @@ AHB_CACHE #(.MEM_ADDR_BITS(BRAM_ADDR_BITS)) uAHB2DMEM (
 	.HRDATA(HRDATA_MEM), 
 	.HREADYOUT(HREADYOUT_MEM),
 	
-	.BRAM_MEM_REQ(data_cache_mem_req),
-	.BRAM_MEM_WRITE(data_cache_mem_write),
-	.BRAM_MEM_ADDR(data_cache_mem_addr),
-	.BRAM_WDATA(data_cache_mem_wdata),
-	.BRAM_RDATA(cache_mem_rdata),
-	.BRAM_MEM_VALID(data_cache_mem_rdy),
+	.BRAM_MEM_REQ(cache_ua_data_req),
+	.BRAM_MEM_WRITE(cache_ua_data_write),
+	.BRAM_MEM_ADDR(cache_ua_data_addr),
+	.BRAM_WDATA(cache_ua_data_wdata),
+	.BRAM_RDATA(cache_ua_data_rdata),
+	.BRAM_MEM_VALID(cache_ua_data_rdy),
 	
 	.interrupt(D_interrupt)
 	//.debug(D_debug)
 );
 
+wire mem_ready;
+
+
+wire [128-1:0]	ua_mem_rdata;
+reg	[128-1:0]	ua_mem_wdata;
+reg	[BRAM_ADDR_BITS-1:0]	ua_mem_addr;
+reg							ua_mem_req;
+reg							ua_mem_write;
+reg							ua_mem_rdy;
 
 reg inst_mem_req_ongoing;
 
@@ -392,27 +417,27 @@ begin
     // the arrival of a data request, the data request has to wait.
     else if (data_cache_mem_req && !inst_mem_req_ongoing)
     begin
-       cache_mem_req <= 1;
-       cache_mem_write <= data_cache_mem_write;
-       cache_mem_addr <= data_cache_mem_addr;
-       cache_mem_wdata <= data_cache_mem_wdata;
-       data_cache_mem_rdy <= cache_mem_rdy;
+       ua_mem_req <= 1;
+       ua_mem_write <= data_cache_mem_write;
+       ua_mem_addr <= data_cache_mem_addr;
+       ua_mem_wdata <= data_cache_mem_wdata;
+       ua_mem_rdy <= mem_ready;
     end
     
     else if(inst_cache_mem_req)
     begin
-       cache_mem_req <= 1;
-       cache_mem_write <= inst_cache_mem_write;
-       cache_mem_addr <= inst_cache_mem_addr;
-       cache_mem_wdata <= inst_cache_mem_wdata;
-       inst_cache_mem_rdy <= cache_mem_rdy;
+       ua_mem_req <= 1;
+       ua_mem_write <= inst_cache_mem_write;
+       ua_mem_addr <= inst_cache_mem_addr;
+       ua_mem_wdata <= inst_cache_mem_wdata;
+       inst_cache_mem_rdy <= mem_ready;
        
        inst_mem_req_ongoing <= 1;
     end
     
     else
     begin
-       cache_mem_req <= 0;
+       ua_mem_req <= 0;
        cache_mem_write <= 0;
        cache_mem_addr <= 0;
        cache_mem_wdata <= 0;
@@ -422,21 +447,89 @@ begin
 end
 
 
+
+
+// Encryption and MAC unit for instructions
+UA_encrypt
+    #(.ADDRESS_SIZE(BRAM_ADDR_BITS))
+UA_inst
+    (
+        .clock              (sys_clock),
+        .reset              (!sys_reset_N),
+        
+        .cache_rdata        (cache_ua_inst_rdata),
+        .cache_wdata        (cache_ua_inst_wdata),
+        .cache_address      (cache_ua_inst_addr),
+        .cache_req          (cache_ua_inst_req),
+        .cache_rw_enable    (cache_ua_inst_write),
+        .cache_ready        (cache_ua_inst_rdy),
+        
+        .mem_rdata          (ua_mem_rdata),
+        .mem_wdata          (inst_cache_mem_wdata),
+        .mem_address        (inst_cache_mem_addr),
+        .mem_req            (inst_cache_mem_req),
+        .mem_rw_enable      (inst_cache_mem_write),
+        .mem_ready          (mem_ready),
+        
+        //.interrupt          (interrupt),
+        
+        .debug              (UA_debug)
+    );
+    
+    // Encryption and MAC unit for data
+UA_encrypt
+    #(.ADDRESS_SIZE(BRAM_ADDR_BITS))
+UA_data
+    (
+        .clock              (sys_clock),
+        .reset              (!sys_reset_N),
+        
+        .cache_rdata        (cache_ua_data_rdata),
+        .cache_wdata        (cache_ua_data_wdata),
+        .cache_address      (cache_ua_data_addr),
+        .cache_req          (cache_ua_data_req),
+        .cache_rw_enable    (cache_ua_data_write),
+        .cache_ready        (cache_ua_data_rdy),
+        
+        .mem_rdata          (ua_mem_rdata),
+        .mem_wdata          (data_cache_mem_wdata),
+        .mem_address        (data_cache_mem_addr),
+        .mem_req            (data_cache_mem_req),
+        .mem_rw_enable      (data_cache_mem_write),
+        .mem_ready          (mem_ready),
+        
+        //.interrupt          (interrupt),
+        
+        .debug              (UA_debug)
+    );
+
 // BRAM connected to caches
 bram_memory	#(.MEM_ADDR_BITS(BRAM_ADDR_BITS))
 ram (
+//    .clk(sys_clock),
+//    .rst(sys_reset_N),
+    
+//    // Inputs
+//    .mem_req(cache_mem_req),
+//    .mem_write(cache_mem_write),
+//    .mem_addr(cache_mem_addr),
+//    .mem_wdata(cache_mem_wdata),
+    
+//    // Outputs
+//    .mem_rdata(cache_mem_rdata),
+//    
+
     .clk(sys_clock),
     .rst(sys_reset_N),
     
-    // Inputs
-    .mem_req(cache_mem_req),
-    .mem_write(cache_mem_write),
-    .mem_addr(cache_mem_addr),
-    .mem_wdata(cache_mem_wdata),
+    .mem_req(ua_mem_req),
+    .mem_write(ua_mem_write),
+    .mem_addr(ua_mem_addr),
+    .mem_wdata(ua_mem_wdata),
+    .mem_rdata(ua_mem_rdata),
     
-    // Outputs
-    .mem_rdata(cache_mem_rdata),
-    .mem_valid(cache_mem_rdy)
+    .mem_ready(  ),// ???
+    .mem_valid( mem_ready ) 
 );
 
 
@@ -445,7 +538,7 @@ assign HADDR_DUMP = {16'd0,dat_HADDR[15:0]};
 AHB2DUMP uAHB2DUMP (
 	//AHBLITE Signals
 	.HSEL(HSEL_DUMP),
-	.HCLK(sys_clock), 
+	.HCLK(sys_clock),
 	.HRESETn(sys_reset_N), 
 	.HREADY(dat_HREADY),     
 	.HADDR(HADDR_DUMP),

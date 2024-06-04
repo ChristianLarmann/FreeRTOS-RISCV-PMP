@@ -43,7 +43,7 @@ module AHB_CACHE
 		// TO BRAM
 		    output wire BRAM_MEM_REQ,
 		    output wire BRAM_MEM_WRITE,
-		    output wire [MEM_ADDR_BITS-1:0] BRAM_MEM_ADDR,
+		    output wire [CPU_ADDR_BITS-1:0] BRAM_MEM_ADDR,
 		    output wire [MEM_DATA_BITS-1:0] BRAM_WDATA,
 		    input wire [MEM_DATA_BITS-1:0] BRAM_RDATA,
 		    input wire BRAM_MEM_VALID,
