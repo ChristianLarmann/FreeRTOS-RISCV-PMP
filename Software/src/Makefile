@@ -202,4 +202,6 @@ clean : clean_external
 
 # Generate and move .dat files to the Vivado Simulation Folder
 $(shell bash ./srec2dat.sh)
+$(shell bash ./convert.sh)
 $(shell cp ./code_and_data.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
+$(shell cp ./code_and_data_prince.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
