@@ -35,8 +35,8 @@ def encrypt_part(offset, n_threads):
 		local_encrypts.append(output_a + output_b)
 
 		i += n_threads
-		if(i % 1000 == 0):
-		    print(str(i) + " lines done")
+		# if(i % 1000 == 0):
+		    # print(str(i) + " lines done")
 		
 	encrypted_thread_part[offset] = local_encrypts
 

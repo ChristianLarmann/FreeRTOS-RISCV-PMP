@@ -421,7 +421,7 @@ begin
        ua_mem_write <= data_cache_mem_write;
        ua_mem_addr <= data_cache_mem_addr;
        ua_mem_wdata <= data_cache_mem_wdata;
-       ua_mem_rdy <= mem_ready;
+       data_cache_mem_rdy <= mem_ready;
     end
     
     else if(inst_cache_mem_req)
@@ -441,6 +441,8 @@ begin
        cache_mem_write <= 0;
        cache_mem_addr <= 0;
        cache_mem_wdata <= 0;
+       inst_cache_mem_rdy <= mem_ready;
+       data_cache_mem_rdy <= mem_ready;
        
        inst_mem_req_ongoing <= 0;
     end
@@ -469,7 +471,7 @@ UA_inst
         .mem_address        (inst_cache_mem_addr),
         .mem_req            (inst_cache_mem_req),
         .mem_rw_enable      (inst_cache_mem_write),
-        .mem_ready          (mem_ready),
+        .mem_ready          (inst_cache_mem_rdy),
         
         //.interrupt          (interrupt),
         
@@ -496,7 +498,7 @@ UA_data
         .mem_address        (data_cache_mem_addr),
         .mem_req            (data_cache_mem_req),
         .mem_rw_enable      (data_cache_mem_write),
-        .mem_ready          (mem_ready),
+        .mem_ready          (data_cache_mem_rdy),
         
         //.interrupt          (interrupt),
         

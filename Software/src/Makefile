@@ -123,7 +123,8 @@ LDFLAGS += -L../libs/crypto/sbi -lsbi
 
 
 ## Compile and link executable. Obeys standard GNU variables used by implicit rules.
-all: external extract-task-names $(PROG) misc-info
+all: external extract-task-names $(PROG) misc-info generate-dat-files
+encrypt: external extract-task-names $(PROG) misc-info generate-dat-files-encrypted
 
 
 
@@ -193,15 +194,22 @@ $(PROG).siz: $(PROG)
 	$(SIZE) --format=berkeley $<
 
 
+generate-dat-files: 
+	# Generate and move .dat files to the Vivado Simulation Folder
+	$(shell bash ./srec2dat.sh)
+	$(shell cp ./code_and_data.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
+
+generate-dat-files-encrypted: 
+	# Generate and move .dat files to the Vivado Simulation Folder
+	$(shell bash ./srec2dat.sh)
+	$(info Encrypting .dat file...)
+	$(shell bash ./convert_encrypt.sh)
+	$(shell cp ./code_and_data_prince.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
+
+
 .PHONY: clean
 ## Clean object files
 clean : clean_external
 	rm -f $(OBJS) $(PROG) $(DEPS) $(SU) \
 		$(PROG).hex $(PROG).lst $(PROG).siz memory.map \
 
-
-# Generate and move .dat files to the Vivado Simulation Folder
-$(shell bash ./srec2dat.sh)
-$(shell bash ./convert.sh)
-$(shell cp ./code_and_data.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
-$(shell cp ./code_and_data_prince.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
