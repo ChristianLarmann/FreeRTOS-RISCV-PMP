@@ -9,6 +9,8 @@ module UA_encrypt
         input   wire                    clock,
         input   wire                    reset,
         
+        input   wire                    skip_encryption_i,
+        
         //Cache side connections
         output  wire [DATA_WIDTH-1:0]   cache_rdata,
         input   wire [DATA_WIDTH-1:0]   cache_wdata,
@@ -64,15 +66,15 @@ module UA_encrypt
     wire    [DATA_WIDTH-1:0]        cry_dout;
     wire                            cry_rdy;
     reg                             cry_run;
-    
 
-    // Assign output wires    
-    assign  cache_rdata     =   ((state == END) ? cry_dout : 0);
-    assign  mem_wdata       =   data_out;
-    assign  mem_address     =   address;
-    assign  mem_req         =   mem_request;
-    assign  mem_rw_enable   =   mem_rw;
-    assign  cache_ready     =   ((state == END) ? 1 : 0);
+    
+    // Assign output wires                     | Skip encryption    | Default assignment
+    assign cache_rdata     = skip_encryption_i ? mem_rdata          : ((state == END) ? cry_dout : 0);
+    assign mem_wdata       = skip_encryption_i ? cache_wdata        : data_out;
+    assign mem_address     = skip_encryption_i ? cache_address      : address;
+    assign mem_req         = skip_encryption_i ? cache_req          : mem_request;
+    assign mem_rw_enable   = skip_encryption_i ? cache_rw_enable    : mem_rw;
+    assign cache_ready     = skip_encryption_i ? mem_ready          : ((state == END) ? 1 : 0);
 
     
   // Reset and state switches

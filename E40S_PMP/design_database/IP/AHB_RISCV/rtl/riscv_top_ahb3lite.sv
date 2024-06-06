@@ -32,6 +32,7 @@ module riscv_top_ahb3lite #(
 					input  wire [31:0] 	ins_HRDATA,
 					input  wire        	ins_HREADY,
 					input  wire        	ins_HRESP,
+					output wire         ins_encryption_enabled_o,
 				
 				// AHB-LITE MASTER PORT - DATA				
 					output wire [31:0] 	dat_HADDR,
@@ -45,6 +46,7 @@ module riscv_top_ahb3lite #(
 					input  wire [31:0] 	dat_HRDATA,
 					input  wire        	dat_HREADY,
 					input  wire        	dat_HRESP,
+					output wire         dat_encryption_enabled_o,
 				  
 				  //Interrupts
 					input  wire [31:0]       irqs,                 // level sensitive IR lines
@@ -87,6 +89,10 @@ wire [31:0]		core_lsu_wdata;
 
 // Debug
 assign dmem_access_req_debug_o = core_lsu_req;
+
+assign ins_encryption_enabled_o = 0;
+assign dat_encryption_enabled_o = 0;
+
 
 integer i;
 reg  [4:0] irq_id;

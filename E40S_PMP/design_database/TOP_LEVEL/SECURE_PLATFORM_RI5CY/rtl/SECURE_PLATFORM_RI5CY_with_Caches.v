@@ -75,6 +75,7 @@ wire [2:0] 		HSIZE,ins_HSIZE,dat_HSIZE;
 wire [31:0] 	HRDATA,ins_HRDATA,dat_HRDATA;
 wire 			HRESP,ins_HRESP,dat_HRESP;
 wire 			HREADY,ins_HREADY,dat_HREADY;
+wire            ins_encryption_enabled, dat_encryption_enabled;
 
 //SELECT SIGNALS
 wire [3:0] 		MUX_SEL;
@@ -199,6 +200,7 @@ RISC_V
 				  .ins_HMASTLOCK(ins_HMASTLOCK),
 				  .ins_HREADY(ins_HREADY),	
 				  .ins_HRESP(ins_HRESP),
+				  .ins_encryption_enabled_o(ins_encryption_enabled),
 				  
 				  .dat_HADDR(dat_HADDR),
 				  .dat_HWDATA(dat_HWDATA),
@@ -211,6 +213,7 @@ RISC_V
 				  .dat_HMASTLOCK(dat_HMASTLOCK),
 				  .dat_HREADY(dat_HREADY),
 				  .dat_HRESP(dat_HRESP),
+				  .dat_encryption_enabled_o(dat_encryption_enabled),
 				  //Interrupts
 				  .irqs(IRQ),
 				  
@@ -393,15 +396,14 @@ AHB_CACHE #(.MEM_ADDR_BITS(BRAM_ADDR_BITS)) uAHB2DMEM (
 	//.debug(D_debug)
 );
 
-wire mem_ready;
 
 
-wire [128-1:0]	ua_mem_rdata;
-reg	[128-1:0]	ua_mem_wdata;
+wire [128-1:0]	            ua_mem_rdata;
+reg	[128-1:0]	            ua_mem_wdata;
 reg	[BRAM_ADDR_BITS-1:0]	ua_mem_addr;
 reg							ua_mem_req;
 reg							ua_mem_write;
-reg							ua_mem_rdy;
+wire                        ua_mem_ready;
 
 reg inst_mem_req_ongoing;
 
@@ -421,7 +423,7 @@ begin
        ua_mem_write <= data_cache_mem_write;
        ua_mem_addr <= data_cache_mem_addr;
        ua_mem_wdata <= data_cache_mem_wdata;
-       data_cache_mem_rdy <= mem_ready;
+       data_cache_mem_rdy <= ua_mem_ready;
     end
     
     else if(inst_cache_mem_req)
@@ -430,7 +432,7 @@ begin
        ua_mem_write <= inst_cache_mem_write;
        ua_mem_addr <= inst_cache_mem_addr;
        ua_mem_wdata <= inst_cache_mem_wdata;
-       inst_cache_mem_rdy <= mem_ready;
+       inst_cache_mem_rdy <= ua_mem_ready;
        
        inst_mem_req_ongoing <= 1;
     end
@@ -441,8 +443,8 @@ begin
        cache_mem_write <= 0;
        cache_mem_addr <= 0;
        cache_mem_wdata <= 0;
-       inst_cache_mem_rdy <= mem_ready;
-       data_cache_mem_rdy <= mem_ready;
+       inst_cache_mem_rdy <= ua_mem_ready;
+       data_cache_mem_rdy <= ua_mem_ready;
        
        inst_mem_req_ongoing <= 0;
     end
@@ -458,6 +460,8 @@ UA_inst
     (
         .clock              (sys_clock),
         .reset              (!sys_reset_N),
+        
+        .skip_encryption_i    (!ins_encryption_enabled),
         
         .cache_rdata        (cache_ua_inst_rdata),
         .cache_wdata        (cache_ua_inst_wdata),
@@ -486,6 +490,8 @@ UA_data
         .clock              (sys_clock),
         .reset              (!sys_reset_N),
         
+        .skip_encryption_i  (!dat_encryption_enabled),
+        
         .cache_rdata        (cache_ua_data_rdata),
         .cache_wdata        (cache_ua_data_wdata),
         .cache_address      (cache_ua_data_addr),
@@ -508,19 +514,6 @@ UA_data
 // BRAM connected to caches
 bram_memory	#(.MEM_ADDR_BITS(BRAM_ADDR_BITS))
 ram (
-//    .clk(sys_clock),
-//    .rst(sys_reset_N),
-    
-//    // Inputs
-//    .mem_req(cache_mem_req),
-//    .mem_write(cache_mem_write),
-//    .mem_addr(cache_mem_addr),
-//    .mem_wdata(cache_mem_wdata),
-    
-//    // Outputs
-//    .mem_rdata(cache_mem_rdata),
-//    
-
     .clk(sys_clock),
     .rst(sys_reset_N),
     
@@ -531,7 +524,7 @@ ram (
     .mem_rdata(ua_mem_rdata),
     
     .mem_ready(  ),// ???
-    .mem_valid( mem_ready ) 
+    .mem_valid( ua_mem_ready ) 
 );
 
 

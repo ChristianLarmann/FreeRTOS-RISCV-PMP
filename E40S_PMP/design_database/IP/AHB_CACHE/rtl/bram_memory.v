@@ -26,7 +26,8 @@ reg		[31:0]					delay;
 initial  
 begin
     //$readmemh("code128_orig.dat", memory);
-    $readmemh("code_and_data_prince.dat", memory);
+//    $readmemh("code_and_data_prince.dat", memory);
+    $readmemh("code_and_data.dat", memory);
     //$readmemh("code128_siphash_S.dat", memory);
     //$readmemh("code128_siphash_D.dat", memory);
     //$readmemh("code128_prince_siphash_S.dat", memory);    
