@@ -90,25 +90,9 @@ end
 
 
 
-SECURE_PLATFORM_RI5CY
-/*		#(
-				.QTY_SHARED_CACHES(2),
-				.SHARED_CACHES_ADDRESSES(5),
-				.MY_ADDRESS(0),
-				.FLIT_SIZE(32),
-				.ADDRESS_SIZE(32),
-				.XLEN(32),
-				.ICACHE_SIZE(0),
-				.DCACHE_SIZE(0),
-				.ICACHE_BLOCK_SIZE(32),
-				.DCACHE_BLOCK_SIZE(32),
-				.ICACHE_WAYS(2),
-				.DCACHE_WAYS(2),
-				.PC_INIT('h200)
-			)*/
-SECURE_SOC_PLATFORM
+SECURE_PLATFORM_RI5CY SECURE_SOC_PLATFORM
 		(
-				.clock(clock),
+				.sys_clock(clock),
 				.reset(reset),
 				.output_LEDS(leds),
 				//.SWITCHES(switches),

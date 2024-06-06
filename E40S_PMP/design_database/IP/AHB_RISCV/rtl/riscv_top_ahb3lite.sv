@@ -107,8 +107,6 @@ reg  [4:0] irq_id;
   end
  end
  
- // ---------- NEW ----------- //
- 
  
 cv32e40s_core
  #(
@@ -170,24 +168,10 @@ cv32e40s_core
     .data_rvalidpar_i ( 1'b1              ),
     .data_rchk_i    ( 5'b0              ),
 
-    // apu-interconnect
-    // handshake signals
-    //.apu_req_o (             ),
-    //.apu_gnt_i ( 1'b1        ),
-    // request channel
-    //.apu_operands_o (             ),
-    //.apu_op_o (             ),
-    //.apu_flags_o (             ),
-    // response channel
-    //.apu_rvalid_i ( 1'b0          ),
-    //.apu_result_i ( 32'd0          ),
-    //.apu_flags_i ( 5'd0          ),
 
     // Interrupt inputs
     .irq_i ((irqs)),  // CLINT interrupts + CLINT extension interrupts
-    //.irq_ack_o (                   ),
-    //.irq_id_o (                   ),
-    
+      
     .clic_irq_i         ( 1'b0              ),
     .clic_irq_id_i      ( 5'b0              ),
     .clic_irq_level_i   ( 8'b0              ),
@@ -214,91 +198,8 @@ cv32e40s_core
     
     .mimpid_patch_i( 4'b0100 ),  // Arbitrary number for machine implementation ID  
     .wu_wfe_i( 1'b0 )  // Wake-for-event wakeup not used
-  );
+);
     
- 
- // ---------- NEW END ----------- //
- 
- // ---------- OLD ----------- //
- /*
- riscv_core
- #(
-  .N_EXT_PERF_COUNTERS (     0       ),
-  .FPU                 (     0       ),
-  .SHARED_FP           (     0       ),
-  .SHARED_FP_DIVSQRT   (     2       )
- )
- RISCV_CORE
- (
-  .clk_i           ( HCLK              ),
-  .rst_ni          ( HRESETn           ),
-
-  .clock_en_i      ( 1'b1 			   ),
-  .test_en_i       ( 1'b0 	           ),
-
-  .boot_addr_i     ( BOOT_ADDR        ),
-  .core_id_i       ( 4'h0              ),
-  .cluster_id_i    ( 6'h0              ),
-
-  .instr_addr_o    ( core_instr_addr   ),
-  .instr_req_o     ( core_instr_req    ),
-  .instr_rdata_i   ( core_instr_rdata  ),
-  .instr_gnt_i     ( core_instr_gnt    ),
-  .instr_rvalid_i  ( core_instr_rvalid ),
-
-  .data_addr_o     ( core_lsu_addr     ),
-  .data_wdata_o    ( core_lsu_wdata    ),
-  .data_we_o       ( core_lsu_we       ),
-  .data_req_o      ( core_lsu_req      ),
-  .data_be_o       ( core_lsu_be       ),
-  .data_rdata_i    ( core_lsu_rdata    ),
-  .data_gnt_i      ( core_lsu_gnt      ),
-  .data_rvalid_i   ( core_lsu_rvalid   ),
-  .data_err_i      ( 1'b0              ),
-
-  .irq_i           ( (|irqs)),
-  .irq_id_i        ( irq_id            ),
-  .irq_ack_o       (                   ),
-  .irq_id_o        (                   ),
-  .irq_sec_i       ( 1'b0              ),
-  .sec_lvl_o       (                   ),
-
-  .debug_req_i     ( 1'b0              ),
-  .debug_gnt_o     (                   ),
-  .debug_rvalid_o  (                   ),
-  .debug_addr_i    ( 15'd0              ),
-  .debug_we_i      ( 1'b0              ),
-  .debug_wdata_i   ( 32'd0              ),
-  .debug_rdata_o   (                   ),
-  .debug_halted_o  (                   ),
-  .debug_halt_i    ( 1'b0              ),
-  .debug_resume_i  ( 1'b0              ),
-
-  .fetch_enable_i  ( fetch_enable_i 	 ),
-  .core_busy_o     ( core_busy_o	     ),
-
-  // apu-interconnect
-  // handshake signals
-  .apu_master_req_o      (             ),
-  .apu_master_ready_o    (             ),
-  .apu_master_gnt_i      ( 1'b1        ),
-  // request channel
-  .apu_master_operands_0_o(             ),
-  .apu_master_operands_1_o(             ),
-  .apu_master_operands_2_o(             ),
-  .apu_master_op_o       (             ),
-  .apu_master_type_o     (             ),
-  .apu_master_flags_o    (             ),
-  // response channel
-  .apu_master_valid_i    ( 1'b0          ),
-  .apu_master_result_i   ( 32'd0          ),
-  .apu_master_flags_i    ( 5'd0          ),
-
-  .ext_perf_counters_i (               )
- );
- */
- // ---------- OLD END ----------- //
- 
  
 core2ahb3lite
 #(
