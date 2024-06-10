@@ -50,7 +50,11 @@ module cv32e40s_pmp import cv32e40s_pkg::*;
    input logic [33:0] pmp_req_addr_i,
    input logic        pmp_req_debug_region_i,
    input              pmp_req_e pmp_req_type_i,
-   output logic       pmp_req_err_o
+   output logic       pmp_req_err_o,
+   
+   // PMP Encryption (added feature)
+   output logic pmp_encrypt_ins_o,
+   output logic pmp_encrypt_dat_o
    );
 
   // Access Checking Signals
@@ -204,11 +208,26 @@ module cv32e40s_pmp import cv32e40s_pkg::*;
                    csr_pmp_i.mseccfg.mml      ? (pmp_req_type_i == PMP_ACC_EXEC) :  // Machine mode execution access without matching region fails when mml=1
                    1'b0;                                                            // Machine mode access without matching region is granted when mmwp=0 and mml=0
 
+//        if (PMP_ENCRYPTION_ENABLED) begin
+            pmp_encrypt_ins_o = 0;
+            pmp_encrypt_dat_o = 0;
+//        end
+
     // PMP entries are statically prioritized, from 0 to N-1
     // The lowest-numbered PMP entry which matches an address determines accessability
     for (int i_r = PMP_NUM_REGIONS-1; i_r >= 0; i_r--) begin
       if (region_match_all[i_r]) begin
         access_fault = access_fault_all[i_r];
+        
+//        if (PMP_ENCRYPTION_ENABLED) begin
+//            pmp_encrypt_ins_o = 1;
+//            pmp_encrypt_dat_o = 1;
+
+          if (priv_lvl_i != PRIV_LVL_M) begin // prv_lvl important because TCB is used by kernel but should not be encrypted
+            pmp_encrypt_ins_o = csr_pmp_i.cfg[i_r][6];
+            pmp_encrypt_dat_o = csr_pmp_i.cfg[i_r][5];
+          end
+//        end
       end
     end
   end

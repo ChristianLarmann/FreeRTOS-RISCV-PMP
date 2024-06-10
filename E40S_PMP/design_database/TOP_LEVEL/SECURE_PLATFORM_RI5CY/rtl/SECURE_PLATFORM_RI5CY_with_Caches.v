@@ -138,7 +138,8 @@ assign unmapped_addr_requested = dmem_access_req_debug && HSEL_NOMAP;
 
 (* dont_touch = "true" *) riscv_top_ahb3lite 
 #(
-	.BOOT_ADDR(BOOT_ADDR)
+	.BOOT_ADDR(BOOT_ADDR),
+	.PMP_ENCRYPTION_ENABLED(1)
 )
 RISC_V
 (
@@ -418,7 +419,8 @@ UA_inst
         .clock              (sys_clock),
         .reset              (!sys_reset_N),
         
-        .skip_encryption_i    (!ins_encryption_enabled),
+//        .skip_encryption_i    (!ins_encryption_enabled),
+        .skip_encryption_i    (1),
         
         .cache_rdata        (cache_ua_inst_rdata),
         .cache_wdata        (cache_ua_inst_wdata),
@@ -447,7 +449,8 @@ UA_data
         .clock              (sys_clock),
         .reset              (!sys_reset_N),
         
-        .skip_encryption_i  (!dat_encryption_enabled),
+//        .skip_encryption_i  (!dat_encryption_enabled),
+.skip_encryption_i  (1),
         
         .cache_rdata        (cache_ua_data_rdata),
         .cache_wdata        (cache_ua_data_wdata),

@@ -97,6 +97,7 @@ extern "C" {
 #endif
 
 #include "mpu_wrappers.h"
+#include "pmp.h"
 
 /*
  * Setup the stack of a new task so it is ready to be placed under the
@@ -188,7 +189,7 @@ void vPortEndScheduler( void ) PRIVILEGED_FUNCTION;
  */
 #if( portUSING_MPU_WRAPPERS == 1 )
 	struct xMEMORY_REGION;
-	void vPortStoreTaskMPUSettings( xMPU_SETTINGS *xMPUSettings, const struct xMEMORY_REGION * const xRegions, StackType_t *pxBottomOfStack, uint32_t ulStackDepth ) PRIVILEGED_FUNCTION;
+	void vPortStoreTaskMPUSettings( xMPU_SETTINGS *xMPUSettings, const struct xMEMORY_REGION * const xRegions, StackType_t *pxBottomOfStack, uint32_t ulStackDepth, enum pmp_encryption_mode_e encMode ) PRIVILEGED_FUNCTION;
 #endif
 
 #ifdef __cplusplus

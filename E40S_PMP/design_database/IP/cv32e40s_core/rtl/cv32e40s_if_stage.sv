@@ -110,7 +110,11 @@ module cv32e40s_if_stage import cv32e40s_pkg::*;
   output  logic         integrity_err_o,
   output  logic         protocol_err_o,
   
-  output logic          mpu_err_o
+  output logic          mpu_err_o,
+  
+  // PMP Encryption (added feature)
+  output logic          pmp_encrypt_ins_o,
+  output logic          pmp_encrypt_dat_o
 );
 
   // ALBUF_DEPTH set to 3 as the alignment_buffer will need 3 entries to function correctly
@@ -319,7 +323,11 @@ module cv32e40s_if_stage import cv32e40s_pkg::*;
     .bus_trans_ready_i    ( bus_trans_ready             ),
     .bus_trans_o          ( bus_trans                   ),
     .bus_resp_valid_i     ( bus_resp_valid              ),
-    .bus_resp_i           ( bus_resp                    )
+    .bus_resp_i           ( bus_resp                    ),
+    
+    // PMP Encryption (added feature)
+    .pmp_encrypt_ins_o    ( pmp_encrypt_ins_o           ),
+    .pmp_encrypt_dat_o    ( pmp_encrypt_dat_o           )
   );
 
 

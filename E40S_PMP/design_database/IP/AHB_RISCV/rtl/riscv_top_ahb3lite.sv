@@ -13,7 +13,9 @@ module riscv_top_ahb3lite #(
 					parameter APU_NARGS_CPU       =  3,
 					parameter APU_WOP_CPU         =  6,
 					parameter APU_NDSFLAGS_CPU    = 15,
-					parameter APU_NUSFLAGS_CPU    =  5
+					parameter APU_NUSFLAGS_CPU    =  5,
+					
+					parameter PMP_ENCRYPTION_ENABLED = 0
  )
 (
 				  //AHB interfaces
@@ -90,9 +92,14 @@ wire [31:0]		core_lsu_wdata;
 // Debug
 assign dmem_access_req_debug_o = core_lsu_req;
 
-assign ins_encryption_enabled_o = 0;
-assign dat_encryption_enabled_o = 0;
-
+//if (PMP_ENCRYPTION_ENABLED) begin
+//    assign ins_encryption_enabled_o = tbd;
+//    assign dat_encryption_enabled_o = tbd;
+//end
+//else begin
+//    assign ins_encryption_enabled_o = 0;
+//    assign dat_encryption_enabled_o = 0;
+//end
 
 integer i;
 reg  [4:0] irq_id;
@@ -115,7 +122,9 @@ cv32e40s_core
    // aligned accordingly in memory so they can be PMP protected.
   .PMP_GRANULARITY ( 0 ),  // 2^(PMP_GRANULARITY+2), -> 4 byte
   .PMP_NUM_REGIONS ( 16 ),
-  .DEBUG ( 0 )
+  .DEBUG ( 0 ),
+  
+  .PMP_ENCRYPTION_ENABLED( PMP_ENCRYPTION_ENABLED )
  )
  RISCV_CORE
  (
@@ -197,7 +206,11 @@ cv32e40s_core
     .fencei_flush_ack_i ( 1'b1 ),
     
     .mimpid_patch_i( 4'b0100 ),  // Arbitrary number for machine implementation ID  
-    .wu_wfe_i( 1'b0 )  // Wake-for-event wakeup not used
+    .wu_wfe_i( 1'b0 ),  // Wake-for-event wakeup not used
+    
+    // PMP Encryption (added feature)
+    .pmp_encrypt_ins_o                 (ins_encryption_enabled_o),
+    .pmp_encrypt_dat_o                 (dat_encryption_enabled_o)
 );
     
  

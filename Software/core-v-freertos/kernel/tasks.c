@@ -992,7 +992,8 @@ UBaseType_t x;
 
 	#if ( portUSING_MPU_WRAPPERS == 1 )
 	{
-		vPortStoreTaskMPUSettings( &( pxNewTCB->xMPUSettings ), xRegions, pxNewTCB->pxStack, ulStackDepth );
+		vPortStoreTaskMPUSettings( &( pxNewTCB->xMPUSettings ), xRegions, pxNewTCB->pxStack, 
+			ulStackDepth, ONLY_DATA_PMP_ENCRYPTION );
 	}
 	#else
 	{
@@ -3654,7 +3655,7 @@ static portTASK_FUNCTION( prvIdleTask, pvParameters )
 		the calling task. */
 		pxTCB = prvGetTCBFromHandle( xTaskToModify );
 
-		vPortStoreTaskMPUSettings( &( pxTCB->xMPUSettings ), xRegions, NULL, 0 );
+		vPortStoreTaskMPUSettings( &( pxTCB->xMPUSettings ), xRegions, NULL, 0, NO_PMP_ENCRYPTION);
 	}
 
 #endif /* portUSING_MPU_WRAPPERS */

@@ -94,7 +94,11 @@ module cv32e40s_load_store_unit import cv32e40s_pkg::*;
 
   input xsecure_ctrl_t   xsecure_ctrl_i,
   
-  output logic          mpu_err_o
+  output logic          mpu_err_o,
+  
+  // PMP Encryption (added feature)
+  output logic          pmp_encrypt_ins_o,
+  output logic          pmp_encrypt_dat_o
 );
 
   localparam DEPTH = 1;                           // Maximum number of outstanding transactions CL: Changed from 2 to 1
@@ -716,7 +720,11 @@ module cv32e40s_load_store_unit import cv32e40s_pkg::*;
     .bus_trans_ready_i    ( filter_trans_ready ),
     .bus_trans_o          ( filter_trans       ),
     .bus_resp_valid_i     ( filter_resp_valid  ),
-    .bus_resp_i           ( filter_resp        )
+    .bus_resp_i           ( filter_resp        ),
+    
+    // PMP Encryption (added feature)
+    .pmp_encrypt_ins_o    ( pmp_encrypt_ins_o  ),
+    .pmp_encrypt_dat_o    ( pmp_encrypt_dat_o  )
 
   );
 

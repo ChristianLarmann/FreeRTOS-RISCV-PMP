@@ -131,6 +131,7 @@ typedef struct xTASK_PARAMETERS
 	#if ( ( portUSING_MPU_WRAPPERS == 1 ) && ( configSUPPORT_STATIC_ALLOCATION == 1 ) )
 		StaticTask_t * const pxTaskBuffer;
 	#endif
+	uint8_t pmpEncryptionMode;
 } TaskParameters_t;
 
 /* Used with the uxTaskGetSystemState() function to return the state of each task

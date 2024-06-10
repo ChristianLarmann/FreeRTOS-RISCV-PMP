@@ -129,7 +129,8 @@ void main_blinky(void)
 			.xRegions		= {
 				/* Base address   		   Length                     Parameters */
 				{ TASK_CODE_REGION(QueueReceive) },
-			}
+			},
+			.pmpEncryptionMode = NO_PMP_ENCRYPTION
 		};
 		xTaskCreateRestricted(&xQueueReceiveTaskParams, NULL);
 
