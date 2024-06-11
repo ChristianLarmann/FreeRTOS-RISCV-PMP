@@ -321,8 +321,11 @@ AHB_CACHE #(.MEM_ADDR_BITS(BRAM_ADDR_BITS)) uAHB2MEM (
 	.BRAM_RDATA(cache_ua_inst_rdata),
 	.BRAM_MEM_VALID( cache_ua_inst_rdy ),
 	
-    .interrupt(I_interrupt)
+    .interrupt(I_interrupt),
 	//.debug(I_debug)
+	
+	.enc_bit_i(ins_encryption_enabled),
+	.write_back_encryption_enabled_o()
 );
 
 
@@ -350,8 +353,11 @@ AHB_CACHE #(.MEM_ADDR_BITS(BRAM_ADDR_BITS)) uAHB2DMEM (
 	.BRAM_RDATA(cache_ua_data_rdata),
 	.BRAM_MEM_VALID(cache_ua_data_rdy),
 	
-	.interrupt(D_interrupt)
+	.interrupt(D_interrupt),
 	//.debug(D_debug)
+	
+	.enc_bit_i(dat_encryption_enabled),
+	.write_back_encryption_enabled_o()
 );
 
 
@@ -450,7 +456,7 @@ UA_data
         .reset              (!sys_reset_N),
         
 //        .skip_encryption_i  (!dat_encryption_enabled),
-.skip_encryption_i  (1'b1),
+        .skip_encryption_i  (1'b1),
         
         .cache_rdata        (cache_ua_data_rdata),
         .cache_wdata        (cache_ua_data_wdata),

@@ -23,14 +23,18 @@ module set
 				output							hit,
 				output							miss,
 				output							dirty,
-				output reg [TAG_ADDRESS-1:0]	write_back_tag
+				output reg [TAG_ADDRESS-1:0]	write_back_tag,
+			
+				input                           enc_bit_i,
+				output reg                      write_back_encryption_enabled_o
 				
 			);
 
 localparam VALID_BIT  = 1;
 localparam DIRTY_BIT  = 1;
+localparam ENC_BIT    = 1;
 localparam DATA_WIDTH = (LINE_WIDTH*8);
-localparam MAX_ADDR   = (TAG_ADDRESS+VALID_BIT+DIRTY_BIT+DATA_WIDTH);
+localparam MAX_ADDR   = (TAG_ADDRESS+VALID_BIT+DIRTY_BIT+ENC_BIT+DATA_WIDTH);
 
 /////////////////////////////////////////////////////////////////////////////////////
 // 1 SET - 16 LINES (WAYS)
@@ -59,13 +63,13 @@ assign cache_mem_dout = write_back_buffer;
 assign cache_cpu_dout = cache_set[cache_set_addr][DATA_WIDTH-1:0];
 
 assign cache_set_addr = (cache_mem_ready & miss)	? next_evict_line : current_line; 
-assign cache_set_in   = (cache_cpu_wren & hit) 		? {cache_cpu_tag,1'b1,1'b1,cache_cpu_din} : {cache_cpu_tag,1'b1,1'b0,cache_mem_din};
+assign cache_set_in   = (cache_cpu_wren & hit) 		? {cache_cpu_tag,1'b1,1'b1, enc_bit_i, cache_cpu_din} : {cache_cpu_tag,1'b1,1'b0, enc_bit_i, cache_mem_din};
 assign cache_set_wren = (cache_mem_ready & miss & (~wr_back)) | (cache_cpu_wren & hit);						
 					
 initial
 begin
     for (i=0;i<WAYS;i=i+1)
-        cache_set[i]	<= {TAG_ADDRESS+VALID_BIT+DIRTY_BIT+DATA_WIDTH{1'b0}};
+        cache_set[i]	<= {TAG_ADDRESS+VALID_BIT+DIRTY_BIT+ENC_BIT+DATA_WIDTH{1'b0}};
 end					
 					
 always @(posedge clock)
@@ -94,6 +98,8 @@ begin
 		//begin
 		write_back_buffer	<= cache_set[next_evict_line][DATA_WIDTH-1:0];
 		write_back_tag		<= cache_set[next_evict_line][MAX_ADDR-1:(MAX_ADDR-TAG_ADDRESS)];
+		
+		write_back_encryption_enabled_o <= cache_set[next_evict_line][MAX_ADDR-1-TAG_ADDRESS-VALID_BIT-DIRTY_BIT];
 		//end
 	end
 end
@@ -172,7 +178,7 @@ assign hit_result = hits[current_line];
 
 assign	hit		= req ?  hit_result	: 0;
 assign	miss	= req ? ~hit_result : 0;
-assign	dirty	= req ? cache_set[next_evict_line][MAX_ADDR-(TAG_ADDRESS+VALID_BIT):DATA_WIDTH] : 0;
+assign	dirty	= req ? cache_set[next_evict_line][MAX_ADDR-(TAG_ADDRESS+VALID_BIT):(ENC_BIT+DATA_WIDTH)] : 0;   
 
 
 endmodule

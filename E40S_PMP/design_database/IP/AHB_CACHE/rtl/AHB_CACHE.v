@@ -50,7 +50,10 @@ module AHB_CACHE
 		    output wire BRAM_RDY,
 			
         // Debug output
-            output wire [9:0]   debug
+            output wire [9:0]   debug,
+            
+           input                           enc_bit_i,
+		   output                          write_back_encryption_enabled_o
 	);
 	
 
@@ -225,7 +228,10 @@ cache
 		.mem_address	(BRAM_MEM_ADDR),
 		.mem_dout 		(BRAM_WDATA),		
 		.mem_ready		(BRAM_MEM_VALID),
-		.mem_din 		(BRAM_RDATA)
+		.mem_din 		(BRAM_RDATA),
+		
+		.enc_bit_i      (enc_bit_i),
+		.write_back_encryption_enabled_o  (write_back_encryption_enabled_o)
     );
 
 endmodule

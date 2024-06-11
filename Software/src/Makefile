@@ -137,7 +137,7 @@ clean_external:
 
 
 TASK_LINKER_FILE := ../core-v-freertos/target/core-v-mcu/tasks.ld
-PMP_GRANULARITY := 4 # 2^(PMP_GRANULARITY+2) -> PMP_GRA..= 0 -> 4 bytes
+PMP_GRANULARITY := 128  # Same as cache line size
 extract-task-names:
 
 	$(eval RAW_OUTPUT := $(shell grep 'ADD_ENCLAVE_TASK_SIGNATURE' ./blinky_demo/tasks/user_tasks.h))
