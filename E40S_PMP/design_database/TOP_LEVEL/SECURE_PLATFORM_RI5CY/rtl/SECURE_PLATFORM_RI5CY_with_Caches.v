@@ -283,14 +283,14 @@ reg						       data_cache_mem_rdy;
 // BRAM_ADDR_BITS was MEM_ADDR_BITS
 wire	[128-1:0]	            cache_ua_inst_rdata;
 wire	[128-1:0]	            cache_ua_inst_wdata;
-wire	[32-1:0]	            cache_ua_inst_addr;
+wire	[BRAM_ADDR_BITS-1:0]	            cache_ua_inst_addr;
 wire							cache_ua_inst_req;
 wire							cache_ua_inst_write;
 wire							cache_ua_inst_rdy;
 
 wire	[128-1:0]           	cache_ua_data_rdata;
 wire	[128-1:0]            	cache_ua_data_wdata;
-wire	[BRAM_ADDR_BITS-1:0]	cache_ua_data_addr;
+wire	[BRAM_ADDR_BITS-1:0]	            cache_ua_data_addr;
 wire							cache_ua_data_req;
 wire							cache_ua_data_write;
 wire							cache_ua_data_rdy;
@@ -420,7 +420,7 @@ UA_inst
         .reset              (!sys_reset_N),
         
 //        .skip_encryption_i    (!ins_encryption_enabled),
-        .skip_encryption_i    (1),
+        .skip_encryption_i    (1'b1),
         
         .cache_rdata        (cache_ua_inst_rdata),
         .cache_wdata        (cache_ua_inst_wdata),
@@ -438,7 +438,7 @@ UA_inst
         
         //.interrupt          (interrupt),
         
-        .debug              (UA_debug)
+        .debug              ()
     );
     
     // Encryption and MAC unit for data
@@ -450,7 +450,7 @@ UA_data
         .reset              (!sys_reset_N),
         
 //        .skip_encryption_i  (!dat_encryption_enabled),
-.skip_encryption_i  (1),
+.skip_encryption_i  (1'b1),
         
         .cache_rdata        (cache_ua_data_rdata),
         .cache_wdata        (cache_ua_data_wdata),
@@ -468,7 +468,7 @@ UA_data
         
         //.interrupt          (interrupt),
         
-        .debug              (UA_debug)
+        .debug              ()
     );
 
 // BRAM connected to caches
