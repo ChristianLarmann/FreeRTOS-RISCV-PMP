@@ -106,6 +106,15 @@ enum pmp_address_mode_e {
 };
 
 /**
+ * @brief Encryption mode
+ */
+enum pmp_encryption_mode_e {
+    NO_PMP_ENCRYPTION = 0b0000000,
+    ONLY_DATA_PMP_ENCRYPTION = 0b0100000,
+    CODE_AND_DATA_PMP_ENCRYPTION = 0b1100000,
+};
+
+/**
  * @brief get the number of pmp for the hart and granularity
  *
  * @param pmp_info  structure that contains numbre of pmp and granularity

@@ -114,34 +114,64 @@ void main_blinky(void)
 		/* Start the two tasks as described in the comments at the top of this
 		file. */
 		asm volatile("li x28, 0x10" ::: "x28");
-		xTaskCreate(
-			prvQueueReceiveTask, /* The function that implements the task. */
-			"Rx", /* The text name assigned to the task - for debug only as it is not used by the kernel. */
-			configMINIMAL_STACK_SIZE *
-				2U, /* The size of the stack to allocate to the task. */
-			getQueueReceiveTaskSize(),
-			NULL, /* The parameter passed to the task - not used in this case. */
-			mainQUEUE_RECEIVE_TASK_PRIORITY, /* The priority assigned to the task. */
-			NULL); /* The task handle is not required, so NULL is passed. */
+
+	 	#define recvStackSize configMINIMAL_STACK_SIZE * 8
+    	static StackType_t recvTaskStack[ recvStackSize ] ENCLAVE_DATA(QueueReceive);
+		TaskParameters_t xQueueReceiveTaskParams =
+		{
+			.pvTaskCode		= TASK_FUNCTION_NAME(QueueReceive),
+			.pcName			= "RX",
+			.usStackDepth	= recvStackSize,
+			.pvParameters	= NULL,
+			.uxPriority		= 1,
+			.puxStackBuffer	= (StackType_t*) recvTaskStack,
+			/* xRegions - Protects the task's program code */
+			.xRegions		= {
+				/* Base address   		   Length                     Parameters */
+				{ TASK_CODE_REGION(QueueReceive) },
+			},
+			.pmpEncryptionMode = NO_PMP_ENCRYPTION
+		};
+		xTaskCreateRestricted(&xQueueReceiveTaskParams, NULL);
+
 
 		asm volatile("li x28, 0x20" ::: "x28");
-		xTaskCreate(prvQueueSendTask, "TX",
-			    configMINIMAL_STACK_SIZE * 2U,
-				getQueueSendTaskSize(),
-				NULL,
-			    mainQUEUE_SEND_TASK_PRIORITY, NULL);
+	 	#define sendStackSize 0x200 * 0x2
+    	static StackType_t sendTaskStack[ sendStackSize ] ENCLAVE_DATA(QueueSend);
+		TaskParameters_t xQueueSendTaskParams =
+		{
+			.pvTaskCode		= TASK_FUNCTION_NAME(QueueSend),
+			.pcName			= "TX",
+			.usStackDepth	= sendStackSize,
+			.pvParameters	= NULL,
+			.uxPriority		= 1,
+			.puxStackBuffer	= (StackType_t*) sendTaskStack,
+			// .xRegions		= { {0, 0, 0} }
+			.xRegions		= {
+				/* Base address   		   Length                     Parameters */
+				{ TASK_CODE_REGION(QueueSend) },
+			}
+		};
+		xTaskCreateRestricted(&xQueueSendTaskParams, NULL);
 
-    	char ledTaskStack[ 1024 ] __attribute__((aligned(1024)));
+     
+	 	#define ledStackSize 1024
+   		static StackType_t ledTaskStack[ ledStackSize ] ENCLAVE_DATA(Led);
+		extern char _start_LedTaskCode;
+
 
 		TaskParameters_t xLedTaskParams =
 		{
-			.pvTaskCode		= prvLedTask,
+			.pvTaskCode		= TASK_FUNCTION_NAME(Led),
 			.pcName			= "LED",
-			.usStackDepth	= configMINIMAL_STACK_SIZE * 10,
+			.usStackDepth	= ledStackSize,
 			.pvParameters	= NULL,
 			.uxPriority		= 1,
 			.puxStackBuffer	= (StackType_t*) ledTaskStack,
-			.xRegions		= { {0, 0, 0} }
+			.xRegions = {
+				/* Base address   		 Length            Parameters */
+				{ TASK_CODE_REGION(Led) },
+			}
 		};
 
 		asm volatile("li x28, 0x30" ::: "x28");

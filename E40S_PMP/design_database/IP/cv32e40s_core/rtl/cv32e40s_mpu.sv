@@ -70,7 +70,11 @@ module cv32e40s_mpu import cv32e40s_pkg::*;
    input logic  core_mpu_err_wait_i,
 
    // Report MPU errors to the core immediatly (used in case core_mpu_err_wait_i is not asserted)
-   output logic core_mpu_err_o
+   output logic core_mpu_err_o,
+   
+   // PMP Encryption (added feature)
+   output pmp_encrypt_ins_o,
+   output pmp_encrypt_dat_o
    );
 
   //localparam bit PMP = SECURE;
@@ -237,7 +241,12 @@ module cv32e40s_mpu import cv32e40s_pkg::*;
          .csr_pmp_i                         (csr_pmp_i              ),
          .priv_lvl_i                        (pmp_priv_lvl           ),
          .pmp_req_addr_i                    (pmp_req_addr           ),
-         .pmp_req_debug_region_i            (core_trans_debug_region));
+         .pmp_req_debug_region_i            (core_trans_debug_region),
+         
+         // PMP Encryption (added feature)
+         .pmp_encrypt_ins_o                 (pmp_encrypt_ins_o),
+         .pmp_encrypt_dat_o                 (pmp_encrypt_dat_o)
+         );
     end
     else begin: no_pmp
       assign pmp_err = 1'b0;

@@ -123,7 +123,8 @@ LDFLAGS += -L../libs/crypto/sbi -lsbi
 
 
 ## Compile and link executable. Obeys standard GNU variables used by implicit rules.
-all: external extract-task-names $(PROG) misc-info
+all: external extract-task-names $(PROG) misc-info generate-dat-files
+encrypt: external extract-task-names $(PROG) misc-info generate-dat-files-encrypted
 
 
 
@@ -136,6 +137,7 @@ clean_external:
 
 
 TASK_LINKER_FILE := ../core-v-freertos/target/core-v-mcu/tasks.ld
+PMP_GRANULARITY := 128  # Same as cache line size
 extract-task-names:
 
 	$(eval RAW_OUTPUT := $(shell grep 'ADD_ENCLAVE_TASK_SIGNATURE' ./blinky_demo/tasks/user_tasks.h))
@@ -143,13 +145,21 @@ extract-task-names:
 	$(eval NAMES := $(shell echo "$(RAW_OUTPUT)" | sed 's/ADD_ENCLAVE_TASK_SIGNATURE(/\n/g' | sed 's/)//g' | grep -v '^$$'))
 	@echo "Names extracted: $(NAMES)"
 
-	@echo "Generating linker script sections for tasks..."
+	@echo "Generating linker script sections for tasks... Aligning functions to pmp granularity"
 	@echo "" > $(TASK_LINKER_FILE)  # This creates a new linker_script.ld or truncates the existing one
-	@$(foreach name,$(NAMES),echo "$(name)Task :" >> $(TASK_LINKER_FILE); \
+	@$(foreach name,$(NAMES),echo "$(name)TaskCode :"  >> $(TASK_LINKER_FILE); \
 	  echo "{" >> $(TASK_LINKER_FILE); \
-	  echo "	_start_$(name)Task = .;" >> $(TASK_LINKER_FILE); \
-      echo "    *(.$(name)Task*)" >> $(TASK_LINKER_FILE); \
-      echo "	_end_$(name)Task = .;" >> $(TASK_LINKER_FILE); \
+	  echo "	. = ALIGN($(PMP_GRANULARITY));" >> $(TASK_LINKER_FILE); \
+	  echo "	_start_$(name)TaskCode = .;" >> $(TASK_LINKER_FILE); \
+      echo "    *(.$(name)TaskCode*)" >> $(TASK_LINKER_FILE); \
+	  echo "	. = ALIGN($(PMP_GRANULARITY));" >> $(TASK_LINKER_FILE); \
+      echo "	_end_$(name)TaskCode = .;" >> $(TASK_LINKER_FILE); \
+	  echo "} > BRAM\n" >> $(TASK_LINKER_FILE); \
+	  \
+	  echo "$(name)TaskData :"  >> $(TASK_LINKER_FILE); \
+	  echo "{" >> $(TASK_LINKER_FILE); \
+	  echo "	. = ALIGN($(PMP_GRANULARITY));" >> $(TASK_LINKER_FILE); \
+      echo "    *(.$(name)TaskData*)" >> $(TASK_LINKER_FILE); \
 	  echo "} > BRAM\n" >> $(TASK_LINKER_FILE);)
 
 %.o: %.S
@@ -184,13 +194,22 @@ $(PROG).siz: $(PROG)
 	$(SIZE) --format=berkeley $<
 
 
+generate-dat-files: 
+	# Generate and move .dat files to the Vivado Simulation Folder
+	$(shell bash ./srec2dat.sh)
+	$(shell cp ./code_and_data.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
+
+generate-dat-files-encrypted: 
+	# Generate and move .dat files to the Vivado Simulation Folder
+	$(shell bash ./srec2dat.sh)
+	$(info Encrypting .dat file...)
+	$(shell bash ./convert_encrypt.sh)
+	$(shell cp ./code_and_data_prince.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
+
+
 .PHONY: clean
 ## Clean object files
 clean : clean_external
 	rm -f $(OBJS) $(PROG) $(DEPS) $(SU) \
 		$(PROG).hex $(PROG).lst $(PROG).siz memory.map \
 
-
-# Generate and move .dat files to the Vivado Simulation Folder
-$(shell bash ./srec2dat.sh)
-$(shell cp ./code_and_data.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)

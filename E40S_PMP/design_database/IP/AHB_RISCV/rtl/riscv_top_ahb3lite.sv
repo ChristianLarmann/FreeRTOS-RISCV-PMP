@@ -13,7 +13,9 @@ module riscv_top_ahb3lite #(
 					parameter APU_NARGS_CPU       =  3,
 					parameter APU_WOP_CPU         =  6,
 					parameter APU_NDSFLAGS_CPU    = 15,
-					parameter APU_NUSFLAGS_CPU    =  5
+					parameter APU_NUSFLAGS_CPU    =  5,
+					
+					parameter PMP_ENCRYPTION_ENABLED = 0
  )
 (
 				  //AHB interfaces
@@ -32,6 +34,7 @@ module riscv_top_ahb3lite #(
 					input  wire [31:0] 	ins_HRDATA,
 					input  wire        	ins_HREADY,
 					input  wire        	ins_HRESP,
+					output wire         ins_encryption_enabled_o,
 				
 				// AHB-LITE MASTER PORT - DATA				
 					output wire [31:0] 	dat_HADDR,
@@ -45,6 +48,7 @@ module riscv_top_ahb3lite #(
 					input  wire [31:0] 	dat_HRDATA,
 					input  wire        	dat_HREADY,
 					input  wire        	dat_HRESP,
+					output wire         dat_encryption_enabled_o,
 				  
 				  //Interrupts
 					input  wire [31:0]       irqs,                 // level sensitive IR lines
@@ -88,6 +92,15 @@ wire [31:0]		core_lsu_wdata;
 // Debug
 assign dmem_access_req_debug_o = core_lsu_req;
 
+//if (PMP_ENCRYPTION_ENABLED) begin
+//    assign ins_encryption_enabled_o = tbd;
+//    assign dat_encryption_enabled_o = tbd;
+//end
+//else begin
+//    assign ins_encryption_enabled_o = 0;
+//    assign dat_encryption_enabled_o = 0;
+//end
+
 integer i;
 reg  [4:0] irq_id;
  
@@ -101,14 +114,17 @@ reg  [4:0] irq_id;
   end
  end
  
- // ---------- NEW ----------- //
- 
  
 cv32e40s_core
  #(
-  .PMP_GRANULARITY ( 0 ),  // 2^(PMP_GRANULARITY+2), 4 -> 64 bytes
+   // Attention: If the granularity is changed here, it also has to be changed
+   // in the FreeRTOS-PMP Makefile. This is important because the tasks are 
+   // aligned accordingly in memory so they can be PMP protected.
+  .PMP_GRANULARITY ( 0 ),  // 2^(PMP_GRANULARITY+2), -> 4 byte
   .PMP_NUM_REGIONS ( 16 ),
-  .DEBUG ( 0 )
+  .DEBUG ( 0 ),
+  
+  .PMP_ENCRYPTION_ENABLED( PMP_ENCRYPTION_ENABLED )
  )
  RISCV_CORE
  (
@@ -161,24 +177,10 @@ cv32e40s_core
     .data_rvalidpar_i ( 1'b1              ),
     .data_rchk_i    ( 5'b0              ),
 
-    // apu-interconnect
-    // handshake signals
-    //.apu_req_o (             ),
-    //.apu_gnt_i ( 1'b1        ),
-    // request channel
-    //.apu_operands_o (             ),
-    //.apu_op_o (             ),
-    //.apu_flags_o (             ),
-    // response channel
-    //.apu_rvalid_i ( 1'b0          ),
-    //.apu_result_i ( 32'd0          ),
-    //.apu_flags_i ( 5'd0          ),
 
     // Interrupt inputs
     .irq_i ((irqs)),  // CLINT interrupts + CLINT extension interrupts
-    //.irq_ack_o (                   ),
-    //.irq_id_o (                   ),
-    
+      
     .clic_irq_i         ( 1'b0              ),
     .clic_irq_id_i      ( 5'b0              ),
     .clic_irq_level_i   ( 8'b0              ),
@@ -204,92 +206,13 @@ cv32e40s_core
     .fencei_flush_ack_i ( 1'b1 ),
     
     .mimpid_patch_i( 4'b0100 ),  // Arbitrary number for machine implementation ID  
-    .wu_wfe_i( 1'b0 )  // Wake-for-event wakeup not used
-  );
+    .wu_wfe_i( 1'b0 ),  // Wake-for-event wakeup not used
     
- 
- // ---------- NEW END ----------- //
- 
- // ---------- OLD ----------- //
- /*
- riscv_core
- #(
-  .N_EXT_PERF_COUNTERS (     0       ),
-  .FPU                 (     0       ),
-  .SHARED_FP           (     0       ),
-  .SHARED_FP_DIVSQRT   (     2       )
- )
- RISCV_CORE
- (
-  .clk_i           ( HCLK              ),
-  .rst_ni          ( HRESETn           ),
-
-  .clock_en_i      ( 1'b1 			   ),
-  .test_en_i       ( 1'b0 	           ),
-
-  .boot_addr_i     ( BOOT_ADDR        ),
-  .core_id_i       ( 4'h0              ),
-  .cluster_id_i    ( 6'h0              ),
-
-  .instr_addr_o    ( core_instr_addr   ),
-  .instr_req_o     ( core_instr_req    ),
-  .instr_rdata_i   ( core_instr_rdata  ),
-  .instr_gnt_i     ( core_instr_gnt    ),
-  .instr_rvalid_i  ( core_instr_rvalid ),
-
-  .data_addr_o     ( core_lsu_addr     ),
-  .data_wdata_o    ( core_lsu_wdata    ),
-  .data_we_o       ( core_lsu_we       ),
-  .data_req_o      ( core_lsu_req      ),
-  .data_be_o       ( core_lsu_be       ),
-  .data_rdata_i    ( core_lsu_rdata    ),
-  .data_gnt_i      ( core_lsu_gnt      ),
-  .data_rvalid_i   ( core_lsu_rvalid   ),
-  .data_err_i      ( 1'b0              ),
-
-  .irq_i           ( (|irqs)),
-  .irq_id_i        ( irq_id            ),
-  .irq_ack_o       (                   ),
-  .irq_id_o        (                   ),
-  .irq_sec_i       ( 1'b0              ),
-  .sec_lvl_o       (                   ),
-
-  .debug_req_i     ( 1'b0              ),
-  .debug_gnt_o     (                   ),
-  .debug_rvalid_o  (                   ),
-  .debug_addr_i    ( 15'd0              ),
-  .debug_we_i      ( 1'b0              ),
-  .debug_wdata_i   ( 32'd0              ),
-  .debug_rdata_o   (                   ),
-  .debug_halted_o  (                   ),
-  .debug_halt_i    ( 1'b0              ),
-  .debug_resume_i  ( 1'b0              ),
-
-  .fetch_enable_i  ( fetch_enable_i 	 ),
-  .core_busy_o     ( core_busy_o	     ),
-
-  // apu-interconnect
-  // handshake signals
-  .apu_master_req_o      (             ),
-  .apu_master_ready_o    (             ),
-  .apu_master_gnt_i      ( 1'b1        ),
-  // request channel
-  .apu_master_operands_0_o(             ),
-  .apu_master_operands_1_o(             ),
-  .apu_master_operands_2_o(             ),
-  .apu_master_op_o       (             ),
-  .apu_master_type_o     (             ),
-  .apu_master_flags_o    (             ),
-  // response channel
-  .apu_master_valid_i    ( 1'b0          ),
-  .apu_master_result_i   ( 32'd0          ),
-  .apu_master_flags_i    ( 5'd0          ),
-
-  .ext_perf_counters_i (               )
- );
- */
- // ---------- OLD END ----------- //
- 
+    // PMP Encryption (added feature)
+    .pmp_encrypt_ins_o                 (ins_encryption_enabled_o),
+    .pmp_encrypt_dat_o                 (dat_encryption_enabled_o)
+);
+    
  
 core2ahb3lite
 #(

@@ -118,3 +118,5 @@ Software/libs/crypto/C-reference-implementation/myprogram
 Software/libs/crypto/sbi/libsbi.a
 
 Software/core-v-freertos/target/core-v-mcu/tasks.ld
+
+memoryInterfaceAnalyzer/

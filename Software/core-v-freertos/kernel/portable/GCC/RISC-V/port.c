@@ -712,7 +712,8 @@ void vResetPrivilege( void ) PRIVILEGED_FUNCTION
 void vPortStoreTaskMPUSettings( xMPU_SETTINGS *xPMPSettings,
 								const struct xMEMORY_REGION * const xRegions,
 								StackType_t *pxBottomOfStack,
-								uint32_t ulStackDepth ) PRIVILEGED_FUNCTION
+								uint32_t ulStackDepth, 
+								enum pmp_encryption_mode_e encMode ) PRIVILEGED_FUNCTION
 {
 	int32_t lIndex;
 	uint32_t ul;
@@ -753,7 +754,7 @@ void vPortStoreTaskMPUSettings( xMPU_SETTINGS *xPMPSettings,
 
 		xPMPSettings->uxPmpConfigRegAttribute[portGET_PMPCFG_IDX(portSTACK_REGION_START)] +=
                 ((UBaseType_t)((portPMP_REGION_READ_WRITE) |
-                (portPMP_REGION_ADDR_MATCH_NA4)) <<
+                (portPMP_REGION_ADDR_MATCH_NA4) | encMode) <<
                 portPMPCFG_BIT_SHIFT(portSTACK_REGION_START));
 
 		xPMPSettings->uxPmpConfigRegMask[portGET_PMPCFG_IDX(portSTACK_REGION_START)] +=
@@ -774,7 +775,7 @@ void vPortStoreTaskMPUSettings( xMPU_SETTINGS *xPMPSettings,
 
 		xPMPSettings->uxPmpConfigRegAttribute[portGET_PMPCFG_IDX(portSTACK_REGION_END)] +=
 				((UBaseType_t)((portPMP_REGION_READ_WRITE) |
-				(portPMP_REGION_ADDR_MATCH_TOR)) <<
+				(portPMP_REGION_ADDR_MATCH_TOR) | encMode) <<
 				portPMPCFG_BIT_SHIFT(portSTACK_REGION_END));
 
 		xPMPSettings->uxPmpConfigRegMask[portGET_PMPCFG_IDX(portSTACK_REGION_END)] +=
@@ -811,7 +812,7 @@ void vPortStoreTaskMPUSettings( xMPU_SETTINGS *xPMPSettings,
 
             xPMPSettings->uxPmpConfigRegAttribute[portGET_PMPCFG_IDX(portSTACK_REGION_START)] +=
                     ((UBaseType_t)((portPMP_REGION_READ_WRITE) |
-                    (portPMP_REGION_ADDR_MATCH_NA4)) <<
+                    (portPMP_REGION_ADDR_MATCH_NA4) | encMode) <<
                     portPMPCFG_BIT_SHIFT(portSTACK_REGION_START));
 
             xPMPSettings->uxPmpConfigRegMask[portGET_PMPCFG_IDX(portSTACK_REGION_START)] +=
@@ -832,7 +833,7 @@ void vPortStoreTaskMPUSettings( xMPU_SETTINGS *xPMPSettings,
 
             xPMPSettings->uxPmpConfigRegAttribute[portGET_PMPCFG_IDX(portSTACK_REGION_END)] +=
                     ((UBaseType_t)((portPMP_REGION_READ_WRITE) |
-                    (portPMP_REGION_ADDR_MATCH_TOR)) <<
+                    (portPMP_REGION_ADDR_MATCH_TOR) | encMode) <<
                     portPMPCFG_BIT_SHIFT(portSTACK_REGION_END));
 
             xPMPSettings->uxPmpConfigRegMask[portGET_PMPCFG_IDX(portSTACK_REGION_END)] +=
@@ -841,18 +842,55 @@ void vPortStoreTaskMPUSettings( xMPU_SETTINGS *xPMPSettings,
 
 		lIndex = 0;
 
-		for( ul = 2; ul < (portNUM_CONFIGURABLE_REGIONS_REAL (xPmpInfo.nb_pmp) + 2); ul++ )
+		for( ul = 2; ul < (portNUM_CONFIGURABLE_REGIONS_REAL (xPmpInfo.nb_pmp) + 2); ul=ul+2 )
 		{
+			/* Here the user defined xRegions are stored in the task's MPU settings. Each region
+			contains a starting address, a size and a configuration. For that reason, a TOR
+			region is used as it fits very natural to the format (begin + size). Because a TOR
+			region needs 2 PMP registers to be described, the index is increased by 2 after each 
+			round. */
 			if( ( xRegions[ lIndex ] ).ulLengthInBytes > 0UL )
 			{
-				xPMPSettings->uxRegionBaseAddress[ul] = (size_t) xRegions[ lIndex ].pvBaseAddress;
+				size_t bottomOfRegion = (size_t) xRegions[ lIndex ].pvBaseAddress;
+				size_t topOfRegion = bottomOfRegion + xRegions[ lIndex ].ulLengthInBytes;
 
+				/* Bottom */
+            	uxBaseAddressChecked = 0;
+				lResult = addr_modifier (xPmpInfo.granularity,
+                                    bottomOfRegion,
+                                    &uxBaseAddressChecked);
+
+				#if( configASSERT_DEFINED == 1 )
+				{
+					configASSERT(0 <= lResult);
+				}
+				#endif
+				xPMPSettings->uxRegionBaseAddress[ul] = uxBaseAddressChecked;
 				xPMPSettings->uxPmpConfigRegAttribute[portGET_PMPCFG_IDX(portSTACK_REGION_START + ul)] +=
-					((UBaseType_t)( xRegions[ lIndex ].ulParameters ) <<
-					portPMPCFG_BIT_SHIFT(portSTACK_REGION_START + ul));
-
+					((UBaseType_t)( xRegions[ lIndex ].ulParameters ) |
+                    (portPMP_REGION_ADDR_MATCH_NA4) | encMode) <<
+					portPMPCFG_BIT_SHIFT(portSTACK_REGION_START + ul);
 				xPMPSettings->uxPmpConfigRegMask[portGET_PMPCFG_IDX(portSTACK_REGION_START + ul)] +=
 					((UBaseType_t)0xFF << portPMPCFG_BIT_SHIFT(portSTACK_REGION_START + ul));
+
+				/* Top */
+            	uxBaseAddressChecked = 0;
+				lResult = addr_modifier (xPmpInfo.granularity,
+                                    topOfRegion,
+                                    &uxBaseAddressChecked);
+
+				#if( configASSERT_DEFINED == 1 )
+				{
+					configASSERT(0 <= lResult);
+				}
+				#endif
+				xPMPSettings->uxRegionBaseAddress[ul + 1] = uxBaseAddressChecked;
+				xPMPSettings->uxPmpConfigRegAttribute[portGET_PMPCFG_IDX(portSTACK_REGION_START + ul+1 )] +=
+					((UBaseType_t)( xRegions[ lIndex ].ulParameters ) |
+                    (portPMP_REGION_ADDR_MATCH_TOR) | encMode) <<
+					portPMPCFG_BIT_SHIFT(portSTACK_REGION_START + ul+1 );
+				xPMPSettings->uxPmpConfigRegMask[portGET_PMPCFG_IDX(portSTACK_REGION_START + ul+1)] +=
+					((UBaseType_t)0xFF << portPMPCFG_BIT_SHIFT(portSTACK_REGION_START + ul+1));
 			}
 			else
 			{

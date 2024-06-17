@@ -117,12 +117,12 @@ begin
 			dec = 16'b0000_0000_0000_1000;
 			MUX_SEL = 4'b0011;
 		end
-	16'h1E10:  
+	16'h1D10:  
 		begin
 			dec = 16'b0000_0000_0001_0000;
 			MUX_SEL = 4'b0100;
 		end	
-	16'h1D10:  // Keys
+	16'h1E10:  // Keys
 		begin
 			dec = 16'b0000_0000_0010_0000;
 			MUX_SEL = 4'b0101;

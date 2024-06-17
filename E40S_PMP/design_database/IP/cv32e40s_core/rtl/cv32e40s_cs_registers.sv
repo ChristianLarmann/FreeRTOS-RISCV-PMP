@@ -50,7 +50,9 @@ module cv32e40s_cs_registers import cv32e40s_pkg::*;
   parameter lfsr_cfg_t   LFSR2_CFG        = LFSR_CFG_DEFAULT,
   parameter bit          DEBUG            = 1,
   parameter int          DBG_NUM_TRIGGERS = 1,
-  parameter int unsigned MTVT_ADDR_WIDTH  = 26
+  parameter int unsigned MTVT_ADDR_WIDTH  = 26,
+  
+  parameter bit          PMP_ENCRYPTION_ENABLED = 0
 )
 (
   // Clock and Reset
@@ -2354,8 +2356,11 @@ module cv32e40s_cs_registers import cv32e40s_pkg::*;
             else begin
 
               pmpncfg_n[i]       = csr_wdata_int[(i%4)*PMPNCFG_W+:PMPNCFG_W];
-              pmpncfg_n[i].zero0 = '0;
-
+              
+              if (!PMP_ENCRYPTION_ENABLED) begin
+                pmpncfg_n[i].zero0 = '0;
+              end
+              
               // PMPCFG.R/W/X form a collective WARL field, disallowing RW=01. Writing an illegal value will leave RWX unchanged.
               if (!pmpncfg_n[i].read && pmpncfg_n[i].write && !pmp_mseccfg_rdata.mml) begin
                 pmpncfg_n[i].read  = pmpncfg_q[i].read;

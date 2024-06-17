@@ -33,10 +33,13 @@
 						
 						input	[(LINE_WIDTH*8)-1	:0]	mem_din,
 						output	[(LINE_WIDTH*8)-1	:0]	mem_dout,
-						output	[ADDRESS_SIZE-2-1	:0]	mem_address,
+						output	[MEM_ADDR_BITS-1	:0]	mem_address,
 						output							mem_req,
 						output							mem_rw_enable,
-						input							mem_ready
+						input							mem_ready,
+						
+						input                           enc_bit_i,
+				        output                          write_back_encryption_enabled_o
 						
 					);
 				
@@ -56,6 +59,7 @@ localparam	STATE_BITS = 2;
   
  wire	[NUMBER_OF_SETS-1:0]	hits,misses,dirties;
  reg	[NUMBER_OF_SETS-1:0]	cache_mem_ready;
+ wire	[NUMBER_OF_SETS-1:0]    write_back_encryption_enabled;
  
  wire	[TAG_ADDRESS-1:0]		write_back_tags [0:NUMBER_OF_SETS-1];
  
@@ -81,6 +85,8 @@ localparam	STATE_BITS = 2;
  // HERE I THINK IT SHOULD BE DOWNTO 4 INSTEAD OF DOWNTO 2
  assign		mem_address		= (state == WBACK) ? {2'b00,write_back_tags[set_index],cpu_address[ADDRESS_SIZE-TAG_ADDRESS-1:4]} : 
 													{2'b00,cpu_address[31:4]};
+					
+ assign write_back_encryption_enabled_o = write_back_encryption_enabled[set_index];
 													
  assign		mem_req			= (state == WBACK) | (state == MISS) ? 1'b1 : 1'b0;
  assign		mem_rw_enable	= (state == WBACK) ? 1'b1 : 1'b0;
@@ -233,7 +239,10 @@ end
 				.hit(hits[i]),
 				.miss(misses[i]),
 				.dirty(dirties[i]),
-				.write_back_tag(write_back_tags[i])
+				.write_back_tag(write_back_tags[i]),
+				
+				.enc_bit_i(enc_bit_i),
+				.write_back_encryption_enabled_o(write_back_encryption_enabled[i])
 			);
 	end
  endgenerate

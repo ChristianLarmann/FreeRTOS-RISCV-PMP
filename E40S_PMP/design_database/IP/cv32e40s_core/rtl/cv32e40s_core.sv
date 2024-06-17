@@ -50,7 +50,9 @@ module cv32e40s_core import cv32e40s_pkg::*;
   parameter mseccfg_t                   PMP_MSECCFG_RV                          = MSECCFG_DEFAULT,
   parameter lfsr_cfg_t                  LFSR0_CFG                               = LFSR_CFG_DEFAULT, // Do not use default value for LFSR configuration
   parameter lfsr_cfg_t                  LFSR1_CFG                               = LFSR_CFG_DEFAULT, // Do not use default value for LFSR configuration
-  parameter lfsr_cfg_t                  LFSR2_CFG                               = LFSR_CFG_DEFAULT  // Do not use default value for LFSR configuration
+  parameter lfsr_cfg_t                  LFSR2_CFG                               = LFSR_CFG_DEFAULT,  // Do not use default value for LFSR configuration
+
+  parameter bit                         PMP_ENCRYPTION_ENABLED                  = 0
 )
 (
   // Clock and reset
@@ -82,6 +84,9 @@ module cv32e40s_core import cv32e40s_pkg::*;
   input  logic                          instr_rvalidpar_i,      // secure
   output logic [12:0]                   instr_achk_o,           // secure
   input  logic [4:0]                    instr_rchk_i,           // secure
+  
+  output logic                          ins_encryption_enabled_o,
+
 
   // Data memory interface
   output logic                          data_req_o,
@@ -96,7 +101,7 @@ module cv32e40s_core import cv32e40s_pkg::*;
   output logic                          data_dbg_o,
   input  logic [31:0]                   data_rdata_i,
   input  logic                          data_err_i,
-
+  
   output logic                          data_reqpar_o,          // secure
   input  logic                          data_gntpar_i,          // secure
   input  logic                          data_rvalidpar_i,       // secure
@@ -137,7 +142,11 @@ module cv32e40s_core import cv32e40s_pkg::*;
 
   // CPU control signals
   input  logic                          fetch_enable_i,
-  output logic                          core_sleep_o
+  output logic                          core_sleep_o,
+  
+  // PMP Encryption (added feature)
+  output logic                          pmp_encrypt_ins_o,
+  output logic                          pmp_encrypt_dat_o
 );
 
   // No additional hardware performance counters
@@ -607,7 +616,11 @@ module cv32e40s_core import cv32e40s_pkg::*;
     .integrity_err_o     ( integrity_err_if         ),
     .protocol_err_o      ( protocol_err_if          ),
     
-    .mpu_err_o           ( mpu_err_if               )
+    .mpu_err_o           ( mpu_err_if               ),
+    
+    // PMP Encryption (added feature)
+    .pmp_encrypt_ins_o   ( pmp_encrypt_ins_o        ),
+    .pmp_encrypt_dat_o   (         )
 );
 
   /////////////////////////////////////////////////
@@ -829,7 +842,11 @@ module cv32e40s_core import cv32e40s_pkg::*;
 
     .xsecure_ctrl_i        ( xsecure_ctrl       ),
     
-    .mpu_err_o             ( mpu_err_lsu        )
+    .mpu_err_o             ( mpu_err_lsu        ),
+    
+    // PMP Encryption (added feature)
+    .pmp_encrypt_ins_o     (   ),
+    .pmp_encrypt_dat_o     ( pmp_encrypt_dat_o  )
 );
 
   ////////////////////////////////////////////////////////////////////////////////////////
@@ -913,7 +930,9 @@ module cv32e40s_core import cv32e40s_pkg::*;
     .LFSR0_CFG                  ( LFSR0_CFG              ),
     .LFSR1_CFG                  ( LFSR1_CFG              ),
     .LFSR2_CFG                  ( LFSR2_CFG              ),
-    .MTVT_ADDR_WIDTH            ( MTVT_ADDR_WIDTH        )
+    .MTVT_ADDR_WIDTH            ( MTVT_ADDR_WIDTH        ),
+    
+    .PMP_ENCRYPTION_ENABLED     ( PMP_ENCRYPTION_ENABLED )
   )
   cs_registers_i
   (
