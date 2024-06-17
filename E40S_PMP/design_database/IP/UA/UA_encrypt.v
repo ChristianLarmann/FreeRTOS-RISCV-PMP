@@ -2,7 +2,8 @@ module UA_encrypt
     #(
         parameter	ADDRESS_SIZE	=	32,
         parameter	NUMBER_OF_BYTES	=	16,
-        parameter	DATA_WIDTH		=	NUMBER_OF_BYTES * 8
+        parameter	DATA_WIDTH		=	NUMBER_OF_BYTES * 8,
+        parameter   ENABLE_ADDR_TWEAK = 1
     )
     (
         //Clock and reset
@@ -69,8 +70,14 @@ module UA_encrypt
 
     
     // Assign output wires                     | Skip encryption    | Default assignment
-    assign cache_rdata     = skip_encryption_i ? mem_rdata          : ((state == END) ? cry_dout : 0);
-    assign mem_wdata       = skip_encryption_i ? cache_wdata        : data_out;
+    if (ENABLE_ADDR_TWEAK) begin
+        assign mem_wdata       = skip_encryption_i ? cache_wdata        : (data_out ^ address);
+        assign cache_rdata     = skip_encryption_i ? mem_rdata          : ((state == END) ? (cry_dout ^ address) : 0);
+    end
+    else begin
+        assign cache_rdata     = skip_encryption_i ? mem_rdata          : ((state == END) ? cry_dout : 0);
+        assign mem_wdata       = skip_encryption_i ? cache_wdata        : data_out;
+    end
     assign mem_address     = skip_encryption_i ? cache_address      : address;
     assign mem_req         = skip_encryption_i ? cache_req          : mem_request;
     assign mem_rw_enable   = skip_encryption_i ? cache_rw_enable    : mem_rw;
