@@ -220,13 +220,8 @@ module cv32e40s_pmp import cv32e40s_pkg::*;
         access_fault = access_fault_all[i_r];
         
 //        if (PMP_ENCRYPTION_ENABLED) begin
-//            pmp_encrypt_ins_o = 1;
-//            pmp_encrypt_dat_o = 1;
-
-          if (priv_lvl_i != PRIV_LVL_M) begin // prv_lvl important because TCB is used by kernel but should not be encrypted
             pmp_encrypt_ins_o = csr_pmp_i.cfg[i_r][6];
             pmp_encrypt_dat_o = csr_pmp_i.cfg[i_r][5];
-          end
 //        end
       end
     end

@@ -86,7 +86,7 @@ localparam	STATE_BITS = 2;
  assign		mem_address		= (state == WBACK) ? {2'b00,write_back_tags[set_index],cpu_address[ADDRESS_SIZE-TAG_ADDRESS-1:4]} : 
 													{2'b00,cpu_address[31:4]};
 					
-assign write_back_encryption_enabled_o = write_back_encryption_enabled[set_index];
+ assign write_back_encryption_enabled_o = write_back_encryption_enabled[set_index];
 													
  assign		mem_req			= (state == WBACK) | (state == MISS) ? 1'b1 : 1'b0;
  assign		mem_rw_enable	= (state == WBACK) ? 1'b1 : 1'b0;

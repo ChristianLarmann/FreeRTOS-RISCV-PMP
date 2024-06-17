@@ -1,17 +1,17 @@
 
 # Trigger
-LSU_REQ_HIGH_char = "1'!"
-LSU_REQ_LOW_char = "0'!"
-LSU_RVALID_HIGH_char = "1)!"
-LSU_WE_char = "1+!"
-LSU_RE_char = "0+!"
+LSU_REQ_HIGH_char = "1X!"
+LSU_REQ_LOW_char = "0X!"
+LSU_RVALID_HIGH_char = "1Z!"
+LSU_WE_char = "1\!"
+LSU_RE_char = "0\!"
 
 # Address
-LSU_ADDR_char = "*!"
+LSU_ADDR_char = "[!"
 
 # Data
-LSU_WDATA_char = ".!"
-LSU_RDATA_char = "-!"
+LSU_WDATA_char = "_!"
+LSU_RDATA_char = "^!"
 
 # Status variables
 req_in_current_cycle = False
@@ -25,10 +25,10 @@ we_at_req = False
 
 SIGNALS = [LSU_RDATA_char, LSU_REQ_LOW_char, LSU_RE_char, LSU_REQ_HIGH_char, LSU_WE_char, LSU_WDATA_char, LSU_ADDR_char, LSU_RVALID_HIGH_char]
 
-DATA_OFFSET = 0x1c010000
-memory = [0] * 0x10000
-address_was_written_to = [False] * 0x10000
-last_write_timestamp = [0] * 0x10000
+DATA_OFFSET = 0x1c000000
+memory = [0] * 0x80000
+address_was_written_to = [False] * 0x80000
+last_write_timestamp = [0] * 0x80000
 
 # Debug
 success_counter = 0
@@ -57,9 +57,12 @@ def extract_value_from_line(line_with_value):
 def process_write_mem_access(timestamp):
     offset = current_address - DATA_OFFSET
 
-    if not 0 <= offset < 0xFFFF:
+    if not 0 <= offset < 0xFFFFF:
         if 0x2010_0000 <= current_address < 0x2010_FFFF:
             print(f"Timer accessed, Address: {hex(current_address)}")
+            return
+        elif 0x1D10_0000 <= current_address < 0x1D10_FFFF:
+            print(f"UART accessed, Address: {hex(current_address)}")
             return
         else:
             print(f"ADDRESS OUT OF BOUNDS: {hex(current_address)}")
@@ -79,6 +82,17 @@ def process_read_mem_access():
     global success_counter, error_counter
     offset = address_at_req - DATA_OFFSET
 
+    if not 0 <= offset < 0xFFFFF:
+        if 0x2010_0000 <= current_address < 0x2010_FFFF:
+            print(f"Timer accessed, Address: {hex(current_address)}")
+            return
+        elif 0x1D10_0000 <= current_address < 0x1D10_FFFF:
+            print(f"UART accessed, Address: {hex(current_address)}")
+            return
+        else:
+            print(f"ADDRESS OUT OF BOUNDS: {hex(current_address)}")
+            return
+
     if not we_at_req:  # Only read access relevant at lsu_gnt
         if address_was_written_to[offset]:  # read access of written cell
             expected_value = memory[offset]
@@ -91,13 +105,12 @@ def process_read_mem_access():
                 print(f"READ SUCCESS at \t{hex(address_at_req)} | Expected value: {hex(expected_value)} ({last_write_timestamp[offset]}ns), \t\t\tread value: {hex(current_read_data)} ")
                 success_counter += 1
 
-
 def get_timestamp(timestamp_line):
     return int(timestamp_line[1:])
 
 
 # with open("mem_interface.vcd", 'r') as vcd:
-with open("mem_interface_final.vcd", 'r') as vcd:
+with open("without_stack_check.vcd", 'r') as vcd:
     for i, line in enumerate(vcd):
         if True:  # i < 1000000:  # Process only the first 10 lines
             signal_name: str = line.split(" ")[-1].strip()  # strip for removing \n
@@ -133,6 +146,7 @@ with open("mem_interface_final.vcd", 'r') as vcd:
                     process_write_mem_access(get_timestamp(line))
                     # print(line)
                 elif rvalid_in_current_cycle:
+                    # print(line)
                     rvalid_in_current_cycle = False
                     process_read_mem_access()
 

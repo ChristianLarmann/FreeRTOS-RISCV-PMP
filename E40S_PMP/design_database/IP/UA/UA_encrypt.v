@@ -25,7 +25,7 @@ module UA_encrypt
         output  wire [ADDRESS_SIZE-1:0] mem_address,
         output  wire                    mem_req,
         output  wire                    mem_rw_enable,
-        input   wire                    mem_ready,
+        input   wire                    mem_valid,
         
         //Debug output
         output  wire    [7:0]           debug
@@ -74,7 +74,7 @@ module UA_encrypt
     assign mem_address     = skip_encryption_i ? cache_address      : address;
     assign mem_req         = skip_encryption_i ? cache_req          : mem_request;
     assign mem_rw_enable   = skip_encryption_i ? cache_rw_enable    : mem_rw;
-    assign cache_ready     = skip_encryption_i ? mem_ready          : ((state == END) ? 1 : 0);
+    assign cache_ready     = skip_encryption_i ? mem_valid          : ((state == END) ? 1 : 0);
 
     
   // Reset and state switches
@@ -88,6 +88,8 @@ module UA_encrypt
         end
     end
     
+    integer fd;
+    initial fd = $fopen("encryption_debug.txt", "w");
     
     // State machine
     // Events per state to switch to next state
@@ -97,7 +99,10 @@ module UA_encrypt
         //  IDLE STATE================================================================================
             IDLE: begin 
                 // When cache wants something, start state machine
-                if(cache_req) begin
+                if(cache_req && !skip_encryption_i) begin
+                    // Debug
+                     $fwrite(fd, "%x, %x, %x. %x\n", cache_address, cache_wdata, cache_rdata, skip_encryption_i);
+                    
                     // If write operation, go encrypt first
                     if(cache_rw_enable) begin
                         next_state  =  ENCRYPT;
@@ -117,7 +122,7 @@ module UA_encrypt
         //  READ STATE================================================================================
             READ: begin
                 // When data has been received, go decrypt
-                if(mem_ready) begin 
+                if(mem_valid) begin 
                     next_state          =  DECRYPT;
                 end
             end
@@ -134,7 +139,7 @@ module UA_encrypt
         //  WRITE STATE============================================================================
             WRITE: begin
                 // Go straight to end when done writing data to memory
-                if(mem_ready) begin
+                if(mem_valid) begin
                     next_state      =   END;
                 end
             end 
@@ -181,7 +186,7 @@ module UA_encrypt
             //  READ STATE-------------------------------------
                 READ: begin
                     // Read encrypted data
-                    if(!mem_ready) begin
+                    if(!mem_valid) begin
                         mem_request         <=  1;
                         mem_rw              <=  0;
                         data_in             <=  mem_rdata;  
@@ -196,7 +201,7 @@ module UA_encrypt
             //  WRITE STATE-------------------------------------------
                 WRITE: begin
                     // Write encrypted data
-                    if(!mem_ready) begin
+                    if(!mem_valid) begin
                         mem_request         <=  1;
                         mem_rw              <=  1;
                         address             <=  cache_address;

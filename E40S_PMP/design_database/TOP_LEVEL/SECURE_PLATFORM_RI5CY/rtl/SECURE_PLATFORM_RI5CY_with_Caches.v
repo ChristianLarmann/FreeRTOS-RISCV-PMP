@@ -63,6 +63,9 @@ wire [2:0] 		HSIZE,ins_HSIZE,dat_HSIZE;
 wire [31:0] 	HRDATA,ins_HRDATA,dat_HRDATA;
 wire 			HRESP,ins_HRESP,dat_HRESP;
 wire 			HREADY,ins_HREADY,dat_HREADY;
+wire            ins_encryption_enabled_cpu, dat_encryption_enabled_cpu;
+wire            ins_write_back_encryption_enabled, dat_write_back_encryption_enabled;
+// Actual control signals for encryption unit
 wire            ins_encryption_enabled, dat_encryption_enabled;
 
 
@@ -158,7 +161,7 @@ RISC_V
 				  .ins_HMASTLOCK(ins_HMASTLOCK),
 				  .ins_HREADY(ins_HREADY),	
 				  .ins_HRESP(ins_HRESP),
-				  .ins_encryption_enabled_o(ins_encryption_enabled),
+				  .ins_encryption_enabled_o(ins_encryption_enabled_cpu),
 				  
 				  .dat_HADDR(dat_HADDR),
 				  .dat_HWDATA(dat_HWDATA),
@@ -171,7 +174,7 @@ RISC_V
 				  .dat_HMASTLOCK(dat_HMASTLOCK),
 				  .dat_HREADY(dat_HREADY),
 				  .dat_HRESP(dat_HRESP),
-				  .dat_encryption_enabled_o(dat_encryption_enabled),
+				  .dat_encryption_enabled_o(dat_encryption_enabled_cpu),
 				  //Interrupts
 				  .irqs(IRQ),
 				  
@@ -276,7 +279,7 @@ wire	[128-1:0]		       data_cache_mem_wdata;
 wire	[BRAM_ADDR_BITS-1:0]   data_cache_mem_addr;
 wire                           data_cache_mem_req;
 wire						   data_cache_mem_write;
-reg						       data_cache_mem_rdy;
+reg						       data_ua_bram_valid;
 
 
 // WIRES BETWEEN CACHE AND UA MODULE
@@ -293,7 +296,7 @@ wire	[128-1:0]            	cache_ua_data_wdata;
 wire	[BRAM_ADDR_BITS-1:0]	            cache_ua_data_addr;
 wire							cache_ua_data_req;
 wire							cache_ua_data_write;
-wire							cache_ua_data_rdy;
+wire							cache_ua_data_valid;
 
 
 //AHBLite Instruction Memory 
@@ -351,13 +354,13 @@ AHB_CACHE #(.MEM_ADDR_BITS(BRAM_ADDR_BITS)) uAHB2DMEM (
 	.BRAM_MEM_ADDR(cache_ua_data_addr),
 	.BRAM_WDATA(cache_ua_data_wdata),
 	.BRAM_RDATA(cache_ua_data_rdata),
-	.BRAM_MEM_VALID(cache_ua_data_rdy),
+	.BRAM_MEM_VALID(cache_ua_data_valid),
 	
 	.interrupt(D_interrupt),
 	//.debug(D_debug)
 	
 	.enc_bit_i(dat_encryption_enabled),
-	.write_back_encryption_enabled_o()
+	.write_back_encryption_enabled_o(dat_write_back_encryption_enabled)
 );
 
 
@@ -367,7 +370,7 @@ reg	[128-1:0]	            ua_mem_wdata;
 reg	[BRAM_ADDR_BITS-1:0]	ua_mem_addr;
 reg							ua_mem_req;
 reg							ua_mem_write;
-wire                        ua_mem_ready;
+wire                        ua_mem_valid;
 
 reg inst_mem_req_ongoing;
 
@@ -387,7 +390,7 @@ begin
        ua_mem_write <= data_cache_mem_write;
        ua_mem_addr <= data_cache_mem_addr;
        ua_mem_wdata <= data_cache_mem_wdata;
-       data_cache_mem_rdy <= ua_mem_ready;
+       data_ua_bram_valid <= ua_mem_valid;
     end
     
     else if(inst_cache_mem_req)
@@ -396,7 +399,7 @@ begin
        ua_mem_write <= inst_cache_mem_write;
        ua_mem_addr <= inst_cache_mem_addr;
        ua_mem_wdata <= inst_cache_mem_wdata;
-       inst_cache_mem_rdy <= ua_mem_ready;
+       inst_cache_mem_rdy <= ua_mem_valid;
        
        inst_mem_req_ongoing <= 1;
     end
@@ -407,8 +410,8 @@ begin
        cache_mem_write <= 0;
        cache_mem_addr <= 0;
        cache_mem_wdata <= 0;
-       inst_cache_mem_rdy <= ua_mem_ready;
-       data_cache_mem_rdy <= ua_mem_ready;
+       inst_cache_mem_rdy <= ua_mem_valid;
+       data_ua_bram_valid <= ua_mem_valid;
        
        inst_mem_req_ongoing <= 0;
     end
@@ -440,12 +443,14 @@ UA_inst
         .mem_address        (inst_cache_mem_addr),
         .mem_req            (inst_cache_mem_req),
         .mem_rw_enable      (inst_cache_mem_write),
-        .mem_ready          (inst_cache_mem_rdy),
+        .mem_valid          (inst_cache_mem_rdy),
         
         //.interrupt          (interrupt),
         
         .debug              ()
     );
+    
+assign dat_encryption_enabled = cache_ua_data_write ? dat_write_back_encryption_enabled : dat_encryption_enabled_cpu;
     
     // Encryption and MAC unit for data
 UA_encrypt
@@ -455,22 +460,21 @@ UA_data
         .clock              (sys_clock),
         .reset              (!sys_reset_N),
         
-//        .skip_encryption_i  (!dat_encryption_enabled),
-        .skip_encryption_i  (1'b1),
+        .skip_encryption_i  (!dat_encryption_enabled),
         
         .cache_rdata        (cache_ua_data_rdata),
         .cache_wdata        (cache_ua_data_wdata),
         .cache_address      (cache_ua_data_addr),
         .cache_req          (cache_ua_data_req),
         .cache_rw_enable    (cache_ua_data_write),
-        .cache_ready        (cache_ua_data_rdy),
+        .cache_ready        (cache_ua_data_valid),
         
         .mem_rdata          (ua_mem_rdata),
         .mem_wdata          (data_cache_mem_wdata),
         .mem_address        (data_cache_mem_addr),
         .mem_req            (data_cache_mem_req),
         .mem_rw_enable      (data_cache_mem_write),
-        .mem_ready          (data_cache_mem_rdy),
+        .mem_valid          (data_ua_bram_valid),
         
         //.interrupt          (interrupt),
         
@@ -490,7 +494,7 @@ ram (
     .mem_rdata(ua_mem_rdata),
     
     .mem_ready(  ),// ???
-    .mem_valid( ua_mem_ready ) 
+    .mem_valid( ua_mem_valid ) 
 );
 
 

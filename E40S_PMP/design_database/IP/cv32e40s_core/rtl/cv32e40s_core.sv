@@ -102,8 +102,6 @@ module cv32e40s_core import cv32e40s_pkg::*;
   input  logic [31:0]                   data_rdata_i,
   input  logic                          data_err_i,
   
-  output logic                          dat_encryption_enabled_o,
-
   output logic                          data_reqpar_o,          // secure
   input  logic                          data_gntpar_i,          // secure
   input  logic                          data_rvalidpar_i,       // secure
