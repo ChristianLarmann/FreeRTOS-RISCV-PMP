@@ -298,6 +298,8 @@ wire							cache_ua_data_req;
 wire							cache_ua_data_write;
 wire							cache_ua_data_valid;
 
+wire                            mem_rdata_is_encrypted;
+
 
 //AHBLite Instruction Memory 
 assign HADDR_INST = (ins_HADDR-INST_BASE_ADDR);
@@ -450,7 +452,7 @@ UA_inst
         .debug              ()
     );
     
-assign dat_encryption_enabled = cache_ua_data_write ? dat_write_back_encryption_enabled : dat_encryption_enabled_cpu;
+assign dat_encryption_enabled = cache_ua_data_write ? dat_write_back_encryption_enabled : mem_rdata_is_encrypted;
     
     // Encryption and MAC unit for data
 UA_encrypt
@@ -492,6 +494,9 @@ ram (
     .mem_addr(ua_mem_addr),
     .mem_wdata(ua_mem_wdata),
     .mem_rdata(ua_mem_rdata),
+    
+    .mem_wdata_is_encrypted_i(dat_write_back_encryption_enabled),
+    .mem_rdata_is_encrypted_o(mem_rdata_is_encrypted),
     
     .mem_ready(  ),// ???
     .mem_valid( ua_mem_valid ) 
