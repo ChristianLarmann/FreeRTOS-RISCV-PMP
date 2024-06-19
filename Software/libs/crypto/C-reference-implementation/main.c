@@ -162,7 +162,8 @@ int main()
 
 	// Derive {SK_D, PK_D} (device keys) from the first 32 B of the hash 
 	//(NIST endorses SHA512 truncation as safe)
-	ed25519_create_keypair(ks_freertos_public_key, ks_freertos_secret_key, seedHash);
+	byte public_key_not_further_used[32];
+	ed25519_create_keypair(public_key_not_further_used, ks_freertos_secret_key, seedHash);
 
 	printHexFormat(ks_freertos_secret_key, 64, "ks_freertos_secret_key");
 

@@ -36,6 +36,7 @@ SRCS += $(dir)/portable/MemMang/heap_1.c
 # MPU wrappers
 SRCS += $(dir)/portable/Common/mpu_wrappers.c
 SRCS += $(dir)/portable/Common/mpu_wrappers_v2.c
+SRCS += $(dir)/portable/GCC/RISC-V/mpu_wrappers_v2_asm.c
 SRCS += $(dir)/portable/GCC/RISC-V/pmp.c
 # freertos generic headers
 CV_CPPFLAGS += -I"$(dir)/include"

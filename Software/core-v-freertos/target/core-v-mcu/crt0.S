@@ -70,14 +70,14 @@ _start:
 
 #if defined(__SECURE_BOOT_ACTIVATED)
 	// Perform secure boot
-	call secure_bootloader
+	# call secure_bootloader
 
 	# Write anything to 0x1A10... to block LSU accesses to the Instruction-memory
     # lui a0, 0x1A100
     # addi a0, a0, 0
     # sw zero, 0(a0) 
 
-	call derive_secret_key_freertos
+	# call derive_secret_key_freertos
 #endif
 
 
