@@ -119,4 +119,8 @@ header file. */
 #define configKERNEL_INTERRUPT_PRIORITY 7
 
 
+/* Upgrade to V2 */
+#define configUSE_MPU_WRAPPERS_V1 0
+#define configPROTECTED_KERNEL_OBJECT_POOL_SIZE 10
+
 #endif /* FREERTOS_CONFIG_H */

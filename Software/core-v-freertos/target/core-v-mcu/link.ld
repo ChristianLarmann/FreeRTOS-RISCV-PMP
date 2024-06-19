@@ -31,7 +31,7 @@ MEMORY
 
 SECTIONS
 {
-  PROVIDE(__boot_address = 0x1c005000);
+  PROVIDE(__boot_address = 0x1c010000);
   
   /* stack and heap related settings */
   __stack_size = DEFINED(__stack_size) ? __stack_size : 0x800;

@@ -120,3 +120,5 @@ Software/libs/crypto/sbi/libsbi.a
 Software/core-v-freertos/target/core-v-mcu/tasks.ld
 
 memoryInterfaceAnalyzer/
+
+*.vcd

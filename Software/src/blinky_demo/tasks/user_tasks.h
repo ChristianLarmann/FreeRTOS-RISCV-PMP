@@ -8,11 +8,16 @@
 
 /* Kernel includes. */
 #include "FreeRTOS.h"
+#include "stream_buffer.h"
 #include "task.h"
 #include "queue.h"
-#include "mpu_prototypes.h"
 #include "sealing_key.h"
 #include "taskMacros.h"
+#include "event_groups.h"
+#include "timers.h"
+#include "sealing_key.h"
+#include "user_tasks.h"
+#include "mpu_prototypes.h"
 
 /* Tasks */
 ADD_ENCLAVE_TASK_SIGNATURE(QueueReceive)

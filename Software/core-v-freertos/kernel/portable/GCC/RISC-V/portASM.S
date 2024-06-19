@@ -669,7 +669,8 @@ end_trap_handler:
     load_x  x2, PORT_CONTEXT_xOFFSET(2)(sp)
     mret
 /*-----------------------------------------------------------*/
-
+ 
+.section .privileged_functions, "ax"
 .align 8
 .type   xPortStartFirstTask, @function
 xPortStartFirstTask:

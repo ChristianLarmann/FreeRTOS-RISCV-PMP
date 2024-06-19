@@ -70,11 +70,16 @@
 
 /* Kernel includes. */
 #include "FreeRTOS.h"
+#include <assert.h>
+#include "stream_buffer.h"
+#include "message_buffer.h"
 #include "task.h"
 #include "queue.h"
-#include "mpu_prototypes.h"
+#include "event_groups.h"
+#include "timers.h"
 #include "sealing_key.h"
 #include "user_tasks.h"
+#include "mpu_prototypes.h"
 
 /* Priorities used by the tasks. */
 #define mainQUEUE_RECEIVE_TASK_PRIORITY (tskIDLE_PRIORITY + 2)
