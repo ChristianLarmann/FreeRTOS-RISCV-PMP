@@ -1161,3 +1161,133 @@ StackType_t * pxPortInitialiseStack( StackType_t * pxTopOfStack,
 	}
 #endif /* configENABLE_FPU */
 /*-----------------------------------------------------------*/
+
+
+extern volatile BaseType_t xSchedulerRunning;
+/* Does addr lie within [start, end] address range? */
+#define portIS_ADDRESS_WITHIN_RANGE( addr, start, end ) \
+    ( ( ( addr ) >= ( start ) ) && ( ( addr ) <= ( end ) ) )
+
+/* Max value that fits in a uint32_t type. */
+#define portUINT32_MAX    ( ~( ( uint32_t ) 0 ) )
+
+/* Check if adding a and b will result in overflow. */
+#define portADD_UINT32_WILL_OVERFLOW( a, b )    ( ( a ) > ( portUINT32_MAX - ( b ) ) )
+
+/* TODO: fix */
+#define IS_NA4( pmpconfig ) (1)
+#define IS_TOR( pmpconfig ) (1)
+
+#if ( configUSE_MPU_WRAPPERS_V1 == 0 )
+
+    BaseType_t xPortIsAuthorizedToAccessBuffer( const void * pvBuffer,
+                                                uint32_t ulBufferLength,
+                                                uint32_t ulAccessRequested ) /* PRIVILEGED_FUNCTION */
+
+    {
+        uint32_t i, ulBufferStartAddress, ulBufferEndAddress;
+        BaseType_t xAccessGranted = pdFALSE;
+        const xMPU_SETTINGS * xTaskMpuSettings = xTaskGetMPUSettings( NULL ); /* Calling task's MPU settings. */
+
+        if( xSchedulerRunning == pdFALSE )
+        {
+            /* Grant access to all the kernel objects before the scheduler
+             * is started. It is necessary because there is no task running
+             * yet and therefore, we cannot use the permissions of any
+             * task. */
+            xAccessGranted = pdTRUE;
+        }
+		/* CL: Privileged flag does not exist in this implementation */
+        // else if( ( xTaskMpuSettings->ulTaskFlags & portTASK_IS_PRIVILEGED_FLAG ) == portTASK_IS_PRIVILEGED_FLAG )
+        // {
+        //     xAccessGranted = pdTRUE;
+        // }
+        else
+        {
+            if( portADD_UINT32_WILL_OVERFLOW( ( ( uint32_t ) pvBuffer ), ( ulBufferLength - 1UL ) ) == pdFALSE )
+            {
+                ulBufferStartAddress = ( uint32_t ) pvBuffer;
+                ulBufferEndAddress = ( ( ( uint32_t ) pvBuffer ) + ulBufferLength - 1UL );
+
+				// CL: The upper limit of the counter is safe wrong!
+				for( i = 2; i < (portNUM_CONFIGURABLE_REGIONS_REAL (xPmpInfo.nb_pmp) + 2); i = i+2 )
+                {
+					if( IS_NA4(xTaskMpuSettings->uxPmpConfigRegAttribute[i]) &&
+						IS_TOR(xTaskMpuSettings->uxPmpConfigRegAttribute[i+1]) )
+					{
+						size_t bottomOfRegion = (size_t) xTaskMpuSettings->uxRegionBaseAddress[i];
+						size_t topOfRegion = (size_t) xTaskMpuSettings->uxRegionBaseAddress[i+1];
+
+						if( portIS_ADDRESS_WITHIN_RANGE( ulBufferStartAddress, bottomOfRegion, topOfRegion ) &&
+							portIS_ADDRESS_WITHIN_RANGE( ulBufferEndAddress, bottomOfRegion, topOfRegion ) )
+						{
+							xAccessGranted = pdTRUE;
+							break;
+						}
+					}
+                }
+            }
+        }
+
+        return xAccessGranted;
+    }
+
+#endif /* #if ( configUSE_MPU_WRAPPERS_V1 == 0 ) */
+/*-----------------------------------------------------------*/
+
+#if ( configUSE_MPU_WRAPPERS_V1 == 0 )
+
+    #if ( configENABLE_ACCESS_CONTROL_LIST == 1 )
+
+        BaseType_t xPortIsAuthorizedToAccessKernelObject( int32_t lInternalIndexOfKernelObject ) /* PRIVILEGED_FUNCTION */
+        {
+            uint32_t ulAccessControlListEntryIndex, ulAccessControlListEntryBit;
+            BaseType_t xAccessGranted = pdFALSE;
+            const xMPU_SETTINGS * xTaskMpuSettings;
+
+            if( xSchedulerRunning == pdFALSE )
+            {
+                /* Grant access to all the kernel objects before the scheduler
+                 * is started. It is necessary because there is no task running
+                 * yet and therefore, we cannot use the permissions of any
+                 * task. */
+                xAccessGranted = pdTRUE;
+            }
+            else
+            {
+                xTaskMpuSettings = xTaskGetMPUSettings( NULL ); /* Calling task's MPU settings. */
+
+                ulAccessControlListEntryIndex = ( ( uint32_t ) lInternalIndexOfKernelObject / portACL_ENTRY_SIZE_BITS );
+                ulAccessControlListEntryBit = ( ( uint32_t ) lInternalIndexOfKernelObject % portACL_ENTRY_SIZE_BITS );
+
+                if( ( xTaskMpuSettings->ulTaskFlags & portTASK_IS_PRIVILEGED_FLAG ) == portTASK_IS_PRIVILEGED_FLAG )
+                {
+                    xAccessGranted = pdTRUE;
+                }
+                else
+                {
+                    if( ( xTaskMpuSettings->ulAccessControlList[ ulAccessControlListEntryIndex ] & ( 1U << ulAccessControlListEntryBit ) ) != 0 )
+                    {
+                        xAccessGranted = pdTRUE;
+                    }
+                }
+            }
+
+            return xAccessGranted;
+        }
+
+    #else /* #if ( configENABLE_ACCESS_CONTROL_LIST == 1 ) */
+
+        BaseType_t xPortIsAuthorizedToAccessKernelObject( int32_t lInternalIndexOfKernelObject ) /* PRIVILEGED_FUNCTION */
+        {
+            ( void ) lInternalIndexOfKernelObject;
+
+            /* If Access Control List feature is not used, all the tasks have
+             * access to all the kernel objects. */
+            return pdTRUE;
+        }
+
+    #endif /* #if ( configENABLE_ACCESS_CONTROL_LIST == 1 ) */
+
+#endif /* #if ( configUSE_MPU_WRAPPERS_V1 == 0 ) */
+/*-----------------------------------------------------------*/
