@@ -38,7 +38,7 @@ module SECURE_PLATFORM_RI5CY
 		);
 
 
-localparam BOOT_ADDR        = 32'h1c005000;
+localparam BOOT_ADDR        = 32'h1c010000;
 localparam INST_BASE_ADDR   = 32'h1c000000;
 localparam SIZE_MEMORY      =      'h60000;
 

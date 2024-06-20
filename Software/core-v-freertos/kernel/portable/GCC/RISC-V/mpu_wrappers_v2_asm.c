@@ -941,24 +941,13 @@
                                       TickType_t xTicksToWait,
                                       const BaseType_t xCopyPosition ) /* __attribute__ (( naked )) FREERTOS_SYSTEM_CALL */
     {
-        return 0;
-        // __asm volatile
-        // (
-        //     " .syntax unified                                       \n"
-        //     " .extern MPU_xQueueGenericSendImpl                     \n"
-        //     "                                                       \n"
-        //     " push {r0}                                             \n"
-        //     " mrs r0, control                                       \n"
-        //     " tst r0, #1                                            \n"
-        //     " pop {r0}                                              \n"
-        //     " bne MPU_xQueueGenericSend_Unpriv                      \n"
-        //     " MPU_xQueueGenericSend_Priv:                           \n"
-        //     "     b MPU_xQueueGenericSendImpl                       \n"
-        //     " MPU_xQueueGenericSend_Unpriv:                         \n"
-        //     "     svc %0                                            \n"
-        //     "                                                       \n"
-        //     : : "i" ( SYSTEM_CALL_xQueueGenericSend ) : "memory"
-        // );
+        if (xIsPrivileged()) {
+            MPU_xQueueGenericSend(xQueue,pvItemToQueue, xTicksToWait, xCopyPosition );
+            return pdPASS;
+        } else {
+            vPortSyscall(SYSTEM_CALL_xQueueGenericSend);
+            return pdPASS;
+        }
     }
 /*-----------------------------------------------------------*/
 

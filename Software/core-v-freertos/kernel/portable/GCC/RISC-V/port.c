@@ -656,7 +656,7 @@ void vPortEndScheduler( void )
 /*-----------------------------------------------------------*/
 
 #if( portUSING_MPU_WRAPPERS == 1 )
-PRIVILEGED_FUNCTION void vPortSyscall( unsigned int Value )
+FREERTOS_SYSTEM_CALL void vPortSyscall( unsigned int Value )
 {
 	/* Remove compiler warning about unused parameter. */
 	( void ) Value;

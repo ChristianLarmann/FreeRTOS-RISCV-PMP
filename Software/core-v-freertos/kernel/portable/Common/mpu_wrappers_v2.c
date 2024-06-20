@@ -248,6 +248,43 @@
 /*-----------------------------------------------------------*/
 
 /**
+ * @brief malloc with adding boundaries to pmp config of task.
+ */ 
+void *MPU_pvPmpMalloc( size_t xSize ) /* FREERTOS_SYSTEM_CALL */ 
+{
+    void *pvReturn;
+    // BaseType_t xRunningPrivileged = xPortRaisePrivilege();
+
+    pvReturn = pvPortMalloc( xSize );
+
+    /* TODO: Add that memory should be free'd again if this fails */
+    xAddMallocPMP(pvReturn, xSize);
+
+    // vPortResetPrivilege( xRunningPrivileged );
+
+    return pvReturn;
+}
+
+/*-----------------------------------------------------------*/
+
+/**
+ * @brief free with removing boundaries from pmp config of task.
+ */ 
+void MPU_pvPmpFree( void *pv ) /* FREERTOS_SYSTEM_CALL */ 
+{
+    // BaseType_t xRunningPrivileged = xPortRaisePrivilege();
+
+    // vPortFree( pv ); is not possible in heap1.c ....
+
+    xRemoveFreePMP( pv );
+
+    // vPortResetPrivilege( xRunningPrivileged );
+}
+
+/*-----------------------------------------------------------*/
+
+
+/**
  * @brief Kernel object pool.
  */
     PRIVILEGED_DATA static KernelObject_t xKernelObjectPool[ configPROTECTED_KERNEL_OBJECT_POOL_SIZE ] = { 0 };
@@ -687,7 +724,8 @@
                 #if ( INCLUDE_xTaskGetSchedulerState == 1 )
                     if( ( xTaskGetSchedulerState() == taskSCHEDULER_NOT_STARTED ) || ( portIS_TASK_PRIVILEGED() == pdTRUE ) )
                 #else
-                    if( portIS_TASK_PRIVILEGED() == pdTRUE )
+                    // if( portIS_TASK_PRIVILEGED() == pdTRUE )
+                    if( true ) // CL: Privileged tasks not implemented yet
                 #endif
                 {
                     lIndex = ( int32_t ) pxTaskToSuspend;

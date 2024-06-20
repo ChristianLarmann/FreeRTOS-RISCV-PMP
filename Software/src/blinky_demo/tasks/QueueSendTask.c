@@ -36,6 +36,6 @@ TASK_FUNCTION_HEADER(TASK_NAME)
 		will not block - it shouldn't need to block as the queue should always
 		be empty at this point in the code. */
 		xReturned = xQueueSend(xQueue, &ulValueToSend, 0U);
-		configASSERT(xReturned == pdPASS);
+		configASSERT(xReturned == pdPASS);  // TODO: fix this and assert
 	}
 }
