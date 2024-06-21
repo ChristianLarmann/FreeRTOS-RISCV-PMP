@@ -316,7 +316,38 @@ is_exception:
 
 environment_switch:
     
-    #if ( configUSE_MPU_WRAPPERS_V1 == 1 ) // TODO: Should be 0
+    #if ( configUSE_MPU_WRAPPERS_V1 == 0 ) // TODO: Should be 0
+        /* Check for yield */
+        li t0,  100 /* 100 = portSVC_YIELD */
+        beq	a0,	t0,	ecall_yield
+
+         /* restore t0 and save sp in mscratch. */
+        csrr	t0, mscratch
+        csrw	mscratch, sp
+        /* Switch to ISR stack before syscall (Could also have its own syscall stack later). */
+        load_x	sp, xISRStackTop
+        portSAVE_BaseReg
+        csrrw	t0, mscratch, t0
+        /* SP = X2, so save it */
+        store_x	t0, PORT_CONTEXT_xOFFSET(2)(sp)
+
+        /* Defined in freertos_risc_v_chip_specific_extensions.h to save any registers unique to the RISC-V implementation. */
+        portasmSAVE_ADDITIONAL_REGISTERS
+
+        /* Handle syscall */
+        // a0-6 = Function parameters
+        // a7 = Syscall number
+        la      t0, uxSystemCallImplementations
+        slli	a7, a7, 2  // number * 4 because one word is 4 bytes
+        add     t0, t0, a7
+        lw      t0, 0(t0)     
+        jalr    t0
+
+        portasmRESTORE_ADDITIONAL_REGISTERS
+        portRESTORE_BaseReg
+
+        load_x  x2, PORT_CONTEXT_xOFFSET(2)(sp)
+        mret
     
     #else /* #if ( configUSE_MPU_WRAPPERS_V1 == 0 ) */
     li t0, 4
@@ -369,6 +400,9 @@ ecall_end:
         /* unauthorized ecall */
         j       unrecoverable_error
 
+#endif /* #if ( configUSE_MPU_WRAPPERS_V1 == 0 ) */
+
+
 ecall_yield:
     /* restore t0 */
     csrr t0, mscratch
@@ -398,7 +432,6 @@ ecall_yield:
 
     j	switch_context
 
-    #endif /* #if ( configUSE_MPU_WRAPPERS_V1 == 0 ) */
 /*-----------------------------------------------------------*/
 
 handle_interrupt:

@@ -262,6 +262,8 @@
 
     #define PRIVILEGED_FUNCTION     __attribute__( ( section( "privileged_functions" ) ) )
     #define PRIVILEGED_DATA         __attribute__( ( section( "privileged_data" ) ) )
+    /* Privileged syscall table gets its own section because PRIVILEGED_DATA is set to 0 during init */
+    #define SYSCALL_TABLE           __attribute__( ( section( "syscall_table" ) ) )
     #define FREERTOS_SYSTEM_CALL    __attribute__( ( section( "freertos_system_calls" ) ) )
 
 #else /* portUSING_MPU_WRAPPERS */

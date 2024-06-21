@@ -54,11 +54,20 @@
         BaseType_t MPU_xTaskDelayUntil( TickType_t * const pxPreviousWakeTime,
                                         const TickType_t xTimeIncrement ) /* __attribute__ (( naked )) FREERTOS_SYSTEM_CALL */
         {
-            if (xIsPrivileged()) {
-                MPU_xTaskDelayUntilImpl();
-            } else {
-                vPortSyscall(SYSTEM_CALL_xTaskDelayUntil);
-            }
+
+            __asm__ __volatile__ (
+                "	.extern privilege_status \n"
+                "	li	t0, %0 		\n"
+                "	la 	t1, privilege_status \n"
+                "   bne t0, t1, MPU_xTaskAbortDelay_Unpriv  \n"
+                "   MPU_xTaskAbortDelay_Priv:                             \n"
+                "     j MPU_xTaskAbortDelayImpl                         \n"
+                "   MPU_xTaskAbortDelay_Unpriv:                           \n"
+                "     li a7, %1                                          \n"
+                "     ecall                                            \n"
+                "     ret                                            \n"
+                ::"i"(ePortMACHINE_MODE), "i"(SYSTEM_CALL_xTaskDelayUntil):
+            );
         }
 
     #endif /* if ( INCLUDE_xTaskDelayUntil == 1 ) */

@@ -36,6 +36,7 @@
 
 /* Scheduler includes. */
 #include "FreeRTOS.h"
+#include "mpu_syscall_numbers.h"
 #include <stdio.h>
 #include "task.h"
 #include "portmacro.h"

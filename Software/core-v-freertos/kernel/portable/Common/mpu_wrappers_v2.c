@@ -5044,7 +5044,7 @@ void MPU_pvPmpFree( void *pv ) /* FREERTOS_SYSTEM_CALL */
  * The index in the array MUST match the corresponding system call number
  * defined in mpu_wrappers.h.
  */
-    PRIVILEGED_DATA UBaseType_t uxSystemCallImplementations[ NUM_SYSTEM_CALLS ] =
+    SYSCALL_TABLE UBaseType_t uxSystemCallImplementations[ NUM_SYSTEM_CALLS ] =
     {
         #if ( configUSE_TASK_NOTIFICATIONS == 1 )
             ( UBaseType_t ) MPU_xTaskGenericNotifyImpl,                     /* SYSTEM_CALL_xTaskGenericNotify. */

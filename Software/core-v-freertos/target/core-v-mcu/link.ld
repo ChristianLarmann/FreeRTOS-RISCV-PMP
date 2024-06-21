@@ -76,6 +76,10 @@ SECTIONS
     *(.rodata.*)
   } > BRAM
 
+  .syscall_table : ALIGN(32) {
+    *(syscall_table)
+  } > BRAM
+
   .privileged_data (NOLOAD) : ALIGN(32) {
     __privileged_data_start__ = .;
 		*(privileged_data)

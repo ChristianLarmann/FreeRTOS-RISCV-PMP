@@ -103,7 +103,11 @@ to be guarded with a critical section. */
 /**************************/
 
 /* Command to indicate system call handler that yield is requested */
-#define portSVC_YIELD							0
+#if( portUSING_MPU_WRAPPERS == 0 )  // CL: Changed from 1 to 0 for V2
+	#define portSVC_YIELD							0
+#else
+	#define portSVC_YIELD							100
+#endif
 /* Command to indicate system call handler that interrupts should be disabled */
 #define portSVC_DISABLE_INTERRUPTS				1
 /* Command to indicate system call handler that interrupts should be disabled */
@@ -314,7 +318,7 @@ extern void vTaskExitCritical( void );
 
 #define portSET_INTERRUPT_MASK_FROM_ISR() 			0
 #define portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedStatusValue ) ( void ) uxSavedStatusValue
-#if( portUSING_MPU_WRAPPERS == 1 )
+#if( portUSING_MPU_WRAPPERS == 0 ) // CL: Changed from 1 to 0
 #define portDISABLE_INTERRUPTS()	vPortSyscall(portSVC_DISABLE_INTERRUPTS)
 #define portENABLE_INTERRUPTS()		vPortSyscall(portSVC_ENABLE_INTERRUPTS)
 #else
