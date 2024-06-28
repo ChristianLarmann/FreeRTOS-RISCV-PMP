@@ -161,7 +161,7 @@ RISC_V
 				  .ins_HMASTLOCK(ins_HMASTLOCK),
 				  .ins_HREADY(ins_HREADY),	
 				  .ins_HRESP(ins_HRESP),
-				  .ins_encryption_enabled_o(ins_encryption_enabled_cpu),
+				  .ins_HENCRYPT(ins_encryption_enabled_cpu),
 				  
 				  .dat_HADDR(dat_HADDR),
 				  .dat_HWDATA(dat_HWDATA),
@@ -174,7 +174,7 @@ RISC_V
 				  .dat_HMASTLOCK(dat_HMASTLOCK),
 				  .dat_HREADY(dat_HREADY),
 				  .dat_HRESP(dat_HRESP),
-				  .dat_encryption_enabled_o(dat_encryption_enabled_cpu),
+				  .dat_HENCRYPT(dat_encryption_enabled_cpu),
 				  //Interrupts
 				  .irqs(IRQ),
 				  

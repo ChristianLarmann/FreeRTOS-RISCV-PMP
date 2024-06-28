@@ -15,6 +15,7 @@ module core2ahb3lite
     input  wire [3:0]                be_i,
     output wire [31:0]               rdata_o,
     input  wire [31:0]               wdata_i,
+    input  wire                      pmp_encrypt_i,
 
 	output reg  [AHB_ADDR_WIDTH-1:0] HADDR_o,
 	output reg  [AHB_DATA_WIDTH-1:0] HWDATA_o,
@@ -26,7 +27,8 @@ module core2ahb3lite
 	output reg  [1:0]				 HTRANS_o,
 	output reg 						 HMASTLOCK_o,
 	input  wire						 HREADY_i,
-	input  wire						 HRESP_i
+	input  wire						 HRESP_i,
+	output reg                       HENCRYPT_o
 	
 );
 
@@ -83,6 +85,7 @@ module core2ahb3lite
 	HPROT_o			= 4'd0;
 	HTRANS_o		= 2'd0;
 	HMASTLOCK_o		= 1'b0;
+	HENCRYPT_o      = 1'b0;
 	
     case (state)
       IDLE: begin
@@ -90,6 +93,7 @@ module core2ahb3lite
         begin
 		  HADDR_o 	= addr_i;
 		  HTRANS_o	= 2'd2;
+		  HENCRYPT_o = pmp_encrypt_i;
 		  
           if (we_i)
             HWRITE_o = 1'b1;
@@ -104,6 +108,7 @@ module core2ahb3lite
 			if (req_i) begin
 				HADDR_o 	= addr_i;
 				HTRANS_o	= 2'd2;
+				HENCRYPT_o = pmp_encrypt_i;
 				if (we_i)
           			  HWRITE_o = 1'b1;
 		  		else
@@ -135,6 +140,7 @@ module core2ahb3lite
 			if (req_i) begin
 				HADDR_o 	= addr_i;
 				HTRANS_o	= 2'd2;
+				HENCRYPT_o = pmp_encrypt_i;
 				if (we_i)
           			  HWRITE_o = 1'b1;
 		  		else

@@ -34,7 +34,7 @@ module riscv_top_ahb3lite #(
 					input  wire [31:0] 	ins_HRDATA,
 					input  wire        	ins_HREADY,
 					input  wire        	ins_HRESP,
-					output wire         ins_encryption_enabled_o,
+					output wire         ins_HENCRYPT,
 				
 				// AHB-LITE MASTER PORT - DATA				
 					output wire [31:0] 	dat_HADDR,
@@ -48,7 +48,7 @@ module riscv_top_ahb3lite #(
 					input  wire [31:0] 	dat_HRDATA,
 					input  wire        	dat_HREADY,
 					input  wire        	dat_HRESP,
-					output wire         dat_encryption_enabled_o,
+					output wire         dat_HENCRYPT,
 				  
 				  //Interrupts
 					input  wire [31:0]       irqs,                 // level sensitive IR lines
@@ -232,6 +232,7 @@ INST_WRAPPER
     .be_i				( 4'b1111			),
     .rdata_o			( core_instr_rdata  ),
     .wdata_i			( 32'd0			    ),
+    .pmp_encrypt_i      ( ins_encryption_enabled_o ),
 
 	.HADDR_o			(ins_HADDR),
 	.HWDATA_o			(ins_HWDATA),
@@ -243,7 +244,9 @@ INST_WRAPPER
 	.HTRANS_o			(ins_HTRANS),
 	.HMASTLOCK_o		(ins_HMASTLOCK),
 	.HREADY_i			(ins_HREADY),
-	.HRESP_i			(ins_HRESP)
+	.HRESP_i			(ins_HRESP),
+	
+	.HENCRYPT_o         (ins_HENCRYPT)
 	
 );
 
@@ -265,6 +268,7 @@ DATA_WRAPPER
     .be_i				(core_lsu_be),
     .rdata_o			(core_lsu_rdata),
     .wdata_i			(core_lsu_wdata),
+    .pmp_encrypt_i      (dat_encryption_enabled_o),
 
 	.HADDR_o			(dat_HADDR),
 	.HWDATA_o			(dat_HWDATA),
@@ -276,7 +280,9 @@ DATA_WRAPPER
 	.HTRANS_o			(dat_HTRANS),
 	.HMASTLOCK_o		(dat_HMASTLOCK),
 	.HREADY_i			(dat_HREADY),
-	.HRESP_i			(dat_HRESP)
+	.HRESP_i			(dat_HRESP),
+	
+	.HENCRYPT_o         (dat_HENCRYPT)
 	
 );
 
