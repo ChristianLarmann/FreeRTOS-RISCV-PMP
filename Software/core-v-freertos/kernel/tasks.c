@@ -559,7 +559,8 @@ static void prvInitialiseNewTask( 	TaskFunction_t pxTaskCode,
 									UBaseType_t uxPriority,
 									TaskHandle_t * const pxCreatedTask,
 									TCB_t *pxNewTCB,
-									const MemoryRegion_t * const xRegions ) PRIVILEGED_FUNCTION;
+									const MemoryRegion_t * const xRegions,
+									enum pmp_encryption_mode_e encMode ) PRIVILEGED_FUNCTION;
 
 /*
  * Called after a new task has been created and initialised to place the task
@@ -698,7 +699,9 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 			on the implementation of the port malloc function and whether or
 			not static allocation is being used. */
 			pxNewTCB = ( TCB_t * ) pvPortMalloc( sizeof( TCB_t ) );
-			    asm volatile("mv x28, %0" :: "r" (pxNewTCB) : "x28");
+			asm volatile("li x28, 0x1010" ::: "x28");
+			asm volatile("mv x28, %0" :: "r" (pxNewTCB) : "x28");
+			asm volatile("li x28, 0x10101" ::: "x28");
 
 			if( pxNewTCB != NULL )
 			{
@@ -720,7 +723,8 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 										pxTaskDefinition->pvParameters,
 										pxTaskDefinition->uxPriority,
 										pxCreatedTask, pxNewTCB,
-										pxTaskDefinition->xRegions );
+										pxTaskDefinition->xRegions,
+										pxTaskDefinition->pmpEncryptionMode );
 
 				#define SKIP_TASK_HASH_CALCULATION
 
@@ -796,8 +800,10 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 			if( pxStack != NULL )
 			{
 				/* Allocate space for the TCB. */
+				asm volatile("li x28, 0x2020" ::: "x28");
 				pxNewTCB = ( TCB_t * ) pvPortMalloc( sizeof( TCB_t ) ); /*lint !e9087 !e9079 All values returned by pvPortMalloc() have at least the alignment required by the MCU's stack, and the first member of TCB_t is always a pointer to the task's stack. */
-			asm volatile("mv x28, %0" :: "r" (pxNewTCB) : "x28");
+				asm volatile("mv x28, %0" :: "r" (pxNewTCB) : "x28");
+				asm volatile("li x28, 0x20202" ::: "x28");
 
 				if( pxNewTCB != NULL )
 				{
@@ -829,7 +835,8 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 			#endif /* tskSTATIC_AND_DYNAMIC_ALLOCATION_POSSIBLE */
 
 
-			prvInitialiseNewTask( pxTaskCode, pcName, ( uint32_t ) usStackDepth, pvParameters, uxPriority, pxCreatedTask, pxNewTCB, NULL );
+			prvInitialiseNewTask( pxTaskCode, pcName, ( uint32_t ) usStackDepth, pvParameters, 
+								  uxPriority, pxCreatedTask, pxNewTCB, NULL, NO_PMP_ENCRYPTION );
 			prvAddNewTaskToReadyList( pxNewTCB );
 			xReturn = pdPASS;
 		}
@@ -851,10 +858,31 @@ static void prvInitialiseNewTask( 	TaskFunction_t pxTaskCode,
 									UBaseType_t uxPriority,
 									TaskHandle_t * const pxCreatedTask,
 									TCB_t *pxNewTCB,
-									const MemoryRegion_t * const xRegions )
+									const MemoryRegion_t * const xRegions,
+									enum pmp_encryption_mode_e encMode )
 {
 StackType_t *pxTopOfStack;
 UBaseType_t x;
+
+	#if ( portUSING_MPU_WRAPPERS == 1 )
+	{
+		TCB_t* tmpTCB = pxCurrentTCB;
+		pxCurrentTCB = pxNewTCB;
+		vPortStoreTaskMPUSettings( &( pxNewTCB->xMPUSettings ), xRegions, pxNewTCB->pxStack, 
+			ulStackDepth, encMode );
+
+		extern void vPortPmpSwitch ( int32_t ulNbPmp, xMPU_SETTINGS * xPMPSettings );
+		vPortPmpSwitch(NULL, &(pxNewTCB->xMPUSettings));
+
+		pxCurrentTCB = tmpTCB;
+	}
+	#else
+	{
+		/* Avoid compiler warning about unreferenced parameter. */
+		( void ) xRegions;
+	}
+	#endif
+
 
 	#if( portUSING_MPU_WRAPPERS == 1 )
 		/* Should the task be created in privileged mode? */
@@ -990,17 +1018,6 @@ UBaseType_t x;
 	}
 	#endif /* configGENERATE_RUN_TIME_STATS */
 
-	#if ( portUSING_MPU_WRAPPERS == 1 )
-	{
-		vPortStoreTaskMPUSettings( &( pxNewTCB->xMPUSettings ), xRegions, pxNewTCB->pxStack, 
-			ulStackDepth, ONLY_DATA_PMP_ENCRYPTION );
-	}
-	#else
-	{
-		/* Avoid compiler warning about unreferenced parameter. */
-		( void ) xRegions;
-	}
-	#endif
 
 	#if( configNUM_THREAD_LOCAL_STORAGE_POINTERS != 0 )
 	{

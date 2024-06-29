@@ -222,8 +222,13 @@ module UA_encrypt
                 
             //  ENCRYPT STATE--------------------------------------------
                 ENCRYPT: begin
-                    // Let crypto block read data and start encrypting
-                    cry_din             <=  cache_wdata;
+                    // Let crypto block read data and start encrypting                   
+                    if (ENABLE_ADDR_TWEAK) begin
+                        cry_din             <=  cache_wdata ^ address;
+                    end
+                    else begin
+                        cry_din             <=  cache_wdata;
+                    end  
                     cry_enc_dec         <=  1;
                     cry_run             <=  1;
                 end
@@ -231,7 +236,12 @@ module UA_encrypt
             //  DECRYPT STATE-------------------------------------
                 DECRYPT: begin 
                     // Let crypto block read data and start decrypting 
-                    cry_din             <=  data_in;
+                    if (ENABLE_ADDR_TWEAK) begin
+                        cry_din             <=  data_in ^ address;
+                    end
+                    else begin
+                        cry_din             <=  data_in;
+                    end  
                     cry_enc_dec         <=  0;          
                     cry_run             <=  1;
                 end

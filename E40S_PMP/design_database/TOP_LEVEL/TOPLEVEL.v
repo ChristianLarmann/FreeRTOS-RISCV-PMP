@@ -42,7 +42,7 @@ module TOPLEVEL
     SECURE_PLATFORM_RI5CY 
     RI5CY_with_Caches 
     (   
-        .clock(system_clock), 
+        .sys_clock(system_clock), 
         .reset(system_reset), 
         .output_LEDS(output_LEDS[3:0]), 
         .BT_RX(0), 
