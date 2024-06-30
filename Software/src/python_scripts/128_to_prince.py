@@ -16,15 +16,21 @@ cipher = Prince()
 key = "000102030405060708090a0b0c0d0e0f".decode('hex')
 
 
+range_begin = 0x54F0
+range_end = 0x5500 
+
 counter = 0
 for line in file_in:
 	data = line.strip()
 	a,b = data[:len(data)/2], data[(len(data)/2):]
-	output_a = cipher.encrypt(a.decode('hex'), key).encode('hex')
-	output_b = cipher.encrypt(b.decode('hex'), key).encode('hex')
-	file_out.write(output_a + output_b + "\n")
+	
+	if (range_begin <= counter < range_end):
+		print(data)
+		output_a = cipher.encrypt(a.decode('hex'), key).encode('hex')
+		output_b = cipher.encrypt(b.decode('hex'), key).encode('hex')
+		file_out.write(output_a + output_b + "\n")
 	counter += 1
-	if(counter % 1000 == 0):
+	if(counter % 100 == 0):
 		print(str(counter) + " lines done")
 
 	
