@@ -85,7 +85,6 @@ module core2ahb3lite
 	HPROT_o			= 4'd0;
 	HTRANS_o		= 2'd0;
 	HMASTLOCK_o		= 1'b0;
-	HENCRYPT_o      = 1'b0;
 	
     case (state)
       IDLE: begin

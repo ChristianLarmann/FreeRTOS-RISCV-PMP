@@ -29,10 +29,16 @@ void prvLedTask(void *pvParameters){
 
 	for (;;) {
 		/* Place this task in the blocked state until it is time to run again. */
-		vTaskDelayUntil(&xNextWakeTime, pdMS_TO_TICKS(2));
 		// gpio_pin_toggle( 0x1 );
 		asm volatile("li x29, 0x6666" ::: "x29");
 		asm volatile("li x29, 0x7777" ::: "x29");
+
+		volatile uint32_t ar[50];
+		for (uint32_t k = 0; k<50; k++) {
+			ar[k] = k;
+		}
+
+		vTaskDelayUntil(&xNextWakeTime, pdMS_TO_TICKS(2));
 
 
 		if (counter_free > 3) {
@@ -49,8 +55,12 @@ void prvLedTask(void *pvParameters){
 			}
 
 			if (counter_free == 4) {
+				int counter = 0;
+				for (uint32_t k = 0; k<50; k++) {
+					counter += ar[k];
+				}
 				MPU_pvPmpFree(heapVar2);
-				heapVar2[0] = 0xCF;
+				heapVar2[0] = counter;
 			}
 		}
 		counter_free += 1;

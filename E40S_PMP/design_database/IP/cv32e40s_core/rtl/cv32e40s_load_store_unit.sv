@@ -97,7 +97,6 @@ module cv32e40s_load_store_unit import cv32e40s_pkg::*;
   output logic          mpu_err_o,
   
   // PMP Encryption (added feature)
-  output logic          pmp_encrypt_ins_o,
   output logic          pmp_encrypt_dat_o
 );
 
@@ -723,7 +722,7 @@ module cv32e40s_load_store_unit import cv32e40s_pkg::*;
     .bus_resp_i           ( filter_resp        ),
     
     // PMP Encryption (added feature)
-    .pmp_encrypt_ins_o    ( pmp_encrypt_ins_o  ),
+    .pmp_encrypt_ins_o    (   ),
     .pmp_encrypt_dat_o    ( pmp_encrypt_dat_o  )
 
   );

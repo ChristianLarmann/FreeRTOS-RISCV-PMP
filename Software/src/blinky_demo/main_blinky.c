@@ -150,7 +150,8 @@ void main_blinky(void)
 			.xRegions		= {
 				/* Base address   		   Length                     Parameters */
 				{ TASK_CODE_REGION(QueueSend) },
-			}
+			},
+			.pmpEncryptionMode = NO_PMP_ENCRYPTION
 		};
 		xTaskCreateRestricted(&xQueueSendTaskParams, NULL);
 
@@ -171,7 +172,8 @@ void main_blinky(void)
 			.xRegions = {
 				/* Base address   		 Length            Parameters */
 				{ TASK_CODE_REGION(Led) },
-			}
+			},
+			.pmpEncryptionMode = ONLY_DATA_PMP_ENCRYPTION
 		};
 
 		asm volatile("li x28, 0x30" ::: "x28");

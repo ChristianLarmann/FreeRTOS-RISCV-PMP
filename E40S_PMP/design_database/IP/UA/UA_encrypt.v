@@ -3,7 +3,7 @@ module UA_encrypt
         parameter	ADDRESS_SIZE	=	32,
         parameter	NUMBER_OF_BYTES	=	16,
         parameter	DATA_WIDTH		=	NUMBER_OF_BYTES * 8,
-        parameter   ENABLE_ADDR_TWEAK = 1
+        parameter   ENABLE_ADDR_TWEAK = 0
     )
     (
         //Clock and reset

@@ -419,6 +419,8 @@ end
 
 
 
+assign ins_encryption_enabled = cache_ua_inst_write ? ins_write_back_encryption_enabled : ins_encryption_enabled_cpu; // this should be alway sins_encryption_enabled_cpu
+assign dat_encryption_enabled = cache_ua_data_write ? dat_write_back_encryption_enabled : dat_encryption_enabled_cpu;
 
 // Encryption and MAC unit for instructions
 UA_encrypt
@@ -428,8 +430,7 @@ UA_inst
         .clock              (sys_clock),
         .reset              (!sys_reset_N),
         
-//        .skip_encryption_i    (!ins_encryption_enabled),
-        .skip_encryption_i    (1'b1),
+        .skip_encryption_i  (!ins_encryption_enabled),
         
         .cache_rdata        (cache_ua_inst_rdata),
         .cache_wdata        (cache_ua_inst_wdata),
@@ -450,8 +451,26 @@ UA_inst
         .debug              ()
     );
     
-assign dat_encryption_enabled = cache_ua_data_write ? dat_write_back_encryption_enabled : dat_encryption_enabled_cpu;
     
+integer fd;
+initial fd = $fopen("01_data_debug.txt", "w");
+    
+    
+always @(posedge cache_ua_data_req)
+begin
+    if(cache_ua_data_write) begin
+        $fwrite(fd, "UA write to %x, cache_ua_data_wdata: %x, enc: %x\n", cache_ua_data_addr, cache_ua_data_wdata, dat_encryption_enabled);
+    end else
+    begin
+        $fwrite(fd, "UA read from %x, enc: %x...\n", cache_ua_data_addr, dat_encryption_enabled);
+    end
+end    
+
+always @(posedge cache_ua_data_valid)
+begin
+    $fwrite(fd, "... cache_ua_data_rdata: %x \n", cache_ua_data_rdata);
+end
+        
     // Encryption and MAC unit for data
 UA_encrypt
     #(.ADDRESS_SIZE(BRAM_ADDR_BITS))
@@ -480,6 +499,23 @@ UA_data
         
         .debug              ()
     );
+
+
+always @(posedge ua_mem_req)
+begin
+    if(ua_mem_write) begin
+        $fwrite(fd, "   BRAM write to %x, cache_ua_data_wdata: %x\n", ua_mem_addr, ua_mem_wdata);
+    end else
+    begin
+        $fwrite(fd, "   BRAM read from %x...\n", ua_mem_addr);
+    end
+end   
+
+always @(posedge ua_mem_valid)
+begin
+    $fwrite(fd, "   ... ua_mem_rdata: %x, ua_mem_addr: %x \n", ua_mem_rdata, ua_mem_addr);
+end
+    
 
 // BRAM connected to caches
 bram_memory	#(.MEM_ADDR_BITS(BRAM_ADDR_BITS))

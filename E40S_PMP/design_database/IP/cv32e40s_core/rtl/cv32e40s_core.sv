@@ -84,9 +84,6 @@ module cv32e40s_core import cv32e40s_pkg::*;
   input  logic                          instr_rvalidpar_i,      // secure
   output logic [12:0]                   instr_achk_o,           // secure
   input  logic [4:0]                    instr_rchk_i,           // secure
-  
-  output logic                          ins_encryption_enabled_o,
-
 
   // Data memory interface
   output logic                          data_req_o,
@@ -619,8 +616,7 @@ module cv32e40s_core import cv32e40s_pkg::*;
     .mpu_err_o           ( mpu_err_if               ),
     
     // PMP Encryption (added feature)
-    .pmp_encrypt_ins_o   ( pmp_encrypt_ins_o        ),
-    .pmp_encrypt_dat_o   (         )
+    .pmp_encrypt_ins_o   ( pmp_encrypt_ins_o        )
 );
 
   /////////////////////////////////////////////////
@@ -845,7 +841,6 @@ module cv32e40s_core import cv32e40s_pkg::*;
     .mpu_err_o             ( mpu_err_lsu        ),
     
     // PMP Encryption (added feature)
-    .pmp_encrypt_ins_o     (   ),
     .pmp_encrypt_dat_o     ( pmp_encrypt_dat_o  )
 );
 
