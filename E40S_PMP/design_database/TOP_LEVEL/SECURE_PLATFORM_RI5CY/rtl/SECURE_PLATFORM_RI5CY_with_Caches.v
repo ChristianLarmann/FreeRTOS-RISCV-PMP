@@ -326,7 +326,7 @@ AHB_CACHE #(.MEM_ADDR_BITS(BRAM_ADDR_BITS)) uAHB2MEM (
     .interrupt(I_interrupt),
 	//.debug(I_debug)
 	
-	.enc_bit_i(ins_encryption_enabled_cpu),
+	.enc_bit_for_cache_line_i(ins_encryption_enabled_cpu),
 	.write_back_encryption_enabled_o()
 );
 
@@ -358,7 +358,7 @@ AHB_CACHE #(.MEM_ADDR_BITS(BRAM_ADDR_BITS)) uAHB2DMEM (
 	.interrupt(D_interrupt),
 	//.debug(D_debug)
 	
-	.enc_bit_i(dat_encryption_enabled_cpu),
+	.enc_bit_for_cache_line_i(dat_encryption_enabled_cpu),
 	.write_back_encryption_enabled_o(dat_write_back_encryption_enabled)
 );
 
@@ -425,7 +425,7 @@ UA_inst
         .clock              (sys_clock),
         .reset              (!sys_reset_N),
         
-        .encryption_enabled_cpu         (ins_encryption_enabled_cpu),
+        .decryption_enabled_cpu         (ins_encryption_enabled_cpu),
         .write_back_encryption_enabled  (ins_write_back_encryption_enabled),
         
         .cache_rdata        (cache_ua_inst_rdata),
@@ -475,7 +475,7 @@ UA_data
         .clock              (sys_clock),
         .reset              (!sys_reset_N),
         
-        .encryption_enabled_cpu         (dat_encryption_enabled_cpu),
+        .decryption_enabled_cpu         (dat_encryption_enabled_cpu),
         .write_back_encryption_enabled  (dat_write_back_encryption_enabled),
         
         .cache_rdata        (cache_ua_data_rdata),
