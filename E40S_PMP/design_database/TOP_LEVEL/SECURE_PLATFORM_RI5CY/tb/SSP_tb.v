@@ -11,7 +11,6 @@ reg  r_RX_Serial;
 
 reg clock;
 reg reset;
-reg fetch_enable;
 ///////////////////////////////////////////////////
 
   // Takes in input byte and serializes it 
@@ -47,7 +46,6 @@ always #5 clock = ~clock;
 
 initial begin
   clock = 0;
-  fetch_enable = 0;
   r_RX_Serial = 1;
   switches = 0;
   
@@ -56,11 +54,7 @@ initial begin
   reset = 1;
   #20
   reset = 0;
-  
-  #20
-  fetch_enable = 1;
-  #10
-  fetch_enable = 0;
+ 
 
 
 	// Tell UART to send a command (exercise TX)
@@ -89,18 +83,11 @@ initial begin
 end
 
 
-
-SECURE_PLATFORM_RI5CY SECURE_SOC_PLATFORM
+Zynq_E40S_PMP_wrapper SECURE_PLATFORM_RI5CY
 		(
-				.sys_clock(clock),
-				.reset(reset),
-				.output_LEDS(leds),
-				//.SWITCHES(switches),
-				.BT_RX(r_RX_Serial),
-				.BT_TX(w_TX_Serial),
-				.fetch_enable(fetch_enable)
-				//.BT_RST(),
-				//.BT_CTS()
+				.clk_125(clock),
+				.system_reset(reset),
+				.BT_RX(0)
 		);
 
 endmodule

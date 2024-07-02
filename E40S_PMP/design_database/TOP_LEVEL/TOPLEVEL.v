@@ -45,7 +45,6 @@ module TOPLEVEL
         .sys_clock(system_clock), 
         .reset(system_reset), 
         .output_LEDS(output_LEDS[3:0]), 
-        .BT_RX(0), 
         
 //        .BT_RX(BT_RX), 
 //        .BT_TX(BT_TX), 

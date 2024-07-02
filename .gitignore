@@ -120,3 +120,7 @@ Software/libs/crypto/sbi/libsbi.a
 Software/core-v-freertos/target/core-v-mcu/tasks.ld
 
 *.vcd
+
+E40S_PMP/design_database/IP/AHB_CACHE_16_way_working.zip
+
+E40S_PMP/design_database_old.zip

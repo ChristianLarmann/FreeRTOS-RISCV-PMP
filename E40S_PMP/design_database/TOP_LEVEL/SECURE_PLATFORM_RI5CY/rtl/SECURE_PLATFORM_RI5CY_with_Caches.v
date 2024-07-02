@@ -21,20 +21,17 @@ module SECURE_PLATFORM_RI5CY
 				input									reset,
 				
 				//DEBUG LEDS
-				output		[7:0]						output_LEDS,
+				output		[3:0]						output_LEDS,
 				
 				//EXTERNAL INTERFACE
-				input									BT_RX,
-				output									BT_TX,
-				output                                  BT_RTS,
-				output                                  BT_CTS,
+//				input									BT_RX,
+//				output									BT_TX,
+//				output                                  BT_RTS,
+//				output                                  BT_CTS,
 				
 				//UA interrupts
 				output                                  I_interrupt,
-				output                                  D_interrupt,
-								
-				// For MTVEC init
-				input                                   fetch_enable
+				output                                  D_interrupt
 		);
 
 
@@ -44,7 +41,7 @@ localparam SIZE_MEMORY      =      'h60000;
 
 
 wire [7:0] LEDS;
-assign output_LEDS = LEDS[7:0];
+assign output_LEDS = LEDS[3:0];
 
 
 //Address, Control & Write Data Signals
@@ -61,11 +58,12 @@ wire [2:0] 		HSIZE,ins_HSIZE,dat_HSIZE;
 
 //Transfer Response & Read Data Signals
 wire [31:0] 	HRDATA,ins_HRDATA,dat_HRDATA;
-wire 			HRESP,ins_HRESP,dat_HRESP;
+wire 			HRESP,dat_HRESP;
 wire 			HREADY,ins_HREADY,dat_HREADY;
 wire            ins_encryption_enabled_cpu, dat_encryption_enabled_cpu;
 wire            ins_write_back_encryption_enabled, dat_write_back_encryption_enabled;
 // Actual control signals for encryption unit
+wire            ins_encryption_enabled, dat_encryption_enabled;
 
 
 //SELECT SIGNALS
@@ -85,7 +83,6 @@ wire 			HSEL_DUMP;
 wire 			HSEL_AES;
 wire 			HSEL_UART;
 wire 			HSEL_TIMER;
-wire            HSEL_SECURE_BOOT_INSTR_MEM;
 wire            HSEL_KEYS;
 
 
@@ -97,7 +94,6 @@ wire [31:0] 	HRDATA_AES;
 wire [31:0] 	HRDATA_UART;
 wire [31:0] 	HRDATA_TIMER;
 wire [31:0] 	HRDATA_KEYS;
-wire [31:0]     HRDATA_SECURE_BOOT_INSTR_MEM;
 
 
 //SLAVE HREADYOUT
@@ -108,8 +104,6 @@ wire 			HREADYOUT_AES;
 wire            HREADYOUT_KEYS;
 wire 			HREADYOUT_UART;
 wire 			HREADYOUT_TIMER;
-wire            HREADYOUT_SECURE_BOOT_INSTR_MEM;
-
 wire [31:0]		IRQ;
 wire			NI_TX_IRQ, NI_RX_IRQ, TIMER_IRQ, UART_IRQ;
 
@@ -159,7 +153,6 @@ RISC_V
 				  .ins_HTRANS(ins_HTRANS),
 				  .ins_HMASTLOCK(ins_HMASTLOCK),
 				  .ins_HREADY(ins_HREADY),	
-				  .ins_HRESP(ins_HRESP),
 				  .ins_HENCRYPT(ins_encryption_enabled_cpu),
 				  
 				  .dat_HADDR(dat_HADDR),
@@ -207,7 +200,6 @@ RISC_V
 	.HSEL_S3(HSEL_AES),
 	.HSEL_S4(HSEL_UART),
 	.HSEL_S5(HSEL_KEYS),
-	.HSEL_S6(HSEL_SECURE_BOOT_INSTR_MEM),
 	.HSEL_S7(HSEL_TIMER),
 	.HSEL_S8(),
 	.HSEL_S9(),
@@ -229,7 +221,6 @@ RISC_V
 	.HRDATA_S3(HRDATA_AES),
 	.HRDATA_S4(HRDATA_UART),
 	.HRDATA_S5(HRDATA_KEYS),
-	.HRDATA_S6(HRDATA_SECURE_BOOT_INSTR_MEM),
 	.HRDATA_S7(HRDATA_TIMER),
 	.HRDATA_S8(),
 	.HRDATA_S9(),
@@ -241,7 +232,6 @@ RISC_V
 	.HREADYOUT_S3(HREADYOUT_AES),
 	.HREADYOUT_S4(HREADYOUT_UART),
 	.HREADYOUT_S5(HREADYOUT_KEYS),
-	.HREADYOUT_S6(HREADYOUT_SECURE_BOOT_INSTR_MEM),
 	.HREADYOUT_S7(HREADYOUT_TIMER),
 	.HREADYOUT_S8(1'b1),
 	.HREADYOUT_S9(1'b1),
@@ -326,7 +316,7 @@ AHB_CACHE #(.MEM_ADDR_BITS(BRAM_ADDR_BITS)) uAHB2MEM (
     .interrupt(I_interrupt),
 	//.debug(I_debug)
 	
-	.enc_bit_for_cache_line_i(ins_encryption_enabled_cpu),
+	.enc_bit_i(ins_encryption_enabled),
 	.write_back_encryption_enabled_o()
 );
 
@@ -358,7 +348,7 @@ AHB_CACHE #(.MEM_ADDR_BITS(BRAM_ADDR_BITS)) uAHB2DMEM (
 	.interrupt(D_interrupt),
 	//.debug(D_debug)
 	
-	.enc_bit_for_cache_line_i(dat_encryption_enabled_cpu),
+	.enc_bit_i(dat_encryption_enabled),
 	.write_back_encryption_enabled_o(dat_write_back_encryption_enabled)
 );
 
@@ -417,6 +407,10 @@ begin
 end
 
 
+
+assign ins_encryption_enabled = cache_ua_inst_write ? ins_write_back_encryption_enabled : ins_encryption_enabled_cpu; // this should be alway sins_encryption_enabled_cpu
+assign dat_encryption_enabled = cache_ua_data_write ? dat_write_back_encryption_enabled : dat_encryption_enabled_cpu;
+
 // Encryption and MAC unit for instructions
 UA_encrypt
     #(.ADDRESS_SIZE(BRAM_ADDR_BITS))
@@ -425,8 +419,7 @@ UA_inst
         .clock              (sys_clock),
         .reset              (!sys_reset_N),
         
-        .decryption_enabled_cpu         (ins_encryption_enabled_cpu),
-        .write_back_encryption_enabled  (ins_write_back_encryption_enabled),
+        .skip_encryption_i  (!ins_encryption_enabled),
         
         .cache_rdata        (cache_ua_inst_rdata),
         .cache_wdata        (cache_ua_inst_wdata),
@@ -448,24 +441,24 @@ UA_inst
     );
     
     
-//integer fd;
-//initial fd = $fopen("01_data_debug.txt", "w");
+integer fd;
+initial fd = $fopen("01_data_debug.txt", "w");
     
     
-//always @(posedge cache_ua_data_req)
-//begin
-//    if(cache_ua_data_write) begin
-//        $fwrite(fd, "UA write to %x, cache_ua_data_wdata: %x, enc: %x\n", cache_ua_data_addr, cache_ua_data_wdata, dat_encryption_enabled);
-//    end else
-//    begin
-//        $fwrite(fd, "UA read from %x, enc: %x...\n", cache_ua_data_addr, dat_encryption_enabled);
-//    end
-//end    
+always @(posedge cache_ua_data_req)
+begin
+    if(cache_ua_data_write) begin
+        $fwrite(fd, "UA write to %x, cache_ua_data_wdata: %x, enc: %x\n", cache_ua_data_addr, cache_ua_data_wdata, dat_encryption_enabled);
+    end else
+    begin
+        $fwrite(fd, "UA read from %x, enc: %x...\n", cache_ua_data_addr, dat_encryption_enabled);
+    end
+end    
 
-//always @(posedge cache_ua_data_valid)
-//begin
-//    $fwrite(fd, "... cache_ua_data_rdata: %x \n", cache_ua_data_rdata);
-//end
+always @(posedge cache_ua_data_valid)
+begin
+    $fwrite(fd, "... cache_ua_data_rdata: %x \n", cache_ua_data_rdata);
+end
         
     // Encryption and MAC unit for data
 UA_encrypt
@@ -475,8 +468,7 @@ UA_data
         .clock              (sys_clock),
         .reset              (!sys_reset_N),
         
-        .decryption_enabled_cpu         (dat_encryption_enabled_cpu),
-        .write_back_encryption_enabled  (dat_write_back_encryption_enabled),
+        .skip_encryption_i  (!dat_encryption_enabled),
         
         .cache_rdata        (cache_ua_data_rdata),
         .cache_wdata        (cache_ua_data_wdata),
@@ -498,20 +490,20 @@ UA_data
     );
 
 
-//always @(posedge ua_mem_req)
-//begin
-//    if(ua_mem_write) begin
-//        $fwrite(fd, "   BRAM write to %x, cache_ua_data_wdata: %x\n", ua_mem_addr, ua_mem_wdata);
-//    end else
-//    begin
-//        $fwrite(fd, "   BRAM read from %x...\n", ua_mem_addr);
-//    end
-//end   
+always @(posedge ua_mem_req)
+begin
+    if(ua_mem_write) begin
+        $fwrite(fd, "   BRAM write to %x, cache_ua_data_wdata: %x\n", ua_mem_addr, ua_mem_wdata);
+    end else
+    begin
+        $fwrite(fd, "   BRAM read from %x...\n", ua_mem_addr);
+    end
+end   
 
-//always @(posedge ua_mem_valid)
-//begin
-//    $fwrite(fd, "   ... ua_mem_rdata: %x, ua_mem_addr: %x \n", ua_mem_rdata, ua_mem_addr);
-//end
+always @(posedge ua_mem_valid)
+begin
+    $fwrite(fd, "   ... ua_mem_rdata: %x, ua_mem_addr: %x \n", ua_mem_rdata, ua_mem_addr);
+end
     
 
 // BRAM connected to caches
@@ -566,8 +558,8 @@ AHB2UART uAHBUART(
 	.HRDATA(HRDATA_UART),
 	.HREADYOUT(HREADYOUT_UART),
 	
-	.RsRx(BT_RX),
-	.RsTx(BT_TX),
+	.RsRx(1'b0),
+	.RsTx(),
 	.uart_irq(UART_IRQ)
 );
 

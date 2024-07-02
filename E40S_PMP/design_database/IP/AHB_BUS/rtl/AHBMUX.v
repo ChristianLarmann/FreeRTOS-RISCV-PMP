@@ -3,7 +3,7 @@
 //                                                                              //
 //Copyright (c) 2012, ARM All rights reserved.                                  //
 //                                                                              //
-//THIS END USER LICENCE AGREEMENT (“LICENCE”) IS A LEGAL AGREEMENT BETWEEN      //
+//THIS END USER LICENCE AGREEMENT (ï¿½LICENCEï¿½) IS A LEGAL AGREEMENT BETWEEN      //
 //YOU AND ARM LIMITED ("ARM") FOR THE USE OF THE SOFTWARE EXAMPLE ACCOMPANYING  //
 //THIS LICENCE. ARM IS ONLY WILLING TO LICENSE THE SOFTWARE EXAMPLE TO YOU ON   //
 //CONDITION THAT YOU ACCEPT ALL OF THE TERMS IN THIS LICENCE. BY INSTALLING OR  //
@@ -45,28 +45,28 @@ module AHBMUX(
 
   //READ DATA FROM ALL THE SLAVES  
   input wire [31:0] HRDATA_S0,		
-  input wire [31:0] HRDATA_S1,
+//  input wire [31:0] HRDATA_S1,
   input wire [31:0] HRDATA_S2,
-  input wire [31:0] HRDATA_S3,
+//  input wire [31:0] HRDATA_S3,
   input wire [31:0] HRDATA_S4,
   input wire [31:0] HRDATA_S5,
-  input wire [31:0] HRDATA_S6,
+//  input wire [31:0] HRDATA_S6,
   input wire [31:0] HRDATA_S7,
-  input wire [31:0] HRDATA_S8,
-  input wire [31:0] HRDATA_S9,
+//  input wire [31:0] HRDATA_S8,
+//  input wire [31:0] HRDATA_S9,
   input wire [31:0] HRDATA_NOMAP,
 
   //READYOUT FROM ALL THE SLAVES  
   input wire HREADYOUT_S0,
-  input wire HREADYOUT_S1,
+//  input wire HREADYOUT_S1,
   input wire HREADYOUT_S2,
-  input wire HREADYOUT_S3,
+//  input wire HREADYOUT_S3,
   input wire HREADYOUT_S4,
   input wire HREADYOUT_S5,
-  input wire HREADYOUT_S6,
+//  input wire HREADYOUT_S6,
   input wire HREADYOUT_S7,
-  input wire HREADYOUT_S8,
-  input wire HREADYOUT_S9,
+//  input wire HREADYOUT_S8,
+//  input wire HREADYOUT_S9,
   input wire HREADYOUT_NOMAP,
  
   //MULTIPLEXED HREADY & HRDATA TO MASTER
@@ -94,18 +94,18 @@ module AHBMUX(
         HRDATA = HRDATA_S0;
         HREADY = HREADYOUT_S0;
       end
-      4'b0001: begin
-        HRDATA = HRDATA_S1;
-        HREADY = HREADYOUT_S1;
-      end
+//      4'b0001: begin
+//        HRDATA = HRDATA_S1;
+//        HREADY = HREADYOUT_S1;
+//      end
       4'b0010: begin
         HRDATA = HRDATA_S2;
         HREADY = HREADYOUT_S2;
       end
-      4'b0011: begin
-        HRDATA = HRDATA_S3;
-        HREADY = HREADYOUT_S3;
-      end
+//      4'b0011: begin
+//        HRDATA = HRDATA_S3;
+//        HREADY = HREADYOUT_S3;
+//      end
       4'b0100: begin
         HRDATA = HRDATA_S4;
         HREADY = HREADYOUT_S4;
@@ -114,22 +114,22 @@ module AHBMUX(
         HRDATA = HRDATA_S5;
         HREADY = HREADYOUT_S5;
       end
-      4'b0110: begin
-        HRDATA = HRDATA_S6;
-        HREADY = HREADYOUT_S6;
-      end
+//      4'b0110: begin
+//        HRDATA = HRDATA_S6;
+//        HREADY = HREADYOUT_S6;
+//      end
       4'b0111: begin
         HRDATA = HRDATA_S7;
         HREADY = HREADYOUT_S7;
       end
-      4'b1000: begin
-        HRDATA = HRDATA_S8;
-        HREADY = HREADYOUT_S8;
-      end
-      4'b1001: begin
-        HRDATA = HRDATA_S9;
-        HREADY = HREADYOUT_S9;
-      end
+//      4'b1000: begin
+//        HRDATA = HRDATA_S8;
+//        HREADY = HREADYOUT_S8;
+//      end
+//      4'b1001: begin
+//        HRDATA = HRDATA_S9;
+//        HREADY = HREADYOUT_S9;
+//      end
       default: begin            
         HRDATA = HRDATA_NOMAP;
         HREADY = HREADYOUT_NOMAP;

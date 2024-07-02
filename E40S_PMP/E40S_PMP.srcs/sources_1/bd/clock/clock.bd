@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x7DDB7795B24DAA50",
+      "boundary_crc": "0x7DDB77953956DAC5",
       "device": "xc7z020clg400-1",
       "gen_directory": "../../../../RI5CY_UA.gen/sources_1/bd/clock",
       "name": "clock",
@@ -20,6 +20,9 @@
       "clk_in1": {
         "direction": "I"
       },
+      "locked": {
+        "direction": "O"
+      },
       "clk_out1": {
         "direction": "O",
         "parameters": {
@@ -28,7 +31,7 @@
             "value_src": "ip_prop"
           },
           "FREQ_HZ": {
-            "value": "10000000",
+            "value": "100000000",
             "value_src": "ip_prop"
           },
           "PHASE": {
@@ -36,76 +39,19 @@
             "value_src": "ip_prop"
           }
         }
-      },
-      "locked": {
-        "direction": "O"
       }
     },
     "components": {
       "clk_wiz_0": {
         "vlnv": "xilinx.com:ip:clk_wiz:6.0",
-        "xci_name": "clock_clk_wiz_0_0",
-        "xci_path": "ip/clock_clk_wiz_0_0/clock_clk_wiz_0_0.xci",
+        "xci_name": "clock_clk_wiz_0_1",
+        "xci_path": "ip/clock_clk_wiz_0_1/clock_clk_wiz_0_1.xci",
         "inst_hier_path": "clk_wiz_0",
         "parameters": {
-          "CLKIN1_JITTER_PS": {
-            "value": "80.0"
-          },
-          "CLKOUT1_DRIVES": {
-            "value": "BUFGCE"
-          },
-          "CLKOUT1_JITTER": {
-            "value": "197.700"
-          },
-          "CLKOUT1_PHASE_ERROR": {
-            "value": "96.948"
-          },
-          "CLKOUT1_REQUESTED_OUT_FREQ": {
-            "value": "10"
-          },
-          "CLKOUT2_DRIVES": {
-            "value": "BUFGCE"
-          },
-          "CLKOUT3_DRIVES": {
-            "value": "BUFGCE"
-          },
-          "CLKOUT4_DRIVES": {
-            "value": "BUFGCE"
-          },
-          "CLKOUT5_DRIVES": {
-            "value": "BUFGCE"
-          },
-          "CLKOUT6_DRIVES": {
-            "value": "BUFGCE"
-          },
-          "CLKOUT7_DRIVES": {
-            "value": "BUFGCE"
-          },
           "CLK_IN1_BOARD_INTERFACE": {
             "value": "sys_clock"
           },
-          "FEEDBACK_SOURCE": {
-            "value": "FDBK_AUTO"
-          },
-          "MMCM_CLKFBOUT_MULT_F": {
-            "value": "8.000"
-          },
-          "MMCM_CLKIN1_PERIOD": {
-            "value": "8.000"
-          },
-          "MMCM_CLKIN2_PERIOD": {
-            "value": "10.000"
-          },
-          "MMCM_CLKOUT0_DIVIDE_F": {
-            "value": "100.000"
-          },
-          "MMCM_DIVCLK_DIVIDE": {
-            "value": "1"
-          },
-          "PRIM_IN_FREQ": {
-            "value": "125.000"
-          },
-          "USE_SAFE_CLOCK_STARTUP": {
+          "USE_BOARD_FLOW": {
             "value": "true"
           }
         }

@@ -22,12 +22,10 @@ module core2ahb3lite
 	input  wire [AHB_DATA_WIDTH-1:0] HRDATA_i,
 	output reg 						 HWRITE_o,
 	output reg  [2:0]				 HSIZE_o,
-	output reg  [2:0]				 HBURST_o,
 	output reg  [3:0]				 HPROT_o,
 	output reg  [1:0]				 HTRANS_o,
 	output reg 						 HMASTLOCK_o,
 	input  wire						 HREADY_i,
-	input  wire						 HRESP_i,
 	output reg                       HENCRYPT_o
 	
 );
@@ -81,7 +79,6 @@ module core2ahb3lite
 	HWDATA_o		= 0;
 	HWRITE_o		= 1'b0;
 	HSIZE_o			= size;
-	HBURST_o		= 3'd0;
 	HPROT_o			= 4'd0;
 	HTRANS_o		= 2'd0;
 	HMASTLOCK_o		= 1'b0;
