@@ -5,7 +5,7 @@
     "cell_name": "xlconstant_2",
     "component_reference": "xilinx.com:ip:xlconstant:1.1",
     "ip_revision": "7",
-    "gen_directory": "../../../../../../E40S_PMP_22.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_xlconstant_2_0",
+    "gen_directory": "../../../../../../E40S_PMP.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_xlconstant_2_0",
     "parameters": {
       "component_parameters": {
         "Component_Name": [ { "value": "Zynq_E40S_PMP_xlconstant_2_0", "resolve_type": "user", "usage": "all" } ],
@@ -35,7 +35,7 @@
         "IPCONTEXT": [ { "value": "IP_Integrator" } ],
         "IPREVISION": [ { "value": "7" } ],
         "MANAGED": [ { "value": "TRUE" } ],
-        "OUTPUTDIR": [ { "value": "../../../../../../E40S_PMP_22.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_xlconstant_2_0" } ],
+        "OUTPUTDIR": [ { "value": "../../../../../../E40S_PMP.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_xlconstant_2_0" } ],
         "SELECTEDSIMMODEL": [ { "value": "" } ],
         "SHAREDDIR": [ { "value": "../../ipshared" } ],
         "SWVERSION": [ { "value": "2023.1.1" } ],

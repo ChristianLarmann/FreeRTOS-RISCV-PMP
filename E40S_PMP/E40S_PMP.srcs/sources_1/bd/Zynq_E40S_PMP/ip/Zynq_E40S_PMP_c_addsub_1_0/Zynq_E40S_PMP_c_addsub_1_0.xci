@@ -5,11 +5,11 @@
     "cell_name": "c_addsub_1",
     "component_reference": "xilinx.com:ip:c_addsub:12.0",
     "ip_revision": "15",
-    "gen_directory": "../../../../../../E40S_PMP_22.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_c_addsub_1_0",
+    "gen_directory": "../../../../../../E40S_PMP.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_c_addsub_1_0",
     "parameters": {
       "component_parameters": {
         "Component_Name": [ { "value": "Zynq_E40S_PMP_c_addsub_1_0", "resolve_type": "user", "usage": "all" } ],
-        "Implementation": [ { "value": "DSP48", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
+        "Implementation": [ { "value": "Fabric", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
         "A_Type": [ { "value": "Unsigned", "value_src": "user", "value_permission": "bd_and_user", "resolve_type": "user", "usage": "all" } ],
         "B_Type": [ { "value": "Unsigned", "value_src": "user", "value_permission": "bd_and_user", "resolve_type": "user", "usage": "all" } ],
         "A_Width": [ { "value": "32", "value_src": "user", "value_permission": "bd_and_user", "resolve_type": "user", "format": "long", "usage": "all" } ],
@@ -17,7 +17,7 @@
         "Add_Mode": [ { "value": "Subtract", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
         "Out_Width": [ { "value": "32", "value_src": "user", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "Latency_Configuration": [ { "value": "Manual", "resolve_type": "user", "usage": "all" } ],
-        "Latency": [ { "value": "1", "value_src": "user", "resolve_type": "user", "format": "long", "usage": "all" } ],
+        "Latency": [ { "value": "0", "value_src": "user", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "B_Constant": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
         "B_Value": [ { "value": "00000000000000000000000000000000", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
         "CE": [ { "value": "false", "value_src": "user", "resolve_type": "user", "format": "bool", "usage": "all" } ],
@@ -38,14 +38,14 @@
       "model_parameters": {
         "C_VERBOSITY": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_XDEVICEFAMILY": [ { "value": "zynq", "resolve_type": "generated", "usage": "all" } ],
-        "C_IMPLEMENTATION": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+        "C_IMPLEMENTATION": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_A_WIDTH": [ { "value": "32", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_B_WIDTH": [ { "value": "32", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_OUT_WIDTH": [ { "value": "32", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_CE_OVERRIDES_SCLR": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_A_TYPE": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_B_TYPE": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ],
-        "C_LATENCY": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+        "C_LATENCY": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_ADD_MODE": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_B_CONSTANT": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_B_VALUE": [ { "value": "00000000000000000000000000000000", "resolve_type": "generated", "usage": "all" } ],
@@ -80,7 +80,7 @@
         "IPCONTEXT": [ { "value": "IP_Integrator" } ],
         "IPREVISION": [ { "value": "15" } ],
         "MANAGED": [ { "value": "TRUE" } ],
-        "OUTPUTDIR": [ { "value": "../../../../../../E40S_PMP_22.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_c_addsub_1_0" } ],
+        "OUTPUTDIR": [ { "value": "../../../../../../E40S_PMP.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_c_addsub_1_0" } ],
         "SELECTEDSIMMODEL": [ { "value": "" } ],
         "SHAREDDIR": [ { "value": "../../ipshared" } ],
         "SWVERSION": [ { "value": "2023.1.1" } ],
@@ -91,7 +91,6 @@
       "ports": {
         "A": [ { "direction": "in", "size_left": "31", "size_right": "0", "driver_value": "0" } ],
         "B": [ { "direction": "in", "size_left": "31", "size_right": "0", "driver_value": "0" } ],
-        "CLK": [ { "direction": "in", "driver_value": "0x0" } ],
         "S": [ { "direction": "out", "size_left": "31", "size_right": "0", "driver_value": "0" } ]
       },
       "interfaces": {
@@ -120,9 +119,6 @@
             "CLK_DOMAIN": [ { "value": "/clk_wiz_0_clk_out1", "value_src": "ip_propagated", "value_permission": "bd", "resolve_type": "generated", "is_ips_inferred": true, "is_static_object": false } ],
             "ASSOCIATED_PORT": [ { "value": "", "value_permission": "bd", "resolve_type": "generated", "is_ips_inferred": true, "is_static_object": false } ],
             "INSERT_VIP": [ { "value": "0", "resolve_type": "user", "format": "long", "usage": "simulation.rtl", "is_ips_inferred": true, "is_static_object": false } ]
-          },
-          "port_maps": {
-            "CLK": [ { "physical_name": "CLK" } ]
           }
         },
         "sclr_intf": {

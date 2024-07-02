@@ -5,10 +5,10 @@
     "cell_name": "riscv_top_ahb3lite_0",
     "component_reference": "xilinx.com:module_ref:riscv_top_ahb3lite:1.0",
     "ip_revision": "1",
-    "gen_directory": "../../../../../../E40S_PMP_22.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_riscv_top_ahb3lite_0_0",
+    "gen_directory": "../../../../../../E40S_PMP.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_riscv_top_ahb3lite_0_0",
     "parameters": {
       "component_parameters": {
-        "BOOT_ADDR": [ { "value": "0x00008080", "resolve_type": "user", "format": "bitString", "usage": "all" } ],
+        "BOOT_ADDR": [ { "value": "0x1c005000", "value_src": "user", "resolve_type": "user", "format": "bitString", "usage": "all" } ],
         "N_EXT_PERF_COUNTERS": [ { "value": "0", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "INSTR_RDATA_WIDTH": [ { "value": "32", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "PULP_SECURE": [ { "value": "0", "resolve_type": "user", "format": "long", "usage": "all" } ],
@@ -26,7 +26,7 @@
         "Component_Name": [ { "value": "Zynq_E40S_PMP_riscv_top_ahb3lite_0_0", "resolve_type": "user", "usage": "all" } ]
       },
       "model_parameters": {
-        "BOOT_ADDR": [ { "value": "0x00008080", "resolve_type": "generated", "format": "bitString", "usage": "all" } ],
+        "BOOT_ADDR": [ { "value": "0x1c005000", "resolve_type": "generated", "format": "bitString", "usage": "all" } ],
         "N_EXT_PERF_COUNTERS": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "INSTR_RDATA_WIDTH": [ { "value": "32", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "PULP_SECURE": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
@@ -61,7 +61,7 @@
         "IPCONTEXT": [ { "value": "IP_Integrator" } ],
         "IPREVISION": [ { "value": "1" } ],
         "MANAGED": [ { "value": "TRUE" } ],
-        "OUTPUTDIR": [ { "value": "../../../../../../E40S_PMP_22.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_riscv_top_ahb3lite_0_0" } ],
+        "OUTPUTDIR": [ { "value": "../../../../../../E40S_PMP.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_riscv_top_ahb3lite_0_0" } ],
         "SELECTEDSIMMODEL": [ { "value": "" } ],
         "SHAREDDIR": [ { "value": "../../ipshared" } ],
         "SWVERSION": [ { "value": "2023.1.1" } ],

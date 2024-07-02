@@ -36,9 +36,10 @@ module bram_read_write_latency
     
     always @(posedge clk)
 	begin
-	    if (reset) begin
+	    if (!reset) begin
 	        valid <= 0;
 		    delay_active <= 0;
+		    counter <= 0;
 	   end
 	   
        if(req && !delay_active)
@@ -47,10 +48,11 @@ module bram_read_write_latency
        end
        
        // Check wheter latency has been waited
-       if(counter == LATENCY_IN_CYCLES)
+       if(counter >= LATENCY_IN_CYCLES)
 	   begin
 	       valid <= 1;
 	       delay_active <= 0;
+	       counter <= 0;
 	   end
         
        // Either count up or reset counter 

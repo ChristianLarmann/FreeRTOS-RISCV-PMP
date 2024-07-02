@@ -316,7 +316,7 @@ AHB_CACHE #(.MEM_ADDR_BITS(BRAM_ADDR_BITS)) uAHB2MEM (
     .interrupt(I_interrupt),
 	//.debug(I_debug)
 	
-	.enc_bit_i(ins_encryption_enabled),
+	.enc_bit_for_cache_line_i(ins_encryption_enabled_cpu),
 	.write_back_encryption_enabled_o()
 );
 
@@ -348,10 +348,9 @@ AHB_CACHE #(.MEM_ADDR_BITS(BRAM_ADDR_BITS)) uAHB2DMEM (
 	.interrupt(D_interrupt),
 	//.debug(D_debug)
 	
-	.enc_bit_i(dat_encryption_enabled),
+	.enc_bit_for_cache_line_i(dat_encryption_enabled_cpu),
 	.write_back_encryption_enabled_o(dat_write_back_encryption_enabled)
 );
-
 
 
 wire [128-1:0]	            ua_mem_rdata;
@@ -361,51 +360,35 @@ reg							ua_mem_req;
 reg							ua_mem_write;
 wire                        ua_mem_valid;
 
-reg inst_mem_req_ongoing;
+BRAM_ARBITER bram_arbiter ( 
 
-// BRAM-FSM: Arbiter for two caches wanting to access one memory
-always @(posedge sys_clock)
-begin
-    if (reset) begin
-        inst_mem_req_ongoing <= 0;
-    end
-    
-    // Data accesses are being prioritized because it definitely will
-    // lead to a stall. However, if an instruction fetch is active at 
-    // the arrival of a data request, the data request has to wait.
-    else if (data_cache_mem_req && !inst_mem_req_ongoing)
-    begin
-       ua_mem_req <= 1;
-       ua_mem_write <= data_cache_mem_write;
-       ua_mem_addr <= data_cache_mem_addr;
-       ua_mem_wdata <= data_cache_mem_wdata;
-       data_ua_bram_valid <= ua_mem_valid;
-    end
-    
-    else if(inst_cache_mem_req)
-    begin
-       ua_mem_req <= 1;
-       ua_mem_write <= inst_cache_mem_write;
-       ua_mem_addr <= inst_cache_mem_addr;
-       ua_mem_wdata <= inst_cache_mem_wdata;
-       inst_cache_mem_rdy <= ua_mem_valid;
-       
-       inst_mem_req_ongoing <= 1;
-    end
-    
-    else
-    begin
-       ua_mem_req <= 0;
-       cache_mem_write <= 0;
-       cache_mem_addr <= 0;
-       cache_mem_wdata <= 0;
-       inst_cache_mem_rdy <= ua_mem_valid;
-       data_ua_bram_valid <= ua_mem_valid;
-       
-       inst_mem_req_ongoing <= 0;
-    end
-end
+    .ua_mem_wdata(ua_mem_wdata),
+	.ua_mem_req(ua_mem_req),
+	.ua_mem_write(ua_mem_write),
+	.ua_mem_addr(ua_mem_addr),
+	.ua_mem_valid(ua_mem_valid),
+	.data_ua_bram_valid(data_ua_bram_valid),
+	.ua_mem_rdata_i(ua_mem_rdata_i),
+	.ua_mem_rdata_o(ua_mem_rdata_o),
 
+
+
+	// SIGNALS BETWEEN CACHES AND BRAM-FSM
+	//input  wire	[31:0]		               inst_cache_mem_rdata,
+	.inst_cache_mem_wdata(inst_cache_mem_wdata),
+	.inst_cache_mem_addr(inst_cache_mem_addr),
+	.inst_cache_mem_req(inst_cache_mem_req),
+	.inst_cache_mem_write(inst_cache_mem_write),
+	.inst_cache_mem_rdy(inst_cache_mem_rdy),
+
+	//input  wire	[31:0]		               data_cache_mem_rdata,
+	.data_cache_mem_wdata(data_cache_mem_wdata),
+	.data_cache_mem_addr(data_cache_mem_addr),
+	.data_cache_mem_req(data_cache_mem_req),
+	.data_cache_mem_write(data_cache_mem_write),
+	.data_cache_mem_rdy(data_cache_mem_rdy)
+
+);
 
 
 assign ins_encryption_enabled = cache_ua_inst_write ? ins_write_back_encryption_enabled : ins_encryption_enabled_cpu; // this should be alway sins_encryption_enabled_cpu
@@ -419,7 +402,8 @@ UA_inst
         .clock              (sys_clock),
         .reset              (!sys_reset_N),
         
-        .skip_encryption_i  (!ins_encryption_enabled),
+        .decryption_enabled_cpu         (ins_encryption_enabled_cpu),
+        .write_back_encryption_enabled  (ins_write_back_encryption_enabled),
         
         .cache_rdata        (cache_ua_inst_rdata),
         .cache_wdata        (cache_ua_inst_wdata),
@@ -468,7 +452,8 @@ UA_data
         .clock              (sys_clock),
         .reset              (!sys_reset_N),
         
-        .skip_encryption_i  (!dat_encryption_enabled),
+        .decryption_enabled_cpu         (dat_encryption_enabled_cpu),
+        .write_back_encryption_enabled  (dat_write_back_encryption_enabled),
         
         .cache_rdata        (cache_ua_data_rdata),
         .cache_wdata        (cache_ua_data_wdata),

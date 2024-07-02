@@ -5,22 +5,22 @@
     "cell_name": "BRAM_ARBITER_0",
     "component_reference": "xilinx.com:module_ref:BRAM_ARBITER:1.0",
     "ip_revision": "1",
-    "gen_directory": "../../../../../../E40S_PMP_22.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_BRAM_ARBITER_0_0",
+    "gen_directory": "../../../../../../E40S_PMP.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_BRAM_ARBITER_0_0",
     "parameters": {
       "component_parameters": {
-        "SIZE_MEMORY": [ { "value": "0x00060000", "resolve_type": "user", "format": "bitString", "usage": "all" } ],
-        "NUMBER_BRAM_ENTRIES": [ { "value": "24576", "resolve_type": "user", "format": "long", "usage": "all" } ],
+        "SIZE_MEMORY": [ { "value": "60000", "resolve_type": "user", "format": "long", "usage": "all" } ],
+        "NUMBER_BRAM_ENTRIES": [ { "value": "6000", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "BRAM_ADDR_BITS": [ { "value": "15", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "Component_Name": [ { "value": "Zynq_E40S_PMP_BRAM_ARBITER_0_0", "resolve_type": "user", "usage": "all" } ]
       },
       "model_parameters": {
-        "SIZE_MEMORY": [ { "value": "0x00060000", "resolve_type": "generated", "format": "bitString", "usage": "all" } ],
-        "NUMBER_BRAM_ENTRIES": [ { "value": "24576", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+        "SIZE_MEMORY": [ { "value": "60000", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+        "NUMBER_BRAM_ENTRIES": [ { "value": "6000", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "BRAM_ADDR_BITS": [ { "value": "15", "resolve_type": "generated", "format": "long", "usage": "all" } ]
       },
       "project_parameters": {
         "ARCHITECTURE": [ { "value": "zynq" } ],
-        "BASE_BOARD_PART": [ { "value": "" } ],
+        "BASE_BOARD_PART": [ { "value": "www.digilentinc.com:pynq-z1:part0:1.0" } ],
         "BOARD_CONNECTIONS": [ { "value": "" } ],
         "DEVICE": [ { "value": "xc7z020" } ],
         "PACKAGE": [ { "value": "clg400" } ],
@@ -37,7 +37,7 @@
         "IPCONTEXT": [ { "value": "IP_Integrator" } ],
         "IPREVISION": [ { "value": "1" } ],
         "MANAGED": [ { "value": "TRUE" } ],
-        "OUTPUTDIR": [ { "value": "../../../../../../E40S_PMP_22.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_BRAM_ARBITER_0_0" } ],
+        "OUTPUTDIR": [ { "value": "../../../../../../E40S_PMP.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_BRAM_ARBITER_0_0" } ],
         "SELECTEDSIMMODEL": [ { "value": "" } ],
         "SHAREDDIR": [ { "value": "../../ipshared" } ],
         "SWVERSION": [ { "value": "2023.1.1" } ],
@@ -60,7 +60,7 @@
         "inst_cache_mem_addr": [ { "direction": "in", "size_left": "14", "size_right": "0" } ],
         "inst_cache_mem_req": [ { "direction": "in" } ],
         "inst_cache_mem_write": [ { "direction": "in" } ],
-        "inst_cache_mem_rdy": [ { "direction": "out" } ],
+        "inst_cache_mem_valid": [ { "direction": "out" } ],
         "data_cache_mem_wdata": [ { "direction": "in", "size_left": "127", "size_right": "0" } ],
         "data_cache_mem_addr": [ { "direction": "in", "size_left": "14", "size_right": "0" } ],
         "data_cache_mem_req": [ { "direction": "in" } ],

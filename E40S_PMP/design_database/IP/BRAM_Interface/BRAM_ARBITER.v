@@ -21,8 +21,8 @@
 
 
 module BRAM_ARBITER #(
-	parameter SIZE_MEMORY = 'h60000,
-	parameter NUMBER_BRAM_ENTRIES = SIZE_MEMORY / 'h10,  // 16 byte per bram line
+	parameter SIZE_MEMORY = 60000,
+	parameter NUMBER_BRAM_ENTRIES = SIZE_MEMORY / 10,  // 16 byte per bram line
 	parameter BRAM_ADDR_BITS = 15 //$clog2(NUMBER_BRAM_ENTRIES + 1)
 )
 (
@@ -54,7 +54,7 @@ module BRAM_ARBITER #(
 	input  wire	[BRAM_ADDR_BITS-1:0]       inst_cache_mem_addr,
 	input  wire                            inst_cache_mem_req,
 	input  wire						       inst_cache_mem_write,
-	output reg                             inst_cache_mem_rdy,
+	output reg                             inst_cache_mem_valid,
 
 	//input  wire	[31:0]		               data_cache_mem_rdata,
 	input  wire	[128-1:0]		           data_cache_mem_wdata,
@@ -75,8 +75,15 @@ module BRAM_ARBITER #(
 	// BRAM-FSM: Arbiter for two caches wanting to access one memory
 	always @(posedge sys_clock)
 	begin
-		if (reset) begin
+		if (!reset) begin
 		    inst_mem_req_ongoing <= 0;
+		    
+		    ua_mem_wdata <= 0;
+		    ua_mem_req <= 0;
+		    ua_mem_write <= 0;
+		    data_ua_bram_valid <= 0;
+		    inst_cache_mem_valid <= 0;
+		    data_cache_mem_rdy <= 0;
 		end
 		
 		// Data accesses are being prioritized because it definitely will
@@ -97,7 +104,7 @@ module BRAM_ARBITER #(
 		   ua_mem_write <= inst_cache_mem_write;
 		   ua_mem_addr <= inst_cache_mem_addr;
 		   ua_mem_wdata <= inst_cache_mem_wdata;
-		   inst_cache_mem_rdy <= ua_mem_valid;
+		   inst_cache_mem_valid <= ua_mem_valid;
 		   
 		   inst_mem_req_ongoing <= 1;
 		end
@@ -105,7 +112,7 @@ module BRAM_ARBITER #(
 		else
 		begin
 		   ua_mem_req <= 0;
-		   inst_cache_mem_rdy <= ua_mem_valid;
+		   inst_cache_mem_valid <= ua_mem_valid;
 		   data_ua_bram_valid <= ua_mem_valid;
 		   
 		   inst_mem_req_ongoing <= 0;

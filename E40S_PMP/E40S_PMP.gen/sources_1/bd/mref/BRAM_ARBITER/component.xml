@@ -55,7 +55,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>56c87948</spirit:value>
+            <spirit:value>0f3eec47</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -68,7 +68,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>56c87948</spirit:value>
+            <spirit:value>0f3eec47</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -289,7 +289,7 @@
         </spirit:wire>
       </spirit:port>
       <spirit:port>
-        <spirit:name>inst_cache_mem_rdy</spirit:name>
+        <spirit:name>inst_cache_mem_valid</spirit:name>
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
           <spirit:wireTypeDefs>
@@ -379,12 +379,12 @@
       <spirit:modelParameter xsi:type="spirit:nameValueTypeType" spirit:dataType="integer">
         <spirit:name>SIZE_MEMORY</spirit:name>
         <spirit:displayName>Size Memory</spirit:displayName>
-        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.SIZE_MEMORY" spirit:bitStringLength="32">0x00060000</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.SIZE_MEMORY">60000</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>NUMBER_BRAM_ENTRIES</spirit:name>
         <spirit:displayName>Number Bram Entries</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.NUMBER_BRAM_ENTRIES" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.SIZE_MEMORY&apos;)) / 0x00000010)">24576</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.NUMBER_BRAM_ENTRIES" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.SIZE_MEMORY&apos;)) / 10)">6000</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>BRAM_ADDR_BITS</spirit:name>
@@ -409,12 +409,12 @@
     <spirit:parameter>
       <spirit:name>SIZE_MEMORY</spirit:name>
       <spirit:displayName>Size Memory</spirit:displayName>
-      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.SIZE_MEMORY" spirit:bitStringLength="32">0x00060000</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.SIZE_MEMORY">60000</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>NUMBER_BRAM_ENTRIES</spirit:name>
       <spirit:displayName>Number Bram Entries</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.NUMBER_BRAM_ENTRIES">24576</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.NUMBER_BRAM_ENTRIES">6000</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>BRAM_ADDR_BITS</spirit:name>
@@ -441,7 +441,7 @@
         <xilinx:designToolContext>IPI</xilinx:designToolContext>
       </xilinx:designToolContexts>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2024-07-02T17:42:33Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2024-07-02T23:23:15Z</xilinx:coreCreationDateTime>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2023.1.1</xilinx:xilinxVersion>

@@ -1,5 +1,5 @@
 vhdl xil_defaultlib  \
-"../../../../E40S_PMP_22.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_c_addsub_1_0/sim/Zynq_E40S_PMP_c_addsub_1_0.vhd" \
+"../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_c_addsub_1_0/sim/Zynq_E40S_PMP_c_addsub_1_0.vhd" \
 
 # Do not sort compile order
 nosort

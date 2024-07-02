@@ -1,3 +1,5 @@
+`timescale 1ns/1ps
+
 module ssp_tb();
 
 ///////////////////////////////////////////////////
@@ -11,6 +13,7 @@ reg  r_RX_Serial;
 
 reg clock;
 reg reset;
+reg fetch_enable_cpu;
 ///////////////////////////////////////////////////
 
   // Takes in input byte and serializes it 
@@ -46,6 +49,7 @@ always #5 clock = ~clock;
 
 initial begin
   clock = 0;
+  fetch_enable_cpu = 0;
   r_RX_Serial = 1;
   switches = 0;
   
@@ -54,6 +58,8 @@ initial begin
   reset = 1;
   #20
   reset = 0;
+  #40
+  fetch_enable_cpu = 1;
  
 
 
@@ -87,7 +93,20 @@ Zynq_E40S_PMP_wrapper SECURE_PLATFORM_RI5CY
 		(
 				.clk_125(clock),
 				.system_reset(reset),
-				.BT_RX(0)
+				.BT_RX(1'b0),
+				.fetch_enable_cpu(fetch_enable_cpu)
 		);
+
+//SECURE_PLATFORM_RI5CY SECURE_SOC_PLATFORM
+//		(
+//				.sys_clock(clock),
+//				.reset(reset),
+//				.output_LEDS(leds),
+//				//.SWITCHES(switches),
+////				.BT_RX(r_RX_Serial),
+////				.BT_TX(w_TX_Serial)
+//				//.BT_RST(),
+//				//.BT_CTS()
+//		);
 
 endmodule
