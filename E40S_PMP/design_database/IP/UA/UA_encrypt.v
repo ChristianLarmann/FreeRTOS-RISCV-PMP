@@ -10,7 +10,8 @@ module UA_encrypt
         input   wire                    clock,
         input   wire                    reset,
         
-        input   wire                    skip_encryption_i,
+        input   wire                    encryption_enabled_cpu,
+        input   wire                    write_back_encryption_enabled,
         
         //Cache side connections
         output  wire [DATA_WIDTH-1:0]   cache_rdata,
@@ -68,20 +69,26 @@ module UA_encrypt
     wire                            cry_rdy;
     reg                             cry_run;
 
+    wire                            encryption_enabled;
+    wire                            skip_encryption;
+    
+   
+    assign encryption_enabled = cache_rw_enable ? write_back_encryption_enabled : encryption_enabled_cpu;
+    assign skip_encryption = !encryption_enabled;
     
     // Assign output wires                     | Skip encryption    | Default assignment
     if (ENABLE_ADDR_TWEAK) begin
-        assign mem_wdata       = skip_encryption_i ? cache_wdata        : (data_out ^ address);
-        assign cache_rdata     = skip_encryption_i ? mem_rdata          : ((state == END) ? (cry_dout ^ address) : 0);
+        assign mem_wdata       = skip_encryption ? cache_wdata        : (data_out ^ address);
+        assign cache_rdata     = skip_encryption ? mem_rdata          : ((state == END) ? (cry_dout ^ address) : 0);
     end
     else begin
-        assign cache_rdata     = skip_encryption_i ? mem_rdata          : ((state == END) ? cry_dout : 0);
-        assign mem_wdata       = skip_encryption_i ? cache_wdata        : data_out;
+        assign cache_rdata     = skip_encryption ? mem_rdata          : ((state == END) ? cry_dout : 0);
+        assign mem_wdata       = skip_encryption ? cache_wdata        : data_out;
     end
-    assign mem_address     = skip_encryption_i ? cache_address      : address;
-    assign mem_req         = skip_encryption_i ? cache_req          : mem_request;
-    assign mem_rw_enable   = skip_encryption_i ? cache_rw_enable    : mem_rw;
-    assign cache_ready     = skip_encryption_i ? mem_valid          : ((state == END) ? 1 : 0);
+    assign mem_address     = skip_encryption ? cache_address      : address;
+    assign mem_req         = skip_encryption ? cache_req          : mem_request;
+    assign mem_rw_enable   = skip_encryption ? cache_rw_enable    : mem_rw;
+    assign cache_ready     = skip_encryption ? mem_valid          : ((state == END) ? 1 : 0);
 
     
   // Reset and state switches
@@ -106,9 +113,9 @@ module UA_encrypt
         //  IDLE STATE================================================================================
             IDLE: begin 
                 // When cache wants something, start state machine
-                if(cache_req && !skip_encryption_i) begin
+                if(cache_req && !skip_encryption) begin
                     // Debug
-                     $fwrite(fd, "%x, %x, %x. %x\n", cache_address, cache_wdata, cache_rdata, skip_encryption_i);
+                     $fwrite(fd, "%x, %x, %x. %x\n", cache_address, cache_wdata, cache_rdata, skip_encryption);
                     
                     // If write operation, go encrypt first
                     if(cache_rw_enable) begin
