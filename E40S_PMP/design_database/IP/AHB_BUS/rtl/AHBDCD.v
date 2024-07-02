@@ -71,13 +71,6 @@ assign HSEL_S7 = dec[7];   //MEMORY MAP --> 0x2010_0000 to 0x2010_FFFF  64kb
 assign HSEL_S8 = dec[8];   //MEMORY MAP --> undef
 assign HSEL_S9 = dec[9];   //MEMORY MAP --> undef
 assign HSEL_NOMAP = dec[15]; //REST OF REGION NOT COVERED ABOVE
-    
-    
-always@ (negedge RESET)
-begin
-  if(!RESET)
-    instr_mem_access_locked <= 1'h0;
-end
   
 
 always@*
@@ -92,20 +85,13 @@ begin
     
     16'h1C00, 16'h1C01: // Secure boot accessing PRGM-RAM instructions
       begin
-        if (!instr_mem_access_locked) begin
-            dec = 16'b0000_0000_00000001;
-            MUX_SEL = 4'b0000;
-        end else begin
-            // Same as NOMAP, default case
-            dec = 16'b1000_0000_00000000;
-            MUX_SEL = 4'b1111;
-        end
+        dec = 16'b0000_0000_00000001;
+        MUX_SEL = 4'b0000;
       end
     16'h1A10: //MEMORY MAP --> 0x1A10_0000 to 0x1A10_FFFF  64kB 
       begin		
 			dec = 16'b0000_0000_0000_0010;
 			MUX_SEL = 4'b0001;
-			instr_mem_access_locked = 'h1;
       end
 	16'h1B10:  
 		begin
