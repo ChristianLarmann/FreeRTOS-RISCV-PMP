@@ -86,6 +86,12 @@ module BRAM_ARBITER #(
 		    data_cache_mem_rdy <= 0;
 		end
 		
+        // Make sure that req is reset if inst_req is high during data_req
+		else if(data_cache_mem_req && data_ua_bram_valid)
+		begin
+		   ua_mem_req <= 0;
+		end
+		
 		// Data accesses are being prioritized because it definitely will
 		// lead to a stall. However, if an instruction fetch is active at 
 		// the arrival of a data request, the data request has to wait.
