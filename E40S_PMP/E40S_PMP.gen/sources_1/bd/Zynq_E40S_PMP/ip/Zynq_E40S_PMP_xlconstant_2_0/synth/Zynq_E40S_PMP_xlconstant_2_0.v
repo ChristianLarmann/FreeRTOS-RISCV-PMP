@@ -52,17 +52,17 @@
 
 (* X_CORE_INFO = "xlconstant_v1_1_7_xlconstant,Vivado 2023.1.1" *)
 (* CHECK_LICENSE_TYPE = "Zynq_E40S_PMP_xlconstant_2_0,xlconstant_v1_1_7_xlconstant,{}" *)
-(* CORE_GENERATION_INFO = "Zynq_E40S_PMP_xlconstant_2_0,xlconstant_v1_1_7_xlconstant,{x_ipProduct=Vivado 2023.1.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=xlconstant,x_ipVersion=1.1,x_ipCoreRevision=7,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,CONST_WIDTH=32,CONST_VAL=0x00000000}" *)
+(* CORE_GENERATION_INFO = "Zynq_E40S_PMP_xlconstant_2_0,xlconstant_v1_1_7_xlconstant,{x_ipProduct=Vivado 2023.1.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=xlconstant,x_ipVersion=1.1,x_ipCoreRevision=7,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,CONST_WIDTH=1,CONST_VAL=0x0}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module Zynq_E40S_PMP_xlconstant_2_0 (
   dout
 );
 
-output wire [31 : 0] dout;
+output wire [0 : 0] dout;
 
   xlconstant_v1_1_7_xlconstant #(
-    .CONST_WIDTH(32),
-    .CONST_VAL(32'H00000000)
+    .CONST_WIDTH(1),
+    .CONST_VAL(1'H0)
   ) inst (
     .dout(dout)
   );

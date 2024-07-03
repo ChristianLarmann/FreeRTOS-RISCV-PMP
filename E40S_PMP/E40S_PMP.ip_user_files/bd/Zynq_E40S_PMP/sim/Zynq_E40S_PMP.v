@@ -2,7 +2,7 @@
 //Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2023.1.1 (lin64) Build 3900603 Fri Jun 16 19:30:25 MDT 2023
-//Date        : Wed Jul  3 15:13:22 2024
+//Date        : Wed Jul  3 18:18:10 2024
 //Host        : TP-T480s running 64-bit Ubuntu 22.04.4 LTS
 //Command     : generate_target Zynq_E40S_PMP.bd
 //Design      : Zynq_E40S_PMP
@@ -93,10 +93,10 @@ module Zynq_E40S_PMP
   wire [31:0]riscv_top_ahb3lite_0_ins_HWDATA;
   wire riscv_top_ahb3lite_0_ins_HWRITE;
   wire system_reset_1;
-  wire [961:0]xlconcat_0_dout;
+  wire [31:0]xlconcat_0_dout;
   wire [31:0]xlconstant_0_dout;
   wire [31:0]xlconstant_1_dout;
-  wire [31:0]xlconstant_2_dout;
+  wire [0:0]xlconstant_2_dout;
   wire [2:0]xlconstant_3_dout;
   wire [0:0]xlconstant_4_dout;
   wire [0:0]xlconstant_5_dout;
@@ -322,7 +322,7 @@ module Zynq_E40S_PMP
         .ins_HTRANS(riscv_top_ahb3lite_0_ins_HTRANS),
         .ins_HWDATA(riscv_top_ahb3lite_0_ins_HWDATA),
         .ins_HWRITE(riscv_top_ahb3lite_0_ins_HWRITE),
-        .irqs(xlconcat_0_dout[31:0]));
+        .irqs(xlconcat_0_dout));
   Zynq_E40S_PMP_xlconcat_0_0 xlconcat_0
        (.In0(xlconstant_2_dout),
         .In1(xlconstant_2_dout),

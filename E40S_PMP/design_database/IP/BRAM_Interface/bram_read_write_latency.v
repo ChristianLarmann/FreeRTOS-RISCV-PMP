@@ -67,7 +67,7 @@ module bram_read_write_latency
        // Either count up or reset counter 
        if(delay_active) 
        begin
-           counter = counter + 1;
+           counter <= counter + 1;
        end else 
        begin
            valid <= 0;

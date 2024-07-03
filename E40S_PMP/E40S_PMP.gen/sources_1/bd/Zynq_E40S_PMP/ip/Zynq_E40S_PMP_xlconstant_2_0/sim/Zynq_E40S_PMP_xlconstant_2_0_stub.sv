@@ -62,7 +62,7 @@ typedef bit bit_as_bool;
 
 (* SC_MODULE_EXPORT *)
 module Zynq_E40S_PMP_xlconstant_2_0 (
-  output bit [31 : 0 ] dout
+  output bit [0 : 0 ] dout
 );
 endmodule
 `endif
@@ -72,7 +72,7 @@ endmodule
 module Zynq_E40S_PMP_xlconstant_2_0 (dout)
 (* integer foreign = "SystemC";
 *);
- output wire [31 : 0 ] dout;  
+ output wire [0 : 0 ] dout;  
 endmodule
 `endif
 

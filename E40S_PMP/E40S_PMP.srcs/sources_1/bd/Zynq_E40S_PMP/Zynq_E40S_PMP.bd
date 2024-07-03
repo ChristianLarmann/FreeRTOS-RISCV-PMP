@@ -29,14 +29,14 @@
       "clk_wiz_0": "",
       "riscv_top_ahb3lite_0": "",
       "AHBDCD_0": "",
-      "AHB_CACHE_0": "",
-      "AHB_CACHE_1": "",
       "UA_encrypt_0": "",
       "UA_encrypt_1": "",
       "xlconstant_5": "",
       "AHBMUX_0": "",
-      "bram_read_write_late_0": "",
-      "BRAM_ARBITER_0": ""
+      "AHB_CACHE_0": "",
+      "AHB_CACHE_1": "",
+      "BRAM_ARBITER_0": "",
+      "bram_read_write_late_0": ""
     },
     "ports": {
       "BT_RX": {
@@ -353,6 +353,102 @@
         "xci_path": "ip/Zynq_E40S_PMP_xlconcat_0_0/Zynq_E40S_PMP_xlconcat_0_0.xci",
         "inst_hier_path": "xlconcat_0",
         "parameters": {
+          "IN0_WIDTH": {
+            "value": "1"
+          },
+          "IN10_WIDTH": {
+            "value": "1"
+          },
+          "IN11_WIDTH": {
+            "value": "1"
+          },
+          "IN12_WIDTH": {
+            "value": "1"
+          },
+          "IN13_WIDTH": {
+            "value": "1"
+          },
+          "IN14_WIDTH": {
+            "value": "1"
+          },
+          "IN15_WIDTH": {
+            "value": "1"
+          },
+          "IN16_WIDTH": {
+            "value": "1"
+          },
+          "IN17_WIDTH": {
+            "value": "1"
+          },
+          "IN18_WIDTH": {
+            "value": "1"
+          },
+          "IN19_WIDTH": {
+            "value": "1"
+          },
+          "IN1_WIDTH": {
+            "value": "1"
+          },
+          "IN20_WIDTH": {
+            "value": "1"
+          },
+          "IN21_WIDTH": {
+            "value": "1"
+          },
+          "IN22_WIDTH": {
+            "value": "1"
+          },
+          "IN23_WIDTH": {
+            "value": "1"
+          },
+          "IN24_WIDTH": {
+            "value": "1"
+          },
+          "IN25_WIDTH": {
+            "value": "1"
+          },
+          "IN26_WIDTH": {
+            "value": "1"
+          },
+          "IN27_WIDTH": {
+            "value": "1"
+          },
+          "IN28_WIDTH": {
+            "value": "1"
+          },
+          "IN29_WIDTH": {
+            "value": "1"
+          },
+          "IN2_WIDTH": {
+            "value": "1"
+          },
+          "IN30_WIDTH": {
+            "value": "1"
+          },
+          "IN31_WIDTH": {
+            "value": "1"
+          },
+          "IN3_WIDTH": {
+            "value": "1"
+          },
+          "IN4_WIDTH": {
+            "value": "1"
+          },
+          "IN5_WIDTH": {
+            "value": "1"
+          },
+          "IN6_WIDTH": {
+            "value": "1"
+          },
+          "IN7_WIDTH": {
+            "value": "1"
+          },
+          "IN8_WIDTH": {
+            "value": "1"
+          },
+          "IN9_WIDTH": {
+            "value": "1"
+          },
           "NUM_PORTS": {
             "value": "32"
           }
@@ -365,7 +461,7 @@
         "inst_hier_path": "blk_mem_gen_1",
         "parameters": {
           "Coe_File": {
-            "value": "../../../../../../E40S_PMP.sim/sim_1/behav/xsim/code_and_data0307.coe"
+            "value": "../../../../../../code_and_data0307.coe"
           },
           "Load_Init_File": {
             "value": "true"
@@ -457,7 +553,7 @@
             "value": "0"
           },
           "CONST_WIDTH": {
-            "value": "32"
+            "value": "1"
           }
         }
       },
@@ -660,7 +756,7 @@
             "right": "0",
             "parameters": {
               "PortWidth": {
-                "value": "962",
+                "value": "32",
                 "value_src": "ip_prop"
               },
               "SENSITIVITY": {
@@ -762,268 +858,6 @@
             "direction": "O",
             "left": "3",
             "right": "0"
-          }
-        }
-      },
-      "AHB_CACHE_0": {
-        "vlnv": "xilinx.com:module_ref:AHB_CACHE:1.0",
-        "xci_name": "Zynq_E40S_PMP_AHB_CACHE_0_0",
-        "xci_path": "ip/Zynq_E40S_PMP_AHB_CACHE_0_0/Zynq_E40S_PMP_AHB_CACHE_0_0.xci",
-        "inst_hier_path": "AHB_CACHE_0",
-        "reference_info": {
-          "ref_type": "hdl",
-          "ref_name": "AHB_CACHE",
-          "boundary_crc": "0x0"
-        },
-        "ports": {
-          "HSEL": {
-            "direction": "I"
-          },
-          "HCLK": {
-            "direction": "I",
-            "parameters": {
-              "FREQ_HZ": {
-                "value": "100000000",
-                "value_src": "ip_prop"
-              },
-              "PHASE": {
-                "value": "0.0",
-                "value_src": "ip_prop"
-              },
-              "CLK_DOMAIN": {
-                "value": "/clk_wiz_0_clk_out1",
-                "value_src": "ip_prop"
-              }
-            }
-          },
-          "HRESETn": {
-            "direction": "I"
-          },
-          "HREADY": {
-            "direction": "I"
-          },
-          "HADDR": {
-            "direction": "I",
-            "left": "31",
-            "right": "0",
-            "parameters": {
-              "LAYERED_METADATA": {
-                "value": [
-                  "xilinx.com:interface:datatypes:1.0 {",
-                  "DATA {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value data} bitwidth {attribs {resolve_type generated dependency bitwidth format long minimum",
-                  "{} maximum {}} value 32} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0} integer {signed {attribs {resolve_type generated dependency signed format",
-                  "bool minimum {} maximum {}} value FALSE}}}} DATA_WIDTH 32",
-                  "}"
-                ],
-                "value_src": "ip_prop"
-              }
-            }
-          },
-          "HTRANS": {
-            "direction": "I",
-            "left": "1",
-            "right": "0"
-          },
-          "HWRITE": {
-            "direction": "I"
-          },
-          "HSIZE": {
-            "direction": "I",
-            "left": "2",
-            "right": "0"
-          },
-          "HWDATA": {
-            "direction": "I",
-            "left": "31",
-            "right": "0"
-          },
-          "HREADYOUT": {
-            "direction": "O"
-          },
-          "HRDATA": {
-            "direction": "O",
-            "left": "31",
-            "right": "0"
-          },
-          "interrupt": {
-            "type": "intr",
-            "direction": "O",
-            "parameters": {
-              "SENSITIVITY": {
-                "value": "LEVEL_HIGH",
-                "value_src": "constant"
-              }
-            }
-          },
-          "BRAM_MEM_REQ": {
-            "direction": "O"
-          },
-          "BRAM_MEM_WRITE": {
-            "direction": "O"
-          },
-          "BRAM_MEM_ADDR": {
-            "direction": "O",
-            "left": "14",
-            "right": "0"
-          },
-          "BRAM_WDATA": {
-            "direction": "O",
-            "left": "127",
-            "right": "0"
-          },
-          "BRAM_RDATA": {
-            "direction": "I",
-            "left": "127",
-            "right": "0"
-          },
-          "BRAM_MEM_VALID": {
-            "direction": "I"
-          },
-          "BRAM_RDY": {
-            "direction": "O"
-          },
-          "debug": {
-            "direction": "O",
-            "left": "9",
-            "right": "0"
-          },
-          "enc_bit_for_cache_line_i": {
-            "direction": "I"
-          },
-          "write_back_encryption_enabled_o": {
-            "direction": "O"
-          }
-        }
-      },
-      "AHB_CACHE_1": {
-        "vlnv": "xilinx.com:module_ref:AHB_CACHE:1.0",
-        "xci_name": "Zynq_E40S_PMP_AHB_CACHE_1_0",
-        "xci_path": "ip/Zynq_E40S_PMP_AHB_CACHE_1_0/Zynq_E40S_PMP_AHB_CACHE_1_0.xci",
-        "inst_hier_path": "AHB_CACHE_1",
-        "reference_info": {
-          "ref_type": "hdl",
-          "ref_name": "AHB_CACHE",
-          "boundary_crc": "0x0"
-        },
-        "ports": {
-          "HSEL": {
-            "direction": "I"
-          },
-          "HCLK": {
-            "direction": "I",
-            "parameters": {
-              "FREQ_HZ": {
-                "value": "100000000",
-                "value_src": "ip_prop"
-              },
-              "PHASE": {
-                "value": "0.0",
-                "value_src": "ip_prop"
-              },
-              "CLK_DOMAIN": {
-                "value": "/clk_wiz_0_clk_out1",
-                "value_src": "ip_prop"
-              }
-            }
-          },
-          "HRESETn": {
-            "direction": "I"
-          },
-          "HREADY": {
-            "direction": "I"
-          },
-          "HADDR": {
-            "direction": "I",
-            "left": "31",
-            "right": "0"
-          },
-          "HTRANS": {
-            "direction": "I",
-            "left": "1",
-            "right": "0"
-          },
-          "HWRITE": {
-            "direction": "I"
-          },
-          "HSIZE": {
-            "direction": "I",
-            "left": "2",
-            "right": "0"
-          },
-          "HWDATA": {
-            "direction": "I",
-            "left": "31",
-            "right": "0"
-          },
-          "HREADYOUT": {
-            "direction": "O"
-          },
-          "HRDATA": {
-            "direction": "O",
-            "left": "31",
-            "right": "0",
-            "parameters": {
-              "SENSITIVITY": {
-                "value": "LEVEL_HIGH",
-                "value_src": "const_prop"
-              },
-              "PortWidth": {
-                "value": "1",
-                "value_src": "default_prop"
-              }
-            }
-          },
-          "interrupt": {
-            "type": "intr",
-            "direction": "O",
-            "parameters": {
-              "SENSITIVITY": {
-                "value": "LEVEL_HIGH",
-                "value_src": "constant"
-              },
-              "PortWidth": {
-                "value": "1",
-                "value_src": "default_prop"
-              }
-            }
-          },
-          "BRAM_MEM_REQ": {
-            "direction": "O"
-          },
-          "BRAM_MEM_WRITE": {
-            "direction": "O"
-          },
-          "BRAM_MEM_ADDR": {
-            "direction": "O",
-            "left": "14",
-            "right": "0"
-          },
-          "BRAM_WDATA": {
-            "direction": "O",
-            "left": "127",
-            "right": "0"
-          },
-          "BRAM_RDATA": {
-            "direction": "I",
-            "left": "127",
-            "right": "0"
-          },
-          "BRAM_MEM_VALID": {
-            "direction": "I"
-          },
-          "BRAM_RDY": {
-            "direction": "O"
-          },
-          "debug": {
-            "direction": "O",
-            "left": "9",
-            "right": "0"
-          },
-          "enc_bit_for_cache_line_i": {
-            "direction": "I"
-          },
-          "write_back_encryption_enabled_o": {
-            "direction": "O"
           }
         }
       },
@@ -1333,25 +1167,23 @@
           }
         }
       },
-      "bram_read_write_late_0": {
-        "vlnv": "xilinx.com:module_ref:bram_read_write_latency:1.0",
-        "xci_name": "Zynq_E40S_PMP_bram_read_write_late_0_0",
-        "xci_path": "ip/Zynq_E40S_PMP_bram_read_write_late_0_0/Zynq_E40S_PMP_bram_read_write_late_0_0.xci",
-        "inst_hier_path": "bram_read_write_late_0",
+      "AHB_CACHE_0": {
+        "vlnv": "xilinx.com:module_ref:AHB_CACHE:1.0",
+        "xci_name": "Zynq_E40S_PMP_AHB_CACHE_0_0",
+        "xci_path": "ip/Zynq_E40S_PMP_AHB_CACHE_0_0/Zynq_E40S_PMP_AHB_CACHE_0_0.xci",
+        "inst_hier_path": "AHB_CACHE_0",
         "reference_info": {
           "ref_type": "hdl",
-          "ref_name": "bram_read_write_latency",
+          "ref_name": "AHB_CACHE",
           "boundary_crc": "0x0"
         },
         "ports": {
-          "clk": {
-            "type": "clk",
+          "HSEL": {
+            "direction": "I"
+          },
+          "HCLK": {
             "direction": "I",
             "parameters": {
-              "ASSOCIATED_RESET": {
-                "value": "reset",
-                "value_src": "constant"
-              },
               "FREQ_HZ": {
                 "value": "100000000",
                 "value_src": "ip_prop"
@@ -1366,14 +1198,229 @@
               }
             }
           },
-          "reset": {
-            "type": "rst",
+          "HRESETn": {
             "direction": "I"
           },
-          "req": {
+          "HREADY": {
             "direction": "I"
           },
-          "valid": {
+          "HADDR": {
+            "direction": "I",
+            "left": "31",
+            "right": "0",
+            "parameters": {
+              "LAYERED_METADATA": {
+                "value": [
+                  "xilinx.com:interface:datatypes:1.0 {",
+                  "DATA {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value data} bitwidth {attribs {resolve_type generated dependency bitwidth format long minimum",
+                  "{} maximum {}} value 32} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0} integer {signed {attribs {resolve_type generated dependency signed format",
+                  "bool minimum {} maximum {}} value FALSE}}}} DATA_WIDTH 32",
+                  "}"
+                ],
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "HTRANS": {
+            "direction": "I",
+            "left": "1",
+            "right": "0"
+          },
+          "HWRITE": {
+            "direction": "I"
+          },
+          "HSIZE": {
+            "direction": "I",
+            "left": "2",
+            "right": "0"
+          },
+          "HWDATA": {
+            "direction": "I",
+            "left": "31",
+            "right": "0"
+          },
+          "HREADYOUT": {
+            "direction": "O"
+          },
+          "HRDATA": {
+            "direction": "O",
+            "left": "31",
+            "right": "0"
+          },
+          "interrupt": {
+            "type": "intr",
+            "direction": "O",
+            "parameters": {
+              "SENSITIVITY": {
+                "value": "LEVEL_HIGH",
+                "value_src": "constant"
+              }
+            }
+          },
+          "BRAM_MEM_REQ": {
+            "direction": "O"
+          },
+          "BRAM_MEM_WRITE": {
+            "direction": "O"
+          },
+          "BRAM_MEM_ADDR": {
+            "direction": "O",
+            "left": "14",
+            "right": "0"
+          },
+          "BRAM_WDATA": {
+            "direction": "O",
+            "left": "127",
+            "right": "0"
+          },
+          "BRAM_RDATA": {
+            "direction": "I",
+            "left": "127",
+            "right": "0"
+          },
+          "BRAM_MEM_VALID": {
+            "direction": "I"
+          },
+          "BRAM_RDY": {
+            "direction": "O"
+          },
+          "debug": {
+            "direction": "O",
+            "left": "9",
+            "right": "0"
+          },
+          "enc_bit_for_cache_line_i": {
+            "direction": "I"
+          },
+          "write_back_encryption_enabled_o": {
+            "direction": "O"
+          }
+        }
+      },
+      "AHB_CACHE_1": {
+        "vlnv": "xilinx.com:module_ref:AHB_CACHE:1.0",
+        "xci_name": "Zynq_E40S_PMP_AHB_CACHE_1_0",
+        "xci_path": "ip/Zynq_E40S_PMP_AHB_CACHE_1_0/Zynq_E40S_PMP_AHB_CACHE_1_0.xci",
+        "inst_hier_path": "AHB_CACHE_1",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "AHB_CACHE",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "HSEL": {
+            "direction": "I"
+          },
+          "HCLK": {
+            "direction": "I",
+            "parameters": {
+              "FREQ_HZ": {
+                "value": "100000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "HRESETn": {
+            "direction": "I"
+          },
+          "HREADY": {
+            "direction": "I"
+          },
+          "HADDR": {
+            "direction": "I",
+            "left": "31",
+            "right": "0"
+          },
+          "HTRANS": {
+            "direction": "I",
+            "left": "1",
+            "right": "0"
+          },
+          "HWRITE": {
+            "direction": "I"
+          },
+          "HSIZE": {
+            "direction": "I",
+            "left": "2",
+            "right": "0"
+          },
+          "HWDATA": {
+            "direction": "I",
+            "left": "31",
+            "right": "0"
+          },
+          "HREADYOUT": {
+            "direction": "O"
+          },
+          "HRDATA": {
+            "direction": "O",
+            "left": "31",
+            "right": "0",
+            "parameters": {
+              "SENSITIVITY": {
+                "value": "LEVEL_HIGH",
+                "value_src": "const_prop"
+              },
+              "PortWidth": {
+                "value": "1",
+                "value_src": "default_prop"
+              }
+            }
+          },
+          "interrupt": {
+            "type": "intr",
+            "direction": "O",
+            "parameters": {
+              "SENSITIVITY": {
+                "value": "LEVEL_HIGH",
+                "value_src": "constant"
+              }
+            }
+          },
+          "BRAM_MEM_REQ": {
+            "direction": "O"
+          },
+          "BRAM_MEM_WRITE": {
+            "direction": "O"
+          },
+          "BRAM_MEM_ADDR": {
+            "direction": "O",
+            "left": "14",
+            "right": "0"
+          },
+          "BRAM_WDATA": {
+            "direction": "O",
+            "left": "127",
+            "right": "0"
+          },
+          "BRAM_RDATA": {
+            "direction": "I",
+            "left": "127",
+            "right": "0"
+          },
+          "BRAM_MEM_VALID": {
+            "direction": "I"
+          },
+          "BRAM_RDY": {
+            "direction": "O"
+          },
+          "debug": {
+            "direction": "O",
+            "left": "9",
+            "right": "0"
+          },
+          "enc_bit_for_cache_line_i": {
+            "direction": "I"
+          },
+          "write_back_encryption_enabled_o": {
             "direction": "O"
           }
         }
@@ -1483,6 +1530,51 @@
             "direction": "I"
           },
           "data_cache_mem_rdy": {
+            "direction": "O"
+          }
+        }
+      },
+      "bram_read_write_late_0": {
+        "vlnv": "xilinx.com:module_ref:bram_read_write_latency:1.0",
+        "xci_name": "Zynq_E40S_PMP_bram_read_write_late_0_0",
+        "xci_path": "ip/Zynq_E40S_PMP_bram_read_write_late_0_0/Zynq_E40S_PMP_bram_read_write_late_0_0.xci",
+        "inst_hier_path": "bram_read_write_late_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "bram_read_write_latency",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "clk": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_RESET": {
+                "value": "reset",
+                "value_src": "constant"
+              },
+              "FREQ_HZ": {
+                "value": "100000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "reset": {
+            "type": "rst",
+            "direction": "I"
+          },
+          "req": {
+            "direction": "I"
+          },
+          "valid": {
             "direction": "O"
           }
         }
@@ -1740,8 +1832,8 @@
       "Net5": {
         "ports": [
           "riscv_top_ahb3lite_0/dat_HENCRYPT",
-          "AHB_CACHE_1/enc_bit_for_cache_line_i",
-          "UA_encrypt_1/decryption_enabled_cpu"
+          "UA_encrypt_1/decryption_enabled_cpu",
+          "AHB_CACHE_1/enc_bit_for_cache_line_i"
         ]
       },
       "UA_encrypt_0_cache_rdata": {
@@ -1849,13 +1941,13 @@
           "AHB2TIMER_0/HCLK",
           "blk_mem_gen_1/clka",
           "riscv_top_ahb3lite_0/HCLK",
-          "AHB_CACHE_0/HCLK",
-          "AHB_CACHE_1/HCLK",
           "UA_encrypt_0/clock",
           "UA_encrypt_1/clock",
           "AHBMUX_0/HCLK",
-          "bram_read_write_late_0/clk",
-          "BRAM_ARBITER_0/sys_clock"
+          "AHB_CACHE_0/HCLK",
+          "AHB_CACHE_1/HCLK",
+          "BRAM_ARBITER_0/sys_clock",
+          "bram_read_write_late_0/clk"
         ]
       },
       "clk_wiz_0_locked": {
@@ -1867,13 +1959,13 @@
           "AHB2UART_0/HRESETn",
           "riscv_top_ahb3lite_0/HRESETn",
           "AHBDCD_0/RESET",
-          "AHB_CACHE_0/HRESETn",
-          "AHB_CACHE_1/HRESETn",
           "UA_encrypt_0/reset",
           "UA_encrypt_1/reset",
           "AHBMUX_0/HRESETn",
-          "bram_read_write_late_0/reset",
-          "BRAM_ARBITER_0/reset"
+          "AHB_CACHE_0/HRESETn",
+          "AHB_CACHE_1/HRESETn",
+          "BRAM_ARBITER_0/reset",
+          "bram_read_write_late_0/reset"
         ]
       },
       "fetch_enable_cpu_1": {
@@ -1936,8 +2028,8 @@
       "riscv_top_ahb3lite_0_ins_HENCRYPT": {
         "ports": [
           "riscv_top_ahb3lite_0/ins_HENCRYPT",
-          "AHB_CACHE_0/enc_bit_for_cache_line_i",
-          "UA_encrypt_0/decryption_enabled_cpu"
+          "UA_encrypt_0/decryption_enabled_cpu",
+          "AHB_CACHE_0/enc_bit_for_cache_line_i"
         ]
       },
       "riscv_top_ahb3lite_0_ins_HSIZE": {

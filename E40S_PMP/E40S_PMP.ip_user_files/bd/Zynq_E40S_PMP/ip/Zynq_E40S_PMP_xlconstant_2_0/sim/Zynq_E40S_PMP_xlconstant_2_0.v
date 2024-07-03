@@ -57,11 +57,11 @@ module Zynq_E40S_PMP_xlconstant_2_0 (
   dout
 );
 
-output wire [31 : 0] dout;
+output wire [0 : 0] dout;
 
   xlconstant_v1_1_7_xlconstant #(
-    .CONST_WIDTH(32),
-    .CONST_VAL(32'H00000000)
+    .CONST_WIDTH(1),
+    .CONST_VAL(1'H0)
   ) inst (
     .dout(dout)
   );

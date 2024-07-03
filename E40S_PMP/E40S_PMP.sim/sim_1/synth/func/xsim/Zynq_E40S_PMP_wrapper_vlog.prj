@@ -1,0 +1,6 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../../E40S_PMP.gen/sources_1/bd/Zynq_E40S_PMP/ipshared/30ef" \
+"Zynq_E40S_PMP_wrapper_func_synth.v" \
+
+# Do not sort compile order
+nosort

@@ -89,73 +89,73 @@ module Zynq_E40S_PMP_xlconcat_0_0 (
   dout
 );
 
-input wire [31 : 0] In0;
-input wire [31 : 0] In1;
+input wire [0 : 0] In0;
+input wire [0 : 0] In1;
 input wire [0 : 0] In2;
-input wire [31 : 0] In3;
-input wire [31 : 0] In4;
-input wire [31 : 0] In5;
-input wire [31 : 0] In6;
+input wire [0 : 0] In3;
+input wire [0 : 0] In4;
+input wire [0 : 0] In5;
+input wire [0 : 0] In6;
 input wire [0 : 0] In7;
-input wire [31 : 0] In8;
-input wire [31 : 0] In9;
-input wire [31 : 0] In10;
-input wire [31 : 0] In11;
-input wire [31 : 0] In12;
-input wire [31 : 0] In13;
-input wire [31 : 0] In14;
-input wire [31 : 0] In15;
-input wire [31 : 0] In16;
-input wire [31 : 0] In17;
-input wire [31 : 0] In18;
-input wire [31 : 0] In19;
-input wire [31 : 0] In20;
-input wire [31 : 0] In21;
-input wire [31 : 0] In22;
-input wire [31 : 0] In23;
-input wire [31 : 0] In24;
-input wire [31 : 0] In25;
-input wire [31 : 0] In26;
-input wire [31 : 0] In27;
-input wire [31 : 0] In28;
-input wire [31 : 0] In29;
-input wire [31 : 0] In30;
-input wire [31 : 0] In31;
-output wire [961 : 0] dout;
+input wire [0 : 0] In8;
+input wire [0 : 0] In9;
+input wire [0 : 0] In10;
+input wire [0 : 0] In11;
+input wire [0 : 0] In12;
+input wire [0 : 0] In13;
+input wire [0 : 0] In14;
+input wire [0 : 0] In15;
+input wire [0 : 0] In16;
+input wire [0 : 0] In17;
+input wire [0 : 0] In18;
+input wire [0 : 0] In19;
+input wire [0 : 0] In20;
+input wire [0 : 0] In21;
+input wire [0 : 0] In22;
+input wire [0 : 0] In23;
+input wire [0 : 0] In24;
+input wire [0 : 0] In25;
+input wire [0 : 0] In26;
+input wire [0 : 0] In27;
+input wire [0 : 0] In28;
+input wire [0 : 0] In29;
+input wire [0 : 0] In30;
+input wire [0 : 0] In31;
+output wire [31 : 0] dout;
 
   xlconcat_v2_1_4_xlconcat #(
-    .IN0_WIDTH(32),
-    .IN1_WIDTH(32),
+    .IN0_WIDTH(1),
+    .IN1_WIDTH(1),
     .IN2_WIDTH(1),
-    .IN3_WIDTH(32),
-    .IN4_WIDTH(32),
-    .IN5_WIDTH(32),
-    .IN6_WIDTH(32),
+    .IN3_WIDTH(1),
+    .IN4_WIDTH(1),
+    .IN5_WIDTH(1),
+    .IN6_WIDTH(1),
     .IN7_WIDTH(1),
-    .IN8_WIDTH(32),
-    .IN9_WIDTH(32),
-    .IN10_WIDTH(32),
-    .IN11_WIDTH(32),
-    .IN12_WIDTH(32),
-    .IN13_WIDTH(32),
-    .IN14_WIDTH(32),
-    .IN15_WIDTH(32),
-    .IN16_WIDTH(32),
-    .IN17_WIDTH(32),
-    .IN18_WIDTH(32),
-    .IN19_WIDTH(32),
-    .IN20_WIDTH(32),
-    .IN21_WIDTH(32),
-    .IN22_WIDTH(32),
-    .IN23_WIDTH(32),
-    .IN24_WIDTH(32),
-    .IN25_WIDTH(32),
-    .IN26_WIDTH(32),
-    .IN27_WIDTH(32),
-    .IN28_WIDTH(32),
-    .IN29_WIDTH(32),
-    .IN30_WIDTH(32),
-    .IN31_WIDTH(32),
+    .IN8_WIDTH(1),
+    .IN9_WIDTH(1),
+    .IN10_WIDTH(1),
+    .IN11_WIDTH(1),
+    .IN12_WIDTH(1),
+    .IN13_WIDTH(1),
+    .IN14_WIDTH(1),
+    .IN15_WIDTH(1),
+    .IN16_WIDTH(1),
+    .IN17_WIDTH(1),
+    .IN18_WIDTH(1),
+    .IN19_WIDTH(1),
+    .IN20_WIDTH(1),
+    .IN21_WIDTH(1),
+    .IN22_WIDTH(1),
+    .IN23_WIDTH(1),
+    .IN24_WIDTH(1),
+    .IN25_WIDTH(1),
+    .IN26_WIDTH(1),
+    .IN27_WIDTH(1),
+    .IN28_WIDTH(1),
+    .IN29_WIDTH(1),
+    .IN30_WIDTH(1),
+    .IN31_WIDTH(1),
     .IN32_WIDTH(1),
     .IN33_WIDTH(1),
     .IN34_WIDTH(1),
@@ -252,7 +252,7 @@ output wire [961 : 0] dout;
     .IN125_WIDTH(1),
     .IN126_WIDTH(1),
     .IN127_WIDTH(1),
-    .dout_width(962),
+    .dout_width(32),
     .NUM_PORTS(32)
   ) inst (
     .In0(In0),

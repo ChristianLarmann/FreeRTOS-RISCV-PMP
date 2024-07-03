@@ -57,8 +57,8 @@
 #include "systemc.h"
 class Zynq_E40S_PMP_xlconstant_2_0 : public sc_module {
   public:
-xlconstant_v1_1_7<32,0> mod;
-  sc_out< sc_bv<32> > dout;
+xlconstant_v1_1_7<1,0> mod;
+  sc_out< sc_bv<1> > dout;
 Zynq_E40S_PMP_xlconstant_2_0 (sc_core::sc_module_name name);
   };
 
