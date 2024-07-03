@@ -34,9 +34,9 @@
       "AHB_CACHE_0": "",
       "AHB_CACHE_1": "",
       "bram_read_write_late_0": "",
+      "BRAM_ARBITER_0": "",
       "UA_encrypt_0": "",
-      "UA_encrypt_1": "",
-      "BRAM_ARBITER_0": ""
+      "UA_encrypt_1": ""
     },
     "ports": {
       "BT_RX": {
@@ -461,7 +461,7 @@
         "inst_hier_path": "blk_mem_gen_1",
         "parameters": {
           "Coe_File": {
-            "value": "../../../../../../code_and_data0307.coe"
+            "value": "../../../../../../E40S_PMP.sim/sim_1/behav/xsim/code_and_data.coe"
           },
           "Load_Init_File": {
             "value": "true"
@@ -1274,6 +1274,115 @@
           }
         }
       },
+      "BRAM_ARBITER_0": {
+        "vlnv": "xilinx.com:module_ref:BRAM_ARBITER:1.0",
+        "xci_name": "Zynq_E40S_PMP_BRAM_ARBITER_0_0",
+        "xci_path": "ip/Zynq_E40S_PMP_BRAM_ARBITER_0_0/Zynq_E40S_PMP_BRAM_ARBITER_0_0.xci",
+        "inst_hier_path": "BRAM_ARBITER_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "BRAM_ARBITER",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "sys_clock": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_RESET": {
+                "value": "reset",
+                "value_src": "constant"
+              },
+              "FREQ_HZ": {
+                "value": "100000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "reset": {
+            "type": "rst",
+            "direction": "I"
+          },
+          "ua_mem_wdata": {
+            "direction": "O",
+            "left": "127",
+            "right": "0"
+          },
+          "ua_mem_req": {
+            "direction": "O"
+          },
+          "ua_mem_write": {
+            "direction": "O"
+          },
+          "ua_mem_addr": {
+            "direction": "O",
+            "left": "15",
+            "right": "0"
+          },
+          "ua_mem_valid": {
+            "direction": "I"
+          },
+          "data_ua_bram_valid": {
+            "direction": "O"
+          },
+          "ua_mem_rdata_i": {
+            "direction": "I",
+            "left": "127",
+            "right": "0"
+          },
+          "ua_mem_rdata_o": {
+            "direction": "O",
+            "left": "127",
+            "right": "0"
+          },
+          "inst_cache_mem_wdata": {
+            "direction": "I",
+            "left": "127",
+            "right": "0"
+          },
+          "inst_cache_mem_addr": {
+            "direction": "I",
+            "left": "14",
+            "right": "0"
+          },
+          "inst_cache_mem_req": {
+            "direction": "I"
+          },
+          "inst_cache_mem_write": {
+            "direction": "I"
+          },
+          "inst_cache_mem_valid": {
+            "direction": "O"
+          },
+          "data_cache_mem_wdata": {
+            "direction": "I",
+            "left": "127",
+            "right": "0"
+          },
+          "data_cache_mem_addr": {
+            "direction": "I",
+            "left": "14",
+            "right": "0"
+          },
+          "data_cache_mem_req": {
+            "direction": "I"
+          },
+          "data_cache_mem_write": {
+            "direction": "I"
+          },
+          "data_cache_mem_rdy": {
+            "direction": "O"
+          }
+        }
+      },
       "UA_encrypt_0": {
         "vlnv": "xilinx.com:module_ref:UA_encrypt:1.0",
         "xci_name": "Zynq_E40S_PMP_UA_encrypt_0_0",
@@ -1467,115 +1576,6 @@
             "direction": "O",
             "left": "7",
             "right": "0"
-          }
-        }
-      },
-      "BRAM_ARBITER_0": {
-        "vlnv": "xilinx.com:module_ref:BRAM_ARBITER:1.0",
-        "xci_name": "Zynq_E40S_PMP_BRAM_ARBITER_0_0",
-        "xci_path": "ip/Zynq_E40S_PMP_BRAM_ARBITER_0_0/Zynq_E40S_PMP_BRAM_ARBITER_0_0.xci",
-        "inst_hier_path": "BRAM_ARBITER_0",
-        "reference_info": {
-          "ref_type": "hdl",
-          "ref_name": "BRAM_ARBITER",
-          "boundary_crc": "0x0"
-        },
-        "ports": {
-          "sys_clock": {
-            "type": "clk",
-            "direction": "I",
-            "parameters": {
-              "ASSOCIATED_RESET": {
-                "value": "reset",
-                "value_src": "constant"
-              },
-              "FREQ_HZ": {
-                "value": "100000000",
-                "value_src": "ip_prop"
-              },
-              "PHASE": {
-                "value": "0.0",
-                "value_src": "ip_prop"
-              },
-              "CLK_DOMAIN": {
-                "value": "/clk_wiz_0_clk_out1",
-                "value_src": "ip_prop"
-              }
-            }
-          },
-          "reset": {
-            "type": "rst",
-            "direction": "I"
-          },
-          "ua_mem_wdata": {
-            "direction": "O",
-            "left": "127",
-            "right": "0"
-          },
-          "ua_mem_req": {
-            "direction": "O"
-          },
-          "ua_mem_write": {
-            "direction": "O"
-          },
-          "ua_mem_addr": {
-            "direction": "O",
-            "left": "15",
-            "right": "0"
-          },
-          "ua_mem_valid": {
-            "direction": "I"
-          },
-          "data_ua_bram_valid": {
-            "direction": "O"
-          },
-          "ua_mem_rdata_i": {
-            "direction": "I",
-            "left": "127",
-            "right": "0"
-          },
-          "ua_mem_rdata_o": {
-            "direction": "O",
-            "left": "127",
-            "right": "0"
-          },
-          "inst_cache_mem_wdata": {
-            "direction": "I",
-            "left": "127",
-            "right": "0"
-          },
-          "inst_cache_mem_addr": {
-            "direction": "I",
-            "left": "14",
-            "right": "0"
-          },
-          "inst_cache_mem_req": {
-            "direction": "I"
-          },
-          "inst_cache_mem_write": {
-            "direction": "I"
-          },
-          "inst_cache_mem_valid": {
-            "direction": "O"
-          },
-          "data_cache_mem_wdata": {
-            "direction": "I",
-            "left": "127",
-            "right": "0"
-          },
-          "data_cache_mem_addr": {
-            "direction": "I",
-            "left": "14",
-            "right": "0"
-          },
-          "data_cache_mem_req": {
-            "direction": "I"
-          },
-          "data_cache_mem_write": {
-            "direction": "I"
-          },
-          "data_cache_mem_rdy": {
-            "direction": "O"
           }
         }
       }
@@ -1945,9 +1945,9 @@
           "AHB_CACHE_0/HCLK",
           "AHB_CACHE_1/HCLK",
           "bram_read_write_late_0/clk",
+          "BRAM_ARBITER_0/sys_clock",
           "UA_encrypt_0/clock",
-          "UA_encrypt_1/clock",
-          "BRAM_ARBITER_0/sys_clock"
+          "UA_encrypt_1/clock"
         ]
       },
       "clk_wiz_0_locked": {
@@ -1963,9 +1963,9 @@
           "AHB_CACHE_0/HRESETn",
           "AHB_CACHE_1/HRESETn",
           "bram_read_write_late_0/reset",
+          "BRAM_ARBITER_0/reset",
           "UA_encrypt_0/reset",
-          "UA_encrypt_1/reset",
-          "BRAM_ARBITER_0/reset"
+          "UA_encrypt_1/reset"
         ]
       },
       "fetch_enable_cpu_1": {

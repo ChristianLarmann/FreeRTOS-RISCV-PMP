@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Jul  3 18:32:34 2024" VIVADOVERSION="2023.1.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Jul  3 22:35:41 2024" VIVADOVERSION="2023.1.1">
 
   <SYSTEMINFO ARCH="zynq" BOARD="www.digilentinc.com:pynq-z1:part0:1.0" DEVICE="7z020" NAME="Zynq_E40S_PMP" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -1091,7 +1091,7 @@
         <PARAMETER NAME="register_portb_output_of_softecc" VALUE="false"/>
         <PARAMETER NAME="Pipeline_Stages" VALUE="0"/>
         <PARAMETER NAME="Load_Init_File" VALUE="true"/>
-        <PARAMETER NAME="Coe_File" VALUE="../../../../../../code_and_data0307.coe"/>
+        <PARAMETER NAME="Coe_File" VALUE="../../../../../../E40S_PMP.sim/sim_1/behav/xsim/code_and_data.coe"/>
         <PARAMETER NAME="Fill_Remaining_Memory_Locations" VALUE="false"/>
         <PARAMETER NAME="Remaining_Memory_Locations" VALUE="0"/>
         <PARAMETER NAME="Use_RSTA_Pin" VALUE="false"/>
@@ -1883,9 +1883,9 @@
             <CONNECTION INSTANCE="AHB_CACHE_0" PORT="HCLK"/>
             <CONNECTION INSTANCE="AHB_CACHE_1" PORT="HCLK"/>
             <CONNECTION INSTANCE="bram_read_write_late_0" PORT="clk"/>
+            <CONNECTION INSTANCE="BRAM_ARBITER_0" PORT="sys_clock"/>
             <CONNECTION INSTANCE="UA_encrypt_0" PORT="clock"/>
             <CONNECTION INSTANCE="UA_encrypt_1" PORT="clock"/>
-            <CONNECTION INSTANCE="BRAM_ARBITER_0" PORT="sys_clock"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="locked" SIGIS="undef" SIGNAME="clk_wiz_0_locked">
@@ -1900,9 +1900,9 @@
             <CONNECTION INSTANCE="AHB_CACHE_0" PORT="HRESETn"/>
             <CONNECTION INSTANCE="AHB_CACHE_1" PORT="HRESETn"/>
             <CONNECTION INSTANCE="bram_read_write_late_0" PORT="reset"/>
+            <CONNECTION INSTANCE="BRAM_ARBITER_0" PORT="reset"/>
             <CONNECTION INSTANCE="UA_encrypt_0" PORT="reset"/>
             <CONNECTION INSTANCE="UA_encrypt_1" PORT="reset"/>
-            <CONNECTION INSTANCE="BRAM_ARBITER_0" PORT="reset"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>

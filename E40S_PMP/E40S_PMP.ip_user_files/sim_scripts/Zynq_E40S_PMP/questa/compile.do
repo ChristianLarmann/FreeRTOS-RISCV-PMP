@@ -92,13 +92,13 @@ vlog -work xil_defaultlib -64 -incr -mfcu  "+incdir+../../../../E40S_PMP.gen/sou
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_clk_wiz_0_0/Zynq_E40S_PMP_clk_wiz_0_0.v" \
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_riscv_top_ahb3lite_0_0/sim/Zynq_E40S_PMP_riscv_top_ahb3lite_0_0.v" \
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_AHBDCD_0_0/sim/Zynq_E40S_PMP_AHBDCD_0_0.v" \
-"../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_UA_encrypt_0_0/sim/Zynq_E40S_PMP_UA_encrypt_0_0.v" \
-"../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_UA_encrypt_1_0/sim/Zynq_E40S_PMP_UA_encrypt_1_0.v" \
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_xlconstant_5_0/sim/Zynq_E40S_PMP_xlconstant_5_0.v" \
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_AHBMUX_0_0/sim/Zynq_E40S_PMP_AHBMUX_0_0.v" \
-"../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_bram_read_write_late_0_0/sim/Zynq_E40S_PMP_bram_read_write_late_0_0.v" \
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_AHB_CACHE_0_0/sim/Zynq_E40S_PMP_AHB_CACHE_0_0.v" \
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_AHB_CACHE_1_0/sim/Zynq_E40S_PMP_AHB_CACHE_1_0.v" \
+"../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_bram_read_write_late_0_0/sim/Zynq_E40S_PMP_bram_read_write_late_0_0.v" \
+"../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_UA_encrypt_0_0/sim/Zynq_E40S_PMP_UA_encrypt_0_0.v" \
+"../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_UA_encrypt_1_0/sim/Zynq_E40S_PMP_UA_encrypt_1_0.v" \
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_BRAM_ARBITER_0_0/sim/Zynq_E40S_PMP_BRAM_ARBITER_0_0.v" \
 "../../../bd/Zynq_E40S_PMP/sim/Zynq_E40S_PMP.v" \
 

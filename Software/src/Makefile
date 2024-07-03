@@ -197,7 +197,9 @@ $(PROG).siz: $(PROG)
 generate-dat-files: 
 	# Generate and move .dat files to the Vivado Simulation Folder
 	$(shell bash ./srec2dat.sh)
+	$(shell bash ./dat2coe.sh)
 	$(shell cp ./code_and_data.dat ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
+	$(shell cp ./code_and_data.coe ../../E40S_PMP/E40S_PMP.sim/sim_1/behav/xsim)
 
 generate-dat-files-encrypted: 
 	# Generate and move .dat files to the Vivado Simulation Folder

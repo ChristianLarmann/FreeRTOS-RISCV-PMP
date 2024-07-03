@@ -93,9 +93,9 @@ module UA_encrypt
 
     
   // Reset and state switches
-    always @(posedge clock, posedge reset)
+    always @(posedge clock, negedge reset)
     begin
-        if (reset) begin
+        if (!reset) begin
             state                       <=  IDLE;
         end
         else begin
@@ -103,8 +103,8 @@ module UA_encrypt
         end
     end
     
-    integer fd;
-    initial fd = $fopen("encryption_debug.txt", "w");
+//    integer fd;
+//    initial fd = $fopen("encryption_debug.txt", "w");
     
     // State machine
     // Events per state to switch to next state
@@ -116,20 +116,20 @@ module UA_encrypt
                 // When cache wants something, start state machine
                 if(cache_req && !skip_crypto) begin
                     // Debug
-                     $fwrite(fd, "%x, %x, %x. %x\n", cache_address, cache_wdata, cache_rdata, skip_crypto);
+//                     $fwrite(fd, "%x, %x, %x. %x\n", cache_address, cache_wdata, cache_rdata, skip_crypto);
                     
                     // If write operation, go encrypt first
                     if(cache_rw_enable) begin
-                        next_state  =  ENCRYPT;
+                        next_state  <=  ENCRYPT;
                     end
                     // If read operation, go read data from memory
                     else begin
-                        next_state      =  READ;
+                        next_state      <=  READ;
                     end              
                 end
                 // Else remain in idle
                 else begin
-                    next_state          =   IDLE;
+                    next_state          <=   IDLE;
                 end
             end
             
@@ -138,7 +138,7 @@ module UA_encrypt
             READ: begin
                 // When data has been received, go decrypt
                 if(mem_valid) begin 
-                    next_state          =  DECRYPT;
+                    next_state          <=  DECRYPT;
                 end
             end
             
@@ -146,7 +146,7 @@ module UA_encrypt
             DECRYPT: begin
                 // Go straight to end once decryption is complete
                 if(cry_rdy) begin
-                    next_state      =   END;
+                    next_state      <=   END;
                 end
             end
             
@@ -155,7 +155,7 @@ module UA_encrypt
             WRITE: begin
                 // Go straight to end when done writing data to memory
                 if(mem_valid) begin
-                    next_state      =   END;
+                    next_state      <=   END;
                 end
             end 
             
@@ -164,14 +164,14 @@ module UA_encrypt
             ENCRYPT: begin
                 // When encryption is done, go to write data to memory
                 if(cry_rdy) begin
-                    next_state          =   WRITE;
+                    next_state          <=   WRITE;
                 end
             end
             
 
         //  END STATE============================================================================
             END: begin
-                next_state              =   IDLE;
+                next_state              <=   IDLE;
             end
         endcase
     end
@@ -180,9 +180,9 @@ module UA_encrypt
     
     // State descriptions
     // Activities performed per state
-    always @ (posedge clock, posedge reset)
+    always @ (posedge clock, negedge reset)
     begin
-        if(reset) begin
+        if(!reset) begin
             mem_request                 <=  0;
             mem_rw                      <=  0;
             address                     <=  0;
@@ -271,7 +271,7 @@ module UA_encrypt
     crypto_prince
         (
             .clock(clock),
-            .reset(reset),
+            .reset(!reset),
             .key(KEY),
             .run(cry_run),
             .din(cry_din),
