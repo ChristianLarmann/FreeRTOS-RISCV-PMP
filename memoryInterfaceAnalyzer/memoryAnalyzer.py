@@ -1,17 +1,17 @@
 
 # Trigger
-LSU_REQ_HIGH_char = "1X!"
-LSU_REQ_LOW_char = "0X!"
-LSU_RVALID_HIGH_char = "1Z!"
-LSU_WE_char = "1\!"
-LSU_RE_char = "0\!"
+LSU_REQ_HIGH_char = "1O4"
+LSU_REQ_LOW_char = "0O4"
+LSU_RVALID_HIGH_char = "1Q4"
+LSU_WE_char = "1S4"
+LSU_RE_char = "0S4"
 
 # Address
-LSU_ADDR_char = "[!"
+LSU_ADDR_char = "R4"
 
 # Data
-LSU_WDATA_char = "_!"
-LSU_RDATA_char = "^!"
+LSU_WDATA_char = "V4"
+LSU_RDATA_char = "U4"
 
 # Status variables
 req_in_current_cycle = False
@@ -110,7 +110,7 @@ def get_timestamp(timestamp_line):
 
 
 # with open("mem_interface.vcd", 'r') as vcd:
-with open("without_stack_check.vcd", 'r') as vcd:
+with open("new_design.vcd", 'r') as vcd:
     for i, line in enumerate(vcd):
         if True:  # i < 1000000:  # Process only the first 10 lines
             signal_name: str = line.split(" ")[-1].strip()  # strip for removing \n

@@ -2,7 +2,7 @@
 //Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2023.1.1 (lin64) Build 3900603 Fri Jun 16 19:30:25 MDT 2023
-//Date        : Wed Jul  3 11:54:38 2024
+//Date        : Wed Jul  3 14:08:12 2024
 //Host        : TP-T480s running 64-bit Ubuntu 22.04.4 LTS
 //Command     : generate_target Zynq_E40S_PMP.bd
 //Design      : Zynq_E40S_PMP
@@ -82,6 +82,7 @@ module Zynq_E40S_PMP
   wire clk_wiz_0_locked;
   wire fetch_enable_cpu_1;
   wire [31:0]riscv_top_ahb3lite_0_dat_HADDR;
+  wire [2:0]riscv_top_ahb3lite_0_dat_HSIZE;
   wire [1:0]riscv_top_ahb3lite_0_dat_HTRANS;
   wire [31:0]riscv_top_ahb3lite_0_dat_HWDATA;
   wire riscv_top_ahb3lite_0_dat_HWRITE;
@@ -214,7 +215,7 @@ module Zynq_E40S_PMP
         .HREADYOUT(AHB_CACHE_1_HREADYOUT1),
         .HRESETn(clk_wiz_0_locked),
         .HSEL(AHBDCD_0_HSEL_S0),
-        .HSIZE(riscv_top_ahb3lite_0_ins_HSIZE),
+        .HSIZE(riscv_top_ahb3lite_0_dat_HSIZE),
         .HTRANS(riscv_top_ahb3lite_0_dat_HTRANS),
         .HWDATA(riscv_top_ahb3lite_0_dat_HWDATA),
         .HWRITE(riscv_top_ahb3lite_0_dat_HWRITE),
@@ -302,6 +303,7 @@ module Zynq_E40S_PMP
         .dat_HENCRYPT(Net5),
         .dat_HRDATA(AHBMUX_0_HRDATA),
         .dat_HREADY(AHB_CACHE_1_HREADYOUT),
+        .dat_HSIZE(riscv_top_ahb3lite_0_dat_HSIZE),
         .dat_HTRANS(riscv_top_ahb3lite_0_dat_HTRANS),
         .dat_HWDATA(riscv_top_ahb3lite_0_dat_HWDATA),
         .dat_HWRITE(riscv_top_ahb3lite_0_dat_HWRITE),

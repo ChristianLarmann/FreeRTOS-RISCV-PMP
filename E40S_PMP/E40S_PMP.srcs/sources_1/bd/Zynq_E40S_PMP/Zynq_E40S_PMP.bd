@@ -33,10 +33,10 @@
       "AHB_CACHE_1": "",
       "UA_encrypt_0": "",
       "UA_encrypt_1": "",
-      "BRAM_ARBITER_0": "",
       "xlconstant_5": "",
       "AHBMUX_0": "",
-      "bram_read_write_late_0": ""
+      "bram_read_write_late_0": "",
+      "BRAM_ARBITER_0": ""
     },
     "ports": {
       "BT_RX": {
@@ -1220,115 +1220,6 @@
           }
         }
       },
-      "BRAM_ARBITER_0": {
-        "vlnv": "xilinx.com:module_ref:BRAM_ARBITER:1.0",
-        "xci_name": "Zynq_E40S_PMP_BRAM_ARBITER_0_0",
-        "xci_path": "ip/Zynq_E40S_PMP_BRAM_ARBITER_0_0/Zynq_E40S_PMP_BRAM_ARBITER_0_0.xci",
-        "inst_hier_path": "BRAM_ARBITER_0",
-        "reference_info": {
-          "ref_type": "hdl",
-          "ref_name": "BRAM_ARBITER",
-          "boundary_crc": "0x0"
-        },
-        "ports": {
-          "sys_clock": {
-            "type": "clk",
-            "direction": "I",
-            "parameters": {
-              "ASSOCIATED_RESET": {
-                "value": "reset",
-                "value_src": "constant"
-              },
-              "FREQ_HZ": {
-                "value": "100000000",
-                "value_src": "ip_prop"
-              },
-              "PHASE": {
-                "value": "0.0",
-                "value_src": "ip_prop"
-              },
-              "CLK_DOMAIN": {
-                "value": "/clk_wiz_0_clk_out1",
-                "value_src": "ip_prop"
-              }
-            }
-          },
-          "reset": {
-            "type": "rst",
-            "direction": "I"
-          },
-          "ua_mem_wdata": {
-            "direction": "O",
-            "left": "127",
-            "right": "0"
-          },
-          "ua_mem_req": {
-            "direction": "O"
-          },
-          "ua_mem_write": {
-            "direction": "O"
-          },
-          "ua_mem_addr": {
-            "direction": "O",
-            "left": "14",
-            "right": "0"
-          },
-          "ua_mem_valid": {
-            "direction": "I"
-          },
-          "data_ua_bram_valid": {
-            "direction": "O"
-          },
-          "ua_mem_rdata_i": {
-            "direction": "I",
-            "left": "127",
-            "right": "0"
-          },
-          "ua_mem_rdata_o": {
-            "direction": "O",
-            "left": "127",
-            "right": "0"
-          },
-          "inst_cache_mem_wdata": {
-            "direction": "I",
-            "left": "127",
-            "right": "0"
-          },
-          "inst_cache_mem_addr": {
-            "direction": "I",
-            "left": "14",
-            "right": "0"
-          },
-          "inst_cache_mem_req": {
-            "direction": "I"
-          },
-          "inst_cache_mem_write": {
-            "direction": "I"
-          },
-          "inst_cache_mem_valid": {
-            "direction": "O"
-          },
-          "data_cache_mem_wdata": {
-            "direction": "I",
-            "left": "127",
-            "right": "0"
-          },
-          "data_cache_mem_addr": {
-            "direction": "I",
-            "left": "14",
-            "right": "0"
-          },
-          "data_cache_mem_req": {
-            "direction": "I"
-          },
-          "data_cache_mem_write": {
-            "direction": "I"
-          },
-          "data_cache_mem_rdy": {
-            "direction": "O"
-          }
-        }
-      },
       "xlconstant_5": {
         "vlnv": "xilinx.com:ip:xlconstant:1.1",
         "xci_name": "Zynq_E40S_PMP_xlconstant_5_0",
@@ -1480,6 +1371,115 @@
             "direction": "I"
           },
           "valid": {
+            "direction": "O"
+          }
+        }
+      },
+      "BRAM_ARBITER_0": {
+        "vlnv": "xilinx.com:module_ref:BRAM_ARBITER:1.0",
+        "xci_name": "Zynq_E40S_PMP_BRAM_ARBITER_0_0",
+        "xci_path": "ip/Zynq_E40S_PMP_BRAM_ARBITER_0_0/Zynq_E40S_PMP_BRAM_ARBITER_0_0.xci",
+        "inst_hier_path": "BRAM_ARBITER_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "BRAM_ARBITER",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "sys_clock": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_RESET": {
+                "value": "reset",
+                "value_src": "constant"
+              },
+              "FREQ_HZ": {
+                "value": "100000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "reset": {
+            "type": "rst",
+            "direction": "I"
+          },
+          "ua_mem_wdata": {
+            "direction": "O",
+            "left": "127",
+            "right": "0"
+          },
+          "ua_mem_req": {
+            "direction": "O"
+          },
+          "ua_mem_write": {
+            "direction": "O"
+          },
+          "ua_mem_addr": {
+            "direction": "O",
+            "left": "14",
+            "right": "0"
+          },
+          "ua_mem_valid": {
+            "direction": "I"
+          },
+          "data_ua_bram_valid": {
+            "direction": "O"
+          },
+          "ua_mem_rdata_i": {
+            "direction": "I",
+            "left": "127",
+            "right": "0"
+          },
+          "ua_mem_rdata_o": {
+            "direction": "O",
+            "left": "127",
+            "right": "0"
+          },
+          "inst_cache_mem_wdata": {
+            "direction": "I",
+            "left": "127",
+            "right": "0"
+          },
+          "inst_cache_mem_addr": {
+            "direction": "I",
+            "left": "14",
+            "right": "0"
+          },
+          "inst_cache_mem_req": {
+            "direction": "I"
+          },
+          "inst_cache_mem_write": {
+            "direction": "I"
+          },
+          "inst_cache_mem_valid": {
+            "direction": "O"
+          },
+          "data_cache_mem_wdata": {
+            "direction": "I",
+            "left": "127",
+            "right": "0"
+          },
+          "data_cache_mem_addr": {
+            "direction": "I",
+            "left": "14",
+            "right": "0"
+          },
+          "data_cache_mem_req": {
+            "direction": "I"
+          },
+          "data_cache_mem_write": {
+            "direction": "I"
+          },
+          "data_cache_mem_rdy": {
             "direction": "O"
           }
         }
@@ -1850,9 +1850,9 @@
           "AHB_CACHE_1/HCLK",
           "UA_encrypt_0/clock",
           "UA_encrypt_1/clock",
-          "BRAM_ARBITER_0/sys_clock",
           "AHBMUX_0/HCLK",
-          "bram_read_write_late_0/clk"
+          "bram_read_write_late_0/clk",
+          "BRAM_ARBITER_0/sys_clock"
         ]
       },
       "clk_wiz_0_locked": {
@@ -1868,9 +1868,9 @@
           "AHB_CACHE_1/HRESETn",
           "UA_encrypt_0/reset",
           "UA_encrypt_1/reset",
-          "BRAM_ARBITER_0/reset",
           "AHBMUX_0/HRESETn",
-          "bram_read_write_late_0/reset"
+          "bram_read_write_late_0/reset",
+          "BRAM_ARBITER_0/reset"
         ]
       },
       "fetch_enable_cpu_1": {
@@ -1888,6 +1888,12 @@
           "AHB2UART_0/HADDR",
           "AHBDCD_0/HADDR",
           "AHB_CACHE_1/HADDR"
+        ]
+      },
+      "riscv_top_ahb3lite_0_dat_HSIZE": {
+        "ports": [
+          "riscv_top_ahb3lite_0/dat_HSIZE",
+          "AHB_CACHE_1/HSIZE"
         ]
       },
       "riscv_top_ahb3lite_0_dat_HTRANS": {
@@ -1934,8 +1940,7 @@
       "riscv_top_ahb3lite_0_ins_HSIZE": {
         "ports": [
           "riscv_top_ahb3lite_0/ins_HSIZE",
-          "AHB_CACHE_0/HSIZE",
-          "AHB_CACHE_1/HSIZE"
+          "AHB_CACHE_0/HSIZE"
         ]
       },
       "riscv_top_ahb3lite_0_ins_HTRANS": {
