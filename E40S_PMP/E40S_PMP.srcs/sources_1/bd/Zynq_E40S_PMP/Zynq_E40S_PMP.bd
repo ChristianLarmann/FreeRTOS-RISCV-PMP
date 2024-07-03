@@ -29,14 +29,14 @@
       "clk_wiz_0": "",
       "riscv_top_ahb3lite_0": "",
       "AHBDCD_0": "",
-      "UA_encrypt_0": "",
-      "UA_encrypt_1": "",
       "xlconstant_5": "",
       "AHBMUX_0": "",
       "AHB_CACHE_0": "",
       "AHB_CACHE_1": "",
-      "BRAM_ARBITER_0": "",
-      "bram_read_write_late_0": ""
+      "bram_read_write_late_0": "",
+      "UA_encrypt_0": "",
+      "UA_encrypt_1": "",
+      "BRAM_ARBITER_0": ""
     },
     "ports": {
       "BT_RX": {
@@ -861,202 +861,6 @@
           }
         }
       },
-      "UA_encrypt_0": {
-        "vlnv": "xilinx.com:module_ref:UA_encrypt:1.0",
-        "xci_name": "Zynq_E40S_PMP_UA_encrypt_0_0",
-        "xci_path": "ip/Zynq_E40S_PMP_UA_encrypt_0_0/Zynq_E40S_PMP_UA_encrypt_0_0.xci",
-        "inst_hier_path": "UA_encrypt_0",
-        "reference_info": {
-          "ref_type": "hdl",
-          "ref_name": "UA_encrypt",
-          "boundary_crc": "0x0"
-        },
-        "ports": {
-          "clock": {
-            "type": "clk",
-            "direction": "I",
-            "parameters": {
-              "ASSOCIATED_RESET": {
-                "value": "reset",
-                "value_src": "constant"
-              },
-              "FREQ_HZ": {
-                "value": "100000000",
-                "value_src": "ip_prop"
-              },
-              "PHASE": {
-                "value": "0.0",
-                "value_src": "ip_prop"
-              },
-              "CLK_DOMAIN": {
-                "value": "/clk_wiz_0_clk_out1",
-                "value_src": "ip_prop"
-              }
-            }
-          },
-          "reset": {
-            "type": "rst",
-            "direction": "I"
-          },
-          "decryption_enabled_cpu": {
-            "direction": "I"
-          },
-          "write_back_encryption_enabled": {
-            "direction": "I"
-          },
-          "cache_rdata": {
-            "direction": "O",
-            "left": "127",
-            "right": "0"
-          },
-          "cache_wdata": {
-            "direction": "I",
-            "left": "127",
-            "right": "0"
-          },
-          "cache_address": {
-            "direction": "I",
-            "left": "31",
-            "right": "0"
-          },
-          "cache_req": {
-            "direction": "I"
-          },
-          "cache_rw_enable": {
-            "direction": "I"
-          },
-          "cache_ready": {
-            "direction": "O"
-          },
-          "mem_rdata": {
-            "direction": "I",
-            "left": "127",
-            "right": "0"
-          },
-          "mem_wdata": {
-            "direction": "O",
-            "left": "127",
-            "right": "0"
-          },
-          "mem_address": {
-            "direction": "O",
-            "left": "31",
-            "right": "0"
-          },
-          "mem_req": {
-            "direction": "O"
-          },
-          "mem_rw_enable": {
-            "direction": "O"
-          },
-          "mem_valid": {
-            "direction": "I"
-          },
-          "debug": {
-            "direction": "O",
-            "left": "7",
-            "right": "0"
-          }
-        }
-      },
-      "UA_encrypt_1": {
-        "vlnv": "xilinx.com:module_ref:UA_encrypt:1.0",
-        "xci_name": "Zynq_E40S_PMP_UA_encrypt_1_0",
-        "xci_path": "ip/Zynq_E40S_PMP_UA_encrypt_1_0/Zynq_E40S_PMP_UA_encrypt_1_0.xci",
-        "inst_hier_path": "UA_encrypt_1",
-        "reference_info": {
-          "ref_type": "hdl",
-          "ref_name": "UA_encrypt",
-          "boundary_crc": "0x0"
-        },
-        "ports": {
-          "clock": {
-            "type": "clk",
-            "direction": "I",
-            "parameters": {
-              "ASSOCIATED_RESET": {
-                "value": "reset",
-                "value_src": "constant"
-              },
-              "FREQ_HZ": {
-                "value": "100000000",
-                "value_src": "ip_prop"
-              },
-              "PHASE": {
-                "value": "0.0",
-                "value_src": "ip_prop"
-              },
-              "CLK_DOMAIN": {
-                "value": "/clk_wiz_0_clk_out1",
-                "value_src": "ip_prop"
-              }
-            }
-          },
-          "reset": {
-            "type": "rst",
-            "direction": "I"
-          },
-          "decryption_enabled_cpu": {
-            "direction": "I"
-          },
-          "write_back_encryption_enabled": {
-            "direction": "I"
-          },
-          "cache_rdata": {
-            "direction": "O",
-            "left": "127",
-            "right": "0"
-          },
-          "cache_wdata": {
-            "direction": "I",
-            "left": "127",
-            "right": "0"
-          },
-          "cache_address": {
-            "direction": "I",
-            "left": "31",
-            "right": "0"
-          },
-          "cache_req": {
-            "direction": "I"
-          },
-          "cache_rw_enable": {
-            "direction": "I"
-          },
-          "cache_ready": {
-            "direction": "O"
-          },
-          "mem_rdata": {
-            "direction": "I",
-            "left": "127",
-            "right": "0"
-          },
-          "mem_wdata": {
-            "direction": "O",
-            "left": "127",
-            "right": "0"
-          },
-          "mem_address": {
-            "direction": "O",
-            "left": "31",
-            "right": "0"
-          },
-          "mem_req": {
-            "direction": "O"
-          },
-          "mem_rw_enable": {
-            "direction": "O"
-          },
-          "mem_valid": {
-            "direction": "I"
-          },
-          "debug": {
-            "direction": "O",
-            "left": "7",
-            "right": "0"
-          }
-        }
-      },
       "xlconstant_5": {
         "vlnv": "xilinx.com:ip:xlconstant:1.1",
         "xci_name": "Zynq_E40S_PMP_xlconstant_5_0",
@@ -1425,6 +1229,247 @@
           }
         }
       },
+      "bram_read_write_late_0": {
+        "vlnv": "xilinx.com:module_ref:bram_read_write_latency:1.0",
+        "xci_name": "Zynq_E40S_PMP_bram_read_write_late_0_0",
+        "xci_path": "ip/Zynq_E40S_PMP_bram_read_write_late_0_0/Zynq_E40S_PMP_bram_read_write_late_0_0.xci",
+        "inst_hier_path": "bram_read_write_late_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "bram_read_write_latency",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "clk": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_RESET": {
+                "value": "reset",
+                "value_src": "constant"
+              },
+              "FREQ_HZ": {
+                "value": "100000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "reset": {
+            "type": "rst",
+            "direction": "I"
+          },
+          "req": {
+            "direction": "I"
+          },
+          "valid": {
+            "direction": "O"
+          }
+        }
+      },
+      "UA_encrypt_0": {
+        "vlnv": "xilinx.com:module_ref:UA_encrypt:1.0",
+        "xci_name": "Zynq_E40S_PMP_UA_encrypt_0_0",
+        "xci_path": "ip/Zynq_E40S_PMP_UA_encrypt_0_0/Zynq_E40S_PMP_UA_encrypt_0_0.xci",
+        "inst_hier_path": "UA_encrypt_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "UA_encrypt",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "clock": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_RESET": {
+                "value": "reset",
+                "value_src": "constant"
+              },
+              "FREQ_HZ": {
+                "value": "100000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "reset": {
+            "type": "rst",
+            "direction": "I"
+          },
+          "decryption_enabled_cpu": {
+            "direction": "I"
+          },
+          "write_back_encryption_enabled": {
+            "direction": "I"
+          },
+          "cache_rdata": {
+            "direction": "O",
+            "left": "127",
+            "right": "0"
+          },
+          "cache_wdata": {
+            "direction": "I",
+            "left": "127",
+            "right": "0"
+          },
+          "cache_address": {
+            "direction": "I",
+            "left": "14",
+            "right": "0"
+          },
+          "cache_req": {
+            "direction": "I"
+          },
+          "cache_rw_enable": {
+            "direction": "I"
+          },
+          "cache_ready": {
+            "direction": "O"
+          },
+          "mem_rdata": {
+            "direction": "I",
+            "left": "127",
+            "right": "0"
+          },
+          "mem_wdata": {
+            "direction": "O",
+            "left": "127",
+            "right": "0"
+          },
+          "mem_address": {
+            "direction": "O",
+            "left": "14",
+            "right": "0"
+          },
+          "mem_req": {
+            "direction": "O"
+          },
+          "mem_rw_enable": {
+            "direction": "O"
+          },
+          "mem_valid": {
+            "direction": "I"
+          },
+          "debug": {
+            "direction": "O",
+            "left": "7",
+            "right": "0"
+          }
+        }
+      },
+      "UA_encrypt_1": {
+        "vlnv": "xilinx.com:module_ref:UA_encrypt:1.0",
+        "xci_name": "Zynq_E40S_PMP_UA_encrypt_1_0",
+        "xci_path": "ip/Zynq_E40S_PMP_UA_encrypt_1_0/Zynq_E40S_PMP_UA_encrypt_1_0.xci",
+        "inst_hier_path": "UA_encrypt_1",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "UA_encrypt",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "clock": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_RESET": {
+                "value": "reset",
+                "value_src": "constant"
+              },
+              "FREQ_HZ": {
+                "value": "100000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "reset": {
+            "type": "rst",
+            "direction": "I"
+          },
+          "decryption_enabled_cpu": {
+            "direction": "I"
+          },
+          "write_back_encryption_enabled": {
+            "direction": "I"
+          },
+          "cache_rdata": {
+            "direction": "O",
+            "left": "127",
+            "right": "0"
+          },
+          "cache_wdata": {
+            "direction": "I",
+            "left": "127",
+            "right": "0"
+          },
+          "cache_address": {
+            "direction": "I",
+            "left": "14",
+            "right": "0"
+          },
+          "cache_req": {
+            "direction": "I"
+          },
+          "cache_rw_enable": {
+            "direction": "I"
+          },
+          "cache_ready": {
+            "direction": "O"
+          },
+          "mem_rdata": {
+            "direction": "I",
+            "left": "127",
+            "right": "0"
+          },
+          "mem_wdata": {
+            "direction": "O",
+            "left": "127",
+            "right": "0"
+          },
+          "mem_address": {
+            "direction": "O",
+            "left": "14",
+            "right": "0"
+          },
+          "mem_req": {
+            "direction": "O"
+          },
+          "mem_rw_enable": {
+            "direction": "O"
+          },
+          "mem_valid": {
+            "direction": "I"
+          },
+          "debug": {
+            "direction": "O",
+            "left": "7",
+            "right": "0"
+          }
+        }
+      },
       "BRAM_ARBITER_0": {
         "vlnv": "xilinx.com:module_ref:BRAM_ARBITER:1.0",
         "xci_name": "Zynq_E40S_PMP_BRAM_ARBITER_0_0",
@@ -1475,7 +1520,7 @@
           },
           "ua_mem_addr": {
             "direction": "O",
-            "left": "14",
+            "left": "15",
             "right": "0"
           },
           "ua_mem_valid": {
@@ -1530,51 +1575,6 @@
             "direction": "I"
           },
           "data_cache_mem_rdy": {
-            "direction": "O"
-          }
-        }
-      },
-      "bram_read_write_late_0": {
-        "vlnv": "xilinx.com:module_ref:bram_read_write_latency:1.0",
-        "xci_name": "Zynq_E40S_PMP_bram_read_write_late_0_0",
-        "xci_path": "ip/Zynq_E40S_PMP_bram_read_write_late_0_0/Zynq_E40S_PMP_bram_read_write_late_0_0.xci",
-        "inst_hier_path": "bram_read_write_late_0",
-        "reference_info": {
-          "ref_type": "hdl",
-          "ref_name": "bram_read_write_latency",
-          "boundary_crc": "0x0"
-        },
-        "ports": {
-          "clk": {
-            "type": "clk",
-            "direction": "I",
-            "parameters": {
-              "ASSOCIATED_RESET": {
-                "value": "reset",
-                "value_src": "constant"
-              },
-              "FREQ_HZ": {
-                "value": "100000000",
-                "value_src": "ip_prop"
-              },
-              "PHASE": {
-                "value": "0.0",
-                "value_src": "ip_prop"
-              },
-              "CLK_DOMAIN": {
-                "value": "/clk_wiz_0_clk_out1",
-                "value_src": "ip_prop"
-              }
-            }
-          },
-          "reset": {
-            "type": "rst",
-            "direction": "I"
-          },
-          "req": {
-            "direction": "I"
-          },
-          "valid": {
             "direction": "O"
           }
         }
@@ -1832,8 +1832,8 @@
       "Net5": {
         "ports": [
           "riscv_top_ahb3lite_0/dat_HENCRYPT",
-          "UA_encrypt_1/decryption_enabled_cpu",
-          "AHB_CACHE_1/enc_bit_for_cache_line_i"
+          "AHB_CACHE_1/enc_bit_for_cache_line_i",
+          "UA_encrypt_1/decryption_enabled_cpu"
         ]
       },
       "UA_encrypt_0_cache_rdata": {
@@ -1941,13 +1941,13 @@
           "AHB2TIMER_0/HCLK",
           "blk_mem_gen_1/clka",
           "riscv_top_ahb3lite_0/HCLK",
-          "UA_encrypt_0/clock",
-          "UA_encrypt_1/clock",
           "AHBMUX_0/HCLK",
           "AHB_CACHE_0/HCLK",
           "AHB_CACHE_1/HCLK",
-          "BRAM_ARBITER_0/sys_clock",
-          "bram_read_write_late_0/clk"
+          "bram_read_write_late_0/clk",
+          "UA_encrypt_0/clock",
+          "UA_encrypt_1/clock",
+          "BRAM_ARBITER_0/sys_clock"
         ]
       },
       "clk_wiz_0_locked": {
@@ -1959,13 +1959,13 @@
           "AHB2UART_0/HRESETn",
           "riscv_top_ahb3lite_0/HRESETn",
           "AHBDCD_0/RESET",
-          "UA_encrypt_0/reset",
-          "UA_encrypt_1/reset",
           "AHBMUX_0/HRESETn",
           "AHB_CACHE_0/HRESETn",
           "AHB_CACHE_1/HRESETn",
-          "BRAM_ARBITER_0/reset",
-          "bram_read_write_late_0/reset"
+          "bram_read_write_late_0/reset",
+          "UA_encrypt_0/reset",
+          "UA_encrypt_1/reset",
+          "BRAM_ARBITER_0/reset"
         ]
       },
       "fetch_enable_cpu_1": {
@@ -2028,8 +2028,8 @@
       "riscv_top_ahb3lite_0_ins_HENCRYPT": {
         "ports": [
           "riscv_top_ahb3lite_0/ins_HENCRYPT",
-          "UA_encrypt_0/decryption_enabled_cpu",
-          "AHB_CACHE_0/enc_bit_for_cache_line_i"
+          "AHB_CACHE_0/enc_bit_for_cache_line_i",
+          "UA_encrypt_0/decryption_enabled_cpu"
         ]
       },
       "riscv_top_ahb3lite_0_ins_HSIZE": {

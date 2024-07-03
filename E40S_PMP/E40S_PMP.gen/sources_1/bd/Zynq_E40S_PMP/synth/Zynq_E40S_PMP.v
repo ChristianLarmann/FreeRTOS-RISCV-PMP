@@ -2,7 +2,7 @@
 //Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2023.1.1 (lin64) Build 3900603 Fri Jun 16 19:30:25 MDT 2023
-//Date        : Wed Jul  3 18:18:10 2024
+//Date        : Wed Jul  3 18:32:33 2024
 //Host        : TP-T480s running 64-bit Ubuntu 22.04.4 LTS
 //Command     : generate_target Zynq_E40S_PMP.bd
 //Design      : Zynq_E40S_PMP
@@ -54,7 +54,7 @@ module Zynq_E40S_PMP
   wire AHB_CACHE_1_write_back_encryption_enabled_o;
   wire BRAM_ARBITER_0_data_ua_bram_valid1;
   wire BRAM_ARBITER_0_inst_cache_mem_valid;
-  wire [14:0]BRAM_ARBITER_0_ua_mem_addr;
+  wire [15:0]BRAM_ARBITER_0_ua_mem_addr;
   wire [127:0]BRAM_ARBITER_0_ua_mem_rdata_o;
   wire BRAM_ARBITER_0_ua_mem_req;
   wire [127:0]BRAM_ARBITER_0_ua_mem_wdata;
@@ -64,13 +64,13 @@ module Zynq_E40S_PMP
   wire Net5;
   wire [127:0]UA_encrypt_0_cache_rdata;
   wire UA_encrypt_0_cache_ready;
-  wire [31:0]UA_encrypt_0_mem_address;
+  wire [14:0]UA_encrypt_0_mem_address;
   wire UA_encrypt_0_mem_req;
   wire UA_encrypt_0_mem_rw_enable;
   wire [127:0]UA_encrypt_0_mem_wdata;
   wire [127:0]UA_encrypt_1_cache_rdata;
   wire UA_encrypt_1_cache_ready;
-  wire [31:0]UA_encrypt_1_mem_address;
+  wire [14:0]UA_encrypt_1_mem_address;
   wire UA_encrypt_1_mem_req;
   wire UA_encrypt_1_mem_rw_enable;
   wire [127:0]UA_encrypt_1_mem_wdata;
@@ -222,12 +222,12 @@ module Zynq_E40S_PMP
         .enc_bit_for_cache_line_i(Net5),
         .write_back_encryption_enabled_o(AHB_CACHE_1_write_back_encryption_enabled_o));
   Zynq_E40S_PMP_BRAM_ARBITER_0_0 BRAM_ARBITER_0
-       (.data_cache_mem_addr(UA_encrypt_1_mem_address[14:0]),
+       (.data_cache_mem_addr(UA_encrypt_1_mem_address),
         .data_cache_mem_req(UA_encrypt_1_mem_req),
         .data_cache_mem_wdata(UA_encrypt_1_mem_wdata),
         .data_cache_mem_write(UA_encrypt_1_mem_rw_enable),
         .data_ua_bram_valid(BRAM_ARBITER_0_data_ua_bram_valid1),
-        .inst_cache_mem_addr(UA_encrypt_0_mem_address[14:0]),
+        .inst_cache_mem_addr(UA_encrypt_0_mem_address),
         .inst_cache_mem_req(UA_encrypt_0_mem_req),
         .inst_cache_mem_valid(BRAM_ARBITER_0_inst_cache_mem_valid),
         .inst_cache_mem_wdata(UA_encrypt_0_mem_wdata),
@@ -242,7 +242,7 @@ module Zynq_E40S_PMP
         .ua_mem_wdata(BRAM_ARBITER_0_ua_mem_wdata),
         .ua_mem_write(BRAM_ARBITER_0_ua_mem_write));
   Zynq_E40S_PMP_UA_encrypt_0_0 UA_encrypt_0
-       (.cache_address({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,AHB_CACHE_0_BRAM_MEM_ADDR}),
+       (.cache_address(AHB_CACHE_0_BRAM_MEM_ADDR),
         .cache_rdata(UA_encrypt_0_cache_rdata),
         .cache_ready(UA_encrypt_0_cache_ready),
         .cache_req(AHB_CACHE_0_BRAM_MEM_REQ),
@@ -259,7 +259,7 @@ module Zynq_E40S_PMP
         .reset(clk_wiz_0_locked),
         .write_back_encryption_enabled(AHB_CACHE_0_write_back_encryption_enabled_o));
   Zynq_E40S_PMP_UA_encrypt_1_0 UA_encrypt_1
-       (.cache_address({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,AHB_CACHE_1_BRAM_MEM_ADDR}),
+       (.cache_address(AHB_CACHE_1_BRAM_MEM_ADDR),
         .cache_rdata(UA_encrypt_1_cache_rdata),
         .cache_ready(UA_encrypt_1_cache_ready),
         .cache_req(AHB_CACHE_1_BRAM_MEM_REQ),
@@ -276,7 +276,7 @@ module Zynq_E40S_PMP
         .reset(clk_wiz_0_locked),
         .write_back_encryption_enabled(AHB_CACHE_1_write_back_encryption_enabled_o));
   Zynq_E40S_PMP_blk_mem_gen_1_0 blk_mem_gen_1
-       (.addra({1'b0,BRAM_ARBITER_0_ua_mem_addr}),
+       (.addra(BRAM_ARBITER_0_ua_mem_addr),
         .clka(clk_wiz_0_clk_out1),
         .dina(BRAM_ARBITER_0_ua_mem_wdata),
         .douta(blk_mem_gen_1_douta),

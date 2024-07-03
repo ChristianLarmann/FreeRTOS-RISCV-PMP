@@ -11,6 +11,7 @@
         "ADDRESS_SIZE": [ { "value": "32", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "NUMBER_OF_BYTES": [ { "value": "16", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "DATA_WIDTH": [ { "value": "128", "resolve_type": "user", "format": "long", "usage": "all" } ],
+        "MEM_ADDR_BITS": [ { "value": "15", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "ENABLE_ADDR_TWEAK": [ { "value": "0", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "Component_Name": [ { "value": "Zynq_E40S_PMP_UA_encrypt_1_0", "resolve_type": "user", "usage": "all" } ]
       },
@@ -18,6 +19,7 @@
         "ADDRESS_SIZE": [ { "value": "32", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "NUMBER_OF_BYTES": [ { "value": "16", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "DATA_WIDTH": [ { "value": "128", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+        "MEM_ADDR_BITS": [ { "value": "15", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "ENABLE_ADDR_TWEAK": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ]
       },
       "project_parameters": {
@@ -54,13 +56,13 @@
         "write_back_encryption_enabled": [ { "direction": "in" } ],
         "cache_rdata": [ { "direction": "out", "size_left": "127", "size_right": "0" } ],
         "cache_wdata": [ { "direction": "in", "size_left": "127", "size_right": "0" } ],
-        "cache_address": [ { "direction": "in", "size_left": "31", "size_right": "0" } ],
+        "cache_address": [ { "direction": "in", "size_left": "14", "size_right": "0" } ],
         "cache_req": [ { "direction": "in" } ],
         "cache_rw_enable": [ { "direction": "in" } ],
         "cache_ready": [ { "direction": "out" } ],
         "mem_rdata": [ { "direction": "in", "size_left": "127", "size_right": "0" } ],
         "mem_wdata": [ { "direction": "out", "size_left": "127", "size_right": "0" } ],
-        "mem_address": [ { "direction": "out", "size_left": "31", "size_right": "0" } ],
+        "mem_address": [ { "direction": "out", "size_left": "14", "size_right": "0" } ],
         "mem_req": [ { "direction": "out" } ],
         "mem_rw_enable": [ { "direction": "out" } ],
         "mem_valid": [ { "direction": "in" } ],

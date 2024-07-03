@@ -86,7 +86,7 @@ input wire reset;
 output wire [127 : 0] ua_mem_wdata;
 output wire ua_mem_req;
 output wire ua_mem_write;
-output wire [14 : 0] ua_mem_addr;
+output wire [15 : 0] ua_mem_addr;
 input wire ua_mem_valid;
 output wire data_ua_bram_valid;
 input wire [127 : 0] ua_mem_rdata_i;

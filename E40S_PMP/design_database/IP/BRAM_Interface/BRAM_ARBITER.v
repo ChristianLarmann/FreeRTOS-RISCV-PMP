@@ -40,7 +40,7 @@ module BRAM_ARBITER #(
 	output reg [128-1:0]                   ua_mem_wdata,
 	output reg							   ua_mem_req,
 	output reg							   ua_mem_write,
-	output reg	[BRAM_ADDR_BITS-1:0]	   ua_mem_addr,
+	output reg	[BRAM_ADDR_BITS+1-1:0]	   ua_mem_addr,  // +1 because BRAM address port is one bit wider
 	input  wire                            ua_mem_valid,
 	output reg                             data_ua_bram_valid,
 	input  wire [128-1:0]                  ua_mem_rdata_i,
@@ -100,7 +100,7 @@ module BRAM_ARBITER #(
 		begin
 		   ua_mem_req <= 1;
 		   ua_mem_write <= data_cache_mem_write;
-		   ua_mem_addr <= data_cache_mem_addr;
+		   ua_mem_addr <= {1'b0, data_cache_mem_addr};
 		   ua_mem_wdata <= data_cache_mem_wdata;
 		   data_ua_bram_valid <= ua_mem_valid;
 		end
@@ -109,7 +109,7 @@ module BRAM_ARBITER #(
 		begin
 		   ua_mem_req <= 1;
 		   ua_mem_write <= inst_cache_mem_write;
-		   ua_mem_addr <= inst_cache_mem_addr;
+		   ua_mem_addr <= {1'b0, inst_cache_mem_addr};
 		   ua_mem_wdata <= inst_cache_mem_wdata;
 		   inst_cache_mem_valid <= ua_mem_valid;
 		   

@@ -51,7 +51,7 @@
         "ua_mem_wdata": [ { "direction": "out", "size_left": "127", "size_right": "0" } ],
         "ua_mem_req": [ { "direction": "out" } ],
         "ua_mem_write": [ { "direction": "out" } ],
-        "ua_mem_addr": [ { "direction": "out", "size_left": "14", "size_right": "0" } ],
+        "ua_mem_addr": [ { "direction": "out", "size_left": "15", "size_right": "0" } ],
         "ua_mem_valid": [ { "direction": "in" } ],
         "data_ua_bram_valid": [ { "direction": "out" } ],
         "ua_mem_rdata_i": [ { "direction": "in", "size_left": "127", "size_right": "0" } ],

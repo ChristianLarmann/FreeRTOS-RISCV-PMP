@@ -3,6 +3,7 @@ module UA_encrypt
         parameter	ADDRESS_SIZE	=	32,
         parameter	NUMBER_OF_BYTES	=	16,
         parameter	DATA_WIDTH		=	NUMBER_OF_BYTES * 8,
+        parameter   MEM_ADDR_BITS		=	15,	
         parameter   ENABLE_ADDR_TWEAK = 0
     )
     (
@@ -16,7 +17,7 @@ module UA_encrypt
         //Cache side connections
         output  wire [DATA_WIDTH-1:0]   cache_rdata,
         input   wire [DATA_WIDTH-1:0]   cache_wdata,
-        input   wire [ADDRESS_SIZE-1:0] cache_address,
+        input   wire [MEM_ADDR_BITS-1:0] cache_address,
         input   wire                    cache_req,
         input   wire                    cache_rw_enable,
         output  wire                    cache_ready,
@@ -24,7 +25,7 @@ module UA_encrypt
         //Memory side connections
         input   wire [DATA_WIDTH-1:0]   mem_rdata,
         output  wire [DATA_WIDTH-1:0]   mem_wdata,
-        output  wire [ADDRESS_SIZE-1:0] mem_address,
+        output  wire [MEM_ADDR_BITS-1:0] mem_address,
         output  wire                    mem_req,
         output  wire                    mem_rw_enable,
         input   wire                    mem_valid,

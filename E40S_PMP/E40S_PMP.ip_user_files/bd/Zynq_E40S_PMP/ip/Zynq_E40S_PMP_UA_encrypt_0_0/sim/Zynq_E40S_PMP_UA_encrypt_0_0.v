@@ -84,13 +84,13 @@ input wire decryption_enabled_cpu;
 input wire write_back_encryption_enabled;
 output wire [127 : 0] cache_rdata;
 input wire [127 : 0] cache_wdata;
-input wire [31 : 0] cache_address;
+input wire [14 : 0] cache_address;
 input wire cache_req;
 input wire cache_rw_enable;
 output wire cache_ready;
 input wire [127 : 0] mem_rdata;
 output wire [127 : 0] mem_wdata;
-output wire [31 : 0] mem_address;
+output wire [14 : 0] mem_address;
 output wire mem_req;
 output wire mem_rw_enable;
 input wire mem_valid;
@@ -100,6 +100,7 @@ output wire [7 : 0] debug;
     .ADDRESS_SIZE(32),
     .NUMBER_OF_BYTES(16),
     .DATA_WIDTH(128),
+    .MEM_ADDR_BITS(15),
     .ENABLE_ADDR_TWEAK(0)
   ) inst (
     .clock(clock),

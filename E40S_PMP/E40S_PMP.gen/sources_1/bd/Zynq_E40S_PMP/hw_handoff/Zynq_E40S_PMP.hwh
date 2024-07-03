@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Jul  3 18:18:17 2024" VIVADOVERSION="2023.1.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Jul  3 18:32:34 2024" VIVADOVERSION="2023.1.1">
 
   <SYSTEMINFO ARCH="zynq" BOARD="www.digilentinc.com:pynq-z1:part0:1.0" DEVICE="7z020" NAME="Zynq_E40S_PMP" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -700,7 +700,7 @@
             <CONNECTION INSTANCE="blk_mem_gen_1" PORT="wea"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="14" NAME="ua_mem_addr" RIGHT="0" SIGIS="undef" SIGNAME="BRAM_ARBITER_0_ua_mem_addr">
+        <PORT DIR="O" LEFT="15" NAME="ua_mem_addr" RIGHT="0" SIGIS="undef" SIGNAME="BRAM_ARBITER_0_ua_mem_addr">
           <CONNECTIONS>
             <CONNECTION INSTANCE="blk_mem_gen_1" PORT="addra"/>
           </CONNECTIONS>
@@ -781,6 +781,7 @@
         <PARAMETER NAME="ADDRESS_SIZE" VALUE="32"/>
         <PARAMETER NAME="NUMBER_OF_BYTES" VALUE="16"/>
         <PARAMETER NAME="DATA_WIDTH" VALUE="128"/>
+        <PARAMETER NAME="MEM_ADDR_BITS" VALUE="15"/>
         <PARAMETER NAME="ENABLE_ADDR_TWEAK" VALUE="0"/>
         <PARAMETER NAME="Component_Name" VALUE="Zynq_E40S_PMP_UA_encrypt_0_0"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
@@ -816,7 +817,7 @@
             <CONNECTION INSTANCE="AHB_CACHE_0" PORT="BRAM_WDATA"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="31" NAME="cache_address" RIGHT="0" SIGIS="undef" SIGNAME="AHB_CACHE_0_BRAM_MEM_ADDR">
+        <PORT DIR="I" LEFT="14" NAME="cache_address" RIGHT="0" SIGIS="undef" SIGNAME="AHB_CACHE_0_BRAM_MEM_ADDR">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AHB_CACHE_0" PORT="BRAM_MEM_ADDR"/>
           </CONNECTIONS>
@@ -846,7 +847,7 @@
             <CONNECTION INSTANCE="BRAM_ARBITER_0" PORT="inst_cache_mem_wdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="31" NAME="mem_address" RIGHT="0" SIGIS="undef" SIGNAME="UA_encrypt_0_mem_address">
+        <PORT DIR="O" LEFT="14" NAME="mem_address" RIGHT="0" SIGIS="undef" SIGNAME="UA_encrypt_0_mem_address">
           <CONNECTIONS>
             <CONNECTION INSTANCE="BRAM_ARBITER_0" PORT="inst_cache_mem_addr"/>
           </CONNECTIONS>
@@ -876,6 +877,7 @@
         <PARAMETER NAME="ADDRESS_SIZE" VALUE="32"/>
         <PARAMETER NAME="NUMBER_OF_BYTES" VALUE="16"/>
         <PARAMETER NAME="DATA_WIDTH" VALUE="128"/>
+        <PARAMETER NAME="MEM_ADDR_BITS" VALUE="15"/>
         <PARAMETER NAME="ENABLE_ADDR_TWEAK" VALUE="0"/>
         <PARAMETER NAME="Component_Name" VALUE="Zynq_E40S_PMP_UA_encrypt_1_0"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
@@ -911,7 +913,7 @@
             <CONNECTION INSTANCE="AHB_CACHE_1" PORT="BRAM_WDATA"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="31" NAME="cache_address" RIGHT="0" SIGIS="undef" SIGNAME="AHB_CACHE_1_BRAM_MEM_ADDR">
+        <PORT DIR="I" LEFT="14" NAME="cache_address" RIGHT="0" SIGIS="undef" SIGNAME="AHB_CACHE_1_BRAM_MEM_ADDR">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AHB_CACHE_1" PORT="BRAM_MEM_ADDR"/>
           </CONNECTIONS>
@@ -941,7 +943,7 @@
             <CONNECTION INSTANCE="BRAM_ARBITER_0" PORT="data_cache_mem_wdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="31" NAME="mem_address" RIGHT="0" SIGIS="undef" SIGNAME="UA_encrypt_1_mem_address">
+        <PORT DIR="O" LEFT="14" NAME="mem_address" RIGHT="0" SIGIS="undef" SIGNAME="UA_encrypt_1_mem_address">
           <CONNECTIONS>
             <CONNECTION INSTANCE="BRAM_ARBITER_0" PORT="data_cache_mem_addr"/>
           </CONNECTIONS>
@@ -1877,13 +1879,13 @@
             <CONNECTION INSTANCE="AHB2TIMER_0" PORT="HCLK"/>
             <CONNECTION INSTANCE="blk_mem_gen_1" PORT="clka"/>
             <CONNECTION INSTANCE="riscv_top_ahb3lite_0" PORT="HCLK"/>
-            <CONNECTION INSTANCE="UA_encrypt_0" PORT="clock"/>
-            <CONNECTION INSTANCE="UA_encrypt_1" PORT="clock"/>
             <CONNECTION INSTANCE="AHBMUX_0" PORT="HCLK"/>
             <CONNECTION INSTANCE="AHB_CACHE_0" PORT="HCLK"/>
             <CONNECTION INSTANCE="AHB_CACHE_1" PORT="HCLK"/>
-            <CONNECTION INSTANCE="BRAM_ARBITER_0" PORT="sys_clock"/>
             <CONNECTION INSTANCE="bram_read_write_late_0" PORT="clk"/>
+            <CONNECTION INSTANCE="UA_encrypt_0" PORT="clock"/>
+            <CONNECTION INSTANCE="UA_encrypt_1" PORT="clock"/>
+            <CONNECTION INSTANCE="BRAM_ARBITER_0" PORT="sys_clock"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="locked" SIGIS="undef" SIGNAME="clk_wiz_0_locked">
@@ -1894,13 +1896,13 @@
             <CONNECTION INSTANCE="AHB2UART_0" PORT="HRESETn"/>
             <CONNECTION INSTANCE="riscv_top_ahb3lite_0" PORT="HRESETn"/>
             <CONNECTION INSTANCE="AHBDCD_0" PORT="RESET"/>
-            <CONNECTION INSTANCE="UA_encrypt_0" PORT="reset"/>
-            <CONNECTION INSTANCE="UA_encrypt_1" PORT="reset"/>
             <CONNECTION INSTANCE="AHBMUX_0" PORT="HRESETn"/>
             <CONNECTION INSTANCE="AHB_CACHE_0" PORT="HRESETn"/>
             <CONNECTION INSTANCE="AHB_CACHE_1" PORT="HRESETn"/>
-            <CONNECTION INSTANCE="BRAM_ARBITER_0" PORT="reset"/>
             <CONNECTION INSTANCE="bram_read_write_late_0" PORT="reset"/>
+            <CONNECTION INSTANCE="UA_encrypt_0" PORT="reset"/>
+            <CONNECTION INSTANCE="UA_encrypt_1" PORT="reset"/>
+            <CONNECTION INSTANCE="BRAM_ARBITER_0" PORT="reset"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -1977,8 +1979,8 @@
         </PORT>
         <PORT DIR="O" NAME="ins_HENCRYPT" SIGIS="undef" SIGNAME="riscv_top_ahb3lite_0_ins_HENCRYPT">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="UA_encrypt_0" PORT="decryption_enabled_cpu"/>
             <CONNECTION INSTANCE="AHB_CACHE_0" PORT="enc_bit_for_cache_line_i"/>
+            <CONNECTION INSTANCE="UA_encrypt_0" PORT="decryption_enabled_cpu"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" LEFT="31" NAME="dat_HADDR" RIGHT="0" SIGIS="undef" SIGNAME="riscv_top_ahb3lite_0_dat_HADDR">
@@ -2035,8 +2037,8 @@
         </PORT>
         <PORT DIR="O" NAME="dat_HENCRYPT" SIGIS="undef" SIGNAME="riscv_top_ahb3lite_0_dat_HENCRYPT">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="UA_encrypt_1" PORT="decryption_enabled_cpu"/>
             <CONNECTION INSTANCE="AHB_CACHE_1" PORT="enc_bit_for_cache_line_i"/>
+            <CONNECTION INSTANCE="UA_encrypt_1" PORT="decryption_enabled_cpu"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" LEFT="31" NAME="irqs" RIGHT="0" SIGIS="undef" SIGNAME="xlconcat_0_dout">
