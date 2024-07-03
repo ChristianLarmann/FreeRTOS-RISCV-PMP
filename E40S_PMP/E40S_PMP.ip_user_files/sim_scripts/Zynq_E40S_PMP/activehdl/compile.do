@@ -90,6 +90,7 @@ vlog -work xil_defaultlib  -v2k5 "+incdir+../../../../E40S_PMP.gen/sources_1/bd/
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_UA_encrypt_0_0/sim/Zynq_E40S_PMP_UA_encrypt_0_0.v" \
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_UA_encrypt_1_0/sim/Zynq_E40S_PMP_UA_encrypt_1_0.v" \
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_BRAM_ARBITER_0_0/sim/Zynq_E40S_PMP_BRAM_ARBITER_0_0.v" \
+"../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_xlconstant_5_0/sim/Zynq_E40S_PMP_xlconstant_5_0.v" \
 "../../../bd/Zynq_E40S_PMP/sim/Zynq_E40S_PMP.v" \
 
 vlog -work xil_defaultlib \

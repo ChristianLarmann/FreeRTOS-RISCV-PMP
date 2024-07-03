@@ -34,17 +34,26 @@ module bram_read_write_latency
     
     reg delay_active;
     
+    // To make sure that valid is not issued two times for one request
+    reg req_was_low;  
+    
     always @(posedge clk)
 	begin
 	    if (!reset) begin
 	        valid <= 0;
 		    delay_active <= 0;
 		    counter <= 0;
+		    req_was_low <= 1;
 	   end
 	   
-       if(req && !delay_active)
+	   if(!req) begin
+	       req_was_low <= 1;
+	   end
+	   
+       if(req && !delay_active && req_was_low)
        begin
            delay_active <= 1;
+           req_was_low <= 0;
        end
        
        // Check wheter latency has been waited

@@ -7,7 +7,8 @@
       "name": "Zynq_E40S_PMP",
       "rev_ctrl_bd_flag": "RevCtrlBdOff",
       "synth_flow_mode": "Hierarchical",
-      "tool_version": "2023.1.1"
+      "tool_version": "2023.1.1",
+      "validated": "true"
     },
     "design_tree": {
       "AHBKEYS_0": "",
@@ -28,14 +29,14 @@
       "clk_wiz_0": "",
       "riscv_top_ahb3lite_0": "",
       "AHBDCD_0": "",
-      "AHBMUX_0": "",
       "AHB_CACHE_0": "",
       "AHB_CACHE_1": "",
       "UA_encrypt_0": "",
       "UA_encrypt_1": "",
-      "bram_read_write_late_0": "",
       "BRAM_ARBITER_0": "",
-      "xlconstant_5": ""
+      "xlconstant_5": "",
+      "AHBMUX_0": "",
+      "bram_read_write_late_0": ""
     },
     "ports": {
       "BT_RX": {
@@ -364,7 +365,7 @@
         "inst_hier_path": "blk_mem_gen_1",
         "parameters": {
           "Coe_File": {
-            "value": "../../../../../../code_and_data.coe"
+            "value": "../../../../../../E40S_PMP.sim/sim_1/behav/xsim/code_and_data0307.coe"
           },
           "Load_Init_File": {
             "value": "true"
@@ -761,110 +762,6 @@
           }
         }
       },
-      "AHBMUX_0": {
-        "vlnv": "xilinx.com:module_ref:AHBMUX:1.0",
-        "xci_name": "Zynq_E40S_PMP_AHBMUX_0_0",
-        "xci_path": "ip/Zynq_E40S_PMP_AHBMUX_0_0/Zynq_E40S_PMP_AHBMUX_0_0.xci",
-        "inst_hier_path": "AHBMUX_0",
-        "reference_info": {
-          "ref_type": "hdl",
-          "ref_name": "AHBMUX",
-          "boundary_crc": "0x0"
-        },
-        "ports": {
-          "HCLK": {
-            "direction": "I",
-            "parameters": {
-              "FREQ_HZ": {
-                "value": "100000000",
-                "value_src": "ip_prop"
-              },
-              "PHASE": {
-                "value": "0.0",
-                "value_src": "ip_prop"
-              },
-              "CLK_DOMAIN": {
-                "value": "/clk_wiz_0_clk_out1",
-                "value_src": "ip_prop"
-              }
-            }
-          },
-          "HRESETn": {
-            "direction": "I"
-          },
-          "MUX_SEL": {
-            "direction": "I",
-            "left": "3",
-            "right": "0"
-          },
-          "HRDATA_S0": {
-            "direction": "I",
-            "left": "31",
-            "right": "0",
-            "parameters": {
-              "SENSITIVITY": {
-                "value": "LEVEL_HIGH",
-                "value_src": "const_prop"
-              },
-              "PortWidth": {
-                "value": "1",
-                "value_src": "default_prop"
-              }
-            }
-          },
-          "HRDATA_S2": {
-            "direction": "I",
-            "left": "31",
-            "right": "0"
-          },
-          "HRDATA_S4": {
-            "direction": "I",
-            "left": "31",
-            "right": "0"
-          },
-          "HRDATA_S5": {
-            "direction": "I",
-            "left": "31",
-            "right": "0"
-          },
-          "HRDATA_S7": {
-            "direction": "I",
-            "left": "31",
-            "right": "0"
-          },
-          "HRDATA_NOMAP": {
-            "direction": "I",
-            "left": "31",
-            "right": "0"
-          },
-          "HREADYOUT_S0": {
-            "direction": "I"
-          },
-          "HREADYOUT_S2": {
-            "direction": "I"
-          },
-          "HREADYOUT_S4": {
-            "direction": "I"
-          },
-          "HREADYOUT_S5": {
-            "direction": "I"
-          },
-          "HREADYOUT_S7": {
-            "direction": "I"
-          },
-          "HREADYOUT_NOMAP": {
-            "direction": "I"
-          },
-          "HREADY": {
-            "direction": "O"
-          },
-          "HRDATA": {
-            "direction": "O",
-            "left": "31",
-            "right": "0"
-          }
-        }
-      },
       "AHB_CACHE_0": {
         "vlnv": "xilinx.com:module_ref:AHB_CACHE:1.0",
         "xci_name": "Zynq_E40S_PMP_AHB_CACHE_0_0",
@@ -1061,7 +958,17 @@
           "HRDATA": {
             "direction": "O",
             "left": "31",
-            "right": "0"
+            "right": "0",
+            "parameters": {
+              "SENSITIVITY": {
+                "value": "LEVEL_HIGH",
+                "value_src": "const_prop"
+              },
+              "PortWidth": {
+                "value": "1",
+                "value_src": "default_prop"
+              }
+            }
           },
           "interrupt": {
             "type": "intr",
@@ -1313,51 +1220,6 @@
           }
         }
       },
-      "bram_read_write_late_0": {
-        "vlnv": "xilinx.com:module_ref:bram_read_write_latency:1.0",
-        "xci_name": "Zynq_E40S_PMP_bram_read_write_late_0_0",
-        "xci_path": "ip/Zynq_E40S_PMP_bram_read_write_late_0_0/Zynq_E40S_PMP_bram_read_write_late_0_0.xci",
-        "inst_hier_path": "bram_read_write_late_0",
-        "reference_info": {
-          "ref_type": "hdl",
-          "ref_name": "bram_read_write_latency",
-          "boundary_crc": "0x0"
-        },
-        "ports": {
-          "clk": {
-            "type": "clk",
-            "direction": "I",
-            "parameters": {
-              "ASSOCIATED_RESET": {
-                "value": "reset",
-                "value_src": "constant"
-              },
-              "FREQ_HZ": {
-                "value": "100000000",
-                "value_src": "ip_prop"
-              },
-              "PHASE": {
-                "value": "0.0",
-                "value_src": "ip_prop"
-              },
-              "CLK_DOMAIN": {
-                "value": "/clk_wiz_0_clk_out1",
-                "value_src": "ip_prop"
-              }
-            }
-          },
-          "reset": {
-            "type": "rst",
-            "direction": "I"
-          },
-          "req": {
-            "direction": "I"
-          },
-          "valid": {
-            "direction": "O"
-          }
-        }
-      },
       "BRAM_ARBITER_0": {
         "vlnv": "xilinx.com:module_ref:BRAM_ARBITER:1.0",
         "xci_name": "Zynq_E40S_PMP_BRAM_ARBITER_0_0",
@@ -1472,6 +1334,155 @@
         "xci_name": "Zynq_E40S_PMP_xlconstant_5_0",
         "xci_path": "ip/Zynq_E40S_PMP_xlconstant_5_0/Zynq_E40S_PMP_xlconstant_5_0.xci",
         "inst_hier_path": "xlconstant_5"
+      },
+      "AHBMUX_0": {
+        "vlnv": "xilinx.com:module_ref:AHBMUX:1.0",
+        "xci_name": "Zynq_E40S_PMP_AHBMUX_0_0",
+        "xci_path": "ip/Zynq_E40S_PMP_AHBMUX_0_0/Zynq_E40S_PMP_AHBMUX_0_0.xci",
+        "inst_hier_path": "AHBMUX_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "AHBMUX",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "HCLK": {
+            "direction": "I",
+            "parameters": {
+              "FREQ_HZ": {
+                "value": "100000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "HRESETn": {
+            "direction": "I"
+          },
+          "MUX_SEL": {
+            "direction": "I",
+            "left": "3",
+            "right": "0"
+          },
+          "HRDATA_S0": {
+            "direction": "I",
+            "left": "31",
+            "right": "0",
+            "parameters": {
+              "SENSITIVITY": {
+                "value": "LEVEL_HIGH",
+                "value_src": "const_prop"
+              },
+              "PortWidth": {
+                "value": "1",
+                "value_src": "default_prop"
+              }
+            }
+          },
+          "HRDATA_S2": {
+            "direction": "I",
+            "left": "31",
+            "right": "0"
+          },
+          "HRDATA_S4": {
+            "direction": "I",
+            "left": "31",
+            "right": "0"
+          },
+          "HRDATA_S5": {
+            "direction": "I",
+            "left": "31",
+            "right": "0"
+          },
+          "HRDATA_S7": {
+            "direction": "I",
+            "left": "31",
+            "right": "0"
+          },
+          "HRDATA_NOMAP": {
+            "direction": "I",
+            "left": "31",
+            "right": "0"
+          },
+          "HREADYOUT_S0": {
+            "direction": "I"
+          },
+          "HREADYOUT_S2": {
+            "direction": "I"
+          },
+          "HREADYOUT_S4": {
+            "direction": "I"
+          },
+          "HREADYOUT_S5": {
+            "direction": "I"
+          },
+          "HREADYOUT_S7": {
+            "direction": "I"
+          },
+          "HREADYOUT_NOMAP": {
+            "direction": "I"
+          },
+          "HREADY": {
+            "direction": "O"
+          },
+          "HRDATA": {
+            "direction": "O",
+            "left": "31",
+            "right": "0"
+          }
+        }
+      },
+      "bram_read_write_late_0": {
+        "vlnv": "xilinx.com:module_ref:bram_read_write_latency:1.0",
+        "xci_name": "Zynq_E40S_PMP_bram_read_write_late_0_0",
+        "xci_path": "ip/Zynq_E40S_PMP_bram_read_write_late_0_0/Zynq_E40S_PMP_bram_read_write_late_0_0.xci",
+        "inst_hier_path": "bram_read_write_late_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "bram_read_write_latency",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "clk": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_RESET": {
+                "value": "reset",
+                "value_src": "constant"
+              },
+              "FREQ_HZ": {
+                "value": "100000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "reset": {
+            "type": "rst",
+            "direction": "I"
+          },
+          "req": {
+            "direction": "I"
+          },
+          "valid": {
+            "direction": "O"
+          }
+        }
       }
     },
     "nets": {
@@ -1637,6 +1648,12 @@
           "UA_encrypt_1/cache_wdata"
         ]
       },
+      "AHB_CACHE_1_HRDATA": {
+        "ports": [
+          "AHB_CACHE_1/HRDATA",
+          "AHBMUX_0/HRDATA_S0"
+        ]
+      },
       "AHB_CACHE_1_HREADYOUT": {
         "ports": [
           "AHBMUX_0/HREADY",
@@ -1652,12 +1669,6 @@
         "ports": [
           "AHB_CACHE_1/HREADYOUT",
           "AHBMUX_0/HREADYOUT_S0"
-        ]
-      },
-      "AHB_CACHE_1_interrupt": {
-        "ports": [
-          "AHB_CACHE_1/interrupt",
-          "AHBMUX_0/HRDATA_S0"
         ]
       },
       "AHB_CACHE_1_write_back_encryption_enabled_o": {
@@ -1835,13 +1846,13 @@
           "AHB2TIMER_0/HCLK",
           "blk_mem_gen_1/clka",
           "riscv_top_ahb3lite_0/HCLK",
-          "AHBMUX_0/HCLK",
           "AHB_CACHE_0/HCLK",
           "AHB_CACHE_1/HCLK",
           "UA_encrypt_0/clock",
           "UA_encrypt_1/clock",
-          "bram_read_write_late_0/clk",
-          "BRAM_ARBITER_0/sys_clock"
+          "BRAM_ARBITER_0/sys_clock",
+          "AHBMUX_0/HCLK",
+          "bram_read_write_late_0/clk"
         ]
       },
       "clk_wiz_0_locked": {
@@ -1853,13 +1864,13 @@
           "AHB2UART_0/HRESETn",
           "riscv_top_ahb3lite_0/HRESETn",
           "AHBDCD_0/RESET",
-          "AHBMUX_0/HRESETn",
           "AHB_CACHE_0/HRESETn",
           "AHB_CACHE_1/HRESETn",
           "UA_encrypt_0/reset",
           "UA_encrypt_1/reset",
-          "bram_read_write_late_0/reset",
-          "BRAM_ARBITER_0/reset"
+          "BRAM_ARBITER_0/reset",
+          "AHBMUX_0/HRESETn",
+          "bram_read_write_late_0/reset"
         ]
       },
       "fetch_enable_cpu_1": {

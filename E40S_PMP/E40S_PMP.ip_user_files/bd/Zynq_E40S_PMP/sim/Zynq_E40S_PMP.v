@@ -2,7 +2,7 @@
 //Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2023.1.1 (lin64) Build 3900603 Fri Jun 16 19:30:25 MDT 2023
-//Date        : Wed Jul  3 01:26:15 2024
+//Date        : Wed Jul  3 11:54:38 2024
 //Host        : TP-T480s running 64-bit Ubuntu 22.04.4 LTS
 //Command     : generate_target Zynq_E40S_PMP.bd
 //Design      : Zynq_E40S_PMP
@@ -10,7 +10,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "Zynq_E40S_PMP,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=Zynq_E40S_PMP,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=25,numReposBlks=25,numNonXlnxBlks=0,numHierBlks=0,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=13,numPkgbdBlks=0,bdsource=USER,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "Zynq_E40S_PMP.hwdef" *) 
+(* CORE_GENERATION_INFO = "Zynq_E40S_PMP,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=Zynq_E40S_PMP,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=26,numReposBlks=26,numNonXlnxBlks=0,numHierBlks=0,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=13,numPkgbdBlks=0,bdsource=USER,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "Zynq_E40S_PMP.hwdef" *) 
 module Zynq_E40S_PMP
    (BT_RX,
     clk_125,
@@ -29,7 +29,6 @@ module Zynq_E40S_PMP
   wire [31:0]AHB2UART_0_HRDATA;
   wire AHB2UART_0_HREADYOUT;
   wire AHB2UART_0_uart_irq;
-  wire AHBDCD_0_HSEL_NOMAP;
   wire AHBDCD_0_HSEL_S0;
   wire AHBDCD_0_HSEL_S2;
   wire AHBDCD_0_HSEL_S4;
@@ -49,9 +48,9 @@ module Zynq_E40S_PMP
   wire AHB_CACHE_1_BRAM_MEM_REQ;
   wire AHB_CACHE_1_BRAM_MEM_WRITE;
   wire [127:0]AHB_CACHE_1_BRAM_WDATA;
+  wire [31:0]AHB_CACHE_1_HRDATA;
   wire AHB_CACHE_1_HREADYOUT;
   wire AHB_CACHE_1_HREADYOUT1;
-  wire AHB_CACHE_1_interrupt;
   wire AHB_CACHE_1_write_back_encryption_enabled_o;
   wire BRAM_ARBITER_0_data_ua_bram_valid1;
   wire BRAM_ARBITER_0_inst_cache_mem_valid;
@@ -99,6 +98,7 @@ module Zynq_E40S_PMP
   wire [31:0]xlconstant_2_dout;
   wire [2:0]xlconstant_3_dout;
   wire [0:0]xlconstant_4_dout;
+  wire [0:0]xlconstant_5_dout;
   wire [31:0]xlconstant_6_dout;
   wire [14:0]xlconstant_7_dout;
   wire [0:0]xlconstant_8_dout;
@@ -146,7 +146,6 @@ module Zynq_E40S_PMP
         .uart_irq(AHB2UART_0_uart_irq));
   Zynq_E40S_PMP_AHBDCD_0_0 AHBDCD_0
        (.HADDR(riscv_top_ahb3lite_0_dat_HADDR),
-        .HSEL_NOMAP(AHBDCD_0_HSEL_NOMAP),
         .HSEL_S0(AHBDCD_0_HSEL_S0),
         .HSEL_S2(AHBDCD_0_HSEL_S2),
         .HSEL_S4(AHBDCD_0_HSEL_S4),
@@ -167,13 +166,13 @@ module Zynq_E40S_PMP
        (.HCLK(clk_wiz_0_clk_out1),
         .HRDATA(AHBMUX_0_HRDATA),
         .HRDATA_NOMAP(xlconstant_1_dout),
-        .HRDATA_S0({AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt,AHB_CACHE_1_interrupt}),
+        .HRDATA_S0(AHB_CACHE_1_HRDATA),
         .HRDATA_S2(AHB2DUMP_0_HRDATA),
         .HRDATA_S4(AHB2UART_0_HRDATA),
         .HRDATA_S5(AHBKEYS_0_HRDATA),
         .HRDATA_S7(AHB2TIMER_0_HRDATA),
         .HREADY(AHB_CACHE_1_HREADYOUT),
-        .HREADYOUT_NOMAP(AHBDCD_0_HSEL_NOMAP),
+        .HREADYOUT_NOMAP(xlconstant_5_dout),
         .HREADYOUT_S0(AHB_CACHE_1_HREADYOUT1),
         .HREADYOUT_S2(AHB2DUMP_0_HREADYOUT),
         .HREADYOUT_S4(AHB2UART_0_HREADYOUT),
@@ -210,6 +209,7 @@ module Zynq_E40S_PMP
         .BRAM_WDATA(AHB_CACHE_1_BRAM_WDATA),
         .HADDR(riscv_top_ahb3lite_0_dat_HADDR),
         .HCLK(clk_wiz_0_clk_out1),
+        .HRDATA(AHB_CACHE_1_HRDATA),
         .HREADY(AHB_CACHE_1_HREADYOUT),
         .HREADYOUT(AHB_CACHE_1_HREADYOUT1),
         .HRESETn(clk_wiz_0_locked),
@@ -219,7 +219,6 @@ module Zynq_E40S_PMP
         .HWDATA(riscv_top_ahb3lite_0_dat_HWDATA),
         .HWRITE(riscv_top_ahb3lite_0_dat_HWRITE),
         .enc_bit_for_cache_line_i(Net5),
-        .interrupt(AHB_CACHE_1_interrupt),
         .write_back_encryption_enabled_o(AHB_CACHE_1_write_back_encryption_enabled_o));
   Zynq_E40S_PMP_BRAM_ARBITER_0_0 BRAM_ARBITER_0
        (.data_cache_mem_addr(UA_encrypt_1_mem_address[14:0]),
@@ -366,6 +365,8 @@ module Zynq_E40S_PMP
        (.dout(xlconstant_3_dout));
   Zynq_E40S_PMP_xlconstant_4_0 xlconstant_4
        (.dout(xlconstant_4_dout));
+  Zynq_E40S_PMP_xlconstant_5_0 xlconstant_5
+       (.dout(xlconstant_5_dout));
   Zynq_E40S_PMP_xlconstant_4_2 xlconstant_6
        (.dout(xlconstant_6_dout));
   Zynq_E40S_PMP_xlconstant_4_3 xlconstant_7
