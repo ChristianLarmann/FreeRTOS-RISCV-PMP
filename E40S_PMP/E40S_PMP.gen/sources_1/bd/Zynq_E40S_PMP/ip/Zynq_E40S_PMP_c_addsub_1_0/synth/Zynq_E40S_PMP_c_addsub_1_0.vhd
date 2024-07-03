@@ -60,7 +60,6 @@ ENTITY Zynq_E40S_PMP_c_addsub_1_0 IS
   PORT (
     A : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
     B : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-    CLK : IN STD_LOGIC;
     S : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
   );
 END Zynq_E40S_PMP_c_addsub_1_0;
@@ -117,7 +116,7 @@ ARCHITECTURE Zynq_E40S_PMP_c_addsub_1_0_arch OF Zynq_E40S_PMP_c_addsub_1_0 IS
   ATTRIBUTE CHECK_LICENSE_TYPE : STRING;
   ATTRIBUTE CHECK_LICENSE_TYPE OF Zynq_E40S_PMP_c_addsub_1_0_arch : ARCHITECTURE IS "Zynq_E40S_PMP_c_addsub_1_0,c_addsub_v12_0_15,{}";
   ATTRIBUTE CORE_GENERATION_INFO : STRING;
-  ATTRIBUTE CORE_GENERATION_INFO OF Zynq_E40S_PMP_c_addsub_1_0_arch: ARCHITECTURE IS "Zynq_E40S_PMP_c_addsub_1_0,c_addsub_v12_0_15,{x_ipProduct=Vivado 2023.1.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=c_addsub,x_ipVersion=12.0,x_ipCoreRevision=15,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_VERBOSITY=0,C_XDEVICEFAMILY=zynq,C_IMPLEMENTATION=1,C_A_WIDTH=32,C_B_WIDTH=32,C_OUT_WIDTH=32,C_CE_OVERRIDES_SCLR=0,C_A_TYPE=1,C_B_TYPE=1,C_LATENCY=1,C_ADD_MODE=1,C_B_CONSTANT=0,C_B_VALUE=00000000000000000000000000000000,C_AINIT_VAL=0,C_SINIT_VAL=0,C_CE_OVERRIDES_BYPASS=1,C_BYPASS_LOW=0,C_" & 
+  ATTRIBUTE CORE_GENERATION_INFO OF Zynq_E40S_PMP_c_addsub_1_0_arch: ARCHITECTURE IS "Zynq_E40S_PMP_c_addsub_1_0,c_addsub_v12_0_15,{x_ipProduct=Vivado 2023.1.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=c_addsub,x_ipVersion=12.0,x_ipCoreRevision=15,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_VERBOSITY=0,C_XDEVICEFAMILY=zynq,C_IMPLEMENTATION=0,C_A_WIDTH=32,C_B_WIDTH=32,C_OUT_WIDTH=32,C_CE_OVERRIDES_SCLR=0,C_A_TYPE=1,C_B_TYPE=1,C_LATENCY=0,C_ADD_MODE=1,C_B_CONSTANT=0,C_B_VALUE=00000000000000000000000000000000,C_AINIT_VAL=0,C_SINIT_VAL=0,C_CE_OVERRIDES_BYPASS=1,C_BYPASS_LOW=0,C_" & 
 "SCLR_OVERRIDES_SSET=1,C_HAS_C_IN=0,C_HAS_C_OUT=0,C_BORROW_LOW=1,C_HAS_CE=0,C_HAS_BYPASS=0,C_HAS_SCLR=0,C_HAS_SSET=0,C_HAS_SINIT=0}";
   ATTRIBUTE X_INTERFACE_INFO : STRING;
   ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
@@ -125,8 +124,6 @@ ARCHITECTURE Zynq_E40S_PMP_c_addsub_1_0_arch OF Zynq_E40S_PMP_c_addsub_1_0 IS
   ATTRIBUTE X_INTERFACE_INFO OF A: SIGNAL IS "xilinx.com:signal:data:1.0 a_intf DATA";
   ATTRIBUTE X_INTERFACE_PARAMETER OF B: SIGNAL IS "XIL_INTERFACENAME b_intf, LAYERED_METADATA undef";
   ATTRIBUTE X_INTERFACE_INFO OF B: SIGNAL IS "xilinx.com:signal:data:1.0 b_intf DATA";
-  ATTRIBUTE X_INTERFACE_PARAMETER OF CLK: SIGNAL IS "XIL_INTERFACENAME clk_intf, ASSOCIATED_BUSIF s_intf:c_out_intf:sinit_intf:sset_intf:bypass_intf:c_in_intf:add_intf:b_intf:a_intf, ASSOCIATED_RESET SCLR, ASSOCIATED_CLKEN CE, FREQ_HZ 100000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1, INSERT_VIP 0";
-  ATTRIBUTE X_INTERFACE_INFO OF CLK: SIGNAL IS "xilinx.com:signal:clock:1.0 clk_intf CLK";
   ATTRIBUTE X_INTERFACE_PARAMETER OF S: SIGNAL IS "XIL_INTERFACENAME s_intf, LAYERED_METADATA xilinx.com:interface:datatypes:1.0 {DATA {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value data} bitwidth {attribs {resolve_type generated dependency bitwidth format long minimum {} maximum {}} value 32} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0} integer {signed {attribs {resolve_type generated dependency signed format bool minimum {} maximu" & 
 "m {}} value FALSE}}}} DATA_WIDTH 32}";
   ATTRIBUTE X_INTERFACE_INFO OF S: SIGNAL IS "xilinx.com:signal:data:1.0 s_intf DATA";
@@ -135,14 +132,14 @@ BEGIN
     GENERIC MAP (
       C_VERBOSITY => 0,
       C_XDEVICEFAMILY => "zynq",
-      C_IMPLEMENTATION => 1,
+      C_IMPLEMENTATION => 0,
       C_A_WIDTH => 32,
       C_B_WIDTH => 32,
       C_OUT_WIDTH => 32,
       C_CE_OVERRIDES_SCLR => 0,
       C_A_TYPE => 1,
       C_B_TYPE => 1,
-      C_LATENCY => 1,
+      C_LATENCY => 0,
       C_ADD_MODE => 1,
       C_B_CONSTANT => 0,
       C_B_VALUE => "00000000000000000000000000000000",
@@ -163,7 +160,7 @@ BEGIN
     PORT MAP (
       A => A,
       B => B,
-      CLK => CLK,
+      CLK => '0',
       ADD => '1',
       C_IN => '0',
       CE => '1',

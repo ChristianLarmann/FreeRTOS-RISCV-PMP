@@ -145,7 +145,7 @@ output wire dmem_access_req_debug_o;
     .APU_WOP_CPU(6),
     .APU_NDSFLAGS_CPU(15),
     .APU_NUSFLAGS_CPU(5),
-    .PMP_ENCRYPTION_ENABLED(0)
+    .PMP_ENCRYPTION_ENABLED(1)
   ) inst (
     .HCLK(HCLK),
     .HRESETn(HRESETn),

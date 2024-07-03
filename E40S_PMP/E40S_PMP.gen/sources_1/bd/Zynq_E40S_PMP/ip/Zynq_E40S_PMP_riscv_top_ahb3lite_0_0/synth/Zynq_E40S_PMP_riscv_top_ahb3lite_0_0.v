@@ -52,7 +52,7 @@
 
 (* X_CORE_INFO = "riscv_top_ahb3lite,Vivado 2023.1.1" *)
 (* CHECK_LICENSE_TYPE = "Zynq_E40S_PMP_riscv_top_ahb3lite_0_0,riscv_top_ahb3lite,{}" *)
-(* CORE_GENERATION_INFO = "Zynq_E40S_PMP_riscv_top_ahb3lite_0_0,riscv_top_ahb3lite,{x_ipProduct=Vivado 2023.1.1,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=riscv_top_ahb3lite,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,BOOT_ADDR=0x00008080,N_EXT_PERF_COUNTERS=0,INSTR_RDATA_WIDTH=32,PULP_SECURE=0,FPU=0,SHARED_FP=0,SHARED_DSP_MULT=0,SHARED_INT_DIV=0,SHARED_FP_DIVSQRT=0,WAPUTYPE=0,APU_NARGS_CPU=3,APU_WOP_CPU=6,APU_NDSFLAGS_CPU=15,APU_NUSFLAGS_CPU=5,PMP_ENCRYPTION_ENABLED=0}" *)
+(* CORE_GENERATION_INFO = "Zynq_E40S_PMP_riscv_top_ahb3lite_0_0,riscv_top_ahb3lite,{x_ipProduct=Vivado 2023.1.1,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=riscv_top_ahb3lite,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,BOOT_ADDR=0x1c005000,N_EXT_PERF_COUNTERS=0,INSTR_RDATA_WIDTH=32,PULP_SECURE=0,FPU=0,SHARED_FP=0,SHARED_DSP_MULT=0,SHARED_INT_DIV=0,SHARED_FP_DIVSQRT=0,WAPUTYPE=0,APU_NARGS_CPU=3,APU_WOP_CPU=6,APU_NDSFLAGS_CPU=15,APU_NUSFLAGS_CPU=5,PMP_ENCRYPTION_ENABLED=0}" *)
 (* IP_DEFINITION_SOURCE = "module_ref" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module Zynq_E40S_PMP_riscv_top_ahb3lite_0_0 (
@@ -132,7 +132,7 @@ output wire core_busy_o;
 output wire dmem_access_req_debug_o;
 
   riscv_top_ahb3lite #(
-    .BOOT_ADDR(32'H00008080),
+    .BOOT_ADDR(32'H1c005000),
     .N_EXT_PERF_COUNTERS(0),
     .INSTR_RDATA_WIDTH(32),
     .PULP_SECURE(0),

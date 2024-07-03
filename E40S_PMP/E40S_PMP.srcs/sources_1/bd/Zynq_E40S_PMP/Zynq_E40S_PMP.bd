@@ -539,6 +539,9 @@
         "parameters": {
           "BOOT_ADDR": {
             "value": "0x1c005000"
+          },
+          "PMP_ENCRYPTION_ENABLED": {
+            "value": "1"
           }
         },
         "reference_info": {

@@ -36,7 +36,6 @@ vlog -work xlconcat_v2_1_4  -v2k5 "+incdir+../../../../E40S_PMP.gen/sources_1/bd
 
 vlog -work xil_defaultlib  -v2k5 "+incdir+../../../../E40S_PMP.gen/sources_1/bd/Zynq_E40S_PMP/ipshared/30ef" -l xpm -l xil_defaultlib -l xlconcat_v2_1_4 -l blk_mem_gen_v8_4_6 -l xbip_utils_v3_0_10 -l c_reg_fd_v12_0_6 -l xbip_dsp48_wrapper_v3_0_4 -l xbip_pipe_v3_0_6 -l xbip_dsp48_addsub_v3_0_6 -l xbip_addsub_v3_0_6 -l c_addsub_v12_0_15 -l xlconstant_v1_1_7 \
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_xlconcat_0_0/sim/Zynq_E40S_PMP_xlconcat_0_0.v" \
-"../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_bram_read_write_late_0_0/sim/Zynq_E40S_PMP_bram_read_write_late_0_0.v" \
 
 vlog -work blk_mem_gen_v8_4_6  -v2k5 "+incdir+../../../../E40S_PMP.gen/sources_1/bd/Zynq_E40S_PMP/ipshared/30ef" -l xpm -l xil_defaultlib -l xlconcat_v2_1_4 -l blk_mem_gen_v8_4_6 -l xbip_utils_v3_0_10 -l c_reg_fd_v12_0_6 -l xbip_dsp48_wrapper_v3_0_4 -l xbip_pipe_v3_0_6 -l xbip_dsp48_addsub_v3_0_6 -l xbip_addsub_v3_0_6 -l c_addsub_v12_0_15 -l xlconstant_v1_1_7 \
 "../../../../E40S_PMP.gen/sources_1/bd/Zynq_E40S_PMP/ipshared/bb55/simulation/blk_mem_gen_v8_4.v" \
@@ -84,13 +83,14 @@ vlog -work xil_defaultlib  -v2k5 "+incdir+../../../../E40S_PMP.gen/sources_1/bd/
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_clk_wiz_0_0/Zynq_E40S_PMP_clk_wiz_0_0.v" \
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_riscv_top_ahb3lite_0_0/sim/Zynq_E40S_PMP_riscv_top_ahb3lite_0_0.v" \
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_AHBDCD_0_0/sim/Zynq_E40S_PMP_AHBDCD_0_0.v" \
-"../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_AHBMUX_0_0/sim/Zynq_E40S_PMP_AHBMUX_0_0.v" \
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_AHB_CACHE_0_0/sim/Zynq_E40S_PMP_AHB_CACHE_0_0.v" \
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_AHB_CACHE_1_0/sim/Zynq_E40S_PMP_AHB_CACHE_1_0.v" \
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_UA_encrypt_0_0/sim/Zynq_E40S_PMP_UA_encrypt_0_0.v" \
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_UA_encrypt_1_0/sim/Zynq_E40S_PMP_UA_encrypt_1_0.v" \
-"../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_BRAM_ARBITER_0_0/sim/Zynq_E40S_PMP_BRAM_ARBITER_0_0.v" \
 "../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_xlconstant_5_0/sim/Zynq_E40S_PMP_xlconstant_5_0.v" \
+"../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_AHBMUX_0_0/sim/Zynq_E40S_PMP_AHBMUX_0_0.v" \
+"../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_bram_read_write_late_0_0/sim/Zynq_E40S_PMP_bram_read_write_late_0_0.v" \
+"../../../bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_BRAM_ARBITER_0_0/sim/Zynq_E40S_PMP_BRAM_ARBITER_0_0.v" \
 "../../../bd/Zynq_E40S_PMP/sim/Zynq_E40S_PMP.v" \
 
 vlog -work xil_defaultlib \

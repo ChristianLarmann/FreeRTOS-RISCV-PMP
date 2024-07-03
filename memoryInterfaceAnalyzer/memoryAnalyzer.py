@@ -110,7 +110,7 @@ def get_timestamp(timestamp_line):
 
 
 # with open("mem_interface.vcd", 'r') as vcd:
-with open("new_design.vcd", 'r') as vcd:
+with open("design_2.vcd", 'r') as vcd:
     for i, line in enumerate(vcd):
         if True:  # i < 1000000:  # Process only the first 10 lines
             signal_name: str = line.split(" ")[-1].strip()  # strip for removing \n

@@ -2,10 +2,10 @@
 -- Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2023.1.1 (lin64) Build 3900603 Fri Jun 16 19:30:25 MDT 2023
--- Date        : Tue Jul  2 23:01:58 2024
+-- Date        : Wed Jul  3 14:34:25 2024
 -- Host        : TP-T480s running 64-bit Ubuntu 22.04.4 LTS
--- Command     : write_vhdl -force -mode synth_stub
---               /home/christian/Documents/CESE/Thesis/FreeRTOS-RISCV-PMP/E40S_PMP/E40S_PMP.gen/sources_1/bd/Zynq_E40S_PMP/ip/Zynq_E40S_PMP_c_addsub_1_0/Zynq_E40S_PMP_c_addsub_1_0_stub.vhdl
+-- Command     : write_vhdl -force -mode synth_stub -rename_top Zynq_E40S_PMP_c_addsub_1_0 -prefix
+--               Zynq_E40S_PMP_c_addsub_1_0_ Zynq_E40S_PMP_c_addsub_1_0_stub.vhdl
 -- Design      : Zynq_E40S_PMP_c_addsub_1_0
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7z020clg400-1
@@ -17,7 +17,6 @@ entity Zynq_E40S_PMP_c_addsub_1_0 is
   Port ( 
     A : in STD_LOGIC_VECTOR ( 31 downto 0 );
     B : in STD_LOGIC_VECTOR ( 31 downto 0 );
-    CLK : in STD_LOGIC;
     S : out STD_LOGIC_VECTOR ( 31 downto 0 )
   );
 
@@ -27,7 +26,7 @@ architecture stub of Zynq_E40S_PMP_c_addsub_1_0 is
 attribute syn_black_box : boolean;
 attribute black_box_pad_pin : string;
 attribute syn_black_box of stub : architecture is true;
-attribute black_box_pad_pin of stub : architecture is "A[31:0],B[31:0],CLK,S[31:0]";
+attribute black_box_pad_pin of stub : architecture is "A[31:0],B[31:0],S[31:0]";
 attribute x_core_info : string;
 attribute x_core_info of stub : architecture is "c_addsub_v12_0_15,Vivado 2023.1.1";
 begin

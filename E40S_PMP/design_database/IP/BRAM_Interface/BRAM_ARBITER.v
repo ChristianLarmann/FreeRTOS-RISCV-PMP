@@ -90,6 +90,7 @@ module BRAM_ARBITER #(
 		else if(data_cache_mem_req && data_ua_bram_valid)
 		begin
 		   ua_mem_req <= 0;
+		   data_ua_bram_valid <= ua_mem_valid;
 		end
 		
 		// Data accesses are being prioritized because it definitely will
