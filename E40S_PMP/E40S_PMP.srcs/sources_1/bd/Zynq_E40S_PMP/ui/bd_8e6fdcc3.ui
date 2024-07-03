@@ -1,122 +1,123 @@
 {
    "ActiveEmotionalView":"Default View",
-   "Default View_ScaleFactor":"0.789187",
-   "Default View_TopLeft":"2623,871",
+   "Default View_ScaleFactor":"0.789188",
+   "Default View_TopLeft":"498,1268",
    "ExpandedHierarchyInLayout":"",
    "guistr":"# # String gsaved with Nlview 7.5.8 2022-09-21 7111 VDI=41 GEI=38 GUI=JA:10.0 TLS
 #  -string -flagsOSRD
 preplace port port-id_BT_RX -pg 1 -lvl 0 -x 0 -y 1140 -defaultsOSRD
 preplace port port-id_clk_125 -pg 1 -lvl 0 -x 0 -y 1220 -defaultsOSRD
 preplace port port-id_system_reset -pg 1 -lvl 0 -x 0 -y 1200 -defaultsOSRD
-preplace port port-id_fetch_enable_cpu -pg 1 -lvl 9 -x 4220 -y 2400 -defaultsOSRD -bot
+preplace port port-id_fetch_enable_cpu -pg 1 -lvl 10 -x 4590 -y 2390 -defaultsOSRD -bot
 preplace inst AHBKEYS_0 -pg 1 -lvl 2 -x 480 -y 1590 -defaultsOSRD
 preplace inst AHB2TIMER_0 -pg 1 -lvl 2 -x 480 -y 790 -defaultsOSRD
 preplace inst AHB2UART_0 -pg 1 -lvl 2 -x 480 -y 1060 -defaultsOSRD
 preplace inst AHB2DUMP_0 -pg 1 -lvl 2 -x 480 -y 1340 -defaultsOSRD
-preplace inst xlconcat_0 -pg 1 -lvl 8 -x 3860 -y 370 -defaultsOSRD
-preplace inst blk_mem_gen_1 -pg 1 -lvl 10 -x 4910 -y 2200 -defaultsOSRD
-preplace inst c_addsub_1 -pg 1 -lvl 7 -x 3260 -y 1360 -defaultsOSRD
-preplace inst xlconstant_0 -pg 1 -lvl 6 -x 2680 -y 1660 -defaultsOSRD
+preplace inst xlconcat_0 -pg 1 -lvl 9 -x 4230 -y 370 -defaultsOSRD
+preplace inst blk_mem_gen_1 -pg 1 -lvl 11 -x 5280 -y 2200 -defaultsOSRD
+preplace inst c_addsub_1 -pg 1 -lvl 8 -x 3620 -y 1360 -defaultsOSRD
+preplace inst xlconstant_0 -pg 1 -lvl 7 -x 2970 -y 1660 -defaultsOSRD
 preplace inst xlconstant_1 -pg 1 -lvl 2 -x 480 -y 1760 -defaultsOSRD
-preplace inst xlconstant_2 -pg 1 -lvl 7 -x 3260 -y 60 -defaultsOSRD
+preplace inst xlconstant_2 -pg 1 -lvl 8 -x 3620 -y 60 -defaultsOSRD
 preplace inst xlconstant_3 -pg 1 -lvl 1 -x 120 -y 1400 -defaultsOSRD
-preplace inst xlconstant_4 -pg 1 -lvl 8 -x 3860 -y 1750 -defaultsOSRD
-preplace inst xlconstant_6 -pg 1 -lvl 8 -x 3860 -y 1950 -defaultsOSRD
-preplace inst xlconstant_7 -pg 1 -lvl 8 -x 3860 -y 1850 -defaultsOSRD
-preplace inst xlconstant_8 -pg 1 -lvl 7 -x 3260 -y 830 -defaultsOSRD
+preplace inst xlconstant_4 -pg 1 -lvl 9 -x 4230 -y 1750 -defaultsOSRD
+preplace inst xlconstant_6 -pg 1 -lvl 9 -x 4230 -y 1950 -defaultsOSRD
+preplace inst xlconstant_7 -pg 1 -lvl 9 -x 4230 -y 1850 -defaultsOSRD
+preplace inst xlconstant_8 -pg 1 -lvl 8 -x 3620 -y 830 -defaultsOSRD
 preplace inst clk_wiz_0 -pg 1 -lvl 1 -x 120 -y 1210 -defaultsOSRD
-preplace inst riscv_top_ahb3lite_0 -pg 1 -lvl 9 -x 4400 -y 1740 -defaultsOSRD
-preplace inst AHBDCD_0 -pg 1 -lvl 10 -x 4910 -y 1930 -defaultsOSRD
-preplace inst AHBMUX_0 -pg 1 -lvl 3 -x 950 -y 1620 -defaultsOSRD
-preplace inst AHB_CACHE_0 -pg 1 -lvl 8 -x 3860 -y 1040 -defaultsOSRD
-preplace inst AHB_CACHE_1 -pg 1 -lvl 4 -x 1490 -y 2060 -defaultsOSRD
-preplace inst UA_encrypt_0 -pg 1 -lvl 7 -x 3260 -y 1040 -defaultsOSRD
-preplace inst UA_encrypt_1 -pg 1 -lvl 5 -x 2070 -y 1890 -defaultsOSRD
-preplace inst bram_read_write_late_0 -pg 1 -lvl 5 -x 2070 -y 1400 -defaultsOSRD
-preplace inst BRAM_ARBITER_0 -pg 1 -lvl 6 -x 2680 -y 1430 -defaultsOSRD
-preplace netloc AHB2DUMP_0_HRDATA 1 2 1 730 1340n
-preplace netloc AHB2DUMP_0_HREADYOUT 1 2 1 640 1320n
-preplace netloc AHB2TIMER_0_HRDATA 1 2 1 750 770n
-preplace netloc AHB2TIMER_0_HREADYOUT 1 2 1 650 790n
-preplace netloc AHB2TIMER_0_timer_irq 1 2 6 640J 730 NJ 730 NJ 730 NJ 730 NJ 730 3550
-preplace netloc AHB2UART_0_HRDATA 1 2 1 740 1050n
-preplace netloc AHB2UART_0_HREADYOUT 1 2 1 710 1030n
-preplace netloc AHB2UART_0_uart_irq 1 2 6 630J 720 NJ 720 NJ 720 NJ 720 NJ 720 3540
-preplace netloc AHBDCD_0_HSEL_NOMAP 1 2 9 770 2330 NJ 2330 NJ 2330 NJ 2330 NJ 2330 NJ 2330 NJ 2330 NJ 2330 5070
-preplace netloc AHBDCD_0_HSEL_S0 1 3 8 1230 2350 NJ 2350 NJ 2350 NJ 2350 NJ 2350 NJ 2350 NJ 2350 5100
-preplace netloc AHBDCD_0_HSEL_S2 1 1 10 340 1820 NJ 1820 1110J 1720 NJ 1720 NJ 1720 2950J 1440 3620J 1410 NJ 1410 NJ 1410 5050
-preplace netloc AHBDCD_0_HSEL_S4 1 1 10 290 1880 NJ 1880 NJ 1880 1760J 2050 NJ 2050 NJ 2050 NJ 2050 NJ 2050 NJ 2050 5060
-preplace netloc AHBDCD_0_HSEL_S5 1 1 10 270 2360 NJ 2360 NJ 2360 NJ 2360 NJ 2360 NJ 2360 NJ 2360 NJ 2360 NJ 2360 5090
-preplace netloc AHBDCD_0_HSEL_S7 1 1 10 260 2310 NJ 2310 NJ 2310 NJ 2310 NJ 2310 NJ 2310 NJ 2310 NJ 2310 4660J 2320 5080
-preplace netloc AHBDCD_0_MUX_SEL 1 2 9 760 2340 NJ 2340 NJ 2340 NJ 2340 NJ 2340 NJ 2340 NJ 2340 NJ 2340 5050
-preplace netloc AHBKEYS_0_HRDATA 1 2 1 630 1580n
-preplace netloc AHBKEYS_0_HREADYOUT 1 2 1 620 1600n
-preplace netloc AHBMUX_0_HRDATA 1 3 6 1140 1650 NJ 1650 2350J 1780 3000J 1680 NJ 1680 4120J
-preplace netloc AHB_CACHE_0_BRAM_MEM_ADDR 1 6 3 3000 740 NJ 740 4130
-preplace netloc AHB_CACHE_0_BRAM_MEM_REQ 1 6 3 3010 750 NJ 750 4100
-preplace netloc AHB_CACHE_0_BRAM_MEM_WRITE 1 6 3 3020 760 NJ 760 4120
-preplace netloc AHB_CACHE_0_BRAM_WDATA 1 6 3 3030 770 NJ 770 4110
-preplace netloc AHB_CACHE_0_HRDATA 1 8 1 4160 970n
-preplace netloc AHB_CACHE_0_write_back_encryption_enabled_o 1 6 3 3050 890 3540J 870 4090
-preplace netloc AHB_CACHE_1_BRAM_MEM_ADDR 1 4 1 1800 1900n
-preplace netloc AHB_CACHE_1_BRAM_MEM_REQ 1 4 1 1770 1920n
-preplace netloc AHB_CACHE_1_BRAM_MEM_WRITE 1 4 1 1740 1940n
-preplace netloc AHB_CACHE_1_BRAM_WDATA 1 4 1 1790 1880n
-preplace netloc AHB_CACHE_1_HREADYOUT 1 1 8 330 1840 NJ 1840 1120 1660 NJ 1660 2300J 1790 NJ 1790 3590J 1690 4100J
-preplace netloc AHB_CACHE_1_HREADYOUT1 1 2 3 790 2230 NJ 2230 1730
-preplace netloc AHB_CACHE_1_interrupt 1 2 3 780 2240 NJ 2240 1720
-preplace netloc AHB_CACHE_1_write_back_encryption_enabled_o 1 4 1 1780 1860n
-preplace netloc BRAM_ARBITER_0_data_ua_bram_valid1 1 4 3 1860 2060 NJ 2060 2890
-preplace netloc BRAM_ARBITER_0_inst_cache_mem_valid 1 6 1 2910 1130n
-preplace netloc BRAM_ARBITER_0_ua_mem_addr 1 6 4 3000J 1430 NJ 1430 NJ 1430 4700
-preplace netloc BRAM_ARBITER_0_ua_mem_rdata_o 1 4 3 1860 1740 NJ 1740 2930
-preplace netloc BRAM_ARBITER_0_ua_mem_req 1 4 6 1860 1260 NJ 1260 2890 1260 NJ 1260 NJ 1260 4730
-preplace netloc BRAM_ARBITER_0_ua_mem_wdata 1 6 4 2900J 1270 NJ 1270 NJ 1270 4720
-preplace netloc BRAM_ARBITER_0_ua_mem_write 1 6 4 2920J 1290 NJ 1290 NJ 1290 4690
+preplace inst riscv_top_ahb3lite_0 -pg 1 -lvl 10 -x 4770 -y 1740 -defaultsOSRD
+preplace inst AHBDCD_0 -pg 1 -lvl 11 -x 5280 -y 1930 -defaultsOSRD
+preplace inst AHBMUX_0 -pg 1 -lvl 4 -x 1160 -y 1500 -defaultsOSRD
+preplace inst AHB_CACHE_0 -pg 1 -lvl 9 -x 4230 -y 1040 -defaultsOSRD
+preplace inst AHB_CACHE_1 -pg 1 -lvl 5 -x 1700 -y 2060 -defaultsOSRD
+preplace inst UA_encrypt_0 -pg 1 -lvl 8 -x 3620 -y 1040 -defaultsOSRD
+preplace inst UA_encrypt_1 -pg 1 -lvl 6 -x 2260 -y 1890 -defaultsOSRD
+preplace inst bram_read_write_late_0 -pg 1 -lvl 6 -x 2260 -y 1400 -defaultsOSRD
+preplace inst BRAM_ARBITER_0 -pg 1 -lvl 7 -x 2970 -y 1430 -defaultsOSRD
+preplace inst xlconstant_5 -pg 1 -lvl 3 -x 760 -y 1730 -defaultsOSRD
+preplace netloc AHB2DUMP_0_HRDATA 1 2 2 650 1440 N
+preplace netloc AHB2DUMP_0_HREADYOUT 1 2 2 670 1430 900
+preplace netloc AHB2TIMER_0_HRDATA 1 2 2 670 820 950
+preplace netloc AHB2TIMER_0_HREADYOUT 1 2 2 650 840 920
+preplace netloc AHB2TIMER_0_timer_irq 1 2 7 NJ 810 970 730 NJ 730 NJ 730 NJ 730 NJ 730 3930
+preplace netloc AHB2UART_0_HRDATA 1 2 2 N 1050 940
+preplace netloc AHB2UART_0_HREADYOUT 1 2 2 N 1030 910
+preplace netloc AHB2UART_0_uart_irq 1 2 7 640J 800 950 720 NJ 720 NJ 720 NJ 720 NJ 720 3920
+preplace netloc AHBDCD_0_HSEL_S0 1 4 8 1450 1600 NJ 1600 NJ 1600 NJ 1600 3920J 1330 NJ 1330 NJ 1330 5430
+preplace netloc AHBDCD_0_HSEL_S2 1 1 11 280 1870 NJ 1870 960 1850 NJ 1850 1990J 1690 2640J 1720 3300J 1710 3950J 1340 NJ 1340 NJ 1340 5440
+preplace netloc AHBDCD_0_HSEL_S4 1 1 11 300 1850 670J 1660 850 1730 NJ 1730 1970J 1700 2610J 1730 3270J 1470 3890J 1350 NJ 1350 NJ 1350 5450
+preplace netloc AHBDCD_0_HSEL_S5 1 1 11 320 1820 650J 1650 870 1710 1340J 1610 NJ 1610 2600J 1830 3330J 1480 3930J 1360 NJ 1360 NJ 1360 5460
+preplace netloc AHBDCD_0_HSEL_S7 1 1 11 310 1700 660J 1670 860 1700 1350J 1620 NJ 1620 2580J 1840 3360J 1490 3960J 1370 NJ 1370 NJ 1370 5470
+preplace netloc AHBDCD_0_MUX_SEL 1 3 9 960 1720 NJ 1720 1980J 1710 2500J 1850 3380J 1500 3990J 1380 NJ 1380 NJ 1380 5480
+preplace netloc AHBKEYS_0_HRDATA 1 2 2 670 1480 N
+preplace netloc AHBKEYS_0_HREADYOUT 1 2 2 N 1600 N
+preplace netloc AHBMUX_0_HRDATA 1 4 6 1450 1580 NJ 1580 2680J 1750 3340J 1740 3970J 1670 4490J
+preplace netloc AHB_CACHE_0_BRAM_MEM_ADDR 1 7 3 3330 740 NJ 740 4510
+preplace netloc AHB_CACHE_0_BRAM_MEM_REQ 1 7 3 3350 750 NJ 750 4500
+preplace netloc AHB_CACHE_0_BRAM_MEM_WRITE 1 7 3 3380 770 NJ 770 4480
+preplace netloc AHB_CACHE_0_BRAM_WDATA 1 7 3 3360 760 NJ 760 4490
+preplace netloc AHB_CACHE_0_HRDATA 1 9 1 4540 970n
+preplace netloc AHB_CACHE_0_write_back_encryption_enabled_o 1 7 3 3400 890 3920J 870 4470
+preplace netloc AHB_CACHE_1_BRAM_MEM_ADDR 1 5 1 2000 1900n
+preplace netloc AHB_CACHE_1_BRAM_MEM_REQ 1 5 1 1960 1920n
+preplace netloc AHB_CACHE_1_BRAM_MEM_WRITE 1 5 1 2010 1940n
+preplace netloc AHB_CACHE_1_BRAM_WDATA 1 5 1 1980 1880n
+preplace netloc AHB_CACHE_1_HREADYOUT 1 1 9 270 1880 NJ 1880 N 1880 1360 1630 NJ 1630 2670J 1760 NJ 1760 3990J 1690 4470J
+preplace netloc AHB_CACHE_1_HREADYOUT1 1 3 3 980 1740 NJ 1740 1950
+preplace netloc AHB_CACHE_1_interrupt 1 3 3 970 1830 NJ 1830 1940
+preplace netloc AHB_CACHE_1_write_back_encryption_enabled_o 1 5 1 1970 1860n
+preplace netloc BRAM_ARBITER_0_data_ua_bram_valid1 1 5 3 2030 1740 2520J 1770 3210
+preplace netloc BRAM_ARBITER_0_inst_cache_mem_valid 1 7 1 3220 1130n
+preplace netloc BRAM_ARBITER_0_ua_mem_addr 1 7 4 3230J 1270 NJ 1270 NJ 1270 5130
+preplace netloc BRAM_ARBITER_0_ua_mem_rdata_o 1 5 3 2040 1720 2530J 1790 3260
+preplace netloc BRAM_ARBITER_0_ua_mem_req 1 5 6 2020 2040 NJ 2040 3290 2210 NJ 2210 NJ 2210 5030
+preplace netloc BRAM_ARBITER_0_ua_mem_wdata 1 7 4 3210J 1280 NJ 1280 NJ 1280 5110
+preplace netloc BRAM_ARBITER_0_ua_mem_write 1 7 4 3240J 1290 NJ 1290 NJ 1290 5080
 preplace netloc BT_RX_1 1 0 2 NJ 1140 NJ
-preplace netloc Net 1 7 2 3620 1230 4170
-preplace netloc Net5 1 3 7 1220 1750 1850 1700 2320J 1760 2970J 1450 NJ 1450 NJ 1450 4650
-preplace netloc UA_encrypt_0_cache_rdata 1 7 1 3530 980n
-preplace netloc UA_encrypt_0_cache_ready 1 7 1 3510 1000n
-preplace netloc UA_encrypt_0_mem_address 1 5 3 2470 1800 NJ 1800 3490
-preplace netloc UA_encrypt_0_mem_req 1 5 3 2460 1810 NJ 1810 3480
-preplace netloc UA_encrypt_0_mem_rw_enable 1 5 3 2450 1820 NJ 1820 3470
-preplace netloc UA_encrypt_0_mem_wdata 1 5 3 2440 1830 NJ 1830 3500
-preplace netloc UA_encrypt_1_cache_rdata 1 3 3 1240 1670 NJ 1670 2280
-preplace netloc UA_encrypt_1_cache_ready 1 3 3 1260 1680 NJ 1680 2290
-preplace netloc UA_encrypt_1_mem_address 1 5 1 2360 1500n
-preplace netloc UA_encrypt_1_mem_req 1 5 1 2370 1520n
-preplace netloc UA_encrypt_1_mem_rw_enable 1 5 1 2380 1540n
-preplace netloc UA_encrypt_1_mem_wdata 1 5 1 2340 1480n
-preplace netloc blk_mem_gen_1_douta 1 5 5 2430 2220 NJ 2220 NJ 2220 NJ 2220 NJ
-preplace netloc bram_read_write_late_0_valid 1 5 1 2380 1360n
-preplace netloc c_addsub_1_S 1 7 1 3520 1010n
+preplace netloc Net 1 8 2 3960 1240 4550
+preplace netloc Net5 1 4 7 1430 1840 2010 1730 2510J 1820 3310J 1440 3980J 1430 NJ 1430 5020
+preplace netloc UA_encrypt_0_cache_rdata 1 8 1 3900 980n
+preplace netloc UA_encrypt_0_cache_ready 1 8 1 3890 1000n
+preplace netloc UA_encrypt_0_mem_address 1 6 3 2720 1880 NJ 1880 3860
+preplace netloc UA_encrypt_0_mem_req 1 6 3 2730 1870 NJ 1870 3840
+preplace netloc UA_encrypt_0_mem_rw_enable 1 6 3 2710 1890 NJ 1890 3850
+preplace netloc UA_encrypt_0_mem_wdata 1 6 3 2700 1900 NJ 1900 3870
+preplace netloc UA_encrypt_1_cache_rdata 1 4 3 1450 2230 NJ 2230 2480
+preplace netloc UA_encrypt_1_cache_ready 1 4 3 1440 1590 NJ 1590 2490
+preplace netloc UA_encrypt_1_mem_address 1 6 1 2590 1500n
+preplace netloc UA_encrypt_1_mem_req 1 6 1 2620 1520n
+preplace netloc UA_encrypt_1_mem_rw_enable 1 6 1 2650 1540n
+preplace netloc UA_encrypt_1_mem_wdata 1 6 1 2570 1480n
+preplace netloc blk_mem_gen_1_douta 1 6 5 2690 2220 NJ 2220 NJ 2220 NJ 2220 NJ
+preplace netloc bram_read_write_late_0_valid 1 6 1 2650 1360n
+preplace netloc c_addsub_1_S 1 8 1 3880 1010n
 preplace netloc clk_125_1 1 0 1 NJ 1220
-preplace netloc clk_wiz_0_clk_out1 1 1 9 240 1480 720 1420 1180 1420 1810 1310 2440 1200 2980 1200 3580 1240 4190 1420 4710
-preplace netloc clk_wiz_0_locked 1 1 9 250 1700 700 1830 1210 1740 1830 1320 2430 1210 2990 1210 3590 1250 4150 1400 4740J
-preplace netloc fetch_enable_cpu_1 1 8 1 4190 1870n
-preplace netloc riscv_top_ahb3lite_0_dat_HADDR 1 1 9 280 1890 NJ 1890 1160 1890 1750J 2040 NJ 2040 NJ 2040 NJ 2040 NJ 2040 4680
-preplace netloc riscv_top_ahb3lite_0_dat_HTRANS 1 1 9 320 1850 NJ 1850 1190 1760 1750J 1710 2310J 1750 2980J 1470 NJ 1470 NJ 1470 4600
-preplace netloc riscv_top_ahb3lite_0_dat_HWDATA 1 1 9 310 1860 NJ 1860 1170 1730 NJ 1730 NJ 1730 2960J 1460 NJ 1460 NJ 1460 4640
-preplace netloc riscv_top_ahb3lite_0_dat_HWRITE 1 1 9 300 1870 NJ 1870 1200 1770 1740J 1690 2330J 1770 2990J 1480 3630J 1440 NJ 1440 4610
-preplace netloc riscv_top_ahb3lite_0_ins_HADDR 1 6 4 3050 1280 NJ 1280 NJ 1280 4660
-preplace netloc riscv_top_ahb3lite_0_ins_HENCRYPT 1 6 4 3040 1190 3610 1220 NJ 1220 4670
-preplace netloc riscv_top_ahb3lite_0_ins_HSIZE 1 3 7 1250 1600 NJ 1600 NJ 1600 NJ 1600 3600 1390 NJ 1390 4590
-preplace netloc riscv_top_ahb3lite_0_ins_HTRANS 1 7 3 3600 850 NJ 850 4630
-preplace netloc riscv_top_ahb3lite_0_ins_HWDATA 1 7 3 3610 860 NJ 860 4680
-preplace netloc riscv_top_ahb3lite_0_ins_HWRITE 1 7 3 3630 1210 NJ 1210 4620
+preplace netloc clk_wiz_0_clk_out1 1 1 10 230 1840 680 1820 880 1810 1410 1810 1960 1320 2690 1200 3290 1200 3920 1250 4560 1400 5090
+preplace netloc clk_wiz_0_locked 1 1 10 240 1830 N 1830 930 1820 1390 1820 2000 1310 2700 1210 3310 1210 3930 1260 4530 1390 5120J
+preplace netloc fetch_enable_cpu_1 1 9 1 4560 1870n
+preplace netloc riscv_top_ahb3lite_0_dat_HADDR 1 1 10 320 1480 640J 1420 840 1300 1370 1670 NJ 1670 2560J 1810 3390J 1750 3980J 1680 4510J 1470 5100
+preplace netloc riscv_top_ahb3lite_0_dat_HTRANS 1 1 10 250 1900 NJ 1900 N 1900 1420 1680 NJ 1680 2550J 1800 3370J 1730 3960J 1580 4480J 1440 4980
+preplace netloc riscv_top_ahb3lite_0_dat_HWDATA 1 1 10 290 1860 NJ 1860 840 1840 1380 1640 NJ 1640 2630J 1780 3280J 1450 NJ 1450 NJ 1450 5000
+preplace netloc riscv_top_ahb3lite_0_dat_HWRITE 1 1 10 260 1890 NJ 1890 N 1890 1400 1650 NJ 1650 2540J 1860 3350J 1460 NJ 1460 NJ 1460 5010
+preplace netloc riscv_top_ahb3lite_0_ins_HADDR 1 7 4 3400 1430 3940J 1410 NJ 1410 5030
+preplace netloc riscv_top_ahb3lite_0_ins_HENCRYPT 1 7 4 3390 1190 3950 1210 NJ 1210 5070
+preplace netloc riscv_top_ahb3lite_0_ins_HSIZE 1 4 7 1460 1660 NJ 1660 2660J 1740 3320J 1720 3910 1420 NJ 1420 5040
+preplace netloc riscv_top_ahb3lite_0_ins_HTRANS 1 8 3 3990 860 NJ 860 4990
+preplace netloc riscv_top_ahb3lite_0_ins_HWDATA 1 8 3 3980 1230 NJ 1230 5050
+preplace netloc riscv_top_ahb3lite_0_ins_HWRITE 1 8 3 3990 1220 NJ 1220 5060
 preplace netloc system_reset_1 1 0 1 NJ 1200
-preplace netloc xlconcat_0_dout 1 8 1 4140 370n
-preplace netloc xlconstant_0_dout 1 6 1 2940J 1370n
-preplace netloc xlconstant_1_dout 1 2 1 740J 1640n
-preplace netloc xlconstant_2_dout 1 7 1 3610 60n
+preplace netloc xlconcat_0_dout 1 9 1 4520 370n
+preplace netloc xlconstant_0_dout 1 7 1 3250J 1370n
+preplace netloc xlconstant_1_dout 1 2 2 640J 1590 890
+preplace netloc xlconstant_2_dout 1 8 1 3990 60n
 preplace netloc xlconstant_3_dout 1 1 1 N 1400
-preplace netloc xlconstant_4_dout 1 8 1 4150 1750n
-preplace netloc xlconstant_6_dout 1 8 1 4170J 1810n
-preplace netloc xlconstant_7_dout 1 8 1 4110J 1770n
-preplace netloc xlconstant_8_dout 1 7 1 3550J 830n
-levelinfo -pg 1 0 120 480 950 1490 2070 2680 3260 3860 4400 4910 5130
-pagesize -pg 1 -db -bbox -sgen -150 0 5130 2560
+preplace netloc xlconstant_4_dout 1 9 1 4510 1750n
+preplace netloc xlconstant_6_dout 1 9 1 4540J 1810n
+preplace netloc xlconstant_7_dout 1 9 1 4480J 1770n
+preplace netloc xlconstant_8_dout 1 8 1 3930J 830n
+preplace netloc xlconstant_5_dout 1 3 1 840 1640n
+levelinfo -pg 1 0 120 480 760 1160 1700 2260 2970 3620 4230 4770 5280 5500
+pagesize -pg 1 -db -bbox -sgen -150 -20 5500 2560
 "
 }
 0

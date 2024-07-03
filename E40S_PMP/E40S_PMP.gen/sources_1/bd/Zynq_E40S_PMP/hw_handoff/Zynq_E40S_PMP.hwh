@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Jul  3 01:26:16 2024" VIVADOVERSION="2023.1.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Jul  3 02:15:41 2024" VIVADOVERSION="2023.1.1">
 
   <SYSTEMINFO ARCH="zynq" BOARD="www.digilentinc.com:pynq-z1:part0:1.0" DEVICE="7z020" NAME="Zynq_E40S_PMP" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -274,11 +274,7 @@
             <CONNECTION INSTANCE="AHB2TIMER_0" PORT="HSEL"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="HSEL_NOMAP" SIGIS="undef" SIGNAME="AHBDCD_0_HSEL_NOMAP">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="AHBMUX_0" PORT="HREADYOUT_NOMAP"/>
-          </CONNECTIONS>
-        </PORT>
+        <PORT DIR="O" NAME="HSEL_NOMAP" SIGIS="undef"/>
         <PORT DIR="O" LEFT="3" NAME="MUX_SEL" RIGHT="0" SIGIS="undef" SIGNAME="AHBDCD_0_MUX_SEL">
           <CONNECTIONS>
             <CONNECTION INSTANCE="AHBMUX_0" PORT="MUX_SEL"/>
@@ -414,9 +410,9 @@
             <CONNECTION INSTANCE="AHB2TIMER_0" PORT="HREADYOUT"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="HREADYOUT_NOMAP" SIGIS="undef" SIGNAME="AHBDCD_0_HSEL_NOMAP">
+        <PORT DIR="I" NAME="HREADYOUT_NOMAP" SIGIS="undef" SIGNAME="xlconstant_5_dout">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="AHBDCD_0" PORT="HSEL_NOMAP"/>
+            <CONNECTION INSTANCE="xlconstant_5" PORT="dout"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="HREADY" SIGIS="undef" SIGNAME="AHBMUX_0_HREADY">
@@ -2506,6 +2502,23 @@
             <CONNECTION INSTANCE="riscv_top_ahb3lite_0" PORT="debug_we_i"/>
             <CONNECTION INSTANCE="riscv_top_ahb3lite_0" PORT="debug_halt_i"/>
             <CONNECTION INSTANCE="riscv_top_ahb3lite_0" PORT="debug_resume_i"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE COREREVISION="7" FULLNAME="/xlconstant_5" HWVERSION="1.1" INSTANCE="xlconstant_5" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlconstant" VLNV="xilinx.com:ip:xlconstant:1.1">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="CONST_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="CONST_VAL" VALUE="0x1"/>
+        <PARAMETER NAME="Component_Name" VALUE="Zynq_E40S_PMP_xlconstant_5_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="O" LEFT="0" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="xlconstant_5_dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="AHBMUX_0" PORT="HREADYOUT_NOMAP"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>

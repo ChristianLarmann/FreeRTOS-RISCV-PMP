@@ -132,7 +132,9 @@ module AHBMUX(
 //      end
       default: begin            
         HRDATA = HRDATA_NOMAP;
-        HREADY = HREADYOUT_NOMAP;
+//        HREADY = HREADYOUT_NOMAP; // The constant block with 1 does not work work for some reason...
+        HREADY = 1'b1;
+
       end
     endcase
     
