@@ -3,6 +3,8 @@
 
 #include <pmp.h>
 
+#if( portUSING_MPU_WRAPPERS == 1 )
+
 /**
  * @brief get the mxlen from misa register
  *
@@ -829,3 +831,5 @@ int32_t napot_addr_modifier (size_t granularity,
 
     return(PMP_SUCCESS);
 }
+
+#endif // portUSING_MPU_WRAPPERS

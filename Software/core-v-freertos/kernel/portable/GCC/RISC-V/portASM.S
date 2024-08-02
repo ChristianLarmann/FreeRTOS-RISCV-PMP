@@ -162,8 +162,11 @@ definitions. */
 .extern pxCurrentTCB
 .extern vTaskSwitchContext
 .extern xTaskIncrementTick
+
+#if( portUSING_MPU_WRAPPERS == 1 )
 .extern vPortPmpSwitch
 .extern vPortUpdatePrivilegeStatus
+#endif
 .extern pullMachineTimerCompareRegister
 .extern pullNextTime
 .extern uxTimerIncrementsForOneTick /* size_t type so 32-bit on 32-bit core and 64-bits on 64-bit core. */
@@ -437,6 +440,7 @@ handle_exception:
     addi	t0, t0, -4
     blt		t0, x0, environment_switch
 
+.globl is_exception
 is_exception:
     /* restore t0 and save sp in mscratch. */
     csrr	t0, mscratch
@@ -470,6 +474,17 @@ is_exception:
     mret
 
 environment_switch:
+
+#if( portUSING_MPU_WRAPPERS == 1)
+    # SysCall Security: Check whether origin of call is from system calls
+    csrr    t0, mepc
+    la      t1, __system_calls_valid_origin_start__   # Load the start address into t1
+    la      t2, __system_calls_valid_origin_end__     # Load the end address into t2
+    blt     t0, t1, is_exception
+    bgt     t0, t2, is_exception
+#endif
+
+    # Jump to the call depending on the value in a0
     li t0, 4
     bgt	a0,	t0,	ecall_end
     la t0, 1f
@@ -643,14 +658,18 @@ switch_context:
     jal	vTaskSwitchContext
     load_x s0, pxCurrentTCB			/* Load pxCurrentTCB. */
     load_x  sp, 0( s0 )				/* Read sp from first TCB member. */
+#if( portUSING_MPU_WRAPPERS == 1 )
     jal vPortPmpSwitch   			/* Call C function that will return if not MPU setting */
+#endif
 
 end_trap_handler:
     load_x s0, pxCurrentTCB			/* Load pxCurrentTCB. */
 
     /* Update privilege_status if needed */
     load_x  a0, PORT_CONTEXT_mstatusOFFSET(sp)
+#if( portUSING_MPU_WRAPPERS == 1 )
     jal vPortUpdatePrivilegeStatus
+#endif
 
     /* restore registers */
 #ifdef __riscv_fdiv
@@ -707,9 +726,11 @@ xPortStartFirstTask:
 
     /* Update privilege_status if needed */
     load_x  a0, PORT_CONTEXT_mstatusOFFSET(sp)
+#if (portUSING_MPU_WRAPPERS == 1)
     jal vPortUpdatePrivilegeStatus
 
     jal vPortPmpSwitch
+#endif
 
     load_x  t2, pxCurrentTCB            /* Load pxCurrentTCB. */
     load_x  sp, 0( t2 )				 	/* Read sp from first TCB member. */

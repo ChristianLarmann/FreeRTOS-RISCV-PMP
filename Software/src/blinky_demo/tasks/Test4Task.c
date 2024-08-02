@@ -1,0 +1,62 @@
+#include "user_tasks.h"
+
+
+void prvTest4Task(void *pvParameters){
+
+
+	TickType_t xNextWakeTime;
+
+	/* Remove compiler warning about unused parameter. */
+	(void)pvParameters;
+
+	/* Initialise xNextWakeTime - this only needs to be done once. */
+	xNextWakeTime = xTaskGetTickCount();
+
+
+	// Request sealing key
+	// char *keyIdentifier = "identifier";
+	// struct sealing_key newSealingKey;
+
+	// xDeriveNewSealingKey(&newSealingKey, keyIdentifier, strlen(keyIdentifier));
+
+
+	for (;;) {
+		/* Place this task in the blocked state until it is time to run again. */
+		// gpio_pin_toggle( 0x1 );
+		// asm volatile("li x29, 0x6666" ::: "x29");
+		// asm volatile("li x29, 0x7777" ::: "x29");
+
+		// volatile uint32_t ar[50];
+		// for (uint32_t k = 0; k<50; k++) {
+		// 	ar[k] = k;
+		// }
+		// vToggleLED();
+
+		vTaskDelayUntil(&xNextWakeTime, pdMS_TO_TICKS(1782));
+
+
+		// if (counter_free > 3) {
+		// 	uint32_t* heapVar2 = (uint32_t*) MPU_pvPmpMalloc(10 * sizeof(uint32_t));
+
+		// 	if (counter_free == 0) {
+		// 		heapVar[0] = 0xAF;
+		// 		MPU_pvPmpFree(heapVar);
+		// 	}
+		// 	if (counter_free == 3) {
+		// 		MPU_pvPmpMalloc(6 * sizeof(uint32_t));
+		// 		// uint32_t* heapVarLater = (uint32_t*) MPU_pvPmpMalloc(6 * sizeof(uint32_t));
+		// 		// heapVarLater[0] = 0xBF;
+		// 	}
+
+		// 	if (counter_free == 4) {
+		// 		int counter = 0;
+		// 		for (uint32_t k = 0; k<50; k++) {
+		// 			counter += ar[k];
+		// 		}
+		// 		MPU_pvPmpFree(heapVar2);
+		// 		// heapVar2[0] = counter;
+		// 	}
+		// }
+		// counter_free += 1;
+	}
+}

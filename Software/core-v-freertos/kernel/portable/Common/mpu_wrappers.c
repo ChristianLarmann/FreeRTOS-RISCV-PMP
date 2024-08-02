@@ -45,6 +45,8 @@ task.h is included from an application file. */
 #include "stream_buffer.h"
 #include "mpu_prototypes.h"
 
+#if ( portUSING_MPU_WRAPPERS == 1 )
+
 #undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
 
 /**
@@ -82,7 +84,25 @@ BaseType_t xRunningPrivileged;
 	/* If the processor is not already privileged, raise privilege. */
 	if( xRunningPrivileged != pdTRUE )
 	{
-		portRAISE_PRIVILEGE();
+		// portRAISE_PRIVILEGE();
+		__asm__ __volatile__ (
+		"	.extern privilege_status \n"
+        "	li	a0,%0 		\n"
+        "	ecall 			\n"
+		"	la 	a0, privilege_status \n"
+		"	li 	t0, %1 		\n"
+		"	sw	t0, 0(a0)	\n" /* we use sw because privilege_status is uint32_t */
+		"	 		\n"
+		"	# SysCall Security: Check whether origin of call is from system calls \n"
+		"	mv  t0, ra 		\n"
+		"	 		\n"
+		"	# Load the start address into t1 and the end address into t2 \n"
+		"	la  t1, __system_calls_valid_origin_start__   # Load the start address into t1 \n"
+		"	la  t2, __system_calls_valid_origin_end__     # Load the end address into t2 \n"
+		"	.extern is_exception 		\n"
+		"	blt t0, t1, is_exception \n"
+		"	bgt t0, t2, is_exception \n"
+        ::"i"(portSVC_SWITCH_TO_MACHINE), "i"(ePortMACHINE_MODE):);
 	}
 
 	return xRunningPrivileged;
@@ -93,7 +113,6 @@ void vPortResetPrivilege( BaseType_t xRunningPrivileged )
 {
 	if( xRunningPrivileged != pdTRUE )
 	{
-		vToggleLED();
 		portRESET_PRIVILEGE();
 	}
 }
@@ -175,7 +194,7 @@ BaseType_t xRunningPrivileged = xPortRaisePrivilege();
 	void MPU_vTaskDelayUntil( TickType_t * const pxPreviousWakeTime, TickType_t xTimeIncrement ) /* FREERTOS_SYSTEM_CALL */
 	{
 	BaseType_t xRunningPrivileged = xPortRaisePrivilege();
-
+		vToggleLED();
 		vTaskDelayUntil( pxPreviousWakeTime, xTimeIncrement );
 		vPortResetPrivilege( xRunningPrivileged );
 	}
@@ -1427,3 +1446,5 @@ BaseType_t xRunningPrivileged = xPortRaisePrivilege();
 #if configINCLUDE_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS == 1
 	#include "application_defined_privileged_functions.h"
 #endif
+
+#endif // portUSING_MPU_WRAPPERS

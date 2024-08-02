@@ -2,7 +2,7 @@
 
 /* The rate at which data is sent to the queue.  The 200ms value is converted
 to ticks using the pdMS_TO_TICKS() macro. */
-#define mainQUEUE_SEND_FREQUENCY_MS pdMS_TO_TICKS(4)
+#define mainQUEUE_SEND_FREQUENCY_MS pdMS_TO_TICKS(3250)
 extern QueueHandle_t xQueue;
 
 #define TASK_NAME QueueSend

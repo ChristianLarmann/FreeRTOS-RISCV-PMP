@@ -72,15 +72,14 @@
 or 0 to run the more comprehensive test and demo application. */
 /* #define mainCREATE_SIMPLE_BLINKY_DEMO_ONLY	0*/
 
-// CL: Added
-#define mainCREATE_SIMPLE_BLINKY_DEMO_ONLY 1
-
 /*
  * main_blinky() is used when mainCREATE_SIMPLE_BLINKY_DEMO_ONLY is set to 1.
  * main_full() is used when mainCREATE_SIMPLE_BLINKY_DEMO_ONLY is set to 0.
  */
 #if mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1
 	extern void main_blinky( void );
+#elif( BENCHMARK_RUNNING == 1 )
+	extern void main_benchmark( void );
 #else
 #error "Full demo is not available in this project. Check demos/ directory."
 #endif /* #if mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 */
@@ -104,8 +103,17 @@ extern void _exit(int exit_status);
 
 int main( void )
 {
+	// Turn on LED1 for debug
+	__asm__ __volatile__(
+		"li a0, 0x1F100000\n"
+		"li a1, 0b101 \n"
+		"sw a1, 0(a0) \n"
+		::: "a0", "a1"
+	);
+
+	// gpio_pin_set_raw(0x1, 1);
 	prvSetupHardware();
-	printf("q\n");
+	// printf("q\n");
 
 	static __attribute__ ((aligned(16))) StackType_t xISRStack[ configMINIMAL_STACK_SIZE  + 1 ] __attribute__ ((section (".heap"))) ;
 	extern BaseType_t xPortFreeRTOSInit( StackType_t xIsrStack );
@@ -115,7 +123,12 @@ int main( void )
 
 	/* The mainCREATE_SIMPLE_BLINKY_DEMO_ONLY setting is described at the top
 	of this file. */
-	#if( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 )
+	#if( BENCHMARK_RUNNING == 1 )
+	{
+		main_benchmark();
+		return 0;
+	}
+	#elif( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 )
 	{
 		main_blinky();
 		return 0;
@@ -140,6 +153,7 @@ static void prvSetupHardware( void )
 
 void vToggleLED( void )
 {
+	// gpio_pin_toggle( 0x4 );
 	gpio_pin_toggle( 0x2 );
 	gpio_pin_toggle( 0x1 );
 }

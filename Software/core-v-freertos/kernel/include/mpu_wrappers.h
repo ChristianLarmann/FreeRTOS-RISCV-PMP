@@ -30,7 +30,7 @@
 
 /* This file redefines API functions to be called through a wrapper macro, but
 only for ports that are using the MPU. */
-#ifdef portUSING_MPU_WRAPPERS
+#if( portUSING_MPU_WRAPPERS == 1 )
 
 	/* MPU_WRAPPERS_INCLUDED_FROM_API_FILE will be defined when this file is
 	included from queue.c or task.c to prevent it from having an effect within
@@ -163,9 +163,9 @@ only for ports that are using the MPU. */
 		/* Remove the privileged function macro, but keep the PRIVILEGED_DATA
 		macro so applications can place data in privileged access sections
 		(useful when using statically allocated objects). */
-		#define PRIVILEGED_FUNCTION
+		#define PRIVILEGED_FUNCTION __attribute__((section("privileged_functions")))
 		#define PRIVILEGED_DATA __attribute__((section("privileged_data")))
-		#define FREERTOS_SYSTEM_CALL
+		#define FREERTOS_SYSTEM_CALL __attribute__((section( "freertos_system_calls")))
 
 	#else /* MPU_WRAPPERS_INCLUDED_FROM_API_FILE */
 

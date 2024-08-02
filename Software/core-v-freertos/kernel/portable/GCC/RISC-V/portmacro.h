@@ -34,6 +34,7 @@ extern "C" {
 #endif
 
 #include "FreeRTOSConfig.h"
+#include "mpu_wrappers.h"
 
 /* ------------------------------------------------------------------
  * This file is originally taken from the FreeRTOS-metal project by
@@ -90,7 +91,6 @@ to be guarded with a critical section. */
 /******************************  PMP settings  ********************************/
 /******************************************************************************/
 
-#define portUSING_MPU_WRAPPERS 1
 
 #if( portUSING_MPU_WRAPPERS == 1 )
 #include "pmp.h"
@@ -260,7 +260,7 @@ enum ePortPRIVILEGE_MODE {
  * @return true (1) if the hart execute in machine mode
  * @return false (0) otherwise
  */
-BaseType_t xIsPrivileged( void );
+BaseType_t xIsPrivileged( void ) FREERTOS_SYSTEM_CALL;
 
 /**
  * @brief Determine the current execution mode of the hart
@@ -307,10 +307,12 @@ extern void vTaskSwitchContext( void );
 #define portYIELD_FROM_ISR( x ) portEND_SWITCHING_ISR( x )
 /*-----------------------------------------------------------*/
 
+// #include "portmacro.h"
+
 /* Critical section management. */
 #define portCRITICAL_NESTING_IN_TCB					1
-extern void vTaskEnterCritical( void );
-extern void vTaskExitCritical( void );
+extern void vTaskEnterCritical( void ); /* PRIVILEGED_FUNCTION */ 
+extern void vTaskExitCritical( void ); /* PRIVILEGED_FUNCTION */ 
 
 #define portSET_INTERRUPT_MASK_FROM_ISR() 			0
 #define portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedStatusValue ) ( void ) uxSavedStatusValue

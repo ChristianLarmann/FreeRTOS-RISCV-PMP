@@ -108,81 +108,190 @@ QueueHandle_t xQueue = NULL;
 void main_blinky(void)
 {
 	/* Create the queue. */
-	xQueue = xQueueCreate(mainQUEUE_LENGTH, sizeof(uint32_t));
+	// xQueue = xQueueCreate(mainQUEUE_LENGTH, sizeof(uint32_t));
+	// gpio_pin_set_raw(0x4, 1);
 
-	if (xQueue != NULL) {
+	// if (xQueue != NULL) {
 		/* Start the two tasks as described in the comments at the top of this
 		file. */
 		asm volatile("li x28, 0x10" ::: "x28");
 
-	 	#define recvStackSize configMINIMAL_STACK_SIZE * 8
-    	static StackType_t recvTaskStack[ recvStackSize ] ENCLAVE_DATA(QueueReceive);
-		TaskParameters_t xQueueReceiveTaskParams =
-		{
-			.pvTaskCode		= TASK_FUNCTION_NAME(QueueReceive),
-			.pcName			= "RX",
-			.usStackDepth	= recvStackSize,
-			.pvParameters	= NULL,
-			.uxPriority		= 1,
-			.puxStackBuffer	= (StackType_t*) recvTaskStack,
-			/* xRegions - Protects the task's program code */
-			.xRegions		= {
-				/* Base address   		   Length                     Parameters */
-				{ TASK_CODE_REGION(QueueReceive) },
-			},
-			.pmpEncryptionMode = NO_PMP_ENCRYPTION
-		};
-		xTaskCreateRestricted(&xQueueReceiveTaskParams, NULL);
+		__asm__ __volatile__(
+			"li a0, 0x1F100000\n"
+			"li a1, 0b111 \n"
+			"sw a1, 0(a0) \n"
+			::: "a0", "a1"
+		);
 
+#if( portUSING_MPU_WRAPPERS == 1 )
+	 	#define testTaskStackSize 1000
 
-		asm volatile("li x28, 0x20" ::: "x28");
-	 	#define sendStackSize 0x200 * 0x2
-    	static StackType_t sendTaskStack[ sendStackSize ] ENCLAVE_DATA(QueueSend);
-		TaskParameters_t xQueueSendTaskParams =
-		{
-			.pvTaskCode		= TASK_FUNCTION_NAME(QueueSend),
-			.pcName			= "TX",
-			.usStackDepth	= sendStackSize,
-			.pvParameters	= NULL,
-			.uxPriority		= 1,
-			.puxStackBuffer	= (StackType_t*) sendTaskStack,
-			// .xRegions		= { {0, 0, 0} }
-			.xRegions		= {
-				/* Base address   		   Length                     Parameters */
-				{ TASK_CODE_REGION(QueueSend) },
-			},
-			.pmpEncryptionMode = NO_PMP_ENCRYPTION
-		};
-		xTaskCreateRestricted(&xQueueSendTaskParams, NULL);
+   		// static StackType_t test8TaskStack[ testTaskStackSize ] ENCLAVE_DATA(Test8);
+		// TaskParameters_t xTest8TaskParams =
+		// {
+		// 	.pvTaskCode		= TASK_FUNCTION_NAME(Test8),
+		// 	.pcName			= "Test8",
+		// 	.usStackDepth	= testTaskStackSize,
+		// 	.pvParameters	= NULL,
+		// 	.uxPriority		= 1,
+		// 	.puxStackBuffer	= (StackType_t*) test8TaskStack,
+		// 	.xRegions = {
+		// 		/* Base address   		 Length            Parameters */
+		// 		{ TASK_CODE_REGION(Test8) },
+		// 	},
+		// 	.pmpEncryptionMode = NO_PMP_ENCRYPTION
+		// };
+		// xTaskCreateRestricted(&xTest8TaskParams, NULL);
 
+   		// static StackType_t test7TaskStack[ testTaskStackSize ] ENCLAVE_DATA(Test7);
+		// TaskParameters_t xTest7TaskParams =
+		// {
+		// 	.pvTaskCode		= TASK_FUNCTION_NAME(Test7),
+		// 	.pcName			= "Test7",
+		// 	.usStackDepth	= testTaskStackSize,
+		// 	.pvParameters	= NULL,
+		// 	.uxPriority		= 1,
+		// 	.puxStackBuffer	= (StackType_t*) test7TaskStack,
+		// 	.xRegions = {
+		// 		/* Base address   		 Length            Parameters */
+		// 		{ TASK_CODE_REGION(Test7) },
+		// 	},
+		// 	.pmpEncryptionMode = NO_PMP_ENCRYPTION
+		// };
+		// xTaskCreateRestricted(&xTest7TaskParams, NULL);
+
+   		// static StackType_t test6TaskStack[ testTaskStackSize ] ENCLAVE_DATA(Test6);
+		// TaskParameters_t xTest6TaskParams =
+		// {
+		// 	.pvTaskCode		= TASK_FUNCTION_NAME(Test6),
+		// 	.pcName			= "Test6",
+		// 	.usStackDepth	= testTaskStackSize,
+		// 	.pvParameters	= NULL,
+		// 	.uxPriority		= 1,
+		// 	.puxStackBuffer	= (StackType_t*) test6TaskStack,
+		// 	.xRegions = {
+		// 		/* Base address   		 Length            Parameters */
+		// 		{ TASK_CODE_REGION(Test6) },
+		// 	},
+		// 	.pmpEncryptionMode = NO_PMP_ENCRYPTION
+		// };
+		// xTaskCreateRestricted(&xTest6TaskParams, NULL);
+
+   		// static StackType_t test5TaskStack[ testTaskStackSize ] ENCLAVE_DATA(Test5);
+		// TaskParameters_t xTest5TaskParams =
+		// {
+		// 	.pvTaskCode		= TASK_FUNCTION_NAME(Test5),
+		// 	.pcName			= "Test5",
+		// 	.usStackDepth	= testTaskStackSize,
+		// 	.pvParameters	= NULL,
+		// 	.uxPriority		= 1,
+		// 	.puxStackBuffer	= (StackType_t*) test5TaskStack,
+		// 	.xRegions = {
+		// 		/* Base address   		 Length            Parameters */
+		// 		{ TASK_CODE_REGION(Test5) },
+		// 	},
+		// 	.pmpEncryptionMode = NO_PMP_ENCRYPTION
+		// };
+		// xTaskCreateRestricted(&xTest5TaskParams, NULL);
+
+   		// static StackType_t test4TaskStack[ testTaskStackSize ] ENCLAVE_DATA(Test4);
+
+		// TaskParameters_t xTest4TaskParams =
+		// {
+		// 	.pvTaskCode		= TASK_FUNCTION_NAME(Test4),
+		// 	.pcName			= "Test4",
+		// 	.usStackDepth	= testTaskStackSize,
+		// 	.pvParameters	= NULL,
+		// 	.uxPriority		= 1,
+		// 	.puxStackBuffer	= (StackType_t*) test4TaskStack,
+		// 	.xRegions = {
+		// 		/* Base address   		 Length            Parameters */
+		// 		{ TASK_CODE_REGION(Test4) },
+		// 	},
+		// 	.pmpEncryptionMode = NO_PMP_ENCRYPTION
+		// };
+		// xTaskCreateRestricted(&xTest4TaskParams, NULL);
      
-	 	#define ledStackSize 1024
-   		static StackType_t ledTaskStack[ ledStackSize ] ENCLAVE_DATA(Led);
-		extern char _start_LedTaskCode;
+   		// static StackType_t test3TaskStack[ testTaskStackSize ] ENCLAVE_DATA(Test3);
+		// TaskParameters_t xTest3TaskParams =
+		// {
+		// 	.pvTaskCode		= TASK_FUNCTION_NAME(Test3),
+		// 	.pcName			= "Task3",
+		// 	.usStackDepth	= testTaskStackSize,
+		// 	.pvParameters	= NULL,
+		// 	.uxPriority		= 1,
+		// 	.puxStackBuffer	= (StackType_t*) test3TaskStack,
+		// 	.xRegions = {
+		// 		/* Base address   		 Length            Parameters */
+		// 		{ TASK_CODE_REGION(Test3) },
+		// 	},
+		// 	.pmpEncryptionMode = NO_PMP_ENCRYPTION
+		// };
+		// xTaskCreateRestricted(&xTest3TaskParams, NULL);
 
+   		// static StackType_t test2TaskStack[ testTaskStackSize ] ENCLAVE_DATA(Test2);
+		// TaskParameters_t xTest2TaskParams =
+		// {
+		// 	.pvTaskCode		= TASK_FUNCTION_NAME(Test2),
+		// 	.pcName			= "Test2",
+		// 	.usStackDepth	= testTaskStackSize,
+		// 	.pvParameters	= NULL,
+		// 	.uxPriority		= 1,
+		// 	.puxStackBuffer	= (StackType_t*) test2TaskStack,
+		// 	.xRegions = {
+		// 		/* Base address   		 Length            Parameters */
+		// 		{ TASK_CODE_REGION(Test2) },
+		// 	},
+		// 	.pmpEncryptionMode = NO_PMP_ENCRYPTION
+		// };
+		// xTaskCreateRestricted(&xTest2TaskParams, NULL);
 
-		TaskParameters_t xLedTaskParams =
+		#if( BENCHMARK_RUNNING == 0 )
+   		static StackType_t test1TaskStack[ testTaskStackSize ] ENCLAVE_DATA(Test1);
+		TaskParameters_t xTest1TaskParams =
 		{
-			.pvTaskCode		= TASK_FUNCTION_NAME(Led),
-			.pcName			= "LED",
-			.usStackDepth	= ledStackSize,
+			.pvTaskCode		= TASK_FUNCTION_NAME(Test1),
+			.pcName			= "Test1",
+			.usStackDepth	= testTaskStackSize,
 			.pvParameters	= NULL,
 			.uxPriority		= 1,
-			.puxStackBuffer	= (StackType_t*) ledTaskStack,
+			.puxStackBuffer	= (StackType_t*) test1TaskStack,
 			.xRegions = {
 				/* Base address   		 Length            Parameters */
-				{ TASK_CODE_REGION(Led) },
+				{ TASK_CODE_REGION(Test1) },
 			},
-			.pmpEncryptionMode = ONLY_DATA_PMP_ENCRYPTION
+			.pmpEncryptionMode = NO_PMP_ENCRYPTION
 		};
-
 		asm volatile("li x28, 0x30" ::: "x28");
-		xTaskCreateRestricted(&xLedTaskParams, NULL);
+		xTaskCreateRestricted(&xTest1TaskParams, NULL);
+		#endif
 
+		__asm__ __volatile__(
+			"li a0, 0x1F100000\n"
+			"li a1, 0b100 \n"
+			"sw a1, 0(a0) \n"
+			::: "a0", "a1"
+		);
+
+#else
+	/* Create tasks */
+	#define testStackSize 128
+	#if( BENCHMARK_RUNNING == 0 )
+		xTaskCreate(TASK_FUNCTION_NAME(Test1), "Task1", testTaskStackSize, 0, NULL, 1, NULL);
+	#endif
+    // xTaskCreate(TASK_FUNCTION_NAME(Test2), "Task2", testTaskStackSize, 0, NULL, 1, NULL);
+    // xTaskCreate(TASK_FUNCTION_NAME(Test3), "Task3", testTaskStackSize, 0, NULL, 1, NULL);
+    // xTaskCreate(TASK_FUNCTION_NAME(Test4), "Task4", testTaskStackSize, 0, NULL, 1, NULL);
+    // xTaskCreate(TASK_FUNCTION_NAME(Test5), "Task5", testTaskStackSize, 0, NULL, 1, NULL);
+    // xTaskCreate(TASK_FUNCTION_NAME(Test6), "Task6", testTaskStackSize, 0, NULL, 1, NULL);
+    // xTaskCreate(TASK_FUNCTION_NAME(Test7), "Task7", testTaskStackSize, 0, NULL, 1, NULL);
+    // xTaskCreate(TASK_FUNCTION_NAME(Test8), "Task8", testTaskStackSize, 0, NULL, 1, NULL);
+
+#endif // portUSING_MPU_WRAPPERS
 
 		/* Start the tasks and timer running. */
 		vTaskStartScheduler();
-	}
+	// }
 
 	/* If all is well, the scheduler will now be running, and the following
 	line will never be reached.  If the following line does execute, then

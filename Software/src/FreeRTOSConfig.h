@@ -43,6 +43,8 @@
  * See http://www.freertos.org/a00110.html.
  *----------------------------------------------------------*/
 
+#define portUSING_MPU_WRAPPERS 0
+
 #define configCLINT_BASE_ADDRESS		 0x1c000880 
 #define configMTIME_BASE_ADDRESS 0
 #define configMTIMECMP_BASE_ADDRESS 0
@@ -55,7 +57,7 @@
 #define configMAX_PRIORITIES			 ( 5 )
 #define configMINIMAL_STACK_SIZE		 ( ( unsigned short ) 200 ) /* Can be as low as 60 but some of the demo tasks that use this constant require it to be higher. */
 #define configAPPLICATION_ALLOCATED_HEAP 1 /* we want to put the heap into special section */
-#define configTOTAL_HEAP_SIZE			 ( ( size_t ) ( 16 * 1024 ) )
+#define configTOTAL_HEAP_SIZE			 ( ( size_t ) ( 32 * 1024 ) )
 #define configMAX_TASK_NAME_LEN			 ( 16 )
 #define configUSE_TRACE_FACILITY		 1 /* TODO: 0 */
 #define configUSE_16_BIT_TICKS			 0
@@ -118,5 +120,7 @@ header file. */
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION 0
 #define configKERNEL_INTERRUPT_PRIORITY 7
 
+// CL: Added
+#define BENCHMARK_RUNNING 1
 
 #endif /* FREERTOS_CONFIG_H */

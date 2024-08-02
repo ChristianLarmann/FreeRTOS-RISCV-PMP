@@ -87,9 +87,21 @@ USER_SRCS += $(CRYLIB)/hmac_sha3/hmac_sha3.c
 
 # Tasks
 CV_CPPFLAGS += -I"blinky_demo/tasks"
-USER_SRCS += blinky_demo/tasks/LedTask.c 
+USER_SRCS += blinky_demo/tasks/Test1Task.c 
+USER_SRCS += blinky_demo/tasks/Test2Task.c 
+USER_SRCS += blinky_demo/tasks/Test3Task.c 
+USER_SRCS += blinky_demo/tasks/Test4Task.c 
+USER_SRCS += blinky_demo/tasks/Test5Task.c 
+USER_SRCS += blinky_demo/tasks/Test6Task.c 
+USER_SRCS += blinky_demo/tasks/Test7Task.c 
+USER_SRCS += blinky_demo/tasks/Test8Task.c 
 USER_SRCS += blinky_demo/tasks/QueueReceiveTask.c 
 USER_SRCS += blinky_demo/tasks/QueueSendTask.c 
+
+# Benchmarks
+CV_CPPFLAGS += -I"benchmarks/tasks"
+USER_SRCS += benchmarks/tasks/BenchmarkTask1.c 
+USER_SRCS += benchmarks/main_benchmarks.c 
 
 # user headers
 CPPFLAGS += $(addprefix -I$(VPATH)/, ".")
@@ -97,7 +109,7 @@ CPPFLAGS += $(addprefix -I$(VPATH)/, ".")
 
 # Set additional compiler flags
 CV_CPPFLAGS += -DportHANDLE_INTERRUPT=vSystemIrqHandler
-CV_CPPFLAGS += -DportHANDLE_EXCEPTION=vSystemIrqHandler
+CV_CPPFLAGS += -DportHANDLE_EXCEPTION=vSystemExcHandler
 CV_CPPFLAGS += -DmainCREATE_SIMPLE_BLINKY_DEMO_ONLY=1
 
 # Compile

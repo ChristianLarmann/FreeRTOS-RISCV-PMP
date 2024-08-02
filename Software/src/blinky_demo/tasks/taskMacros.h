@@ -47,9 +47,12 @@
 
 #define TASK_FUNCTION_NAME(taskName) prv ## taskName ## Task
 
-#define TASK_CODE_REGION(taskName) get ## taskName ##TaskBeginning(), \
-                                   get ## taskName ##TaskSize(), \
-                                   portPMP_REGION_EXECUTE
+
+#if( portUSING_MPU_WRAPPERS == 1 )
+    #define TASK_CODE_REGION(taskName) get ## taskName ##TaskBeginning(), \
+                                    get ## taskName ##TaskSize(), \
+                                    portPMP_REGION_EXECUTE
+#endif // portUSING_MPU_WRAPPERS
 
 /* The stack task does not necessarily need to be put in its own section but there
    is the risk that the linker puts the stack data in the normal data section. This

@@ -115,7 +115,7 @@ BaseType_t xIsPrivileged( void )
  * @details those regions won't be reconfigured during context switch
  *
  */
-static void prvSetupPMP( void ) PRIVILEGED_FUNCTION
+static PRIVILEGED_FUNCTION void prvSetupPMP( void ) 
 {
     extern uint32_t __unprivileged_section_start__[];
     extern uint32_t __unprivileged_section_end__[];
@@ -224,7 +224,7 @@ static void prvSetupPMP( void ) PRIVILEGED_FUNCTION
  *
  * @param xIsrTop
  */
-BaseType_t xPortFreeRTOSInit( StackType_t xIsrTop ) PRIVILEGED_FUNCTION
+BaseType_t PRIVILEGED_FUNCTION xPortFreeRTOSInit( StackType_t xIsrTop ) 
 {
 	UBaseType_t uxHartid;
 
@@ -339,9 +339,9 @@ BaseType_t xPortFreeRTOSInit( StackType_t xIsrTop ) PRIVILEGED_FUNCTION
  *
  */
 #if( portUSING_MPU_WRAPPERS == 1 )
-void vPortPmpSwitch (	uint32_t ulNbPmp, xMPU_SETTINGS * xPMPSettings) PRIVILEGED_FUNCTION
+void PRIVILEGED_FUNCTION vPortPmpSwitch () 
 #else
-__attribute__ (( naked )) void vPortPmpSwitch (	uint32_t ulNbPmp) PRIVILEGED_FUNCTION
+__attribute__ (( naked )) PRIVILEGED_FUNCTION void vPortPmpSwitch () 
 #endif
 {
 #if( portUSING_MPU_WRAPPERS == 1 )
@@ -609,7 +609,7 @@ __attribute__ (( naked )) void vPortPmpSwitch (	uint32_t ulNbPmp) PRIVILEGED_FUN
  *
  * @return BaseType_t error code (pdFAIL or pdPASS)
  */
-BaseType_t xPortStartScheduler( void ) PRIVILEGED_FUNCTION
+PRIVILEGED_FUNCTION BaseType_t xPortStartScheduler( void ) 
 {
 	extern void xPortStartFirstTask( void );
 
@@ -656,7 +656,7 @@ void vPortEndScheduler( void )
 /*-----------------------------------------------------------*/
 
 #if( portUSING_MPU_WRAPPERS == 1 )
-void vPortSyscall( unsigned int Value ) PRIVILEGED_FUNCTION
+PRIVILEGED_FUNCTION void vPortSyscall( unsigned int Value ) 
 {
 	/* Remove compiler warning about unused parameter. */
 	( void ) Value;
@@ -669,7 +669,7 @@ void vPortSyscall( unsigned int Value ) PRIVILEGED_FUNCTION
 }
 /*-----------------------------------------------------------*/
 
-void vRaisePrivilege( void ) PRIVILEGED_FUNCTION
+FREERTOS_SYSTEM_CALL void vRaisePrivilege( void )
 {
 	__asm__ __volatile__ (
 		"	.extern privilege_status \n"
@@ -678,13 +678,23 @@ void vRaisePrivilege( void ) PRIVILEGED_FUNCTION
 		"	la 	a0, privilege_status \n"
 		"	li 	t0, %1 		\n"
 		"	sw	t0, 0(a0)	\n" /* we use sw because privilege_status is uint32_t */
+		"	 		\n"
+		"	# SysCall Security: Check whether origin of call is from system calls		\n"
+		"	mv  t0, ra 		\n"
+		"	mv  t0, ra 		\n"
+		"	la  t1, __system_calls_valid_origin_start__   # Load the start address into t1  		\n"
+		"	la  t2, __system_calls_valid_origin_end__     # Load the end address into t2  		\n"
+		"	.extern is_exception 		\n"
+		"	blt t0, t1, is_exception \n"
+		"	bgt t0, t2, is_exception \n"
+		"	 		\n"
         "	ret 			\n"
         ::"i"(portSVC_SWITCH_TO_MACHINE), "i"(ePortMACHINE_MODE):
 	);
 }
 /*-----------------------------------------------------------*/
 
-void vResetPrivilege( void ) PRIVILEGED_FUNCTION
+FREERTOS_SYSTEM_CALL void vResetPrivilege( void ) 
 {
 	__asm__ __volatile__ (
 		"	.extern privilege_status \n"
@@ -709,11 +719,11 @@ void vResetPrivilege( void ) PRIVILEGED_FUNCTION
  * @param[in]   pxBottomOfStack address of bottom of stack
  * @param[in]   ulStackDepth    size of stack
  */
-void vPortStoreTaskMPUSettings( xMPU_SETTINGS *xPMPSettings,
+PRIVILEGED_FUNCTION void vPortStoreTaskMPUSettings( xMPU_SETTINGS *xPMPSettings,
 								const struct xMEMORY_REGION * const xRegions,
 								StackType_t *pxBottomOfStack,
 								uint32_t ulStackDepth, 
-								enum pmp_encryption_mode_e encMode ) PRIVILEGED_FUNCTION
+								enum pmp_encryption_mode_e encMode ) 
 {
 	int32_t lIndex;
 	uint32_t ul;
@@ -1008,7 +1018,7 @@ BaseType_t xRemoveFreePMP( void *pv )
 	// iprintf("%x", beginningAddress);
 	for( indexRegion = portFIRST_CONFIGURABLE_REGION; indexRegion < portLAST_CONFIGURABLE_REGION; indexRegion++ )
 	{
-		iprintf("%lx", indexRegion);
+		// iprintf("%lx", indexRegion);
 		uint8_t pmpConfig = 0;
 		UBaseType_t pmpAddrRaw = 0;
 		read_pmp_config(&xPmpInfo, indexRegion, &pmpConfig, &pmpAddrRaw);
@@ -1016,7 +1026,7 @@ BaseType_t xRemoveFreePMP( void *pv )
 		/* If true, PMP regions are found that protected that free'd memory */
 		UBaseType_t pmpAddr = pmpAddrRaw << 2; // TODO: Make flexible depending on pmp granularity
 		if (beginningAddress == pmpAddr) {
-			iprintf("S");
+			// iprintf("S");
 
 			// First three regions are not configurable and not in MPUSettings
 			uint32_t offset_addr = indexRegion - 3;  
@@ -1062,7 +1072,7 @@ BaseType_t xRemoveFreePMP( void *pv )
 }
 #endif
 
-void vPortUpdatePrivilegeStatus( UBaseType_t status ) PRIVILEGED_FUNCTION
+PRIVILEGED_FUNCTION void vPortUpdatePrivilegeStatus( UBaseType_t status ) 
 {
 	/* Remove compiler warning about unused parameter. */
 	( void ) status;
@@ -1087,10 +1097,10 @@ void vPortUpdatePrivilegeStatus( UBaseType_t status ) PRIVILEGED_FUNCTION
 /*-----------------------------------------------------------*/
 
 #if ( portUSING_MPU_WRAPPERS == 1 )
-StackType_t * pxPortInitialiseStack( StackType_t * pxTopOfStack,
+PRIVILEGED_FUNCTION StackType_t * pxPortInitialiseStack( StackType_t * pxTopOfStack,
 										TaskFunction_t pxCode,
 										void * pvParameters,
-										BaseType_t xRunPrivileged ) PRIVILEGED_FUNCTION
+										BaseType_t xRunPrivileged ) 
 #else /* if ( portUSING_MPU_WRAPPERS == 1 ) */
 StackType_t * pxPortInitialiseStack( StackType_t * pxTopOfStack,
 										TaskFunction_t pxCode,

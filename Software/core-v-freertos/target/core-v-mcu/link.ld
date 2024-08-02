@@ -31,7 +31,7 @@ MEMORY
 
 SECTIONS
 {
-  PROVIDE(__boot_address = 0x1c005000);
+  PROVIDE(__boot_address = 0x1c010000);
   
   /* stack and heap related settings */
   __stack_size = DEFINED(__stack_size) ? __stack_size : 0x800;
@@ -48,21 +48,41 @@ SECTIONS
   } > BRAM
   
 
+  /*
   .vectors MAX(0x1c000800, ALIGN(256)) :
   {
     __irq_vector_base = .;
     __vector_start = .;
     KEEP(*(.vectors))
-   __small_secure_boot_end_address__ = .;
   } > BRAM
+  */
 
+  
+  .privileged_data (NOLOAD) : ALIGN(32) {
+    __privileged_data_start__ = .;
+		*(privileged_data)
+		/* Non kernel data is kept out of the first _Privileged_Data_Region_Size
+		bytes of SRAM. */
+    . = ALIGN(32);
+		__privileged_data_end__ = .;
+   __small_secure_boot_end_address__ = .;
+	} > BRAM
+  
   .privileged_functions : ALIGN(256) {
+    __system_calls_valid_origin_start__ = .;
 		*(privileged_functions)
+	} > BRAM
+ 
+  .freertos_system_calls : ALIGN(32) {
+    __unprivileged_section_start__ = .;
+		*(freertos_system_calls)
+    . = ALIGN(32);
+    __system_calls_valid_origin_end__ = .;
+    __unprivileged_section_end__ = .;
 	} > BRAM
 
   .text __boot_address :
   {
-    __unprivileged_section_start__ = .;
     *(.text.start)
     *(.text)
     *(.text.*)
@@ -76,14 +96,6 @@ SECTIONS
     *(.rodata.*)
   } > BRAM
 
-  .privileged_data (NOLOAD) : ALIGN(32) {
-    __privileged_data_start__ = .;
-		*(privileged_data)
-		/* Non kernel data is kept out of the first _Privileged_Data_Region_Size
-		bytes of SRAM. */
-    . = ALIGN(32);
-		__privileged_data_end__ = .;
-	} > BRAM
 
 
   .data : ALIGN(4)
@@ -98,7 +110,8 @@ SECTIONS
     . = ALIGN(4);
   } > BRAM
 
-  .bss : ALIGN(8)
+  
+   .bss : ALIGN(8)
   {
     __bss_start = .;
     *(.bss)
@@ -108,7 +121,6 @@ SECTIONS
     *(COMMON)
     . = ALIGN(4);
     __bss_end = .;
-    __unprivileged_section_end__ = .;
 
     /* Sub section for e.g. privilege_status to avoid overlapping PMP 
      * regions as this variable is write-only */

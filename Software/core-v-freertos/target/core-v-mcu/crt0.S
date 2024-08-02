@@ -50,8 +50,8 @@ _start:
 	la sp, __stack_top
 
 /* set vector table address */
-	la a0, __vector_start
-	csrw mtvec, a0
+	# la a0, __vector_start
+	# csrw mtvec, a0
 
 /* clear the bss segment */
 	la t0, __bss_start
@@ -61,12 +61,26 @@ _start:
 	addi t0, t0, 4
 	bltu t0, t1, 1b
 
+	// Turn on LED1 for debug
+	li a0, 0x1B100000
+	li a1, 0b1
+	lw t0, 0(a0)
+	or a1, a1, t0
+	sw a1, 0(a0)
+
 /* new-style constructors and destructors */
 #if defined(__PULP_USE_LIBC)
 	la a0, __libc_fini_array
 	call atexit
 	call __libc_init_array
 #endif
+
+	// Turn on LED1 for debug
+	li a0, 0x1B100000
+	li a1, 0b10
+	lw t0, 0(a0)
+	or a1, a1, t0
+	sw a1, 0(a0)
 
 #if defined(__SECURE_BOOT_ACTIVATED)
 	// Perform secure boot

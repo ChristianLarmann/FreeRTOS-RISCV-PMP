@@ -1,9 +1,0 @@
-{
-	"version": "1.0",
-	"modules": {
-		"Zynq_E40S_PMP": {
-			"proto_instances": {
-			}
-		}
-	}
-}

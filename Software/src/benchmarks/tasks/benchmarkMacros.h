@@ -1,0 +1,5 @@
+#define BM_TASKSWITCH 1
+#define BM_MUTEX 2
+#define BM_ALLOC 3
+
+#define BENCHMARK BM_TASKSWITCH

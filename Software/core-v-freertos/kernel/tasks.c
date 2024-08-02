@@ -691,17 +691,28 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 	TCB_t *pxNewTCB;
 	BaseType_t xReturn = errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY;
 
+		__asm__ __volatile__(
+			"li a0, 0x1F100000\n"
+			"li a1, 0b110 \n"
+			"sw a1, 0(a0) \n"
+			::: "a0", "a1"
+		);
+
 		configASSERT( pxTaskDefinition->puxStackBuffer );
 
 		if( pxTaskDefinition->puxStackBuffer != NULL )
 		{
+			// Not being reached
+
 			/* Allocate space for the TCB.  Where the memory comes from depends
 			on the implementation of the port malloc function and whether or
 			not static allocation is being used. */
 			pxNewTCB = ( TCB_t * ) pvPortMalloc( sizeof( TCB_t ) );
-			asm volatile("li x28, 0x1010" ::: "x28");
-			asm volatile("mv x28, %0" :: "r" (pxNewTCB) : "x28");
-			asm volatile("li x28, 0x10101" ::: "x28");
+			// asm volatile("li x28, 0x1010" ::: "x28");
+			// asm volatile("mv x28, %0" :: "r" (pxNewTCB) : "x28");
+			// asm volatile("li x28, 0x10101" ::: "x28");
+
+			// Not being reached
 
 			if( pxNewTCB != NULL )
 			{
@@ -871,8 +882,8 @@ UBaseType_t x;
 		vPortStoreTaskMPUSettings( &( pxNewTCB->xMPUSettings ), xRegions, pxNewTCB->pxStack, 
 			ulStackDepth, encMode );
 
-		extern void vPortPmpSwitch ( int32_t ulNbPmp, xMPU_SETTINGS * xPMPSettings );
-		vPortPmpSwitch(NULL, &(pxNewTCB->xMPUSettings));
+		extern void vPortPmpSwitch();
+		vPortPmpSwitch();
 
 		pxCurrentTCB = tmpTCB;
 	}
@@ -4360,7 +4371,7 @@ TCB_t *pxTCB;
 
 #if ( portCRITICAL_NESTING_IN_TCB == 1 )
 
-	void vTaskEnterCritical( void )
+	PRIVILEGED_FUNCTION void vTaskEnterCritical( void )
 	{
 		portDISABLE_INTERRUPTS();
 
@@ -4390,7 +4401,7 @@ TCB_t *pxTCB;
 
 #if ( portCRITICAL_NESTING_IN_TCB == 1 )
 
-	void vTaskExitCritical( void )
+	PRIVILEGED_FUNCTION void vTaskExitCritical( void )
 	{
 		if( xSchedulerRunning != pdFALSE )
 		{
